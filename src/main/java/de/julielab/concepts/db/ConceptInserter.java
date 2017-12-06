@@ -1,10 +1,8 @@
 package de.julielab.concepts.db;
 
-import org.apache.commons.configuration2.HierarchicalConfiguration;
-import org.apache.commons.configuration2.tree.ImmutableNode;
-
+import de.julielab.concepts.util.ConceptInsertionException;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 
 public interface ConceptInserter {
-	void insertConcepts(ImportConcepts concepts, HierarchicalConfiguration<ImmutableNode> insertConfiguration);
+	void insertConcepts(ImportConcepts concepts) throws ConceptInsertionException;
 }
