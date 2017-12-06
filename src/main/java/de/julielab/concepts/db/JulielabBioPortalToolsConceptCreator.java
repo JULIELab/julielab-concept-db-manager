@@ -42,7 +42,7 @@ import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
  * @author faessler
  * @see https://github.com/JULIELab/julielab-bioportal-ontology-tools
  */
-public class JulielabBioPortalToolsConceptCreator implements ConceptCreator {
+public class JulielabBioPortalToolsConceptCreator implements ConceptCreationService {
 
 	private static final Logger log = LoggerFactory.getLogger(JulielabBioPortalToolsConceptCreator.class);
 

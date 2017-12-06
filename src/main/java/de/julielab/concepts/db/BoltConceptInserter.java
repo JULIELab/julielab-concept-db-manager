@@ -10,7 +10,7 @@ import de.julielab.concepts.util.ConceptInsertionException;
 import de.julielab.java.utilities.CLIInteractionUtilities;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 
-public class BoltConceptInserter implements ConceptInserter {
+public class BoltConceptInserter implements ConceptInsertionService {
 
 	public static final String CONFKEY_URI = "uri";
 	public static final String CONFKEY_USER = "user";

@@ -16,7 +16,7 @@ import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 import de.julielab.neo4j.plugins.datarepresentation.ImportFacet;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
 
-public class FileConceptInserter implements ConceptInserter {
+public class FileConceptInserter implements ConceptInsertionService {
 
 	private static final Logger log = LoggerFactory.getLogger(FileConceptInserter.class);
 	private GraphDatabaseService graphDb;

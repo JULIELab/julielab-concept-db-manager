@@ -8,6 +8,6 @@ import org.apache.commons.configuration2.tree.ImmutableNode;
 import de.julielab.concepts.util.ConceptCreationException;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 
-public interface ConceptCreator {
+public interface ConceptCreationService {
 	Stream<ImportConcepts> createConcepts(HierarchicalConfiguration<ImmutableNode> config) throws ConceptCreationException;
 }
