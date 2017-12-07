@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 
 import de.julielab.bioportal.ontologies.data.OntologyClass;
 import de.julielab.bioportal.util.BioPortalToolUtils;
+import de.julielab.concepts.db.spi.ConceptCreator;
 import de.julielab.concepts.util.ConceptCreationException;
 import de.julielab.concepts.util.UncheckedConceptDBManagerException;
 import de.julielab.java.utilities.FileUtilities;
@@ -42,10 +43,12 @@ import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
  * @author faessler
  * @see https://github.com/JULIELab/julielab-bioportal-ontology-tools
  */
-public class JulielabBioPortalToolsConceptCreator implements ConceptCreationService {
+public class JulielabBioPortalToolsConceptCreator implements ConceptCreator {
 
 	private static final Logger log = LoggerFactory.getLogger(JulielabBioPortalToolsConceptCreator.class);
 
+	public static final String NAME = "julielabontologies";
+	
 	/**
 	 * A file or directory pointing to the JSON file(s) containing the extracted
 	 * names of ontology classes. The JSON format is required to match the
@@ -118,6 +121,11 @@ public class JulielabBioPortalToolsConceptCreator implements ConceptCreationServ
 				throw new UncheckedConceptDBManagerException(new ConceptCreationException(e));
 			}
 		});
+	}
+
+	@Override
+	public boolean hasName(String providername) {
+		return providername.equals(this.getClass().getName()) || providername.equals(NAME);
 	}
 
 }
