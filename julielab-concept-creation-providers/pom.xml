@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>de.julielab</groupId>
+    <artifactId>julielab-concept-db-manager</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>julielab-concept-creation-providers</artifactId>
+  <name>JULIE Lab Concept Creation Providers</name>
+  <description>This is a module for the julielab-concept-db-manager project. In this project, implementations to create concepts from a different range of sources - ontologies, NCBI gene - and others are included that are used in JULIE Lab projects.</description>
+  <dependencies>
+  	<dependency>
+  		<groupId>org.slf4j</groupId>
+  		<artifactId>slf4j-api</artifactId>
+  	</dependency>
+  	<dependency>
+  		<groupId>de.julielab</groupId>
+  		<artifactId>julielab-concept-db-manager-core</artifactId>
+  		<version>${project.parent.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>de.julielab</groupId>
+  		<artifactId>
+  			julielab-neo4j-plugins-concepts-representation
+  		</artifactId>
+  	</dependency>
+  	<dependency>
+  		<groupId>de.julielab</groupId>
+  		<artifactId>julielab-bioportal-ontology-tools</artifactId>
+  		<version>1.0.0</version>
+  		<scope>provided</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>ch.qos.logback</groupId>
+  		<artifactId>logback-classic</artifactId>
+  		<scope>test</scope>
+  	</dependency>
+  </dependencies>
+</project>

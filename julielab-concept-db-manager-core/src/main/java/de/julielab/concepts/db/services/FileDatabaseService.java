@@ -51,7 +51,7 @@ public class FileDatabaseService {
 		if ((scheme != null) && !scheme.equalsIgnoreCase("file"))
 			return null;
 		File dbFile = dbUri.isAbsolute() ? new File(dbUri) : new File(dbUri.getRawSchemeSpecificPart());
-		log.info("Accessing file database located at {}", dbFile);
+		log.debug("Accessing file database located at {}", dbFile);
 		try {
 			return dbs.computeIfAbsent(dbFile.getCanonicalPath(),
 					k -> graphDatabaseFactory.newEmbeddedDatabase(dbFile));
