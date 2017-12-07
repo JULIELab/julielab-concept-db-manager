@@ -129,5 +129,4 @@ public class JulielabBioPortalToolsConceptCreator implements ConceptCreator {
 			throw new IllegalArgumentException("The concept creation service provider name is null");
 		return providername.equals(this.getClass().getName()) || providername.equals(NAME);
 	}
-
 }
