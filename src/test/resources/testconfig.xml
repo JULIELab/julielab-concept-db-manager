@@ -4,7 +4,7 @@
 	</connection>
 	<imports>
 		<import>
-			<providername>julielabontologies</providername>
+			<conceptcreator>julielabontologies</conceptcreator>
 			<configuration>
 				<facetgroupname>BioPortal</facetgroupname>
 				<path>src/test/resources/PO.cls.jsonlst.gz</path>

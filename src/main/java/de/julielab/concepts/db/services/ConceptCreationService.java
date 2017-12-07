@@ -12,7 +12,7 @@ import de.julielab.concepts.util.ConceptCreationException;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 
 public class ConceptCreationService {
-	public static final String CONFKEY_PROVIDERNAME = "providername";
+	public static final String CONFKEY_PROVIDERNAME = "conceptcreator";
 	public static final String CONFKEY_CONFIGURATION = "configuration";
 
 	private ServiceLoader<ConceptCreator> loader;
