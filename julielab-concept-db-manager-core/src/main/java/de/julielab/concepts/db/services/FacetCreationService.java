@@ -13,17 +13,16 @@ import de.julielab.neo4j.plugins.datarepresentation.ImportFacet;
 public class FacetCreationService {
 
 	public static final String CONFKEY_FACET = "configuration.facet";
-
-	public static final String FACET_CREATOR = "facetcreator";
+	public static final String CONFKEY_FACET_CREATOR = "facetcreator";
 
 	private ServiceLoader<FacetCreator> serviceLoader;
-	private FacetCreationService service;
+	private static FacetCreationService service;
 
 	private FacetCreationService() {
 		serviceLoader = ServiceLoader.load(FacetCreator.class);
 	}
 
-	public FacetCreationService getInstance() {
+	public static FacetCreationService getInstance() {
 		if (service == null)
 			service = new FacetCreationService();
 		return service;
@@ -31,7 +30,7 @@ public class FacetCreationService {
 
 	public ImportFacet createFacet(HierarchicalConfiguration<ImmutableNode> importConfiguration, Object facetData)
 			throws FacetCreationException {
-		String facetCreatorName = importConfiguration.getString(FACET_CREATOR);
+		String facetCreatorName = importConfiguration.getString(CONFKEY_FACET_CREATOR);
 		Iterator<FacetCreator> creatorIt = serviceLoader.iterator();
 		while (creatorIt.hasNext()) {
 			FacetCreator facetCreator = creatorIt.next();
@@ -39,5 +38,10 @@ public class FacetCreationService {
 				return facetCreator.createFacet(importConfiguration.configurationAt(CONFKEY_FACET), facetData);
 		}
 		return null;
+	}
+
+	public ImportFacet createFacet(HierarchicalConfiguration<ImmutableNode> importConfiguration)
+			throws FacetCreationException {
+		return createFacet(importConfiguration, null);
 	}
 }

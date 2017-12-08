@@ -17,6 +17,7 @@ import de.julielab.concepts.db.services.ConceptCreationService;
 import de.julielab.concepts.db.services.ConceptInsertionService;
 import de.julielab.concepts.util.ConceptCreationException;
 import de.julielab.concepts.util.ConceptInsertionException;
+import de.julielab.concepts.util.FacetCreationException;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 
 public class ConceptDatabaseApplication {
@@ -45,10 +46,12 @@ public class ConceptDatabaseApplication {
 					"The configuration file " + configFile.getAbsolutePath() + " could not be loaded.", e);
 		} catch (ConceptCreationException e) {
 			log.error("Database creation could not be completed because the concept creation failed.", e);
+		} catch (FacetCreationException e) {
+			log.error("Database creation could not be completed because the facet creation failed.", e);
 		}
 	}
 
-	private static void run(XMLConfiguration configuration) throws ConceptCreationException {
+	private static void run(XMLConfiguration configuration) throws ConceptCreationException, FacetCreationException {
 		ConceptCreationService conceptCreationService = ConceptCreationService.getInstance();
 		ConceptInsertionService insertionService = ConceptInsertionService.getInstance(configuration.configurationAt(CONFKEY_CONNECTION));
 		List<HierarchicalConfiguration<ImmutableNode>> importConfigs = configuration.configurationsAt(CONFKEY_IMPORT);

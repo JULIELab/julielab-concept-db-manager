@@ -26,8 +26,10 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
+import de.julielab.concepts.db.services.FacetCreationService;
 import de.julielab.concepts.db.spi.ConceptCreator;
 import de.julielab.concepts.util.ConceptCreationException;
+import de.julielab.concepts.util.FacetCreationException;
 import de.julielab.neo4j.plugins.datarepresentation.ConceptCoordinates;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcept;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
@@ -35,7 +37,6 @@ import de.julielab.neo4j.plugins.datarepresentation.ImportFacet;
 import de.julielab.neo4j.plugins.datarepresentation.ImportOptions;
 import de.julielab.neo4j.plugins.datarepresentation.TermCoordinates;
 import de.julielab.neo4j.plugins.datarepresentation.constants.ConceptConstants;
-import de.julielab.semedico.mesh.FacetsProvider;
 import de.julielab.semedico.resources.ResourceTermLabels;
 
 public class NCBIGeneConceptCreator implements ConceptCreator {
@@ -508,12 +509,12 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 		String groupId;
 	}
 	
-	public static final String CONFKEY_GENE_INFO = "gene_info";
-	public static final String CONFKEY_GENE_DESCRIPTIONS = "genedescriptions";
-	public static final String CONFKEY_ORGANISMS = "organismlist";
-	public static final String CONFKEY_ORGANISMS_NAMES = "organismnames";
-	public static final String CONFKEY_HOMOLOGENE = "homologene";
-	public static final String CONFKEY_GENE_GROUP = "gene_group";
+	public static final String CONFKEY_GENE_INFO = "configuration.gene_info";
+	public static final String CONFKEY_GENE_DESCRIPTIONS = "configuration.genedescriptions";
+	public static final String CONFKEY_ORGANISMS = "configuration.organismlist";
+	public static final String CONFKEY_ORGANISMS_NAMES = "configuration.organismnames";
+	public static final String CONFKEY_HOMOLOGENE = "configuration.homologene";
+	public static final String CONFKEY_GENE_GROUP = "configuration.gene_group";
 
 	/**
 	 * 
@@ -546,17 +547,18 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 	 *            only download summaries for the genes that are included in
 	 *            GeNo.
 	 * @param homologene
+	 * @throws FacetCreationException 
 	 * @throws IOException
 	 */
 	@Override
-	public Stream<ImportConcepts> createConcepts(HierarchicalConfiguration<ImmutableNode> config)
-			throws ConceptCreationException {
-		String geneInfo = config.getString(CONFKEY_GENE_INFO);
-		String geneDescriptions = config.getString(CONFKEY_GENE_DESCRIPTIONS);
-		String organisms = config.getString(CONFKEY_ORGANISMS);
-		String ncbiTaxNames = config.getString(CONFKEY_ORGANISMS_NAMES);
-		String homologene = config.getString(CONFKEY_HOMOLOGENE);
-		String geneGroup = config.getString(CONFKEY_GENE_GROUP);
+	public Stream<ImportConcepts> createConcepts(HierarchicalConfiguration<ImmutableNode> importConfig)
+			throws ConceptCreationException, FacetCreationException {
+		String geneInfo = importConfig.getString(CONFKEY_GENE_INFO);
+		String geneDescriptions = importConfig.getString(CONFKEY_GENE_DESCRIPTIONS);
+		String organisms = importConfig.getString(CONFKEY_ORGANISMS);
+		String ncbiTaxNames = importConfig.getString(CONFKEY_ORGANISMS_NAMES);
+		String homologene = importConfig.getString(CONFKEY_HOMOLOGENE);
+		String geneGroup = importConfig.getString(CONFKEY_GENE_GROUP);
 		
 		try {
 			log.info("Beginning import of NCBI Genes.");
@@ -575,7 +577,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 			log.info("Got {} terms overall (genes and homology aggregates)", termsByGeneId.size());
 
 			List<ImportConcept> terms = makeTermList(termsByGeneId);
-			ImportFacet facet = FacetsProvider.createSemedicoImportFacet("Genes and Proteins");
+			ImportFacet facet = FacetCreationService.getInstance().createFacet(importConfig);
+//			ImportFacet facet = FacetsProvider.createSemedicoImportFacet("Genes and Proteins");
 			ImportOptions options = new ImportOptions();
 			options.createHollowAggregateElements = true;
 			options.doNotCreateHollowParents = true;

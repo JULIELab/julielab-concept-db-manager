@@ -6,11 +6,12 @@ import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 
 import de.julielab.concepts.util.ConceptCreationException;
+import de.julielab.concepts.util.FacetCreationException;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 
 public interface ConceptCreator {
-	Stream<ImportConcepts> createConcepts(HierarchicalConfiguration<ImmutableNode> config)
-			throws ConceptCreationException;
+	Stream<ImportConcepts> createConcepts(HierarchicalConfiguration<ImmutableNode> importConfig)
+			throws ConceptCreationException, FacetCreationException;
 
 	/**
 	 * Checks if a concrete service provider implementation of this service provider
