@@ -22,6 +22,7 @@ import de.julielab.concepts.util.ConceptDatabaseCreationException;
 import de.julielab.concepts.util.ConceptInsertionException;
 import de.julielab.neo4j.plugins.ConceptManager;
 import de.julielab.neo4j.plugins.FacetManager.FacetLabel;
+import de.julielab.neo4j.plugins.datarepresentation.ImportConcept;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 import de.julielab.neo4j.plugins.datarepresentation.ImportFacet;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
@@ -59,11 +60,11 @@ public class FileConceptInserter implements ConceptInserter {
 		}
 		if (!alreadyExists) {
 			try {
-				log.trace("Inserting the concepts of facet {} (customId: {}) into the Neo4j database", facet.getName(),
+				log.debug("Inserting the concepts of facet {} (customId: {}) into the Neo4j database", facet.getName(),
 						facet.getCustomId());
 				String conceptsJson = jsonMapper.writeValueAsString(concepts);
 				cm.insertConcepts(graphDb, conceptsJson);
-			} catch (JSONException e) {
+			} catch (de.julielab.neo4j.plugins.util.ConceptInsertionException | JSONException e) {
 				throw new ConceptInsertionException(
 						"The JSON format specifying the ontology class names or - but less probable - the facet JSON format does not fit the requirements of the employed version of the julielab-neo4j-plugin-concepts dependency. There might be a compatibility issue between the julielab-bioportal-tools and the plugin-concepts libraries.",
 						e);
@@ -72,7 +73,7 @@ public class FileConceptInserter implements ConceptInserter {
 			}
 		} else {
 			// ontology facet node was found
-			log.debug("Facet with cutom ID {} already exists in the database and is not inserted again.",
+			log.debug("Facet with custom ID {} already exists in the database and is not inserted again.",
 					facet.getCustomId());
 		}
 	}

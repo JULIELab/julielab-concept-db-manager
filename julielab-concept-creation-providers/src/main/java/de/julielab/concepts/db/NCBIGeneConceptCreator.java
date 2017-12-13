@@ -86,7 +86,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 		Multimap<String, HomologeneRecord> groupId2Homolo = HashMultimap.create();
 		LineIterator iterator = FileUtils.lineIterator(homologene);
 		while (iterator.hasNext()) {
-			String line = (String) iterator.next();
+			String line = iterator.next();
 			String[] split = line.split("\t");
 			if (split.length != 6)
 				throw new IllegalStateException("Expected 6 fields in homologene file format, but got " + split.length
@@ -111,40 +111,43 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 				homologuousGeneSources.add(NCBI_GENE_SOURCE);
 				homologuousGeneCoords.add(geneCoords);
 			}
-			ImportConcept aggregate = new ImportConcept(homologuousGeneCoords, aggregateCopyProperties);
-			aggregate.coordinates = new ConceptCoordinates();
-			aggregate.coordinates.sourceId = HOMOLOGENE_PREFIX + groupId;
-			aggregate.coordinates.source = "Homologene";
-			aggregate.aggregateIncludeInHierarchy = true;
-			aggregate.generalLabels = Arrays.asList("AGGREGATE_HOMOLOGENE", "NO_PROCESSING_GAZETTEER");
-			aggregate.coordinates.originalSource = "Homologene";
-			aggregate.coordinates.originalId = groupId;
-			termsByGeneId.put(new TermCoordinates(aggregate.coordinates.sourceId, aggregate.coordinates.source),
-					aggregate);
-			++homologeneAggregateCounter;
+			// Only continue if more than one gene in this homologene cluster are included in our gene_info
+			if (homologuousGeneCoords.size() >= 1) {
+				ImportConcept aggregate = new ImportConcept(homologuousGeneCoords, aggregateCopyProperties);
+				aggregate.coordinates = new ConceptCoordinates();
+				aggregate.coordinates.sourceId = HOMOLOGENE_PREFIX + groupId;
+				aggregate.coordinates.source = "Homologene";
+				aggregate.aggregateIncludeInHierarchy = true;
+				aggregate.generalLabels = Arrays.asList("AGGREGATE_HOMOLOGENE", "NO_PROCESSING_GAZETTEER");
+				aggregate.coordinates.originalSource = "Homologene";
+				aggregate.coordinates.originalId = groupId;
+				termsByGeneId.put(new TermCoordinates(aggregate.coordinates.sourceId, aggregate.coordinates.source),
+						aggregate);
+				++homologeneAggregateCounter;
 
-			for (TermCoordinates geneCoords : homologuousGeneCoords) {
-				String geneId = geneCoords.id;
-				ImportConcept gene = termsByGeneId.get(geneCoords);
-				if (genes2HomoloGroup.containsKey(geneId))
-					throw new IllegalStateException(
-							"Gene with ID " + geneId + " is taking part in multiple homologene groups.");
-				genes2HomoloGroup.put(geneId, groupId);
-				genes2Aggregate.put(geneId,
-						new TermCoordinates(aggregate.coordinates.sourceId, aggregate.coordinates.source));
-				gene.addParent(aggregate.coordinates);
-				// gene.addParentSrcId(aggregate.coordinates.sourceId);
-				// If we actually aggregate multiple genes into one, the
-				// elements should disappear behind the aggregate and as such
-				// should not be present in the query dictionary or suggestions.
+				for (TermCoordinates geneCoords : homologuousGeneCoords) {
+					String geneId = geneCoords.id;
+					ImportConcept gene = termsByGeneId.get(geneCoords);
+					if (genes2HomoloGroup.containsKey(geneId))
+						throw new IllegalStateException(
+								"Gene with ID " + geneId + " is taking part in multiple homologene groups.");
+					genes2HomoloGroup.put(geneId, groupId);
+					genes2Aggregate.put(geneId,
+							new TermCoordinates(aggregate.coordinates.sourceId, aggregate.coordinates.source));
+					gene.addParent(aggregate.coordinates);
+					// gene.addParentSrcId(aggregate.coordinates.sourceId);
+					// If we actually aggregate multiple genes into one, the
+					// elements should disappear behind the aggregate and as such
+					// should not be present in the query dictionary or suggestions.
 
-				if (homologuousGeneIds.size() > 1) {
-					gene.addGeneralLabel(ResourceTermLabels.Gazetteer.NO_QUERY_DICTIONARY.name(),
-							ResourceTermLabels.Suggestions.NO_SUGGESTIONS.name());
+					if (homologuousGeneIds.size() > 1) {
+						gene.addGeneralLabel(ResourceTermLabels.Gazetteer.NO_QUERY_DICTIONARY.name(),
+								ResourceTermLabels.Suggestions.NO_SUGGESTIONS.name());
+					}
 				}
 			}
 		}
-		// and homologene aggregates
+		// end homologene aggregates
 
 		// add the orthology information from gene group to make gene group aggregates
 		Multimap<String, String> geneGroupOrthologs = HashMultimap.create();
@@ -152,7 +155,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 		// Format: tax_id GeneID relationship Other_tax_id Other_GeneID (tab is
 		// used as a separator, pound sign - start of a comment)
 		while (iterator.hasNext()) {
-			String geneGroupLine = (String) iterator.next();
+			String geneGroupLine = iterator.next();
 			if (geneGroupLine.startsWith("#"))
 				continue;
 			String[] geneGroupRecord = geneGroupLine.split("\t");
@@ -178,8 +181,9 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 				// it is possible that some elements of a gene group are not in
 				// our version of gene_info (e.g. due to species filtering)
 				TermCoordinates geneCoords = new TermCoordinates(geneId, NCBI_GENE_SOURCE);
-				if (!termsByGeneId.containsKey(geneCoords))
+				if (!termsByGeneId.containsKey(geneCoords)) {
 					continue;
+				}
 				groupGeneIds.add(geneId);
 				groupGeneCoords.add(geneCoords);
 			}
@@ -187,44 +191,49 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 			// human version. It has to be added to the resulting aggregate
 			// node, as well.
 			// But here also we should check if we even know a gene with this ID
-			if (termsByGeneId.containsKey(new TermCoordinates(GENE_GROUP_PREFIX + geneGroupId, "GeneGroup"))) {
+			if (termsByGeneId.containsKey(new TermCoordinates(geneGroupId, NCBI_GENE_SOURCE))) {
 				groupGeneIds.add(geneGroupId);
 				groupGeneCoords.add(new TermCoordinates(geneGroupId, NCBI_GENE_SOURCE));
 			}
 
-			ImportConcept aggregate = new ImportConcept(groupGeneCoords, aggregateCopyProperties);
-			aggregate.coordinates = new ConceptCoordinates();
-			aggregate.coordinates.sourceId = GENE_GROUP_PREFIX + geneGroupId;
-			aggregate.coordinates.source = "GeneGroup";
-			aggregate.coordinates.originalSource = "GeneGroup";
-			aggregate.coordinates.originalId = geneGroupId;
-			aggregate.aggregateIncludeInHierarchy = true;
-			aggregate.generalLabels = Arrays.asList("AGGREGATE_GENEGROUP", "NO_PROCESSING_GAZETTEER");
-			termsByGeneId.put(new TermCoordinates(aggregate.coordinates.sourceId, aggregate.coordinates.source),
-					aggregate);
-			++orthologAggregateCounter;
+			// The set of genes participating in this gene group might be empty or only
+			// contain a single element because all other elements were not included in the
+			// input gene_info. Then, we don't need an aggregate.
+			if (groupGeneCoords.size() >= 1) {
+				ImportConcept aggregate = new ImportConcept(groupGeneCoords, aggregateCopyProperties);
+				aggregate.coordinates = new ConceptCoordinates();
+				aggregate.coordinates.sourceId = GENE_GROUP_PREFIX + geneGroupId;
+				aggregate.coordinates.source = "GeneGroup";
+				aggregate.coordinates.originalSource = "GeneGroup";
+				aggregate.coordinates.originalId = geneGroupId;
+				aggregate.aggregateIncludeInHierarchy = true;
+				aggregate.generalLabels = Arrays.asList("AGGREGATE_GENEGROUP", "NO_PROCESSING_GAZETTEER");
+				termsByGeneId.put(new TermCoordinates(aggregate.coordinates.sourceId, aggregate.coordinates.source),
+						aggregate);
+				++orthologAggregateCounter;
 
-			for (String geneId : groupGeneIds) {
-				ImportConcept gene = termsByGeneId.get(new TermCoordinates(geneId, NCBI_GENE_SOURCE));
-				// it can happen that gene_group lists a gene we do not work
-				// with (e.g. since we filter for a subset of organisms)
-				// outcommented: should now already be handled above
-				// if (null == gene)
-				// continue;
-				if (genes2OrthoGroup.containsKey(geneId))
-					throw new IllegalStateException(
-							"Gene with ID " + geneId + " is taking part in multiple ortholog gene groups.");
-				genes2OrthoGroup.put(geneId, geneGroupId);
-				genes2Aggregate.put(geneId,
-						new TermCoordinates(aggregate.coordinates.sourceId, aggregate.coordinates.source));
-				gene.addParent(aggregate.coordinates);
-				// If we actually aggregate multiple genes into one, the
-				// elements should disappear behind the aggregate and as such
-				// should not be present in the query dictionary or suggestions.
+				for (String geneId : groupGeneIds) {
+					ImportConcept gene = termsByGeneId.get(new TermCoordinates(geneId, NCBI_GENE_SOURCE));
+					// it can happen that gene_group lists a gene we do not work
+					// with (e.g. since we filter for a subset of organisms)
+					// outcommented: should now already be handled above
+					// if (null == gene)
+					// continue;
+					if (genes2OrthoGroup.containsKey(geneId))
+						throw new IllegalStateException(
+								"Gene with ID " + geneId + " is taking part in multiple ortholog gene groups.");
+					genes2OrthoGroup.put(geneId, geneGroupId);
+					genes2Aggregate.put(geneId,
+							new TermCoordinates(aggregate.coordinates.sourceId, aggregate.coordinates.source));
+					gene.addParent(aggregate.coordinates);
+					// If we actually aggregate multiple genes into one, the
+					// elements should disappear behind the aggregate and as such
+					// should not be present in the query dictionary or suggestions.
 
-				if (groupGeneIds.size() > 1) {
-					gene.addGeneralLabel(ResourceTermLabels.Gazetteer.NO_QUERY_DICTIONARY.name(),
-							ResourceTermLabels.Suggestions.NO_SUGGESTIONS.name());
+					if (groupGeneIds.size() > 1) {
+						gene.addGeneralLabel(ResourceTermLabels.Gazetteer.NO_QUERY_DICTIONARY.name(),
+								ResourceTermLabels.Suggestions.NO_SUGGESTIONS.name());
+					}
 				}
 			}
 		}
