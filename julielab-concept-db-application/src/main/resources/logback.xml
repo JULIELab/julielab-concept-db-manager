@@ -8,9 +8,8 @@
     </encoder>
   </appender>
   
-  <logger name="org.apache.commons.beanutils" level="INFO"/>
 
-  <root level="DEBUG">
+  <root level="INFO">
     <appender-ref ref="STDOUT" />
   </root>
 </configuration>

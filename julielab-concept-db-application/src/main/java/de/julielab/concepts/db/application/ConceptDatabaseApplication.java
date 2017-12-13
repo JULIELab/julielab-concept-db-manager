@@ -13,8 +13,8 @@ import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.julielab.concepts.db.services.ConceptCreationService;
-import de.julielab.concepts.db.services.ConceptInsertionService;
+import de.julielab.concepts.db.core.services.ConceptCreationService;
+import de.julielab.concepts.db.core.services.ConceptInsertionService;
 import de.julielab.concepts.util.ConceptCreationException;
 import de.julielab.concepts.util.ConceptInsertionException;
 import de.julielab.concepts.util.FacetCreationException;
@@ -48,12 +48,16 @@ public class ConceptDatabaseApplication {
 			log.error("Database creation could not be completed because the concept creation failed.", e);
 		} catch (FacetCreationException e) {
 			log.error("Database creation could not be completed because the facet creation failed.", e);
+		} catch (ConceptInsertionException e) {
+			log.error("Concept insertion failed", e);
 		}
 	}
 
-	private static void run(XMLConfiguration configuration) throws ConceptCreationException, FacetCreationException {
+	private static void run(XMLConfiguration configuration)
+			throws ConceptCreationException, FacetCreationException, ConceptInsertionException {
 		ConceptCreationService conceptCreationService = ConceptCreationService.getInstance();
-		ConceptInsertionService insertionService = ConceptInsertionService.getInstance(configuration.configurationAt(CONFKEY_CONNECTION));
+		ConceptInsertionService insertionService = ConceptInsertionService
+				.getInstance(configuration.configurationAt(CONFKEY_CONNECTION));
 		List<HierarchicalConfiguration<ImmutableNode>> importConfigs = configuration.configurationsAt(CONFKEY_IMPORT);
 		for (HierarchicalConfiguration<ImmutableNode> importConfig : importConfigs) {
 			Stream<ImportConcepts> concepts = conceptCreationService.createConcepts(importConfig);

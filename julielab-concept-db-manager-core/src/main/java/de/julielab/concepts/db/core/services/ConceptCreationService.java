@@ -1,4 +1,4 @@
-package de.julielab.concepts.db.services;
+package de.julielab.concepts.db.core.services;
 
 import java.util.Iterator;
 import java.util.ServiceLoader;
@@ -6,15 +6,19 @@ import java.util.stream.Stream;
 
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import de.julielab.concepts.db.spi.ConceptCreator;
+import de.julielab.concepts.db.core.spi.ConceptCreator;
 import de.julielab.concepts.util.ConceptCreationException;
 import de.julielab.concepts.util.FacetCreationException;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 
 public class ConceptCreationService {
+
+	private static final Logger log = LoggerFactory.getLogger(ConceptCreationService.class);
+
 	public static final String CONFKEY_PROVIDERNAME = "conceptcreator";
-	public static final String CONFKEY_CONFIGURATION = "configuration";
 
 	private ServiceLoader<ConceptCreator> loader;
 	private static ConceptCreationService service;
@@ -47,9 +51,15 @@ public class ConceptCreationService {
 		while (providerIt.hasNext()) {
 			ConceptCreator conceptCreator = providerIt.next();
 			if (conceptCreator.hasName(providername)) {
-				return conceptCreator.createConcepts(importConfig.configurationAt(CONFKEY_CONFIGURATION));
+				log.debug("Invoking concept creator {}", providername);
+				Stream<ImportConcepts> concepts = conceptCreator
+						.createConcepts(importConfig);
+				if (concepts == null)
+					throw new ConceptCreationException("Concept creator " + providername + " did return null.");
+				return concepts;
 			}
 		}
-		return null;
+		throw new ConceptCreationException("No concept creator was found for the name " + providername
+				+ ". Make sure that the desired concept creation provider is present in the META-INF/services/de.julielab.concepts.db.spi.ConceptCreator file.");
 	}
 }

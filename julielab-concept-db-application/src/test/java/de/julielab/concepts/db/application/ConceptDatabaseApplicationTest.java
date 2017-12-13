@@ -21,7 +21,7 @@ import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Transaction;
 
-import de.julielab.concepts.db.services.FileDatabaseService;
+import de.julielab.concepts.db.core.services.FileDatabaseService;
 import de.julielab.concepts.util.ConceptDatabaseCreationException;
 import de.julielab.neo4j.plugins.ConceptManager;
 import de.julielab.neo4j.plugins.FacetManager;

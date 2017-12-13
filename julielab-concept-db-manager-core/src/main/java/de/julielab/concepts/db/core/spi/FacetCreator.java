@@ -1,4 +1,4 @@
-package de.julielab.concepts.db.spi;
+package de.julielab.concepts.db.core.spi;
 
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;

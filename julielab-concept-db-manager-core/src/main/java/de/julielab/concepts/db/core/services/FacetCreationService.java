@@ -1,4 +1,4 @@
-package de.julielab.concepts.db.services;
+package de.julielab.concepts.db.core.services;
 
 import java.util.Iterator;
 import java.util.ServiceLoader;
@@ -6,7 +6,7 @@ import java.util.ServiceLoader;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 
-import de.julielab.concepts.db.spi.FacetCreator;
+import de.julielab.concepts.db.core.spi.FacetCreator;
 import de.julielab.concepts.util.FacetCreationException;
 import de.julielab.neo4j.plugins.datarepresentation.ImportFacet;
 

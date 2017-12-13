@@ -1,11 +1,11 @@
-package de.julielab.concepts.db;
+package de.julielab.concepts.db.core;
 
 import java.util.List;
 
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 
-import de.julielab.concepts.db.spi.FacetCreator;
+import de.julielab.concepts.db.core.spi.FacetCreator;
 import de.julielab.concepts.util.FacetCreationException;
 import de.julielab.neo4j.plugins.datarepresentation.ImportFacet;
 import de.julielab.neo4j.plugins.datarepresentation.ImportFacetGroup;

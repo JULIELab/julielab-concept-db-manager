@@ -1,5 +1,8 @@
 package de.julielab.concepts.db;
 
+import static java.util.stream.Collectors.joining;
+
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -26,10 +29,11 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
-import de.julielab.concepts.db.services.FacetCreationService;
-import de.julielab.concepts.db.spi.ConceptCreator;
+import de.julielab.concepts.db.core.services.FacetCreationService;
+import de.julielab.concepts.db.core.spi.ConceptCreator;
 import de.julielab.concepts.util.ConceptCreationException;
 import de.julielab.concepts.util.FacetCreationException;
+import de.julielab.java.utilities.FileUtilities;
 import de.julielab.neo4j.plugins.datarepresentation.ConceptCoordinates;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcept;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
@@ -45,11 +49,10 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 	public static final String NCBI_GENE_SOURCE = "NCBI Gene";
 	public String HOMOLOGENE_PREFIX = "homologene";
 	/**
-	 * "gene_group" is the name of the file specifying the ortholog
-	 * relationships between genes. Also, NCBI Gene, searching for a specific
-	 * ortholog group works by search for "ortholog_gene_2475[group]" where the
-	 * number is the ID of the gene that represents the group, the human gene,
-	 * most of the time.
+	 * "gene_group" is the name of the file specifying the ortholog relationships
+	 * between genes. Also, NCBI Gene, searching for a specific ortholog group works
+	 * by search for "ortholog_gene_2475[group]" where the number is the ID of the
+	 * gene that represents the group, the human gene, most of the time.
 	 */
 	public String GENE_GROUP_PREFIX = "genegroup";
 	public String TOP_HOMOLOGY_PREFIX = "tophomology";
@@ -64,7 +67,6 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 		this.topHomologyAggregateCounter = 0;
 	}
 
-
 	/**
 	 * 
 	 * @param termsByGeneId
@@ -74,15 +76,15 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 	 *            orthologs-regions/
 	 * @throws IOException
 	 */
-	private void createHomologyAggregates(Map<TermCoordinates, ImportConcept> termsByGeneId, String homologene,
-			String geneGroup) throws IOException {
+	private void createHomologyAggregates(Map<TermCoordinates, ImportConcept> termsByGeneId, File homologene,
+			File geneGroup) throws IOException {
 		Multimap<String, TermCoordinates> genes2Aggregate = HashMultimap.create();
 
 		List<String> aggregateCopyProperties = Arrays.asList(ConceptConstants.PROP_PREF_NAME,
 				ConceptConstants.PROP_SYNONYMS, ConceptConstants.PROP_WRITING_VARIANTS,
 				ConceptConstants.PROP_DESCRIPTIONS, ConceptConstants.PROP_FACETS);
 		Multimap<String, HomologeneRecord> groupId2Homolo = HashMultimap.create();
-		LineIterator iterator = FileUtils.lineIterator(new File(homologene));
+		LineIterator iterator = FileUtils.lineIterator(homologene);
 		while (iterator.hasNext()) {
 			String line = (String) iterator.next();
 			String[] split = line.split("\t");
@@ -146,7 +148,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 
 		// add the orthology information from gene group to make gene group aggregates
 		Multimap<String, String> geneGroupOrthologs = HashMultimap.create();
-		iterator = FileUtils.lineIterator(new File(geneGroup));
+		iterator = FileUtils.lineIterator(geneGroup);
 		// Format: tax_id GeneID relationship Other_tax_id Other_GeneID (tab is
 		// used as a separator, pound sign - start of a comment)
 		while (iterator.hasNext()) {
@@ -305,19 +307,19 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 
 	/**
 	 * Gives genes species-related qualifier / display name in the form the NCBI
-	 * gene search engine does, e.g. interleukin 2 [Homo sapiens (human)], only
-	 * that we don't use the full official symbol but just the symbol to keep it
-	 * a bit shorter.
+	 * gene search engine does, e.g. interleukin 2 [Homo sapiens (human)], only that
+	 * we don't use the full official symbol but just the symbol to keep it a bit
+	 * shorter.
 	 * 
 	 * @param ncbiTaxNames
 	 * @param geneId2Tax
 	 * @param geneTerms
 	 * @throws IOException
 	 */
-	private void setSpeciesQualifier(String ncbiTaxNames, Map<String, String> geneId2Tax,
+	private void setSpeciesQualifier(File ncbiTaxNames, Map<String, String> geneId2Tax,
 			Collection<ImportConcept> geneTerms) throws IOException {
 		Map<String, TaxonomyRecord> taxNameRecords = new HashMap<>();
-		LineIterator lineIt = FileUtils.lineIterator(new File(ncbiTaxNames), "UTF-8");
+		LineIterator lineIt = FileUtils.lineIterator(ncbiTaxNames, "UTF-8");
 		while (lineIt.hasNext()) {
 			String recordString = lineIt.nextLine();
 			// at the end of the line there is no more tab, thus we have
@@ -360,11 +362,11 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 		}
 	}
 
-	protected void convertGeneInfoToTerms(String geneInfo, String organisms, String geneSummary,
+	protected void convertGeneInfoToTerms(File geneInfo, File organisms, File geneDescriptions,
 			Map<String, String> geneId2Tax, Map<TermCoordinates, ImportConcept> termsByGeneId) throws IOException {
 		Set<String> organismSet = new HashSet<>(IOUtils.readLines(new FileInputStream(organisms), "UTF-8"));
 
-		LineIterator lineIt = FileUtils.lineIterator(new File(geneSummary), "UTF-8");
+		LineIterator lineIt = FileUtils.lineIterator(geneDescriptions, "UTF-8");
 		Map<String, String> gene2Summary = new HashMap<>();
 		while (lineIt.hasNext()) {
 			String line = lineIt.nextLine();
@@ -374,20 +376,21 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 			gene2Summary.put(geneId, summary);
 		}
 
-		lineIt = FileUtils.lineIterator(new File(geneInfo), "UTF-8");
-		while (lineIt.hasNext()) {
-			String record = lineIt.nextLine();
-			// comment
-			if (record.startsWith("#"))
-				continue;
-			ImportConcept term = createGeneTerm(record, gene2Summary);
-			String[] split = record.split("\t", 2);
-			String taxId = split[0];
-			if (!organismSet.contains(taxId))
-				continue;
-			geneId2Tax.put(term.coordinates.originalId, taxId);
-			termsByGeneId.put(new TermCoordinates(term.coordinates.originalId, term.coordinates.originalSource), term);
+		try (BufferedReader bw = FileUtilities.getReaderFromFile(geneInfo)) {
+			Iterator<String> it = bw.lines().filter(record -> !record.startsWith("#")).iterator();
+			while (it.hasNext()) {
+				String record = it.next();
+				ImportConcept term = createGeneTerm(record, gene2Summary);
+				String[] split = record.split("\t", 2);
+				String taxId = split[0];
+				if (organismSet.contains(taxId)) {
+					geneId2Tax.put(term.coordinates.originalId, taxId);
+					termsByGeneId.put(new TermCoordinates(term.coordinates.originalId, term.coordinates.originalSource),
+							term);
+				}
+			}
 		}
+
 	}
 
 	private ImportConcept createGeneTerm(String record, Map<String, String> gene2Summary) {
@@ -450,8 +453,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 		ImportConcept geneTerm = new ImportConcept(prefName, synonyms, description,
 				new ConceptCoordinates(originalId, NCBI_GENE_SOURCE, originalId, NCBI_GENE_SOURCE));
 		/**
-		 * Gene IDs are given by a Gene Normalization component like GeNo. Thus,
-		 * genes are not supposed to be additionally tagged by a gazetteer.
+		 * Gene IDs are given by a Gene Normalization component like GeNo. Thus, genes
+		 * are not supposed to be additionally tagged by a gazetteer.
 		 */
 		geneTerm.addGeneralLabel(ResourceTermLabels.Gazetteer.NO_PROCESSING_GAZETTEER.toString(),
 				ResourceTermLabels.IdMapping.ID_MAP_NCBI_GENES.toString());
@@ -508,7 +511,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 		// The homology cluster ID
 		String groupId;
 	}
-	
+
 	public static final String CONFKEY_GENE_INFO = "configuration.gene_info";
 	public static final String CONFKEY_GENE_DESCRIPTIONS = "configuration.genedescriptions";
 	public static final String CONFKEY_ORGANISMS = "configuration.organismlist";
@@ -519,47 +522,57 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 	/**
 	 * 
 	 * @param geneInfo
-	 *            Original gene_info file download from the NCBI. Should reside
-	 *            on our servers at
-	 *            <tt>/data/data_resources/biology/entrez/gene/gene_info</tt>
-	 *            (or similar, path could change over time).
+	 *            Original gene_info file download from the NCBI. Should reside on
+	 *            our servers at
+	 *            <tt>/data/data_resources/biology/entrez/gene/gene_info</tt> (or
+	 *            similar, path could change over time).
 	 * @param organisms
 	 *            A list of NCBI Taxonomy IDs specifying the organisms for which
-	 *            genes should be included. The whole of the gene database
-	 *            contains around 16M entries, as of August 2014, most of which
-	 *            do not stand in the focus of research. The list given here
-	 *            should be the same list used for GeNo resource generation
-	 *            (organisms.taxid) to create a match between terms in the term
-	 *            database and actually mapped genes in the documents.
+	 *            genes should be included. The whole of the gene database contains
+	 *            around 16M entries, as of August 2014, most of which do not stand
+	 *            in the focus of research. The list given here should be the same
+	 *            list used for GeNo resource generation (organisms.taxid) to create
+	 *            a match between terms in the term database and actually mapped
+	 *            genes in the documents.
 	 * @param ncbiTaxNames
-	 *            The <tt>names.dmp</tt> file included in the original NCBI
-	 *            Taxonomy download. Should reside on our servers at
+	 *            The <tt>names.dmp</tt> file included in the original NCBI Taxonomy
+	 *            download. Should reside on our servers at
 	 *            <tt>/data/data_resources/biology/ncbi_tax/names.dmp</tt> (or
 	 *            similar, path could change over time).
 	 * @param geneSummary
 	 *            This file - unfortunately - cannot be downloaded directly.
-	 *            However, it should already exist, somewhere, since it is part
-	 *            of GeNo resource generation. You can either ask someone who is
+	 *            However, it should already exist, somewhere, since it is part of
+	 *            GeNo resource generation. You can either ask someone who is
 	 *            responsible for GeNo, or just build the semantic context index
 	 *            yourself with the script that is included in the
-	 *            jules-gene-mapper-ae project. Please note that summary
-	 *            download takes a while (a few hours) and thus is filtered to
-	 *            only download summaries for the genes that are included in
-	 *            GeNo.
+	 *            jules-gene-mapper-ae project. Please note that summary download
+	 *            takes a while (a few hours) and thus is filtered to only download
+	 *            summaries for the genes that are included in GeNo.
 	 * @param homologene
-	 * @throws FacetCreationException 
+	 * @throws FacetCreationException
 	 * @throws IOException
 	 */
 	@Override
 	public Stream<ImportConcepts> createConcepts(HierarchicalConfiguration<ImmutableNode> importConfig)
 			throws ConceptCreationException, FacetCreationException {
-		String geneInfo = importConfig.getString(CONFKEY_GENE_INFO);
-		String geneDescriptions = importConfig.getString(CONFKEY_GENE_DESCRIPTIONS);
-		String organisms = importConfig.getString(CONFKEY_ORGANISMS);
-		String ncbiTaxNames = importConfig.getString(CONFKEY_ORGANISMS_NAMES);
-		String homologene = importConfig.getString(CONFKEY_HOMOLOGENE);
-		String geneGroup = importConfig.getString(CONFKEY_GENE_GROUP);
-		
+		checkParameters(importConfig, CONFKEY_GENE_INFO, CONFKEY_GENE_DESCRIPTIONS, CONFKEY_ORGANISMS,
+				CONFKEY_ORGANISMS_NAMES, CONFKEY_HOMOLOGENE, CONFKEY_GENE_GROUP);
+
+		File geneInfo = new File(importConfig.getString(CONFKEY_GENE_INFO));
+		File geneDescriptions = new File(importConfig.getString(CONFKEY_GENE_DESCRIPTIONS));
+		File organisms = new File(importConfig.getString(CONFKEY_ORGANISMS));
+		File ncbiTaxNames = new File(importConfig.getString(CONFKEY_ORGANISMS_NAMES));
+		File homologene = new File(importConfig.getString(CONFKEY_HOMOLOGENE));
+		File geneGroup = new File(importConfig.getString(CONFKEY_GENE_GROUP));
+		List<File> notFound = new ArrayList<>();
+		for (File f : Arrays.asList(geneInfo, geneDescriptions, organisms, ncbiTaxNames, homologene, geneGroup)) {
+			if (!f.exists())
+				notFound.add(f);
+		}
+		if (!notFound.isEmpty())
+			throw new ConceptCreationException("The following files do not exist: " + notFound.stream()
+					.map(File::getAbsolutePath).collect(joining(System.getProperty("line.separator"))));
+
 		try {
 			log.info("Beginning import of NCBI Genes.");
 			Map<String, String> geneId2Tax = new HashMap<>();
@@ -578,7 +591,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 
 			List<ImportConcept> terms = makeTermList(termsByGeneId);
 			ImportFacet facet = FacetCreationService.getInstance().createFacet(importConfig);
-//			ImportFacet facet = FacetsProvider.createSemedicoImportFacet("Genes and Proteins");
+			// ImportFacet facet = FacetsProvider.createSemedicoImportFacet("Genes and
+			// Proteins");
 			ImportOptions options = new ImportOptions();
 			options.createHollowAggregateElements = true;
 			options.doNotCreateHollowParents = true;
@@ -588,7 +602,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 		} catch (IOException e) {
 			throw new ConceptCreationException(e);
 		}
-		
+
 	}
 
 	@Override

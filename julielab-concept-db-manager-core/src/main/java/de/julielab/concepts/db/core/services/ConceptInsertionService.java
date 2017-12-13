@@ -1,14 +1,15 @@
-package de.julielab.concepts.db.services;
+package de.julielab.concepts.db.core.services;
 
 import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 import java.util.stream.Stream;
 
+import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 
-import de.julielab.concepts.db.spi.ConceptInserter;
+import de.julielab.concepts.db.core.spi.ConceptInserter;
 import de.julielab.concepts.util.ConceptDBManagerException;
 import de.julielab.concepts.util.ConceptDatabaseCreationException;
 import de.julielab.concepts.util.ConceptInsertionException;
@@ -37,19 +38,25 @@ public class ConceptInsertionService {
 
 	public void insertConcepts(ImportConcepts concepts) throws ConceptInsertionException, ConceptDatabaseCreationException {
 		Iterator<ConceptInserter> inserterIt = loader.iterator();
+		boolean inserterFound = false;
 		try {
 			while (inserterIt.hasNext()) {
 				ConceptInserter inserter = inserterIt.next();
 				if (inserter.setConfiguration(connectionConfiguration)) {
 					inserter.insertConcepts(concepts);
+					inserterFound = true;
 				}
 			}
+			if (!inserterFound)
+				throw new ConceptInsertionException("Concept insertion failed because no concept inserter for the connection configuration " + ConfigurationUtils.toString(connectionConfiguration) +" was found. Make sure that an appropriate connection provider is given in the META-INF/services/" + ConceptInserter.class.getCanonicalName() + " file.");
 		} catch (URISyntaxException e) {
 			throw new ConceptInsertionException(e);
 		}
 	}
 
-	public void insertConcepts(Stream<ImportConcepts> concepts) {
+	public void insertConcepts(Stream<ImportConcepts> concepts) throws ConceptInsertionException {
+		if (concepts == null)
+			throw new ConceptInsertionException("The passed concepts object is null.");
 		concepts.forEach(t -> {
 			try {
 				insertConcepts(t);

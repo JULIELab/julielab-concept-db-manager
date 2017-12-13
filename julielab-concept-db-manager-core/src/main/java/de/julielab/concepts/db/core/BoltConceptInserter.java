@@ -1,4 +1,4 @@
-package de.julielab.concepts.db;
+package de.julielab.concepts.db.core;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -7,7 +7,7 @@ import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.neo4j.graphdb.GraphDatabaseService;
 
-import de.julielab.concepts.db.spi.ConceptInserter;
+import de.julielab.concepts.db.core.spi.ConceptInserter;
 import de.julielab.concepts.util.ConceptInsertionException;
 import de.julielab.java.utilities.CLIInteractionUtilities;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;

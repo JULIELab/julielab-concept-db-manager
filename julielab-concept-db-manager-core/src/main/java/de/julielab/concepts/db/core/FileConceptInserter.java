@@ -1,4 +1,4 @@
-package de.julielab.concepts.db;
+package de.julielab.concepts.db.core;
 
 import java.net.URISyntaxException;
 
@@ -16,8 +16,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 
-import de.julielab.concepts.db.services.FileDatabaseService;
-import de.julielab.concepts.db.spi.ConceptInserter;
+import de.julielab.concepts.db.core.services.FileDatabaseService;
+import de.julielab.concepts.db.core.spi.ConceptInserter;
 import de.julielab.concepts.util.ConceptDatabaseCreationException;
 import de.julielab.concepts.util.ConceptInsertionException;
 import de.julielab.neo4j.plugins.ConceptManager;

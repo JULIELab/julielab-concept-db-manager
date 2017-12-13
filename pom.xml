@@ -15,6 +15,7 @@
 	<modules>
 		<module>julielab-concept-db-manager-core</module>
 		<module>julielab-concept-creation-providers</module>
+		<module>julielab-concept-db-application</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>

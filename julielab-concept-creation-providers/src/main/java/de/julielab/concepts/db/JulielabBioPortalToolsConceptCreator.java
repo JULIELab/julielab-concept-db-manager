@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 
 import de.julielab.bioportal.ontologies.data.OntologyClass;
 import de.julielab.bioportal.util.BioPortalToolUtils;
-import de.julielab.concepts.db.spi.ConceptCreator;
+import de.julielab.concepts.db.core.spi.ConceptCreator;
 import de.julielab.concepts.util.ConceptCreationException;
 import de.julielab.concepts.util.UncheckedConceptDBManagerException;
 import de.julielab.java.utilities.FileUtilities;
@@ -54,17 +54,19 @@ public class JulielabBioPortalToolsConceptCreator implements ConceptCreator {
 	 * names of ontology classes. The JSON format is required to match the
 	 * definition of the julielab-bioportal-ontology-tools.
 	 */
-	public static final String CONFKEY_ONTOLOGY_CLASS_NAMES = "path";
+	public static final String CONFKEY_ONTOLOGY_CLASS_NAMES = "configuration.path";
 	/**
 	 * In the Neo4j database, concepts are grouped in facets and facets are grouped
 	 * into facet groups. This is the unique name of the facet group the currently
 	 * inserted facet should go to.
 	 */
-	public static final String CONFKEY_FACET_GROUP_NAME = "facetgroupname";
+	public static final String CONFKEY_FACET_GROUP_NAME = "configuration.facet.facetgroup.name";
 
 	@Override
 	public Stream<ImportConcepts> createConcepts(HierarchicalConfiguration<ImmutableNode> config)
 			throws ConceptCreationException {
+		checkParameters(config, CONFKEY_FACET_GROUP_NAME, CONFKEY_ONTOLOGY_CLASS_NAMES);
+		checkFilesExist(config, CONFKEY_ONTOLOGY_CLASS_NAMES);
 		// First, read the configuration.
 		String facetGroupName = config.getString(CONFKEY_FACET_GROUP_NAME);
 		File ontologyNamesPath = new File(config.getString(CONFKEY_ONTOLOGY_CLASS_NAMES));

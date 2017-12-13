@@ -1,4 +1,4 @@
-package de.julielab.concepts.db.services;
+package de.julielab.concepts.db.core.services;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +14,6 @@ import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.julielab.concepts.db.application.ConceptDatabaseApplication;
 import de.julielab.concepts.util.ConceptDatabaseCreationException;
 
 public class FileDatabaseService {
@@ -22,6 +21,7 @@ public class FileDatabaseService {
 	private static final Logger log = LoggerFactory.getLogger(FileDatabaseService.class);
 
 	public static final String CONFKEY_URI = "uri";
+	public static final String CONFKEY_CONNECTION = "connection";
 
 	private Map<String, GraphDatabaseService> dbs;
 
@@ -44,7 +44,7 @@ public class FileDatabaseService {
 		String uriString;
 		if ((uriString = connectionConfiguration.getString(CONFKEY_URI)) == null)
 			throw new IllegalArgumentException("The passed configuration does not have the property \"" + CONFKEY_URI
-					+ "\". Make sure to only pass the \"" + ConceptDatabaseApplication.CONFKEY_CONNECTION
+					+ "\". Make sure to only pass the \"" + CONFKEY_CONNECTION
 					+ "\" subconfiguration.");
 		URI dbUri = new URI(uriString);
 		String scheme = dbUri.getScheme();
