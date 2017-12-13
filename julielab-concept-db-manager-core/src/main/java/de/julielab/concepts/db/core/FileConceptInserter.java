@@ -43,8 +43,10 @@ public class FileConceptInserter implements ConceptInserter {
 			throw new ConceptInsertionException(
 					"No access to a file-based graph database. The FileConceptInserter has not been initialized properly. Call setConfiguration() and check its return value before calling this method.");
 		ConceptManager cm = new ConceptManager();
-		log.info("Inserting classes into embedded Neo4j database at {}.", connectionConfiguration.getString("uri"));
+		log.info("Inserting concepts into embedded Neo4j database at {}.", connectionConfiguration.getString("uri"));
 		ImportFacet facet = concepts.getFacet();
+		if (facet == null)
+			throw new ConceptInsertionException("The facet of the import concepts is null.");
 		String customId = facet.getCustomId();
 		ObjectMapper jsonMapper = new ObjectMapper().registerModule(new Jdk8Module());
 		jsonMapper.setSerializationInclusion(Include.NON_NULL);
@@ -57,7 +59,7 @@ public class FileConceptInserter implements ConceptInserter {
 		}
 		if (!alreadyExists) {
 			try {
-				log.trace("Inserting the classes of facet {} (customId: {}) into the Neo4j database", facet.getName(),
+				log.trace("Inserting the concepts of facet {} (customId: {}) into the Neo4j database", facet.getName(),
 						facet.getCustomId());
 				String conceptsJson = jsonMapper.writeValueAsString(concepts);
 				cm.insertConcepts(graphDb, conceptsJson);

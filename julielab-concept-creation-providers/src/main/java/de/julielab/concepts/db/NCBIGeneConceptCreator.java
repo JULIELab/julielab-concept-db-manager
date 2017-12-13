@@ -591,8 +591,6 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 
 			List<ImportConcept> terms = makeTermList(termsByGeneId);
 			ImportFacet facet = FacetCreationService.getInstance().createFacet(importConfig);
-			// ImportFacet facet = FacetsProvider.createSemedicoImportFacet("Genes and
-			// Proteins");
 			ImportOptions options = new ImportOptions();
 			options.createHollowAggregateElements = true;
 			options.doNotCreateHollowParents = true;

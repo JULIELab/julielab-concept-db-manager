@@ -3,6 +3,7 @@ package de.julielab.concepts.db.core.services;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 
+import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 
@@ -32,12 +33,21 @@ public class FacetCreationService {
 			throws FacetCreationException {
 		String facetCreatorName = importConfiguration.getString(CONFKEY_FACET_CREATOR);
 		Iterator<FacetCreator> creatorIt = serviceLoader.iterator();
+		ImportFacet facet = null;
+		boolean providerFound = false;
 		while (creatorIt.hasNext()) {
 			FacetCreator facetCreator = creatorIt.next();
-			if (facetCreator.hasName(facetCreatorName))
-				return facetCreator.createFacet(importConfiguration.configurationAt(CONFKEY_FACET), facetData);
+			if (facetCreator.hasName(facetCreatorName)) {
+				facet =  facetCreator.createFacet(importConfiguration.configurationAt(CONFKEY_FACET), facetData);
+				providerFound = true;
+				break;
+			}
 		}
-		return null;
+		if (!providerFound)
+			throw new FacetCreationException("No facet creation provider for the name \"" + facetCreatorName + "\" could be found.");
+		if (facet == null)
+			throw new FacetCreationException("The facet creator \"" + facetCreatorName + "\" did not create a facet for the facet configuration " + ConfigurationUtils.toString(importConfiguration.configurationAt(CONFKEY_FACET)));
+		return facet;
 	}
 
 	public ImportFacet createFacet(HierarchicalConfiguration<ImmutableNode> importConfiguration)
