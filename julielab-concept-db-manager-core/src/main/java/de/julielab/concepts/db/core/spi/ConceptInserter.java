@@ -12,6 +12,6 @@ import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 public interface ConceptInserter {
 	void insertConcepts(ImportConcepts concepts) throws ConceptInsertionException;
 
-	boolean setConfiguration(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
+	boolean setConfiguration(HierarchicalConfiguration<ImmutableNode> connectionConfiguration, String version)
 			throws URISyntaxException, ConceptDatabaseCreationException;
 }

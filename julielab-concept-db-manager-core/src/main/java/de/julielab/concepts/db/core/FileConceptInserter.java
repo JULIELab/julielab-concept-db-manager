@@ -2,9 +2,11 @@ package de.julielab.concepts.db.core;
 
 import java.net.URISyntaxException;
 
+import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Transaction;
 import org.neo4j.shell.util.json.JSONException;
@@ -22,7 +24,6 @@ import de.julielab.concepts.util.ConceptDatabaseCreationException;
 import de.julielab.concepts.util.ConceptInsertionException;
 import de.julielab.neo4j.plugins.ConceptManager;
 import de.julielab.neo4j.plugins.FacetManager.FacetLabel;
-import de.julielab.neo4j.plugins.datarepresentation.ImportConcept;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 import de.julielab.neo4j.plugins.datarepresentation.ImportFacet;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
@@ -33,6 +34,10 @@ public class FileConceptInserter implements ConceptInserter {
 	private GraphDatabaseService graphDb;
 	private FileDatabaseService fileDbService;
 	private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
+
+	public enum VersionLabel implements Label {
+		VERSION
+	}
 
 	public FileConceptInserter() {
 		fileDbService = FileDatabaseService.getInstance();
@@ -79,10 +84,18 @@ public class FileConceptInserter implements ConceptInserter {
 	}
 
 	@Override
-	public boolean setConfiguration(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
+	public boolean setConfiguration(HierarchicalConfiguration<ImmutableNode> connectionConfiguration, String version)
 			throws URISyntaxException, ConceptDatabaseCreationException {
 		this.connectionConfiguration = connectionConfiguration;
 		graphDb = fileDbService.getDatabase(connectionConfiguration);
+		if (graphDb != null) {
+			if (graphDb.findNodes(VersionLabel.VERSION).stream().findAny().isPresent()) {
+				throw new ConceptDatabaseCreationException("The database connected to through configuration "
+						+ ConfigurationUtils.toString(connectionConfiguration)
+						+ " already has a version tag. Changing it is against the version contract.");
+			}
+			graphDb.createNode(VersionLabel.VERSION).setProperty("version", version);
+		}
 		return graphDb != null;
 	}
 

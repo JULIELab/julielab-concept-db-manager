@@ -1,4 +1,5 @@
 <db>
+	<version>1.0</version>
 	<connection>
 		<uri>src/test/resources/graphdb</uri>
 	</connection>
