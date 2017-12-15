@@ -1,6 +1,5 @@
 package de.julielab.concepts.db.core.services;
 
-import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 import java.util.stream.Stream;
@@ -11,7 +10,7 @@ import org.apache.commons.configuration2.tree.ImmutableNode;
 
 import de.julielab.concepts.db.core.spi.ConceptInserter;
 import de.julielab.concepts.util.ConceptDBManagerException;
-import de.julielab.concepts.util.ConceptDatabaseCreationException;
+import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.ConceptInsertionException;
 import de.julielab.concepts.util.UncheckedConceptDBManagerException;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
@@ -36,22 +35,23 @@ public class ConceptInsertionService {
 		return service;
 	}
 
-	public void insertConcepts(ImportConcepts concepts) throws ConceptInsertionException, ConceptDatabaseCreationException {
+	public void insertConcepts(ImportConcepts concepts)
+			throws ConceptInsertionException, ConceptDatabaseConnectionException {
 		Iterator<ConceptInserter> inserterIt = loader.iterator();
 		boolean inserterFound = false;
-		try {
-			while (inserterIt.hasNext()) {
-				ConceptInserter inserter = inserterIt.next();
-				if (inserter.setConfiguration(connectionConfiguration)) {
-					inserter.insertConcepts(concepts);
-					inserterFound = true;
-				}
+		while (inserterIt.hasNext()) {
+			ConceptInserter inserter = inserterIt.next();
+			if (inserter.setConnection(connectionConfiguration)) {
+				inserter.insertConcepts(concepts);
+				inserterFound = true;
 			}
-			if (!inserterFound)
-				throw new ConceptInsertionException("Concept insertion failed because no concept inserter for the connection configuration " + ConfigurationUtils.toString(connectionConfiguration) +" was found. Make sure that an appropriate connection provider is given in the META-INF/services/" + ConceptInserter.class.getCanonicalName() + " file.");
-		} catch (URISyntaxException e) {
-			throw new ConceptInsertionException(e);
 		}
+		if (!inserterFound)
+			throw new ConceptInsertionException(
+					"Concept insertion failed because no concept inserter for the connection configuration "
+							+ ConfigurationUtils.toString(connectionConfiguration)
+							+ " was found. Make sure that an appropriate connection provider is given in the META-INF/services/"
+							+ ConceptInserter.class.getCanonicalName() + " file.");
 	}
 
 	public void insertConcepts(Stream<ImportConcepts> concepts) throws ConceptInsertionException {

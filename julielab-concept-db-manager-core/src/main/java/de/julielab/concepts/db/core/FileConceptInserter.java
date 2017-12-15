@@ -1,8 +1,5 @@
 package de.julielab.concepts.db.core;
 
-import java.net.URISyntaxException;
-
-import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.neo4j.graphdb.GraphDatabaseService;
@@ -20,7 +17,7 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 
 import de.julielab.concepts.db.core.services.FileDatabaseService;
 import de.julielab.concepts.db.core.spi.ConceptInserter;
-import de.julielab.concepts.util.ConceptDatabaseCreationException;
+import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.ConceptInsertionException;
 import de.julielab.neo4j.plugins.ConceptManager;
 import de.julielab.neo4j.plugins.FacetManager.FacetLabel;
@@ -32,15 +29,10 @@ public class FileConceptInserter implements ConceptInserter {
 
 	private static final Logger log = LoggerFactory.getLogger(FileConceptInserter.class);
 	private GraphDatabaseService graphDb;
-	private FileDatabaseService fileDbService;
 	private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
 
 	public enum VersionLabel implements Label {
 		VERSION
-	}
-
-	public FileConceptInserter() {
-		fileDbService = FileDatabaseService.getInstance();
 	}
 
 	@Override
@@ -84,18 +76,18 @@ public class FileConceptInserter implements ConceptInserter {
 	}
 
 	@Override
-	public boolean setConfiguration(HierarchicalConfiguration<ImmutableNode> connectionConfiguration, String version)
-			throws URISyntaxException, ConceptDatabaseCreationException {
+	public boolean setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
+			throws ConceptDatabaseConnectionException {
 		this.connectionConfiguration = connectionConfiguration;
-		graphDb = fileDbService.getDatabase(connectionConfiguration);
-		if (graphDb != null) {
-			if (graphDb.findNodes(VersionLabel.VERSION).stream().findAny().isPresent()) {
-				throw new ConceptDatabaseCreationException("The database connected to through configuration "
-						+ ConfigurationUtils.toString(connectionConfiguration)
-						+ " already has a version tag. Changing it is against the version contract.");
-			}
-			graphDb.createNode(VersionLabel.VERSION).setProperty("version", version);
-		}
+		graphDb = FileDatabaseService.getInstance().getDatabase(connectionConfiguration);
+//		if (graphDb != null) {
+//			if (graphDb.findNodes(VersionLabel.VERSION).stream().findAny().isPresent()) {
+//				throw new ConceptDatabaseCreationException("The database connected to through configuration "
+//						+ ConfigurationUtils.toString(connectionConfiguration)
+//						+ " already has a version tag. Changing it is against the version contract.");
+//			}
+//			graphDb.createNode(VersionLabel.VERSION).setProperty("version", version);
+//		}
 		return graphDb != null;
 	}
 

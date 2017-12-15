@@ -14,7 +14,7 @@ import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.julielab.concepts.util.ConceptDatabaseCreationException;
+import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 
 public class FileDatabaseService {
 
@@ -40,23 +40,23 @@ public class FileDatabaseService {
 	}
 
 	public GraphDatabaseService getDatabase(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
-			throws URISyntaxException, ConceptDatabaseCreationException {
+			throws ConceptDatabaseConnectionException {
 		String uriString;
 		if ((uriString = connectionConfiguration.getString(CONFKEY_URI)) == null)
-			throw new IllegalArgumentException("The passed configuration does not have the property \"" + CONFKEY_URI
-					+ "\". Make sure to only pass the \"" + CONFKEY_CONNECTION
-					+ "\" subconfiguration.");
-		URI dbUri = new URI(uriString);
-		String scheme = dbUri.getScheme();
-		if ((scheme != null) && !scheme.equalsIgnoreCase("file"))
-			return null;
-		File dbFile = dbUri.isAbsolute() ? new File(dbUri) : new File(dbUri.getRawSchemeSpecificPart());
-		log.debug("Accessing file database located at {}", dbFile);
+			throw new ConceptDatabaseConnectionException("The passed configuration does not have the property \""
+					+ CONFKEY_URI + "\". Make sure to only pass the \"" + CONFKEY_CONNECTION + "\" subconfiguration.");
 		try {
+			URI dbUri = new URI(uriString);
+			String scheme = dbUri.getScheme();
+			if ((scheme != null) && !scheme.equalsIgnoreCase("file"))
+				throw new ConceptDatabaseConnectionException("The given URI \"" + dbUri
+						+ " is neither a relative file path without scheme nor an absolute file path with file: scheme.");
+			File dbFile = dbUri.isAbsolute() ? new File(dbUri) : new File(dbUri.getRawSchemeSpecificPart());
+			log.debug("Accessing file database located at {}", dbFile);
 			return dbs.computeIfAbsent(dbFile.getCanonicalPath(),
 					k -> graphDatabaseFactory.newEmbeddedDatabase(dbFile));
-		} catch (IOException e) {
-			throw new ConceptDatabaseCreationException(e);
+		} catch (IOException | URISyntaxException e) {
+			throw new ConceptDatabaseConnectionException(e);
 		}
 	}
 
