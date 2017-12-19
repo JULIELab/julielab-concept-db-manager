@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>de.julielab</groupId>
+		<artifactId>julielab-concept-db-manager</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>julielab-concept-creation-provider-mesh </artifactId>
+	<name>JULIE Lab Concept Creation Provider MeSH</name>
+	<description>This project contains algorithms to create database concepts from the XML version of the MeSH. There is a full API to work with MeSH XML in this project.</description>
+	<dependencies>
+		<dependency>
+			<groupId>org.jgrapht</groupId>
+			<artifactId>jgrapht-jdk1.5</artifactId>
+			<version>0.7.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.julielab</groupId>
+			<artifactId>
+  			julielab-neo4j-plugins-concepts-representation
+  		</artifactId>
+		</dependency>
+	</dependencies>
+</project>
