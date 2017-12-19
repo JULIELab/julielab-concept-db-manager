@@ -16,26 +16,26 @@ import org.slf4j.LoggerFactory;
 
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 
-public class FileDatabaseService {
+public class FileConnectionService {
 
-	private static final Logger log = LoggerFactory.getLogger(FileDatabaseService.class);
+	private static final Logger log = LoggerFactory.getLogger(FileConnectionService.class);
 
 	public static final String CONFKEY_URI = "uri";
 	public static final String CONFKEY_CONNECTION = "connection";
 
 	private Map<String, GraphDatabaseService> dbs;
 
-	private static FileDatabaseService service;
+	private static FileConnectionService service;
 	private GraphDatabaseFactory graphDatabaseFactory;
 
-	private FileDatabaseService() {
+	private FileConnectionService() {
 		graphDatabaseFactory = new GraphDatabaseFactory();
 		dbs = new HashMap<>();
 	}
 
-	public static FileDatabaseService getInstance() {
+	public static FileConnectionService getInstance() {
 		if (service == null)
-			service = new FileDatabaseService();
+			service = new FileConnectionService();
 		return service;
 	}
 

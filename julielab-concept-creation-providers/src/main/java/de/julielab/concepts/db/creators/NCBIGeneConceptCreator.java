@@ -1,4 +1,4 @@
-package de.julielab.concepts.db;
+package de.julielab.concepts.db.creators;
 
 import static java.util.stream.Collectors.joining;
 

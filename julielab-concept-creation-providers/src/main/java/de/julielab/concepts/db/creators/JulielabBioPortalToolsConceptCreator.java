@@ -1,4 +1,4 @@
-package de.julielab.concepts.db;
+package de.julielab.concepts.db.creators;
 
 import java.io.BufferedReader;
 import java.io.File;

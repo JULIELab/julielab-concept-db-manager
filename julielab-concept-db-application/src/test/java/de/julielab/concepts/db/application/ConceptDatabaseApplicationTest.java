@@ -21,7 +21,7 @@ import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Transaction;
 
-import de.julielab.concepts.db.core.services.FileDatabaseService;
+import de.julielab.concepts.db.core.services.FileConnectionService;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.neo4j.plugins.ConceptManager;
 import de.julielab.neo4j.plugins.FacetManager;
@@ -43,11 +43,11 @@ public class ConceptDatabaseApplicationTest {
 
 	@AfterClass
 	public static void shutdown() throws IOException {
-		FileDatabaseService databaseService = FileDatabaseService.getInstance();
+		FileConnectionService databaseService = FileConnectionService.getInstance();
 		databaseService.shutdown();
 		// For the test, the URI will always be a relative file path
 		File dbPath = new File(configuration
-				.getString(ConceptDatabaseApplication.CONFKEY_CONNECTION + "." + FileDatabaseService.CONFKEY_URI));
+				.getString(ConceptDatabaseApplication.CONFKEY_CONNECTION + "." + FileConnectionService.CONFKEY_URI));
 		FileUtils.deleteDirectory(dbPath);
 	}
 
@@ -56,7 +56,7 @@ public class ConceptDatabaseApplicationTest {
 		ConceptDatabaseApplication.main(new String[] { TESTCONFIG });
 
 		// Check if the Plant Ontology has been imported as expected.
-		FileDatabaseService databaseService = FileDatabaseService.getInstance();
+		FileConnectionService databaseService = FileConnectionService.getInstance();
 		GraphDatabaseService graphdb = databaseService
 				.getDatabase(configuration.configurationAt(ConceptDatabaseApplication.CONFKEY_CONNECTION));
 		try (Transaction tx = graphdb.beginTx()) {

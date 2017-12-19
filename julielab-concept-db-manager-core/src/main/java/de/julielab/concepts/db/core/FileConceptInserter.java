@@ -15,7 +15,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 
-import de.julielab.concepts.db.core.services.FileDatabaseService;
+import de.julielab.concepts.db.core.services.FileConnectionService;
 import de.julielab.concepts.db.core.spi.ConceptInserter;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.ConceptInsertionException;
@@ -79,7 +79,7 @@ public class FileConceptInserter implements ConceptInserter {
 	public boolean setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
 			throws ConceptDatabaseConnectionException {
 		this.connectionConfiguration = connectionConfiguration;
-		graphDb = FileDatabaseService.getInstance().getDatabase(connectionConfiguration);
+		graphDb = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
 //		if (graphDb != null) {
 //			if (graphDb.findNodes(VersionLabel.VERSION).stream().findAny().isPresent()) {
 //				throw new ConceptDatabaseCreationException("The database connected to through configuration "
