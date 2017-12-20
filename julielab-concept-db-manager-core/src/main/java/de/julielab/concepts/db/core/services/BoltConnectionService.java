@@ -1,6 +1,12 @@
 package de.julielab.concepts.db.core.services;
 
+import static de.julielab.concepts.db.core.services.NetworkConnectionCredentials.CONFKEY_PASSW;
+import static de.julielab.concepts.db.core.services.NetworkConnectionCredentials.CONFKEY_URI;
+import static de.julielab.concepts.db.core.services.NetworkConnectionCredentials.CONFKEY_USER;
+
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Map;
 
 import org.apache.commons.configuration2.ConfigurationUtils;
@@ -15,11 +21,7 @@ import de.julielab.java.utilities.CLIInteractionUtilities;
 
 public class BoltConnectionService {
 
-	public static final String CONFKEY_URI = "uri";
-	public static final String CONFKEY_USER = "user";
-	public static final String CONFKEY_PASSW = "password";
-
-	private Map<Credentials, Driver> drivers;
+	private Map<NetworkConnectionCredentials, Driver> drivers;
 	private static BoltConnectionService service;
 
 	public static BoltConnectionService getInstance() {
@@ -33,15 +35,30 @@ public class BoltConnectionService {
 		String boltUri = connectionConfiguration.getString(CONFKEY_URI);
 		String user = connectionConfiguration.getString(CONFKEY_USER);
 		String password = connectionConfiguration.getString(CONFKEY_PASSW);
+
+		checkForBoltScheme(boltUri);
+		
 		if (password == null)
 			password = aquirePasswordInteractively(user);
-		Credentials key = new Credentials(boltUri, user, password);
+		NetworkConnectionCredentials key = new NetworkConnectionCredentials(boltUri, user, password);
 		try {
 			return drivers.computeIfAbsent(key,
-					k -> GraphDatabase.driver(k.boltUri, AuthTokens.basic(k.user, k.password)));
+					k -> GraphDatabase.driver(k.getUri(), AuthTokens.basic(k.getUser(), k.getPassword())));
 		} catch (Exception e) {
-			throw new ConceptDatabaseConnectionException("Failed to connect to Neo4j database via bolt with the configuration "
-					+ ConfigurationUtils.toString(connectionConfiguration));
+			throw new ConceptDatabaseConnectionException(
+					"Failed to connect to Neo4j database via bolt with the configuration "
+							+ ConfigurationUtils.toString(connectionConfiguration));
+		}
+	}
+
+	private void checkForBoltScheme(String boltUri) throws ConceptDatabaseConnectionException {
+		try {
+			URI uri = new URI(boltUri);
+			if (!uri.getScheme().equals("bolt"))
+				throw new ConceptDatabaseConnectionException(
+						"The given URI " + boltUri + " does not specify the bolt scheme.");
+		} catch (URISyntaxException e1) {
+			throw new ConceptDatabaseConnectionException(e1);
 		}
 	}
 
@@ -50,60 +67,4 @@ public class BoltConnectionService {
 				"Please specify the Neo4j database password for the user \"" + user + "\": ");
 	}
 
-	private class Credentials {
-		private String boltUri;
-		private String user;
-		private String password;
-
-		public Credentials(String boltUri, String user, String password) {
-			this.boltUri = boltUri;
-			this.user = user;
-			this.password = password;
-		}
-
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + getOuterType().hashCode();
-			result = prime * result + ((boltUri == null) ? 0 : boltUri.hashCode());
-			result = prime * result + ((password == null) ? 0 : password.hashCode());
-			result = prime * result + ((user == null) ? 0 : user.hashCode());
-			return result;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			Credentials other = (Credentials) obj;
-			if (!getOuterType().equals(other.getOuterType()))
-				return false;
-			if (boltUri == null) {
-				if (other.boltUri != null)
-					return false;
-			} else if (!boltUri.equals(other.boltUri))
-				return false;
-			if (password == null) {
-				if (other.password != null)
-					return false;
-			} else if (!password.equals(other.password))
-				return false;
-			if (user == null) {
-				if (other.user != null)
-					return false;
-			} else if (!user.equals(other.user))
-				return false;
-			return true;
-		}
-
-		private BoltConnectionService getOuterType() {
-			return BoltConnectionService.this;
-		}
-
-	}
 }

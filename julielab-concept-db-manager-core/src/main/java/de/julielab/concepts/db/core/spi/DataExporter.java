@@ -4,6 +4,7 @@ import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
+import de.julielab.concepts.util.DataExportException;
 
 /**
  * <p>
@@ -27,8 +28,10 @@ public interface DataExporter {
 	 * 
 	 * @param exportConfig
 	 *            Export subconfiguration.
+	 * @throws ConceptDatabaseConnectionException 
+	 * @throws DataExportException 
 	 */
-	void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig);
+	void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws ConceptDatabaseConnectionException, DataExportException;
 
 	boolean hasName(String providerName);
 

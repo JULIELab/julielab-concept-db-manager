@@ -31,7 +31,7 @@ public void testParseParameters() throws Exception {
 	
 	Method method = DataExporterBase.class.getDeclaredMethod("parseParameters", HierarchicalConfiguration.class);
 	method.setAccessible(true);
-	Map<String, Parameter> parsedParameters = (Map<String, Parameter>) method.invoke(new BoltServerPluginExporter(), config.configurationAt("configuration.parameters"));
+	Map<String, Parameter> parsedParameters = (Map<String, Parameter>) method.invoke(new ServerPluginExporter(), config.configurationAt("configuration.parameters"));
 	assertEquals(2, parsedParameters.size());
 	List<Parameter> parametersList = new ArrayList<>(parsedParameters.values());
 	assertNotNull(parametersList.get(0).getName());
@@ -40,6 +40,7 @@ public void testParseParameters() throws Exception {
 	Parameter conceptLabelParameter = parsedParameters.get("conceptlabel");
 	assertNotNull(conceptLabelParameter);
 	assertEquals("label", conceptLabelParameter.getName());
+	assertEquals(String.class, conceptLabelParameter.getType());
 	assertFalse(conceptLabelParameter.isList());
 	assertEquals("ID_MAP_NCBI_GENES", conceptLabelParameter.getValue());
 	

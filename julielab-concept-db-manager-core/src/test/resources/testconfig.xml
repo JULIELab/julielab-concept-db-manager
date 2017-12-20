@@ -5,7 +5,7 @@
 				/db/data/ext/Export/graphdb/hypernyms
 			</pluginendpoint>
 			<parameters>
-				<conceptlabel parametername="label">
+				<conceptlabel parametername="label" parametertype="java.lang.String">
 					ID_MAP_NCBI_GENES
 				</conceptlabel>
 				<facetlabels parametername="labels">
