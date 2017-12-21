@@ -1,0 +1,39 @@
+<db>
+	<storeconfiguration>true</storeconfiguration>
+	<connection>
+		<uri>http://localhost:7474</uri>
+		<!-- <user>...</user> -->
+		<!-- should be optional! If not given, ask interactively and allow a java 
+			property to deliver it -->
+		<!-- <password>...</password> -->
+	</connection>
+	<exports>
+		<export>
+			<exporter>ServerPluginExporter</exporter>
+			<configuration>
+				<pluginname>
+					Export
+				</pluginname>
+				<pluginendpoint>
+					lingpipe_dictionary
+				</pluginendpoint>
+				<outputfile>
+					dict.txt
+				</outputfile>
+				<decoding>
+					<json2bytearray>false</json2bytearray>
+					<base64>true</base64>
+					<gzip>true</gzip>
+				</decoding>
+				<parameters>
+					<conceptlabel parametername="label">
+						TERM
+					</conceptlabel>
+					<id_property>
+						<property>sourceIds</property>
+					</id_property>
+				</parameters>
+			</configuration>
+		</export>
+	</exports>
+</db>

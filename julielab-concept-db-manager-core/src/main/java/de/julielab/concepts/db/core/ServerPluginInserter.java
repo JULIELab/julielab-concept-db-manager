@@ -14,7 +14,7 @@ import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.ConceptInsertionException;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 
-public class BoltConceptInserter implements ConceptInserter {
+public class ServerPluginInserter implements ConceptInserter {
 
 	
 	private Driver driver;

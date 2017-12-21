@@ -1,0 +1,36 @@
+<db>
+	<storeconfiguration>true</storeconfiguration>
+	<connection>
+		<uri>file:///Users/faessler/Coding/semedicoFrontend/semedico-neo4j/data/graph.db</uri>
+		<!-- <user>...</user> -->
+		<!-- should be optional! If not given, ask interactively and allow a java 
+			property to deliver it -->
+		<!-- <password>...</password> -->
+	</connection>
+	<exports>
+		<export>
+			<exporter>JavaClassexporter</exporter>
+			<configuration>
+				<outputfile>
+					dict.txt
+				</outputfile>
+				<decoding>
+					<json2bytearray>false</json2bytearray>
+					<base64>true</base64>
+					<gzip>true</gzip>
+				</decoding>
+				<class>de.julielab.neo4j.plugins.Export</class>
+				<method>exportLingpipeDictionary</method>
+				<parameters>
+					<conceptlabel parametertype="String">
+						TERM
+					</conceptlabel>
+					<exclusionlabel parametertype="java.lang.String"/>
+					<id_property parametertype="[Ljava.lang.String;" elementtype="java.lang.String">
+						<property>sourceIds</property>
+					</id_property>
+				</parameters>
+			</configuration>
+		</export>
+	</exports>
+</db>

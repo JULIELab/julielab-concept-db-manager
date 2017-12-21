@@ -48,8 +48,7 @@ public class JavaClassExporter extends DataExporterBase {
 
 	@Override
 	public boolean hasName(String providerName) {
-		// TODO Auto-generated method stub
-		return false;
+		return providerName.equalsIgnoreCase("javaclassexporter") || providerName.equals(getClass().getCanonicalName());
 	}
 
 	@Override
