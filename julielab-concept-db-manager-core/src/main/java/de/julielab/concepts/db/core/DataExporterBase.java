@@ -3,19 +3,27 @@ package de.julielab.concepts.db.core;
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
+import java.util.zip.ZipException;
 
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.apache.commons.lang3.StringUtils;
+import org.neo4j.shell.util.json.JSONArray;
+import org.neo4j.shell.util.json.JSONException;
+
+import com.google.gson.Gson;
 
 import de.julielab.concepts.db.core.spi.DataExporter;
 import de.julielab.concepts.util.DataExportException;
@@ -31,6 +39,7 @@ public abstract class DataExporterBase implements DataExporter {
 		private Object value;
 		private Class<?> type;
 		private boolean isList;
+		private Gson gson = new Gson();
 
 		public boolean isList() {
 			return isList;
@@ -57,6 +66,10 @@ public abstract class DataExporterBase implements DataExporter {
 			return value;
 		}
 
+		public String getValueAsJson() {
+			return gson.toJson(getValue());
+		}
+
 		public void setValue(Object value) {
 			this.value = value;
 		}
@@ -76,33 +89,38 @@ public abstract class DataExporterBase implements DataExporter {
 
 	}
 
-	protected Map<String, Parameter> parseParameters(HierarchicalConfiguration<ImmutableNode> parameterConfiguration) throws DataExportException {
-		
+	protected Map<String, Parameter> parseParameters(HierarchicalConfiguration<ImmutableNode> parameterConfiguration)
+			throws DataExportException {
+
 		Map<String, Parameter> parameterMap = new LinkedHashMap<>();
 		try {
 			// First pass through the configuration: Identify parameters, their correct
 			// names and if they are multi-valued.
 			for (String key : (Iterable<String>) parameterConfiguration::getKeys) {
-				if (!key.contains(".") && !key.contains("@parametername") && !key.contains("[")) {
-					// e.g. conceptlabel
-					Parameter parameter = parameterMap.computeIfAbsent(key, name -> new Parameter());
-					parameter.setNameIfAbsent(key);
-					parameterMap.put(key, parameter);
-				} else if (!key.contains(".") && (key.contains("@"))) {
-					String parameterElementName = key.substring(0, key.indexOf('['));
-					// e.g. conceptlabel[@parametername]
-					Parameter parameter = parameterMap.computeIfAbsent(parameterElementName, name -> new Parameter());
-					if (key.contains("@parametername"))
-						parameter.setName(parameterConfiguration.getString(key));
-					if (key.contains("@parametertype"))
-						parameter.setType(Class.forName(parameterConfiguration.getString(key)));
-					parameterMap.put(parameterElementName, parameter);
-				} else if (key.contains(".")) {
-					// e.g. facetlabels.facetlabel
-					String parameterElementName = key.substring(0, key.indexOf('.'));
-					Parameter parameter = parameterMap.computeIfAbsent(parameterElementName, name -> new Parameter());
-					parameter.setNameIfAbsent(parameterElementName);
-					parameter.setIsList(true);
+				if (!StringUtils.isBlank(key)) {
+					if (!key.contains(".") && !key.contains("@parametername") && !key.contains("[")) {
+						// e.g. conceptlabel
+						Parameter parameter = parameterMap.computeIfAbsent(key, name -> new Parameter());
+						parameter.setNameIfAbsent(key);
+						parameterMap.put(key, parameter);
+					} else if (!key.contains(".") && (key.contains("@"))) {
+						String parameterElementName = key.substring(0, key.indexOf('['));
+						// e.g. conceptlabel[@parametername]
+						Parameter parameter = parameterMap.computeIfAbsent(parameterElementName,
+								name -> new Parameter());
+						if (key.contains("@parametername"))
+							parameter.setName(parameterConfiguration.getString(key));
+						if (key.contains("@parametertype"))
+							parameter.setType(Class.forName(parameterConfiguration.getString(key)));
+						parameterMap.put(parameterElementName, parameter);
+					} else if (key.contains(".")) {
+						// e.g. facetlabels.facetlabel
+						String parameterElementName = key.substring(0, key.indexOf('.'));
+						Parameter parameter = parameterMap.computeIfAbsent(parameterElementName,
+								name -> new Parameter());
+						parameter.setNameIfAbsent(parameterElementName);
+						parameter.setIsList(true);
+					}
 				}
 			}
 		} catch (ClassNotFoundException e) {
@@ -112,21 +130,23 @@ public abstract class DataExporterBase implements DataExporter {
 		Matcher elementNameMatcher = Pattern.compile("([^\\p{P}]+).*").matcher("");
 		// Second pass: Fill the values into the parameters
 		for (String key : (Iterable<String>) parameterConfiguration::getKeys) {
-			if (elementNameMatcher.reset(key).matches()) {
-				String parameterElementName = elementNameMatcher.group(1);
-				Parameter parameter = parameterMap.get(parameterElementName);
-				if (parameter == null)
+			if (!StringUtils.isBlank(key)) {
+				if (elementNameMatcher.reset(key).matches()) {
+					String parameterElementName = elementNameMatcher.group(1);
+					Parameter parameter = parameterMap.get(parameterElementName);
+					if (parameter == null)
+						throw new IllegalStateException(
+								"The regular expression for the identification of the XML configuration element is faulty: It did not find the capture group of the configuration key \""
+										+ key + "\"");
+					if ((parameter.isList() && key.contains(".")))
+						parameter.setValue(parameterConfiguration.getList(key));
+					if (!parameter.isList() && !key.contains(".") && !key.contains("@"))
+						parameter.setValue(parameterConfiguration.getString(key));
+				} else
 					throw new IllegalStateException(
-							"The regular expression for the identification of the XML configuration element is faulty: It did not find the capture group of the configuration key \""
+							"The regular expression for the identification of the XML configuration element is faulty: It did not find any match on the configuration key \""
 									+ key + "\"");
-				if ((parameter.isList() && key.contains(".")))
-					parameter.setValue(parameterConfiguration.getList(key));
-				if (!parameter.isList() && !key.contains(".") && !key.contains("@"))
-					parameter.setValue(parameterConfiguration.getString(key));
-			} else
-				throw new IllegalStateException(
-						"The regular expression for the identification of the XML configuration element is faulty: It did not find any match on the configuration key \""
-								+ key + "\"");
+			}
 		}
 		return parameterMap;
 	}
@@ -135,7 +155,11 @@ public abstract class DataExporterBase implements DataExporter {
 		try {
 			byte[] decoded = DatatypeConverter.parseBase64Binary(data);
 			InputStream is = new ByteArrayInputStream(decoded);
-			is = new GZIPInputStream(is);
+			try {
+				is = new GZIPInputStream(is);
+			} catch (ZipException e) {
+				// don't do anything; so it's not in GZIP format, OK.
+			}
 			BufferedInputStream bufis = new BufferedInputStream(is);
 			byte[] buffer = new byte[2048];
 			try (BufferedWriter bw = FileUtilities.getWriterToFile(new File(file))) {
@@ -149,4 +173,43 @@ public abstract class DataExporterBase implements DataExporter {
 		}
 	}
 
+	protected String decode(String inputData, HierarchicalConfiguration<ImmutableNode> decodingConfig)
+			throws IOException, JSONException {
+		Object currentDataState = inputData;
+		for (String key : (Iterable<String>) decodingConfig::getKeys) {
+			if (key.equalsIgnoreCase("base64") && decodingConfig.getBoolean(key))
+				currentDataState = DatatypeConverter.parseBase64Binary(toString(currentDataState));
+			if (key.equalsIgnoreCase("gzip") && decodingConfig.getBoolean(key)) {
+				InputStream is = new ByteArrayInputStream(
+						currentDataState instanceof String ? ((String) currentDataState).getBytes()
+								: (byte[]) currentDataState);
+				is = new GZIPInputStream(is);
+				try (BufferedInputStream bw = new BufferedInputStream(is);ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
+					byte[] buffer = new byte[2048];
+					int numread = 0;
+					while ((numread = bw.read(buffer)) != -1) {
+						baos.write(buffer, 0, numread);
+					}
+					currentDataState = baos.toByteArray();
+				}
+			}
+			if (key.equalsIgnoreCase("json2bytearray") && decodingConfig.getBoolean(key)) {
+				JSONArray jsonArray = new JSONArray(toString(currentDataState));
+				byte[] bytes = new byte[jsonArray.length()];
+				for (int i = 0; i < jsonArray.length(); i++) {
+					bytes[i] = (byte) jsonArray.getInt(i);
+				}
+				currentDataState = bytes;
+			}
+		}
+		return toString(currentDataState);
+	}
+	
+	private String toString(Object o) {
+		if (o instanceof String)
+			return (String) o;
+		else if (o instanceof byte[]) {
+			return new String((byte[]) o, Charset.forName("UTF-8"));
+		} else throw new IllegalArgumentException("The passed object is neither a string nor a byte[]: " + o);
+	}
 }
