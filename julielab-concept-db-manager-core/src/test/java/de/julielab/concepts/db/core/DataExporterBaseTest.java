@@ -15,6 +15,7 @@ import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.junit.Test;
+import org.neo4j.shell.util.json.JSONArray;
 
 import de.julielab.concepts.db.core.DataExporterBase.Parameter;
 
@@ -48,10 +49,11 @@ public void testParseParameters() throws Exception {
 	assertNotNull(facetLabelsParameter);
 	assertEquals("labels", facetLabelsParameter.getName());
 	assertTrue(facetLabelsParameter.isList());
-	assertTrue(facetLabelsParameter.getValue() instanceof List);
-	List<Object> facetLabels = (List<Object>) facetLabelsParameter.getValue();
-	assertEquals(2, facetLabels.size());
-	assertEquals("FACET", facetLabels.get(0));
-	assertEquals("BIO_PORTAL", facetLabels.get(1));
+	assertTrue(facetLabelsParameter.convertToJson());
+	assertTrue(facetLabelsParameter.getRequestValue() instanceof String);
+	JSONArray jsonArray = new JSONArray((String)facetLabelsParameter.getRequestValue());
+	assertEquals(2, jsonArray.length());
+	assertEquals("FACET", jsonArray.getString(0));
+	assertEquals("BIO_PORTAL", jsonArray.getString(1));
 }
 }

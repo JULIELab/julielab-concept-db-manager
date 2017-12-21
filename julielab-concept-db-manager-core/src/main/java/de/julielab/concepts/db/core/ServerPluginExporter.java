@@ -46,7 +46,7 @@ public class ServerPluginExporter extends DataExporterBase {
 				.configurationAt(CONFKEY_PARAMETERS);
 		Map<String, Parameter> parameterMap = parseParameters(parameterConfiguration);
 		Map<String, Object> parameters = parameterMap.values().stream()
-				.collect(Collectors.toMap(Parameter::getName, Parameter::getValueAsJson));
+				.collect(Collectors.toMap(Parameter::getName, Parameter::getRequestValue));
 
 		HttpConnectionService httpService = HttpConnectionService.getInstance();
 		String completePluginEndpointUri = baseUri + String.format(ADDRESS_FMT, pluginName, pluginEndpoint);
@@ -54,8 +54,9 @@ public class ServerPluginExporter extends DataExporterBase {
 		Gson gson = new Gson();
 		String response = null;
 		try {
-			request.setEntity(new StringEntity(gson.toJson(parameters)));
-			log.info("Sending request {} to {}", parameters, completePluginEndpointUri);
+			String parameterJson = gson.toJson(parameters);
+			request.setEntity(new StringEntity(parameterJson));
+			log.info("Sending request {} to {}", parameterJson, completePluginEndpointUri);
 			response = httpService.sendRequest(request);
 			log.info("Writing file {}", outputFile);
 			String decodedResponse = decode(response, exportConfig.configurationAt(CONFKEY_DECODING));
