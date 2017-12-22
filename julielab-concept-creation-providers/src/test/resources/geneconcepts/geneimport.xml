@@ -1,16 +1,14 @@
 <?xml version="1.0"?>
-
-<note xmlns="https://www.w3schools.com"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="https://www.w3schools.com note.xsd">
-
-<db>
+<conceptdatabase xmlns="https://www.julielab.de"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://www.julielab.de conceptdatabaseconfiguration.xsd">
 	<connection>
-		<url>src/test/resources/graph.db</url>
+		<uri>src/test/resources/graph.db</uri>
 	</connection>
 	<imports>
 		<import>
-			<conceptcreator>de.julielab.concepts.db.creators.NCBIGeneConceptCreator</conceptcreator>
+			<conceptcreator>de.julielab.concepts.db.creators.NCBIGeneConceptCreator
+			</conceptcreator>
 			<configuration>
 				<basepath>src/test/resources/geneconcepts/</basepath>
 				<gene_info>genes/gene_info_test</gene_info>
@@ -22,4 +20,4 @@ xsi:schemaLocation="https://www.w3schools.com note.xsd">
 			</configuration>
 		</import>
 	</imports>
-</db>
+</conceptdatabase>
