@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<conceptdatabase xmlns="https://www.julielab.de"
+<conceptdatabase xmlns="http://www.julielab.de/conceptdatabase"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="https://www.julielab.de conceptdatabaseconfiguration.xsd">
+	xsi:schemaLocation="http://www.julielab.de/conceptdatabase conceptdatabase.xsd">
 	<connection>
 		<uri>src/test/resources/graph.db</uri>
 	</connection>

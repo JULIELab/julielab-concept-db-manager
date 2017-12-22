@@ -201,7 +201,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 			// The set of genes participating in this gene group might be empty or only
 			// contain a single element because all other elements were not included in the
 			// input gene_info. Then, we don't need an aggregate.
-			if (groupGeneCoords.size() >= 1) {
+			if (groupGeneCoords.size() > 1) {
 				ImportConcept aggregate = new ImportConcept(groupGeneCoords, aggregateCopyProperties);
 				aggregate.coordinates = new ConceptCoordinates();
 				aggregate.coordinates.sourceId = GENE_GROUP_PREFIX + geneGroupId;
@@ -463,19 +463,13 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 		}
 		ImportConcept geneTerm = new ImportConcept(prefName, synonyms, description,
 				new ConceptCoordinates(originalId, NCBI_GENE_SOURCE, originalId, NCBI_GENE_SOURCE));
+		
 		/**
 		 * Gene IDs are given by a Gene Normalization component like GeNo. Thus, genes
 		 * are not supposed to be additionally tagged by a gazetteer.
 		 */
 		geneTerm.addGeneralLabel(ResourceTermLabels.Gazetteer.NO_PROCESSING_GAZETTEER.toString(),
 				ResourceTermLabels.IdMapping.ID_MAP_NCBI_GENES.toString());
-		// geneTerm.coordinates.originalId = originalId;
-		// TODO This should be some kind of constant or identifier to a
-		// "Source Node" in the database having all
-		// information about the actual source so it could be displayed in
-		// Semedico.
-		// geneTerm.coordinates.originalSource = NCBI_GENE_SOURCE;
-		// geneTerm.coordinates.source = NCBI_GENE_SOURCE;
 
 		return geneTerm;
 

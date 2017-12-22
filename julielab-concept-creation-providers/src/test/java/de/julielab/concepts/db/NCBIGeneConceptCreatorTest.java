@@ -2,6 +2,8 @@ package de.julielab.concepts.db;
 
 import static de.julielab.concepts.db.core.RootConfigurationConstants.CONFKEY_CONNECTION;
 import static de.julielab.concepts.db.core.RootConfigurationConstants.CONFKEY_IMPORT;
+import static de.julielab.neo4j.plugins.ConceptManager.ConceptLabel.AGGREGATE;
+import static de.julielab.neo4j.plugins.datarepresentation.constants.ConceptConstants.PROP_ORG_ID;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -9,22 +11,37 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.apache.commons.io.FileUtils;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import org.neo4j.graphdb.Direction;
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Relationship;
+import org.neo4j.graphdb.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.julielab.concepts.db.core.services.ConceptCreationService;
 import de.julielab.concepts.db.core.services.ConceptInsertionService;
+import de.julielab.concepts.db.core.services.FileConnectionService;
 import de.julielab.concepts.db.creators.NCBIGeneConceptCreator;
 import de.julielab.concepts.util.ConfigurationHelper;
+import de.julielab.neo4j.plugins.ConceptManager.ConceptLabel;
+import de.julielab.neo4j.plugins.ConceptManager.EdgeTypes;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcept;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 import de.julielab.neo4j.plugins.datarepresentation.TermCoordinates;
@@ -32,6 +49,13 @@ import de.julielab.neo4j.plugins.datarepresentation.TermCoordinates;
 public class NCBIGeneConceptCreatorTest {
 
 	private static Logger log = LoggerFactory.getLogger(NCBIGeneConceptCreatorTest.class);
+	private static final File TEST_DB = new File("src/test/resources/graph.db");
+
+	@After
+	@Before
+	public void afterTest() throws IOException {
+		FileUtils.deleteDirectory(TEST_DB);
+	}
 
 	@Test
 	public void testCreateGeneConcepts() throws Exception {
@@ -105,15 +129,49 @@ public class NCBIGeneConceptCreatorTest {
 
 	@Test
 	public void importNcbiGeneConceptsTest() throws Exception {
+		// This test performs an insertion a few genes excerpted from the full
+		// resources.
+		// Note that not even all genes in the given gene_info file are imported but
+		// only
+		// those belonging to taxonomy IDs given in the taxIdsForTests.lst file
+		// referenced
+		// in the configuration file. This restricts the final imported genes to a
+		// rather
+		// small set.
+
 		XMLConfiguration configuration = ConfigurationHelper
 				.loadXmlConfiguration(new File("src/test/resources/geneconcepts/geneimport.xml"));
 		ConceptCreationService conceptCreationService = ConceptCreationService.getInstance();
-		ConceptInsertionService insertionService = ConceptInsertionService
-				.getInstance(configuration.configurationAt(CONFKEY_CONNECTION));
+		HierarchicalConfiguration<ImmutableNode> connectionConfiguration = configuration
+				.configurationAt(CONFKEY_CONNECTION);
+		ConceptInsertionService insertionService = ConceptInsertionService.getInstance(connectionConfiguration);
 
 		HierarchicalConfiguration<ImmutableNode> importConfiguration = configuration.configurationAt(CONFKEY_IMPORT);
 		Stream<ImportConcepts> concepts = conceptCreationService.createConcepts(importConfiguration);
 		insertionService.insertConcepts(importConfiguration, concepts);
 
+		GraphDatabaseService graphdb = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
+		Set<String> expectedGeneIds = new HashSet<>(Arrays.asList("11477", "172978", "24205"));
+		try (Transaction tx = graphdb.beginTx()) {
+			for (Node n : graphdb.getAllNodes()) {
+				if (n.hasProperty(PROP_ORG_ID) && !n.hasLabel(AGGREGATE)) {
+					expectedGeneIds.remove(n.getProperty(PROP_ORG_ID));
+				}
+				// Check for the MTOR gene group that the orthologs have been collected as
+				// intended. Remember that only a few tax IDs are imported, 9606 (human) is
+				// missing for example. Thus, the human MTOR gene with ID 2475 is not imported
+				// itself but the gene_group node is identified by this ID nontheless.
+				if (n.hasProperty(PROP_ORG_ID) && n.getProperty(PROP_ORG_ID).equals("2475") && n.hasLabel(AGGREGATE)) {
+					Set<String> expectedOrthoGenes = new HashSet<>(Arrays.asList("56718", "56717"));
+					for (Relationship rel : n.getRelationships(Direction.OUTGOING, EdgeTypes.HAS_ELEMENT)) {
+						assertTrue(expectedOrthoGenes.remove(rel.getEndNode().getProperty(PROP_ORG_ID)));
+					}
+					assertTrue("The following gene IDs where not found in the MTOR orthologs aggregate: "
+							+ expectedOrthoGenes, expectedOrthoGenes.isEmpty());
+				}
+			}
+		}
+		assertTrue("The following gene IDs where not found in the database: " + expectedGeneIds,
+				expectedGeneIds.isEmpty());
 	}
 }

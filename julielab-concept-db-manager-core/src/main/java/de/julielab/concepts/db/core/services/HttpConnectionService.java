@@ -72,9 +72,9 @@ public class HttpConnectionService {
 	private void checkForHttpScheme(String httpUri) throws ConceptDatabaseConnectionException {
 		try {
 			URI uri = new URI(httpUri);
-			if (!uri.getScheme().equals("http"))
+			if (uri.getScheme() == null || !uri.getScheme().equals("http"))
 				throw new ConceptDatabaseConnectionException(
-						"The given URI " + httpUri + " does not specify the bolt scheme.");
+						"The given URI " + httpUri + " does not specify the http scheme.");
 		} catch (URISyntaxException e) {
 			throw new ConceptDatabaseConnectionException(e);
 		}
