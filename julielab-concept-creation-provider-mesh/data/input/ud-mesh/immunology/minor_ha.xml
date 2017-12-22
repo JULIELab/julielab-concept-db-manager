@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<terms facet="Minor Histocompatibility Antigens">
+ <term id="D015778">
+  <canonic>Minor histo antigens</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Allelic alloantigens often responsible for weak graft rejection in cases when (major) histocompatibility has been established by standard tests. In the mouse they are coded by more than 500 genes at up to 30 minor histocompatibility loci. The most well-known minor histocompatibility antigen in mammals is the H-Y antigen.</description>
+  <type>de.julielab.jules.types.MinorHA</type>
+  <synonyms>
+   <synonym>minor histocompatibility (antigens)</synonym>
+   <synonym>mHAg antigens</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>minor histocompatibility peptides</token>
+   </variation>
+   <variation>
+    <token>minor histocompatibility peptide</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D006182" parent-id="D015778">
+  <canonic>H-Y Antigens</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A sex-specific cell surface antigen produced by the sex-determining gene of the Y chromosome in mammals. It causes syngeneic grafts from males to females to be rejected and interacts with somatic elements of the embryologic undifferentiated gonad to produce testicular organogenesis.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>HY Antigens</synonym>
+   <synonym>GA-1 Germ Cell Antigens</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>H-Y Antigen</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D008912" parent-id="D015778">
+  <canonic>Minor Histocompatibility Loci</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Genetic loci responsible for the encoding of histocompatibility antigens other than those encoded by the MAJOR HISTOCOMPATIBILITY COMPLEX. The antigens encoded by these genes are often responsible for graft rejection in cases where histocompatibility has been established by standard tests. The location of some of these loci on the X and Y chromosomes explains why grafts from males to females may be rejected while grafts from females to males are accepted. In the mouse roughly 30 minor histocompatibility loci have been recognized, comprising more than 500 genes.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Minor Histocompatibility Loci</synonym>
+   <synonym>Histocompatibility Loci, Minor</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Histocompatibility Locus</token>
+    <token>Minor</token>
+   </variation>
+   <variation>
+    <token>Loci</token>
+    <token>Minor Histocompatibility</token>
+   </variation>
+   <variation>
+    <token>Locus</token>
+    <token>Minor Histocompatibility</token>
+   </variation>
+   <variation>
+    <token>Loci, Minor</token>
+    <token>Histocompatibility</token>
+   </variation>
+   <variation>
+    <token>Locus, Minor</token>
+    <token>Histocompatibility</token>
+   </variation>
+   <variation>
+    <token>Minor Histocompatibility Locus</token>
+   </variation>
+  </variations>
+ </term>
+
+</terms>

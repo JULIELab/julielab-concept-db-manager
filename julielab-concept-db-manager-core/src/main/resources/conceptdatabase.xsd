@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://www.julielab.de/conceptdatabase"
-	xmlns:tns="http://www.julielab.de/conceptdatabase"
+	targetNamespace="http://www.julielab.de/conceptdatabase" xmlns:tns="http://www.julielab.de/conceptdatabase"
 	elementFormDefault="qualified">
 
 	<xs:element name="conceptdatabase">
@@ -16,24 +15,62 @@
 						</xs:all>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="imports" minOccurs="0"></xs:element>
-				<xs:element name="exports" minOccurs="0"></xs:element>
+				<xs:element name="imports" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="import" minOccurs="1" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="conceptcreator" type="xs:string">
+										<xs:annotation>
+												<xs:documentation>
+													<!-- suggested enumerations -->
+													<xs:enumeration value="julielabgenes" />
+													<xs:enumeration value="julielabontologies" />
+												</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="configuration"></xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="exports" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="export" minOccurs="1" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="exporter" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>
+													<!-- suggested enumerations -->
+													<xs:enumeration value="ServerPluginExporter" />
+													<xs:enumeration value="JavaClassexporter" />
+												</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="configuration" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<!-- <xs:element name="pluginname" /> -->
+													<!-- <xs:element name="pluginendpoint" /> -->
+													<!-- <xs:element name="outputfile" /> -->
+													<!-- <xs:element name="decoding" /> -->
+													<!-- <xs:element name="parameters" /> -->
+													<xs:any minOccurs="0" />
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
 			</xs:all>
 		</xs:complexType>
 	</xs:element>
-
-	<xs:attributeGroup name="methodparameters">
-		
-        <xs:attribute name="parametertype" type="tns:QualifiedJavaClass"></xs:attribute>
-        
-        <xs:attribute name="elementtype" type="tns:QualifiedJavaClass"></xs:attribute>
-    </xs:attributeGroup>
-
-	<xs:simpleType name="QualifiedJavaClass">
-		<xs:restriction base="xs:string">
-			<xs:pattern value="([a-zA-Z_$][a-zA-Z\d_$]*\.)*[a-zA-Z_$][a-zA-Z\d_$]*">
-			</xs:pattern>
-			<xs:minLength value="1"></xs:minLength>
-		</xs:restriction>
-	</xs:simpleType>
 </xs:schema>

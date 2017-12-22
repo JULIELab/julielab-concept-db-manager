@@ -1,0 +1,23 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>de.julielab</groupId>
+    <artifactId>julielab-concept-db-manager</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>julielab-concept-creation-bioportal</artifactId>
+  <name>JULIE Lab Concept Creation for BioPortal</name>
+  <description>This project uses the JULIE Lab BioPortal Tools to create database concepts for ontology classes.</description>
+  <dependencies>
+  	<dependency>
+  		<groupId>de.julielab</groupId>
+  		<artifactId>julielab-concept-db-manager-core</artifactId>
+  		<version>${project.parent.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>de.julielab</groupId>
+  		<artifactId>julielab-bioportal-ontology-tools</artifactId>
+  		<version>1.0.1</version>
+  	</dependency>
+  </dependencies>
+</project>

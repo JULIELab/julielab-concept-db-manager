@@ -1,0 +1,288 @@
+<?xml version="1.0"?>
+<DescriptorRecordSet>
+
+
+<DescriptorRecord>
+  <DescriptorUI>D01</DescriptorUI>
+  
+  <LocationList>
+   <Location>
+    <VertexName>V01</VertexName>
+	<ParentVertexName></ParentVertexName>
+   </Location>
+  </LocationList>
+  
+  <ConceptList>
+   <Concept PreferredConceptYN="Y">
+    <ScopeNote>A scope note.
+    </ScopeNote>
+    <TermList>
+     <Term  ConceptPreferredTermYN="Y">
+      <TermUI>T01</TermUI>
+      <String>Term01</String>
+     </Term>
+    </TermList>
+   </Concept>
+  </ConceptList>  
+ </DescriptorRecord>
+ 
+ 
+ <DescriptorRecord>
+  <DescriptorUI>D02</DescriptorUI>
+  
+  <LocationList>
+   <Location>
+    <VertexName>V02</VertexName>
+	<ParentVertexName>V01</ParentVertexName>
+   </Location>
+  </LocationList>
+  
+  <ConceptList>
+   <Concept PreferredConceptYN="Y">
+    <ScopeNote>A scope note.
+    </ScopeNote>
+    <TermList>
+     <Term  ConceptPreferredTermYN="Y">
+      <TermUI>T02</TermUI>
+      <String>Term02</String>
+     </Term>
+    </TermList>
+   </Concept>
+  </ConceptList>  
+ </DescriptorRecord>
+ 
+ 
+ <DescriptorRecord>
+  <DescriptorUI>D03</DescriptorUI>
+  
+  <LocationList>
+   <Location>
+    <VertexName>V03</VertexName>
+	<ParentVertexName>V01</ParentVertexName>
+   </Location>
+  </LocationList>
+  
+  <ConceptList>
+   <Concept PreferredConceptYN="Y">
+    <ScopeNote>A scope note.
+    </ScopeNote>
+    <TermList>
+     <Term  ConceptPreferredTermYN="Y">
+      <TermUI>T03</TermUI>
+      <String>Term03</String>
+     </Term>
+    </TermList>
+   </Concept>
+  </ConceptList>  
+ </DescriptorRecord>
+ 
+ 
+ <DescriptorRecord>
+  <DescriptorUI>D04</DescriptorUI>
+  
+  <LocationList>
+   <Location>
+    <VertexName>V04</VertexName>
+	<ParentVertexName>V02</ParentVertexName>
+   </Location>
+   
+   <Location>
+    <VertexName>V06</VertexName>
+	<ParentVertexName>V02</ParentVertexName>
+   </Location>
+  </LocationList>
+  
+  <ConceptList>
+   <Concept PreferredConceptYN="Y">
+    <ScopeNote>A scope note.
+    </ScopeNote>
+    <TermList>
+     <Term  ConceptPreferredTermYN="Y">
+      <TermUI>T04</TermUI>
+      <String>Term04</String>
+     </Term>
+    </TermList>
+   </Concept>
+  </ConceptList>  
+ </DescriptorRecord>
+ 
+ 
+ <DescriptorRecord>
+  <DescriptorUI>D05</DescriptorUI>
+  
+  <LocationList>
+   <Location>
+    <VertexName>V07</VertexName>
+	<ParentVertexName>V03</ParentVertexName>
+   </Location>
+  </LocationList>
+  
+  <ConceptList>
+   <Concept PreferredConceptYN="Y">
+    <ScopeNote>A scope note.
+    </ScopeNote>
+    <TermList>
+     <Term  ConceptPreferredTermYN="Y">
+      <TermUI>T05</TermUI>
+      <String>Term05</String>
+     </Term>
+    </TermList>
+   </Concept>
+  </ConceptList>  
+ </DescriptorRecord>
+ 
+ 
+  <DescriptorRecord>
+  <DescriptorUI>D08</DescriptorUI>
+  
+  <LocationList>
+   <Location>
+    <VertexName>V08</VertexName>
+	<ParentVertexName>V03</ParentVertexName>
+   </Location>
+  </LocationList>
+  
+  <ConceptList>
+   <Concept PreferredConceptYN="Y">
+    <ScopeNote>A scope note.
+    </ScopeNote>
+    <TermList>
+     <Term  ConceptPreferredTermYN="Y">
+      <TermUI>T08</TermUI>
+      <String>Term08</String>
+     </Term>
+    </TermList>
+   </Concept>
+  </ConceptList>  
+ </DescriptorRecord>
+ 
+ 
+  <DescriptorRecord>
+  <DescriptorUI>D09</DescriptorUI>
+  
+  <LocationList>
+   <Location>
+    <VertexName>V09</VertexName>
+	<ParentVertexName>V04</ParentVertexName>
+   </Location>
+   <Location>
+    <VertexName>V18</VertexName>
+	<ParentVertexName>V08</ParentVertexName>
+   </Location>
+  </LocationList>
+  
+  <ConceptList>
+   <Concept PreferredConceptYN="Y">
+    <ScopeNote>A scope note.
+    </ScopeNote>
+    <TermList>
+     <Term  ConceptPreferredTermYN="Y">
+      <TermUI>T09</TermUI>
+      <String>Term09</String>
+     </Term>
+    </TermList>
+   </Concept>
+  </ConceptList>  
+ </DescriptorRecord>
+ 
+ 
+  <DescriptorRecord>
+  <DescriptorUI>D10</DescriptorUI>
+  
+  <LocationList>
+   <Location>
+    <VertexName>V10</VertexName>
+	<ParentVertexName>V04</ParentVertexName>
+   </Location>
+  </LocationList>
+  
+  <ConceptList>
+   <Concept PreferredConceptYN="Y">
+    <ScopeNote>A scope note.
+    </ScopeNote>
+    <TermList>
+     <Term  ConceptPreferredTermYN="Y">
+      <TermUI>T10</TermUI>
+      <String>Term10</String>
+     </Term>
+    </TermList>
+   </Concept>
+  </ConceptList>  
+ </DescriptorRecord>
+ 
+ 
+ <DescriptorRecord>
+  <DescriptorUI>D11</DescriptorUI>
+  
+  <LocationList>
+   <Location>
+    <VertexName>V11</VertexName>
+	<ParentVertexName>V06</ParentVertexName>
+   </Location>
+  </LocationList>
+  
+  <ConceptList>
+   <Concept PreferredConceptYN="Y">
+    <ScopeNote>A scope note.
+    </ScopeNote>
+    <TermList>
+     <Term  ConceptPreferredTermYN="Y">
+      <TermUI>T11</TermUI>
+      <String>Term11</String>
+     </Term>
+    </TermList>
+   </Concept>
+  </ConceptList>  
+ </DescriptorRecord>
+ 
+ 
+  <DescriptorRecord>
+  <DescriptorUI>D14</DescriptorUI>
+  
+  <LocationList>
+   <Location>
+    <VertexName>V14</VertexName>
+	<ParentVertexName>V11</ParentVertexName>
+   </Location>
+  </LocationList>
+  
+  <ConceptList>
+   <Concept PreferredConceptYN="Y">
+    <ScopeNote>A scope note.
+    </ScopeNote>
+    <TermList>
+     <Term  ConceptPreferredTermYN="Y">
+      <TermUI>T14</TermUI>
+      <String>Term14</String>
+     </Term>
+    </TermList>
+   </Concept>
+  </ConceptList>  
+ </DescriptorRecord>
+ 
+ 
+  <DescriptorRecord>
+  <DescriptorUI>D15</DescriptorUI>
+  
+  <LocationList>
+   <Location>
+    <VertexName>V15</VertexName>
+	<ParentVertexName>V14</ParentVertexName>
+   </Location>
+  </LocationList>
+  
+  <ConceptList>
+   <Concept PreferredConceptYN="Y">
+    <ScopeNote>A scope note.
+    </ScopeNote>
+    <TermList>
+     <Term  ConceptPreferredTermYN="Y">
+      <TermUI>T15</TermUI>
+      <String>Term15</String>
+     </Term>
+    </TermList>
+   </Concept>
+  </ConceptList>  
+ </DescriptorRecord>
+
+</DescriptorRecordSet>

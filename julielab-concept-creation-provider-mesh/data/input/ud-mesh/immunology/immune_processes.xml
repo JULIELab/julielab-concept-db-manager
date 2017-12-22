@@ -1,0 +1,3523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<terms facet="Immune Processes">
+ <term id="D013045" parent-id="D000918">
+  <canonic>Species Specificity</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Restriction of a characteristic or response to the members of one species; it usually refers to that property of the immune response which differentiates one species from another on the basis of antigen recognition, but the concept is not limited to immunology and is used loosely at levels higher than the species.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Species Specificity</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Species Specificities</token>
+   </variation>
+   <variation>
+    <token>Specificities</token>
+    <token>Species</token>
+   </variation>
+   <variation>
+    <token>Specificity</token>
+    <token>Species</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D009928" parent-id="D000918">
+  <canonic>Organ Specificity</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Restriction of a characteristic or response to a particular organ of the body; it usually refers to that property of the immune response which differentiates one organ from another on the basis of antigen recognition, but the concept is not limited to immunology.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Organ Specificity</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Organ Specificities</token>
+   </variation>
+   <variation>
+    <token>Specificities</token>
+    <token>Organ</token>
+   </variation>
+   <variation>
+    <token>Specificity</token>
+    <token>Organ</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D000918">
+  <canonic>Antibody Specificity</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The property of antibodies which enables them to react with some ANTIGENIC DETERMINANTS and not with others. Specificity is dependent on chemical composition, physical forces, and molecular structure at the binding site.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Antibody Specificity</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Antibody Specificities</token>
+   </variation>
+   <variation>
+    <token>Specificities</token>
+    <token>Antibody</token>
+   </variation>
+   <variation>
+    <token>Specificity</token>
+    <token>Antibody</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D006084" parent-id="D006789">
+  <canonic>Graft Rejection</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>An immune response with both cellular and humoral components, directed against an allogeneic transplant, whose tissue antigens are not compatible with those of the recipient.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Graft Rejection</synonym>
+   <synonym>Transplant Rejection</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Rejection</token>
+    <token>Transplant</token>
+   </variation>
+   <variation>
+    <token>Transplantation Rejection</token>
+   </variation>
+   <variation>
+    <token>Graft Rejections</token>
+   </variation>
+   <variation>
+    <token>Rejection</token>
+    <token>Graft</token>
+   </variation>
+   <variation>
+    <token>Rejection</token>
+    <token>Transplantation</token>
+   </variation>
+   <variation>
+    <token>Rejections</token>
+    <token>Graft</token>
+   </variation>
+   <variation>
+    <token>Rejections</token>
+    <token>Transplant</token>
+   </variation>
+   <variation>
+    <token>Rejections</token>
+    <token>Transplantation</token>
+   </variation>
+   <variation>
+    <token>Transplant Rejections</token>
+   </variation>
+   <variation>
+    <token>Transplantation Rejections</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D006085" parent-id="D006789">
+  <canonic>Graft Survival</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The survival of a graft in a host, the factors responsible for the survival and the changes occurring within the graft during growth in the host.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Graft Survival</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Graft Survivals</token>
+   </variation>
+   <variation>
+    <token>Survival</token>
+    <token>Graft</token>
+   </variation>
+   <variation>
+    <token>Survivals</token>
+    <token>Graft</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D003602">
+  <canonic>Cytotoxicity, Immunologic</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The phenomenon of target cell destruction by immunologically active effector cells. It may be brought about directly by sensitized T-lymphocytes or by lymphoid or myeloid "killer" cells, or it may be mediated by cytotoxic antibody, cytotoxic factor released by lymphoid cells, or complement.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Immunologic Cytotoxicity</synonym>
+   <synonym>Immunologic Tumoricidal Activity</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Cytotoxicity</token>
+    <token>Immunologic</token>
+   </variation>
+   <variation>
+    <token>Tumoricidal Activity</token>
+    <token>Immunologic</token>
+   </variation>
+   <variation>
+    <token>Immunologic Tumoricidal Activities</token>
+   </variation>
+   <variation>
+    <token>Tumoricidal Activities</token>
+    <token>Immunologic</token>
+   </variation>
+   <variation>
+    <token>Tumoricidal, Activities</token>
+    <token>Immunologic</token>
+   </variation>
+   <variation>
+    <token>Tumoricidal, Activity</token>
+    <token>Immunologic</token>
+   </variation>
+   <variation>
+    <token>Cytotoxicity</token>
+    <token>Immunological</token>
+   </variation>
+   <variation>
+    <token>Tumoricidal Activity</token>
+    <token>Immunological</token>
+   </variation>
+   <variation>
+    <token>Immunological Cytotoxicity</token>
+   </variation>
+   <variation>
+    <token>Immunological Tumoricidal Activities</token>
+   </variation>
+   <variation>
+    <token>Immunological Tumoricidal Activity</token>
+   </variation>
+   <variation>
+    <token>Tumoricidal Activities</token>
+    <token>Immunological</token>
+   </variation>
+   <variation>
+    <token>Tumoricidal, Activities</token>
+    <token>Immunological</token>
+   </variation>
+   <variation>
+    <token>Tumoricidal, Activity</token>
+    <token>Immunological</token>
+   </variation>
+   <variation>
+    <token>Tumoricidal</token>
+    <token>Immune Response</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D000917">
+  <canonic>Antibody Formation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The proliferation and differentiation of B-LYMPHOCYTES into PLASMA CELLS or memory cells. On stimulation by ANTIGENS, those cells then produce ANTIBODIES.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Antibody Formation</synonym>
+   <synonym>Antibody Production</synonym>
+   <synonym>Antibody Response</synonym>
+   <synonym>Humoral Immunity</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Immunity</token>
+    <token>Humoral</token>
+   </variation>
+   <variation>
+    <token>Antibody Responses</token>
+   </variation>
+   <variation>
+    <token>Formation</token>
+    <token>Antibody</token>
+   </variation>
+   <variation>
+    <token>Humoral Immunities</token>
+   </variation>
+   <variation>
+    <token>Immunities</token>
+    <token>Humoral</token>
+   </variation>
+   <variation>
+    <token>Production</token>
+    <token>Antibody</token>
+   </variation>
+   <variation>
+    <token>Response</token>
+    <token>Antibody</token>
+   </variation>
+   <variation>
+    <token>Responses</token>
+    <token>Antibody</token>
+   </variation>
+   <variation>
+    <token>produces antibodies</token>
+   </variation>
+   <variation>
+    <token>produced antibodies</token>
+   </variation>
+   <variation>
+    <token>produce antibodies</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D007111">
+  <canonic>Immunity, Cellular</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Those manifestations of the immune response which are mediated by antigen-sensitized T-lymphocytes via lymphokines or direct cytotoxicity. This takes place in the absence of circulating antibody or where antibody plays a subordinate role.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Immunity, Cellular</synonym>
+   <synonym>Cell-Mediated Immunity</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Cell Mediated Immunity</token>
+   </variation>
+   <variation>
+    <token>Cell Mediated Immunities</token>
+   </variation>
+   <variation>
+    <token>Cellular Immunities</token>
+   </variation>
+   <variation>
+    <token>Cellular Immunity</token>
+   </variation>
+   <variation>
+    <token>Immunities</token>
+    <token>Cell Mediated</token>
+   </variation>
+   <variation>
+    <token>Immunities</token>
+    <token>Cellular</token>
+   </variation>
+   <variation>
+    <token>Immunity</token>
+    <token>Cell Mediated</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D003429" parent-id="D000937">
+  <canonic>Cross Reactions</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Serological reactions in which an antiserum against one antigen reacts with a non-identical but closely related antigen.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cross Reactions</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Cross Reaction</token>
+   </variation>
+   <variation>
+    <token>Reaction</token>
+    <token>Cross</token>
+   </variation>
+   <variation>
+    <token>Reactions</token>
+    <token>Cross</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D010587" parent-id="D007113">
+  <canonic>Phagocytosis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The engulfing of microorganisms, other cells, and foreign particles by phagocytic cells (PHAGOCYTES).</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Phagocytosis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Phagocytoses</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D007108">
+  <canonic>Immune Tolerance</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The specific failure of a normally responsive individual to make an immune response to a known antigen. It results from previous contact with the antigen by an immunologically immature individual (fetus or neonate) or by an adult exposed to extreme high-dose or low-dose antigen, or by exposure to radiation, antimetabolites, antilymphocytic serum, etc.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Immune Tolerance</synonym>
+   <synonym>Immunosuppression</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Immunosuppressions</token>
+   </variation>
+   <variation>
+    <token>Tolerance</token>
+    <token>Immune</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D007113">
+  <canonic>Immunity, Natural</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The capacity of a normal organism to remain unaffected by microorganisms and their toxins. It results from non-specific mechanisms such as naturally occurring antiviral and bactericidal substances, PHAGOCYTOSIS, and constitutional factors such as BODY TEMPERATURE, oxygen tension, and age.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Innate Immunity</synonym>
+   <synonym>Native Immunity</synonym>
+   <synonym>Natural Immunity</synonym>
+   <synonym>Natural Resistance</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Immunity</token>
+    <token>Natural</token>
+   </variation>
+   <variation>
+    <token>Disease Resistance</token>
+   </variation>
+   <variation>
+    <token>Immunity</token>
+    <token>Innate</token>
+   </variation>
+   <variation>
+    <token>Immunity</token>
+    <token>Native</token>
+   </variation>
+   <variation>
+    <token>Immunity</token>
+    <token>Non Specific</token>
+   </variation>
+   <variation>
+    <token>Resistance</token>
+    <token>Natural</token>
+   </variation>
+   <variation>
+    <token>Resistance</token>
+    <token>Disease</token>
+   </variation>
+   <variation>
+    <token>Immunity</token>
+    <token>Non Specific</token>
+   </variation>
+   <variation>
+    <token>Non Specific Immunity</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D017951" parent-id="D007111">
+  <canonic>Antigen Presentation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The process by which antigen is presented to lymphocytes in a form they can recognize. This is performed by antigen presenting cells (APCs). Some antigens require processing before they can be recognized. Antigen processing consists of ingestion and partial digestion of the antigen by the APC, followed by presentation of fragments on the cell surface.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Antigen Presentation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Antigen Processing</token>
+   </variation>
+   <variation>
+    <token>Antigen Presentations</token>
+   </variation>
+   <variation>
+    <token>Antigen Processings</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016867">
+  <canonic>Immunocompromised Host</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A human or animal whose immunologic mechanism is deficient because of an immunodeficiency disorder or other disease or as the result of the administration of immunosuppressive drugs or radiation.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Immunocompromised Host</synonym>
+   <synonym>Immunosuppressed Host</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Immunocompromised Patient</token>
+   </variation>
+   <variation>
+    <token>Host</token>
+    <token>Immunocompromised</token>
+   </variation>
+   <variation>
+    <token>Host</token>
+    <token>Immunosuppressed</token>
+   </variation>
+   <variation>
+    <token>Hosts</token>
+    <token>Immunocompromised</token>
+   </variation>
+   <variation>
+    <token>Hosts</token>
+    <token>Immunosuppressed</token>
+   </variation>
+   <variation>
+    <token>Immunocompromised Hosts</token>
+   </variation>
+   <variation>
+    <token>Immunocompromised Patients</token>
+   </variation>
+   <variation>
+    <token>Immunosuppressed Hosts</token>
+   </variation>
+   <variation>
+    <token>Patient</token>
+    <token>Immunocompromised</token>
+   </variation>
+   <variation>
+    <token>Patients</token>
+    <token>Immunocompromised</token>
+   </variation>
+   <variation>
+    <token>Immunocompromized Host</token>
+   </variation>
+   <variation>
+    <token>Immunocompromized Patient</token>
+   </variation>
+   <variation>
+    <token>Host</token>
+    <token>Immunocompromized</token>
+   </variation>
+   <variation>
+    <token>Hosts</token>
+    <token>Immunocompromized</token>
+   </variation>
+   <variation>
+    <token>Immunocompromized Hosts</token>
+   </variation>
+   <variation>
+    <token>Immunocompromized Patients</token>
+   </variation>
+   <variation>
+    <token>Patient</token>
+    <token>Immunocompromized</token>
+   </variation>
+   <variation>
+    <token>Patients</token>
+    <token>Immunocompromized</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D006461" parent-id="D000937">
+  <canonic>Hemolysis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The destruction of ERYTHROCYTES by many different causal agents such as antibodies, bacteria, chemicals, temperature, and changes in tonicity.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Hemolysis</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="D007156">
+  <canonic>Immunologic Memory</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The altered state of immunologic responsiveness resulting from initial contact with antigen, which enables the individual to produce antibodies more rapidly and in greater quantity in response to secondary antigenic stimulus.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Immunologic Memory</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Immunological Memory</token>
+   </variation>
+   <variation>
+    <token>Memory</token>
+    <token>Immunologic</token>
+   </variation>
+   <variation>
+    <token>Immunologic Memories</token>
+   </variation>
+   <variation>
+    <token>Immunological Memories</token>
+   </variation>
+   <variation>
+    <token>Memories</token>
+    <token>Immunologic</token>
+   </variation>
+   <variation>
+    <token>Memories</token>
+    <token>Immunological</token>
+   </variation>
+   <variation>
+    <token>Memory</token>
+    <token>Immunological</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015551">
+  <canonic>Autoimmunity</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Process whereby the immune system reacts against the body's own tissues. Autoimmunity may produce or be caused by AUTOIMMUNE DISEASES.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Autoimmunity</synonym>
+   <synonym>Autoimmune Response</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Auto immunity</token>
+   </variation>
+   <variation>
+    <token>Auto immune Response</token>
+   </variation>
+   <variation>
+    <token>Auto immune Responses</token>
+   </variation>
+   <variation>
+    <token>Autoimmune Responses</token>
+   </variation>
+   <variation>
+    <token>Autoimmunities</token>
+   </variation>
+   <variation>
+    <token>Response</token>
+    <token>Autoimmune</token>
+   </variation>
+   <variation>
+    <token>Response</token>
+    <token>Auto immune</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D004306">
+  <canonic>Dose-Response Relationship, Immunologic</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A specific immune response elicited by a specific dose of an immunologically active substance or cell in an organism, tissue, or cell.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Dose-Response Relationship, Immunologic</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Immunologic Dose-Response Relationship</token>
+   </variation>
+   <variation>
+    <token>Relationship</token>
+    <token>Immunologic Dose-Response</token>
+   </variation>
+   <variation>
+    <token>Dose Response Relationship</token>
+    <token>Immunologic</token>
+   </variation>
+   <variation>
+    <token>Dose-Response Relationships</token>
+    <token>Immunologic</token>
+   </variation>
+   <variation>
+    <token>Immunologic Dose Response Relationship</token>
+   </variation>
+   <variation>
+    <token>Immunologic Dose-Response Relationships</token>
+   </variation>
+   <variation>
+    <token>Relationship</token>
+    <token>Immunologic Dose Response</token>
+   </variation>
+   <variation>
+    <token>Relationships</token>
+    <token>Immunologic Dose-Response</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D006636">
+  <canonic>Histamine Release</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The secretion of histamine from mast cell and basophil granules by exocytosis. This can be initiated by a number of factors, all of which involve binding of IgE, cross-linked by antigen, to the mast cell or basophil's Fc receptors. Once released, histamine binds to a number of different target cell receptors and exerts a wide variety of effects.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Histamine Release</synonym>
+   <synonym>Histamine Liberation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Histamine Liberations</token>
+   </variation>
+   <variation>
+    <token>Histamine Releases</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D000937">
+  <canonic>Antigen-Antibody Reactions</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The binding of an antibody with an antigen of the type that stimulated the formation of the antibody, resulting in agglutination, precipitation, complement fixation, greater susceptibility to ingestion and destruction by phagocytes, or neutralization of an exotoxin.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Antigen-Antibody Reactions</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Antigen Antibody Reactions</token>
+   </variation>
+   <variation>
+    <token>Antigen-Antibody Reaction</token>
+   </variation>
+   <variation>
+    <token>Reaction</token>
+    <token>Antigen-Antibody</token>
+   </variation>
+   <variation>
+    <token>Reactions</token>
+    <token>Antigen-Antibody</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D003167">
+  <canonic>Complement Activation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The sequential activation of serum COMPLEMENT PROTEINS to create the COMPLEMENT MEMBRANE ATTACK COMPLEX. Factors initiating complement activation include ANTIGEN-ANTIBODY COMPLEXES, microbial ANTIGENS, or cell surface POLYSACCHARIDES.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Complement Activation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Activation</token>
+    <token>Complement</token>
+   </variation>
+   <variation>
+    <token>Activations</token>
+    <token>Complement</token>
+   </variation>
+   <variation>
+    <token>Complement Activations</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016516">
+  <canonic>CD4-CD8 Ratio</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Ratio of T-LYMPHOCYTES that express the CD4 ANTIGEN to those that express the CD8 ANTIGEN. This value is commonly assessed in the diagnosis and staging of diseases affecting the IMMUNE SYSTEM including HIV INFECTIONS.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>CD4-CD8 Ratio</synonym>
+   <synonym>T4-T8 Ratio</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>CD4 CD8 Ratio</token>
+   </variation>
+   <variation>
+    <token>Ratio, CD4</token>
+    <token>CD8</token>
+   </variation>
+   <variation>
+    <token>Ratios, CD4</token>
+    <token>CD8</token>
+   </variation>
+   <variation>
+    <token>Ratio, T4</token>
+    <token>T8</token>
+   </variation>
+   <variation>
+    <token>Ratios, T4</token>
+    <token>T8</token>
+   </variation>
+   <variation>
+    <token>CD4-CD8 Ratios</token>
+   </variation>
+   <variation>
+    <token>T4 T8 Ratio</token>
+   </variation>
+   <variation>
+    <token>T4-T8 Ratios</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D000915" parent-id="D000937">
+  <canonic>Antibody Affinity</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A measure of the binding strength between antibody and a simple hapten or antigen determinant. It depends on the closeness of stereochemical fit between antibody combining sites and antigen determinants, on the size of the area of contact between them, and on the distribution of charged and hydrophobic groups. It includes the concept of "avidity," which refers to the strength of the antigen-antibody bond after formation of reversible complexes.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Antibody Affinity</synonym>
+   <synonym>Affinity, Antibody</synonym>
+   <synonym>Antibody Avidity</synonym>
+   <synonym>Avidity, Antibody</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Affinities</token>
+    <token>Antibody</token>
+   </variation>
+   <variation>
+    <token>Antibody Affinities</token>
+   </variation>
+   <variation>
+    <token>Antibody Avidities</token>
+   </variation>
+   <variation>
+    <token>Avidities</token>
+    <token>Antibody</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D007121">
+  <canonic>Immunocompetence</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The ability of lymphoid cells to mount a humoral or cellular immune response when challenged by antigen.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Immunocompetence</synonym>
+   <synonym>Competence, Immunologic</synonym>
+   <synonym>Immunologic Competence</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Immunological Competence</token>
+   </variation>
+   <variation>
+    <token>Competence</token>
+    <token>Immunological</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D018928">
+  <canonic>Immunity, Mucosal</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Nonsusceptibility to the pathogenic effects of foreign microorganisms or antigenic substances as a result of antibody secretions of the mucous membranes. Mucosal epithelia in the gastrointestinal, respiratory, and reproductive tracts produce a form of IgA (IMMUNOGLOBULIN A, SECRETORY) that serves to protect these ports of entry into the body.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Mucosal Immunity</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Immunity</token>
+    <token>Mucosal</token>
+   </variation>
+   <variation>
+    <token>Immune Response</token>
+    <token>Mucosal</token>
+   </variation>
+   <variation>
+    <token>Immune Responses</token>
+    <token>Mucosal</token>
+   </variation>
+   <variation>
+    <token>Mucosal Immune Response</token>
+   </variation>
+   <variation>
+    <token>Mucosal Immune Responses</token>
+   </variation>
+   <variation>
+    <token>Immunity</token>
+    <token>Mucous</token>
+   </variation>
+   <variation>
+    <token>Immune Response</token>
+    <token>Mucous</token>
+   </variation>
+   <variation>
+    <token>Immune Responses</token>
+    <token>Mucous</token>
+   </variation>
+   <variation>
+    <token>Immunity</token>
+    <token>mucous membrane</token>
+   </variation>
+   <variation>
+    <token>Immune Response</token>
+    <token>mucous membrane</token>
+   </variation>
+   <variation>
+    <token>Immune Responses</token>
+    <token>mucous membrane</token>
+   </variation>
+   <variation>
+    <token>Immunity</token>
+    <token>mucosae</token>
+   </variation>
+   <variation>
+    <token>Immune Response</token>
+    <token>mucosae</token>
+   </variation>
+   <variation>
+    <token>Immune Responses</token>
+    <token>mucosae</token>
+   </variation>
+   <variation>
+    <token>Immunity</token>
+    <token>mucosa</token>
+   </variation>
+   <variation>
+    <token>Immune Response</token>
+    <token>mucosa</token>
+   </variation>
+   <variation>
+    <token>Immune Responses</token>
+    <token>mucosa</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D014181" parent-id="D007111">
+  <canonic>Transplantation Immunology</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A general term for the complex phenomena involved in allo- and xenograft rejection by a host and graft vs host reaction. Although the reactions involved in transplantation immunology are primarily thymus-dependent phenomena of cellular immunity, humoral factors also play a part in late rejection.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Transplantation Immunology</synonym>
+   <synonym>Immunology, Transplantation</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="D018023">
+  <canonic>HIV Seronegativity</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Immune status consisting of non-production of HIV antibodies, as determined by various serological tests.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>HIV Seronegativity</synonym>
+   <synonym>HTLV-III Seronegativity</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>HIV Seronegativities</token>
+   </variation>
+   <variation>
+    <token>HTLV III Seronegativity</token>
+   </variation>
+   <variation>
+    <token>HTLV-III Seronegativities</token>
+   </variation>
+   <variation>
+    <token>Seronegativities</token>
+    <token>HIV</token>
+   </variation>
+   <variation>
+    <token>Seronegativities</token>
+    <token>HTLV-III</token>
+   </variation>
+   <variation>
+    <token>Seronegativity</token>
+    <token>HIV</token>
+   </variation>
+   <variation>
+    <token>Seronegativity</token>
+    <token>HTLV-III</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015213">
+  <canonic>Neuroimmunomodulation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The biochemical and electrophysiological interactions between the NERVOUS SYSTEM and IMMUNE SYSTEM that result in regulation of the immune system by the nervous system.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Neuroimmunomodulation</synonym>
+   <synonym>Neuroimmune Processes</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Neuroimmune Mechanisms</token>
+   </variation>
+   <variation>
+    <token>Neuroimmune Process</token>
+   </variation>
+   <variation>
+    <token>Mechanism</token>
+    <token>Neuroimmune</token>
+   </variation>
+   <variation>
+    <token>Mechanisms</token>
+    <token>Neuroimmune</token>
+   </variation>
+   <variation>
+    <token>Neuroimmune Mechanism</token>
+   </variation>
+   <variation>
+    <token>Process</token>
+    <token>Neuroimmune</token>
+   </variation>
+   <variation>
+    <token>Neuro immunomodulation</token>
+   </variation>
+   <variation>
+    <token>Neuro immune Processes</token>
+   </variation>
+   <variation>
+    <token>Neuro immune Mechanisms</token>
+   </variation>
+   <variation>
+    <token>Neuro immune Process</token>
+   </variation>
+   <variation>
+    <token>Mechanism</token>
+    <token>Neuro immune</token>
+   </variation>
+   <variation>
+    <token>Mechanisms</token>
+    <token>Neuro immune</token>
+   </variation>
+   <variation>
+    <token>Neuro immune Mechanism</token>
+   </variation>
+   <variation>
+    <token>Process</token>
+    <token>Neuro immune</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D000920" parent-id="D003602">
+  <canonic>Antibody-Dependent Cell Cytotoxicity</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The phenomenon of antibody-mediated target cell destruction by non-sensitized effector cells. The identity of the target cell varies, but it must possess surface IMMUNOGLOBULIN G whose Fc portion is intact. The effector cell is a "killer" cell possessing Fc receptors. It may be a lymphocyte lacking conventional B- or T-cell markers, or a monocyte, macrophage, or polynuclear leukocyte, depending on the identity of the target cell. The reaction is complement-independent.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Antibody-Dependent Cell Cytotoxicity</synonym>
+   <synonym>ADCC</synonym>
+   <synonym>Cytotoxicity, Antibody-Dependent Cell</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Cell Cytoxicity</token>
+    <token>Antibody-Dependent</token>
+   </variation>
+   <variation>
+    <token>Antibody Dependent Cell Cytotoxicity</token>
+   </variation>
+   <variation>
+    <token>Antibody Dependent Cell Cytotoxicities</token>
+   </variation>
+   <variation>
+    <token>Antibody Dependent Cell Cytoxicities</token>
+   </variation>
+   <variation>
+    <token>Antibody Dependent Cell Cytoxicity</token>
+   </variation>
+   <variation>
+    <token>Cytotoxicities</token>
+    <token>Antibody Dependent</token>
+   </variation>
+   <variation>
+    <token>Cytotoxicity</token>
+    <token>Antibody Dependent</token>
+   </variation>
+   <variation>
+    <token>Cytoxicities</token>
+    <token>Antibody Dependent</token>
+   </variation>
+   <variation>
+    <token>Cytoxicity</token>
+    <token>Antibody Dependent</token>
+   </variation>
+   <variation>
+    <token>Cytotoxicities</token>
+    <token>Antibody mediated</token>
+   </variation>
+   <variation>
+    <token>Cytotoxicity</token>
+    <token>Antibody mediated</token>
+   </variation>
+   <variation>
+    <token>Cytoxicities</token>
+    <token>Antibody mediated</token>
+   </variation>
+   <variation>
+    <token>Cytoxicity</token>
+    <token>Antibody mediated</token>
+   </variation>
+   <variation>
+    <token>Antibody Cytotoxicity</token>
+   </variation>
+   <variation>
+    <token>Antibody Cytoxicity</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D000940">
+  <canonic>Antigenic Variation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Change in the surface ANTIGEN of a microorganism. There are two different types. One is a phenomenon, especially associated with INFLUENZA VIRUSES, where they undergo spontaneous variation both as slow antigenic drift and sudden emergence of new strains (antigenic shift). The second type is when certain PARASITES, especially trypanosomes, PLASMODIUM, and BORRELIA, survive the immune response of the host by changing the surface coat (antigen switching).</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Antigenic Variation</synonym>
+   <synonym>Antigen Switching</synonym>
+   <synonym>Antigenic Diversity</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Variation</token>
+    <token>Antigenic</token>
+   </variation>
+   <variation>
+    <token>Antigen Variation</token>
+   </variation>
+   <variation>
+    <token>Antigenic Switching</token>
+   </variation>
+   <variation>
+    <token>Antigenic Variability</token>
+   </variation>
+   <variation>
+    <token>Switching</token>
+    <token>Antigenic</token>
+   </variation>
+   <variation>
+    <token>Diversity</token>
+    <token>Antigenic</token>
+   </variation>
+   <variation>
+    <token>Switching</token>
+    <token>Antigen</token>
+   </variation>
+   <variation>
+    <token>Variability</token>
+    <token>Antigenic</token>
+   </variation>
+   <variation>
+    <token>Variation</token>
+    <token>Antigen</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015329">
+  <canonic>Gene Rearrangement, T-Lymphocyte</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Ordered rearrangement of T-cell variable gene regions coding for the antigen receptors.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Gene Rearrangement, T-Lymphocyte</synonym>
+   <synonym>Gene Rearrangement, T-Cell Antigen Receptor</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>T cell Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>T Lymphocyte Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangement</token>
+    <token>T cell</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangement</token>
+    <token>T cell receptor</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangement</token>
+    <token>T Cell Antigen Receptor</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangement</token>
+    <token>TCR</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangements</token>
+    <token>T cell</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangements</token>
+    <token>T cell receptor</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangements</token>
+    <token>T Cell Antigen Receptor</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangements</token>
+    <token>TCR</token>
+   </variation>
+   <variation>
+    <token>Rearrangement</token>
+    <token>T cell</token>
+   </variation>
+   <variation>
+    <token>Rearrangement</token>
+    <token>T cell receptor</token>
+   </variation>
+   <variation>
+    <token>Rearrangement</token>
+    <token>T Cell Antigen Receptor</token>
+   </variation>
+   <variation>
+    <token>Rearrangement</token>
+    <token>TCR</token>
+   </variation>
+   <variation>
+    <token>Rearrangements</token>
+    <token>T cell</token>
+   </variation>
+   <variation>
+    <token>Rearrangements</token>
+    <token>T cell receptor</token>
+   </variation>
+   <variation>
+    <token>Rearrangements</token>
+    <token>T Cell Antigen Receptor</token>
+   </variation>
+   <variation>
+    <token>Rearrangements</token>
+    <token>TCR</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D006648" parent-id="D014181">
+  <canonic>Histocompatibility</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The degree of antigenic similarity between the tissues of different individuals, which determines the acceptance or rejection of allografts.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Histocompatibility</synonym>
+   <synonym>Immunocompatibility</synonym>
+   <synonym>Tissue Compatibility</synonym>
+   <synonym>Histo compatibility</synonym>
+   <synonym>Immuno compatibility</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Compatibilities</token>
+    <token>Tissue</token>
+   </variation>
+   <variation>
+    <token>Compatibility</token>
+    <token>Tissue</token>
+   </variation>
+   <variation>
+    <token>Histocompatibilities</token>
+   </variation>
+   <variation>
+    <token>Immunocompatibilities</token>
+   </variation>
+   <variation>
+    <token>Tissue Compatibilities</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D001770" parent-id="D007113">
+  <canonic>Blood Bactericidal Activity</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The natural bactericidal property of BLOOD due to normally occurring antibacterial substances such as beta lysin, leukin, etc. This activity needs to be distinguished from the bactericidal activity contained in a patient's serum as a result of antimicrobial therapy, which is measured by a SERUM BACTERICIDAL TEST.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Blood Bactericidal Activity</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Activities</token>
+    <token>Blood Bactericidal</token>
+   </variation>
+   <variation>
+    <token>Activity</token>
+    <token>Blood Bactericidal</token>
+   </variation>
+   <variation>
+    <token>Bactericidal Activities</token>
+    <token>Blood</token>
+   </variation>
+   <variation>
+    <token>Bactericidal Activity</token>
+    <token>Blood</token>
+   </variation>
+   <variation>
+    <token>Blood Bactericidal Activities</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015333" parent-id="D015329">
+  <canonic>Gene Rearrangement, beta-Chain T-Cell Antigen Receptor</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Ordered rearrangement of T-cell variable gene regions coding for the beta-chain of antigen receptors.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>T-Cell Antigen Receptor beta-Chain Gene Rearrangement</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Gene Rearrangement</token>
+    <token>beta-Chain T-Cell Antigen Receptor</token>
+   </variation>
+   <variation>
+    <token>T-Lymphocyte Antigen Receptor beta-Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangement</token>
+    <token>beta-Chain T Cell Antigen Receptor</token>
+   </variation>
+   <variation>
+    <token>T Cell beta-Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>T Lymphocyte beta-Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangement</token>
+    <token>beta Chain T Cell Antigen Receptor</token>
+   </variation>
+   <variation>
+    <token>T Cell Antigen Receptor beta Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>T Cell beta Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>T Lymphocyte Antigen Receptor beta Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>T Lymphocyte beta Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangement</token>
+    <token>TCR beta</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangements</token>
+    <token>TCR beta</token>
+   </variation>
+   <variation>
+    <token>Rearrangement</token>
+    <token>TCR beta</token>
+   </variation>
+   <variation>
+    <token>Rearrangements</token>
+    <token>TCR beta</token>
+   </variation>
+   <variation>
+    <token>Gene Re arrangement</token>
+    <token>TCR beta</token>
+   </variation>
+   <variation>
+    <token>Gene Re arrangements</token>
+    <token>TCR beta</token>
+   </variation>
+   <variation>
+    <token>Re arrangement</token>
+    <token>TCR beta</token>
+   </variation>
+   <variation>
+    <token>Re arrangements</token>
+    <token>TCR beta</token>
+   </variation>
+   <variation>
+    <token>Re arrange</token>
+    <token>TCRB</token>
+   </variation>
+   <variation>
+    <token>Rearrange</token>
+    <token>TCRB</token>
+   </variation>
+   <variation>
+    <token>Re arrange</token>
+    <token>TCR beta</token>
+   </variation>
+   <variation>
+    <token>Rearrange</token>
+    <token>TCR beta</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangement</token>
+    <token>TCRB</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangements</token>
+    <token>TCRB</token>
+   </variation>
+   <variation>
+    <token>Rearrangement</token>
+    <token>TCRB</token>
+   </variation>
+   <variation>
+    <token>Rearrangements</token>
+    <token>TCRB</token>
+   </variation>
+   <variation>
+    <token>Gene Re arrangement</token>
+    <token>TCRB</token>
+   </variation>
+   <variation>
+    <token>Gene Re arrangements</token>
+    <token>TCRB</token>
+   </variation>
+   <variation>
+    <token>Re arrangement</token>
+    <token>TCRB</token>
+   </variation>
+   <variation>
+    <token>Re arrangements</token>
+    <token>TCRB</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D020556">
+  <canonic>Neutrophil Infiltration</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The diffusion or accumulation of neutrophils in tissues or cells in response to a wide variety of substances released at the sites of inflammatory reactions.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Neutrophil Infiltration</synonym>
+   <synonym>Neutrophil Recruitment</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Infiltration</token>
+    <token>neutrophil</token>
+   </variation>
+   <variation>
+    <token>Recruitment</token>
+    <token>neutrophil</token>
+   </variation>
+   <variation>
+    <token>Infiltration</token>
+    <token>neutrophils</token>
+   </variation>
+   <variation>
+    <token>Recruitment</token>
+    <token>neutrophils</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015326" parent-id="D015322">
+  <canonic>Gene Rearrangement, B-Lymphocyte, Heavy Chain</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Ordered rearrangement of B-lymphocyte variable gene regions of the IMMUNOGLOBULIN HEAVY CHAINS, thereby contributing to antibody diversity. It occurs during the first stage of differentiation of the IMMATURE B-LYMPHOCYTES.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>B-Cell Heavy Chain Gene Rearrangement</synonym>
+   <synonym>B-Lymphocyte Heavy Chain Gene Rearrangement</synonym>
+   <synonym>B-Lymphocyte Mu Chain Gene Rearrangement</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Gene Rearrangement, B cell</token>
+    <token>Heavy Chain</token>
+   </variation>
+   <variation>
+    <token>Rearrangement, B cell</token>
+    <token>Heavy Chain</token>
+   </variation>
+   <variation>
+    <token>Rearrangement, B lymphocyte</token>
+    <token>Heavy Chain</token>
+   </variation>
+   <variation>
+    <token>B cell, Mu Chain</token>
+    <token>Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B cell, Mu Chain</token>
+    <token>Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B Cell Heavy Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B Cell Mu Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B Lymphocyte Heavy Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B Lymphocyte Mu Chain Gene Rearrangement</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D011828" parent-id="D016867">
+  <canonic>Radiation Chimera</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>An organism whose body contains cell populations of different genotypes as a result of the TRANSPLANTATION of donor cells after sufficient ionizing radiation to destroy the mature recipient's cells which would otherwise reject the donor cells.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Radiation Chimera</synonym>
+   <synonym>Chimera, Radiation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Chimeras</token>
+    <token>Radiation</token>
+   </variation>
+   <variation>
+    <token>Radiation Chimeras</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D006384" parent-id="D000371">
+  <canonic>Hemagglutination</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Agglutination of red blood cells, often used to test for the presence of antibodies directed against red cell surface antigens or carbohydrate binding proteins or viruses in a solution. Requires that the agglutinin has at least two binding sites.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Hemagglutination</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>haemagglutination</token>
+   </variation>
+   <variation>
+    <token>haemaglutination</token>
+   </variation>
+   <variation>
+    <token>hemaglutination</token>
+   </variation>
+   <variation>
+    <token>Hemagglutinations</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015322">
+  <canonic>Gene Rearrangement, B-Lymphocyte</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Ordered rearrangement of B-lymphocyte variable gene regions coding for the IMMUNOGLOBULIN CHAINS, thereby contributing to antibody diversity. It occurs during the differentiation of the IMMATURE B-LYMPHOCYTES.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>B-Cell Gene Rearrangement</synonym>
+   <synonym>B-Lymphocyte Gene Rearrangement</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>B Cell Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B Lymphocyte Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B-Cell Gene Rearrangements</token>
+   </variation>
+   <variation>
+    <token>B-Lymphocyte Gene Rearrangements</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangement</token>
+    <token>B cell</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangement</token>
+    <token>B lymphocyte</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangements</token>
+    <token>B cell</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangements</token>
+    <token>B lymphocyte</token>
+   </variation>
+   <variation>
+    <token>Rearrangement</token>
+    <token>B lymphocyte</token>
+   </variation>
+   <variation>
+    <token>Rearrangement</token>
+    <token>B cell</token>
+   </variation>
+   <variation>
+    <token>Rearrangements</token>
+    <token>B cell</token>
+   </variation>
+   <variation>
+    <token>Rearrangements</token>
+    <token>B lymphocyte</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D017578" parent-id="D015326">
+  <canonic>Immunoglobulin Class Switching</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Gene rearrangement of the B-lymphocyte which results in a substitution in the type of heavy-chain constant region that is expressed. This allows the effector response to change while the antigen binding specificity (variable region) remains the same. The majority of class switching occurs by a DNA recombination event but it also can take place at the level of RNA processing.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Immunoglobulin Class Switching</synonym>
+   <synonym>Class Switching</synonym>
+   <synonym>Isotype Switching</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Class Switching</token>
+    <token>Immunoglobulin</token>
+   </variation>
+   <variation>
+    <token>Class Switchings</token>
+   </variation>
+   <variation>
+    <token>Class Switchings</token>
+    <token>Immunoglobulin</token>
+   </variation>
+   <variation>
+    <token>Immunoglobulin Class Switchings</token>
+   </variation>
+   <variation>
+    <token>Isotype Switchings</token>
+   </variation>
+   <variation>
+    <token>Switching</token>
+    <token>Class</token>
+   </variation>
+   <variation>
+    <token>Switching</token>
+    <token>Immunoglobulin Class</token>
+   </variation>
+   <variation>
+    <token>Switching</token>
+    <token>Isotype</token>
+   </variation>
+   <variation>
+    <token>Switchings</token>
+    <token>Class</token>
+   </variation>
+   <variation>
+    <token>Switchings</token>
+    <token>Immunoglobulin Class</token>
+   </variation>
+   <variation>
+    <token>Switchings</token>
+    <token>Isotype</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D017635" parent-id="D007108">
+  <canonic>Clonal Anergy</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Functional inactivation of T- or B-lymphocytes rendering them incapable of eliciting an immune response to antigen. This occurs through different mechanisms in the two kinds of lymphocytes and can contribute to SELF TOLERANCE.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Clonal Anergy</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Anergies</token>
+    <token>Clonal</token>
+   </variation>
+   <variation>
+    <token>Anergy</token>
+    <token>Clonal</token>
+   </variation>
+   <variation>
+    <token>Clonal Anergies</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D007112">
+  <canonic>Immunity, Maternally-Acquired</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Resistance to a disease-causing agent induced by the introduction of maternal immunity into the fetus by transplacental transfer or into the neonate through colostrum and milk.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Maternally Acquired Fetal Immunity</synonym>
+   <synonym>Maternally Acquired Neonatal Immunity</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Immunity</token>
+    <token>Maternally Acquired</token>
+   </variation>
+   <variation>
+    <token>Fetal Immunity</token>
+    <token>Maternally Acquired</token>
+   </variation>
+   <variation>
+    <token>Maternally Acquired Immunity</token>
+   </variation>
+   <variation>
+    <token>Neonatal Immunity</token>
+    <token>Maternally Acquired</token>
+   </variation>
+   <variation>
+    <token>Immunity</token>
+    <token>Maternally Acquired</token>
+   </variation>
+   <variation>
+    <token>Fetal Immunities</token>
+    <token>Maternally-Acquired</token>
+   </variation>
+   <variation>
+    <token>Fetal Immunity</token>
+    <token>Maternally Acquired</token>
+   </variation>
+   <variation>
+    <token>Immunities</token>
+    <token>Maternally Acquired</token>
+   </variation>
+   <variation>
+    <token>Immunities</token>
+    <token>Maternally Acquired Fetal</token>
+   </variation>
+   <variation>
+    <token>Immunities</token>
+    <token>Maternally Acquired Neonatal</token>
+   </variation>
+   <variation>
+    <token>Immunity</token>
+    <token>Maternally Acquired Fetal</token>
+   </variation>
+   <variation>
+    <token>Immunity</token>
+    <token>Maternally Acquired Neonatal</token>
+   </variation>
+   <variation>
+    <token>Maternally Acquired Immunities</token>
+   </variation>
+   <variation>
+    <token>Maternally Acquired Immunity</token>
+   </variation>
+   <variation>
+    <token>Maternally Acquired Fetal Immunities</token>
+   </variation>
+   <variation>
+    <token>Maternally Acquired Immunities</token>
+   </variation>
+   <variation>
+    <token>Maternally Acquired Neonatal Immunities</token>
+   </variation>
+   <variation>
+    <token>Neonatal Immunities</token>
+    <token>Maternally Acquired</token>
+   </variation>
+   <variation>
+    <token>Neonatal Immunity</token>
+    <token>Maternally Acquired</token>
+   </variation>
+   <variation>
+    <token>Fetal, Immunity, Maternally</token>
+    <token>Acquired</token>
+   </variation>
+   <variation>
+    <token>Immunity</token>
+    <token>Maternally Acquired</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D017634" parent-id="D007108">
+  <canonic>Self Tolerance</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The normal lack of the ability to produce an immunological response to autologous (self) antigens. A breakdown of self tolerance leads to autoimmune diseases. The ability to recognize the difference between self and non-self is the prime function of the immune system.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Self Tolerance</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Self Tolerances</token>
+   </variation>
+   <variation>
+    <token>Tolerance</token>
+    <token>Self</token>
+   </variation>
+   <variation>
+    <token>Tolerances</token>
+    <token>Self</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D023001" parent-id="D007108">
+  <canonic>Transplantation Tolerance</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>An induced state of non-reactivity to grafted tissue from a donor organism that would ordinarily trigger a cell-mediated or humoral immune response.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Transplantation Tolerance</synonym>
+   <synonym>Graft Tolerance</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Allograft Tolerance</token>
+   </variation>
+   <variation>
+    <token>Tolerance</token>
+    <token>Allograft</token>
+   </variation>
+   <variation>
+    <token>Tolerance</token>
+    <token>Allo graft</token>
+   </variation>
+   <variation>
+    <token>Tolerance</token>
+    <token>allogeneic transplant</token>
+   </variation>
+   <variation>
+    <token>Tolerance</token>
+    <token>Graft</token>
+   </variation>
+   <variation>
+    <token>Tolerance</token>
+    <token>Transplantation</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D003170" parent-id="D003167">
+  <canonic>Complement Pathway, Alternative</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Complement activation initiated by the interaction of microbial ANTIGENS with COMPLEMENT C3B. When COMPLEMENT FACTOR B binds to the membrane-bound C3b, COMPLEMENT FACTOR D cleaves it to form alternative C3 CONVERTASE (C3BBB) which, stabilized by COMPLEMENT FACTOR P, is able to cleave multiple COMPLEMENT C3 to form alternative C5 CONVERTASE (C3BBB3B) leading to cleavage of COMPLEMENT C5 and the assembly of COMPLEMENT MEMBRANE ATTACK COMPLEX.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Alternative Complement Pathway</synonym>
+   <synonym>Properdin Pathway</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Complement Pathway</token>
+    <token>Alternative</token>
+   </variation>
+   <variation>
+    <token>Alternative Complement Activation Pathway</token>
+   </variation>
+   <variation>
+    <token>Complement Activation Pathway</token>
+    <token>Alternative</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D008211">
+  <canonic>Lymphocyte Cooperation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>T-cell enhancement of the B-cell response to thymic-dependent antigens.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Lymphocyte Cooperation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Cooperation</token>
+    <token>Lymphocyte</token>
+   </variation>
+   <variation>
+    <token>Cooperations</token>
+    <token>Lymphocyte</token>
+   </variation>
+   <variation>
+    <token>Lymphocyte Cooperations</token>
+   </variation>
+   <variation>
+    <token>Co operation</token>
+    <token>Lymphocyte</token>
+   </variation>
+   <variation>
+    <token>Co operations</token>
+    <token>Lymphocyte</token>
+   </variation>
+   <variation>
+    <token>Coooperation</token>
+    <token>lymphocyte</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D003171" parent-id="D003167">
+  <canonic>Complement Pathway, Classical</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Complement activation initiated by the binding of COMPLEMENT C1 to ANTIGEN-ANTIBODY COMPLEXES at the COMPLEMENT C1Q subunit. This leads to the sequential activation of COMPLEMENT C1R and COMPLEMENT C1S subunits. Activated C1s cleaves COMPLEMENT C4 and COMPLEMENT C2 forming the membrane-bound classical C3 CONVERTASE (C4B2A) and the subsequent C5 CONVERTASE (C4B2A3B) leading to cleavage of COMPLEMENT C5 and the assembly of COMPLEMENT MEMBRANE ATTACK COMPLEX.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Classical Complement Pathway</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Complement Pathway</token>
+    <token>Classical</token>
+   </variation>
+   <variation>
+    <token>Classical Complement Activation Pathway</token>
+   </variation>
+   <variation>
+    <token>Complement Activation Pathway</token>
+    <token>Classical</token>
+   </variation>
+   <variation>
+    <token>Complement, Activation, Pathway</token>
+    <token>Classical</token>
+   </variation>
+   <variation>
+    <token>Complement, Activation</token>
+    <token>Classical</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D017637" parent-id="D007108">
+  <canonic>Clonal Deletion</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Removal, via CELL DEATH, of immature lymphocytes that interact with antigens during maturation. For T-lymphocytes this occurs in the thymus and ensures that mature T-lymphocytes are self tolerant. B-lymphocytes may also undergo clonal deletion.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Clonal Deletion</synonym>
+   <synonym>Clonal Abortion</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Abortion</token>
+    <token>Clonal</token>
+   </variation>
+   <variation>
+    <token>Abortions</token>
+    <token>Clonal</token>
+   </variation>
+   <variation>
+    <token>Clonal Abortions</token>
+   </variation>
+   <variation>
+    <token>Clonal Deletions</token>
+   </variation>
+   <variation>
+    <token>Deletion</token>
+    <token>Clonal</token>
+   </variation>
+   <variation>
+    <token>Deletions</token>
+    <token>Clonal</token>
+   </variation>
+   <variation>
+    <token>Deletion, Clonal</token>
+    <token>cell death</token>
+   </variation>
+   <variation>
+    <token>Deletion, Clonal</token>
+    <token>apoptosis</token>
+   </variation>
+   <variation>
+    <token>Deletion, Clonal</token>
+    <token>apoptotic</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015334" parent-id="D015329">
+  <canonic>Gene Rearrangement, gamma-Chain T-Cell Antigen Receptor</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>dered rearrangement of T-cell variable gene regions coding for the gamma-chain of antigen receptors.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>T-Cell Antigen Receptor gamma-Chain Gene Rearrangement</synonym>
+   <synonym>T-Lymphocyte Antigen Receptor gamma-Chain Gene Rearrangement</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Gene Rearrangement</token>
+    <token>gamma-Chain T-Cell Antigen Receptor</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangement</token>
+    <token>gamma-Chain T Cell Antigen Receptor</token>
+   </variation>
+   <variation>
+    <token>T Cell gamma-Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>T Lymphocyte gamma-Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangement</token>
+    <token>gamma Chain T Cell Antigen Receptor</token>
+   </variation>
+   <variation>
+    <token>T Cell Antigen Receptor gamma Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>T Cell gamma Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>T Lymphocyte Antigen Receptor gamma Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>T Lymphocyte gamma Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangement, TCR</token>
+    <token>gamma</token>
+   </variation>
+   <variation>
+    <token>Gene Re arrangement, TCR</token>
+    <token>gamma</token>
+   </variation>
+   <variation>
+    <token>Rearrangement, TCR</token>
+    <token>gamma</token>
+   </variation>
+   <variation>
+    <token>Re arrangement, TCR</token>
+    <token>gamma</token>
+   </variation>
+   <variation>
+    <token>Rearrangement, TCR</token>
+    <token>gamma</token>
+   </variation>
+   <variation>
+    <token>Re arrangement, TCR</token>
+    <token>gamma</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D006087" parent-id="D014181">
+  <canonic>Graft vs Host Reaction</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>An immunological attack mounted by a graft against the host because of tissue incompatibility when immunologically competent cells are transplanted to an immunologically incompetent host; the resulting clinical picture is that of GRAFT VS HOST DISEASE.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Graft vs Host Reaction</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Graft versus Host Reaction</token>
+   </variation>
+   <variation>
+    <token>Reaction</token>
+    <token>Graft versus Host</token>
+   </variation>
+   <variation>
+    <token>GvH Reaction</token>
+   </variation>
+   <variation>
+    <token>Reaction</token>
+    <token>GvH</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D000916">
+  <canonic>Antibody Diversity</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The phenomenon of immense variability characteristic of ANTIBODIES. It enables the IMMUNE SYSTEM to react specifically against the essentially unlimited kinds of ANTIGENS it encounters. Antibody diversity is accounted for by three main theories: (1) the Germ Line Theory, which holds that each antibody-producing cell has genes coding for all possible antibody specificities, but expresses only the one stimulated by antigen; (2) the Somatic Mutation Theory, which holds that antibody-producing cells contain only a few genes, which produce antibody diversity by mutation; and (3) the Gene Rearrangement Theory, which holds that antibody diversity is generated by the rearrangement of IMMUNOGLOBULIN VARIABLE REGION gene segments during the differentiation of the ANTIBODY-PRODUCING CELLS.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Antibody Diversity</synonym>
+   <synonym>Germ Line Theory</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Antibody Diversities</token>
+   </variation>
+   <variation>
+    <token>Diversities</token>
+    <token>Antibody</token>
+   </variation>
+   <variation>
+    <token>Diversity</token>
+    <token>Antibody</token>
+   </variation>
+   <variation>
+    <token>Germ Line Theories</token>
+   </variation>
+   <variation>
+    <token>Theories</token>
+    <token>Germ Line</token>
+   </variation>
+   <variation>
+    <token>Theory</token>
+    <token>Germ Line</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D007110">
+  <canonic>Immunity, Active</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Resistance to a disease agent resulting from the production of specific antibodies by the host, either after exposure to the disease or after vaccination.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Active Immunity</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Immunity</token>
+    <token>Active</token>
+   </variation>
+   <variation>
+    <token>Active Immunities</token>
+   </variation>
+   <variation>
+    <token>Immunities</token>
+    <token>Active</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D000371" parent-id="D000937">
+  <canonic>Agglutination</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A reaction in which particles (as red blood cells or bacteria) suspended in a liquid collect into clumps and which occurs especially as a serological response to a specific antibody.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Agglutination</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Agglutinations</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D007157" parent-id="D007111">
+  <canonic>Immunologic Surveillance</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The theory that T-cells monitor cell surfaces and detect structural changes in the plasma membrane and/or surface antigens of virally or neoplastically transformed cells.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Immunologic Surveillance</synonym>
+   <synonym>Surveillance, Immunologic</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Immunological Surveillance</token>
+   </variation>
+   <variation>
+    <token>Immunologic Surveillances</token>
+   </variation>
+   <variation>
+    <token>Immunological Surveillances</token>
+   </variation>
+   <variation>
+    <token>Surveillance</token>
+    <token>Immunological</token>
+   </variation>
+   <variation>
+    <token>Surveillances</token>
+    <token>Immunologic</token>
+   </variation>
+   <variation>
+    <token>Surveillances</token>
+    <token>Immunological</token>
+   </variation>
+   <variation>
+    <token>Surveillance</token>
+    <token>Immune</token>
+   </variation>
+   <variation>
+    <token>Immune Surveillance</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D020544" parent-id="D020350">
+  <canonic>Graft vs Leukemia Effect</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Immunological rejection of leukemia cells following bone marrow transplantation.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Graft vs Leukemia Effect</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Graft vs Leukemia Response</token>
+   </variation>
+   <variation>
+    <token>Graft vs Leukemia Effect</token>
+   </variation>
+   <variation>
+    <token>Effect</token>
+    <token>Graft vs Leukemia</token>
+   </variation>
+   <variation>
+    <token>Effects</token>
+    <token>Graft vs Leukemia</token>
+   </variation>
+   <variation>
+    <token>Graft vs Leukemia Effects</token>
+   </variation>
+   <variation>
+    <token>Graft vs Leukemia Responses</token>
+   </variation>
+   <variation>
+    <token>Response</token>
+    <token>Graft vs Leukemia</token>
+   </variation>
+   <variation>
+    <token>Responses</token>
+    <token>Graft vs Leukemia</token>
+   </variation>
+   <variation>
+    <token>Graft vs leukaemia</token>
+   </variation>
+   <variation>
+    <token>GvL</token>
+    <token>Graft</token>
+   </variation>
+   <variation>
+    <token>Effect</token>
+    <token>GvL</token>
+   </variation>
+   <variation>
+    <token>Reaction</token>
+    <token>GvL</token>
+   </variation>
+   <variation>
+    <token>Reponse</token>
+    <token>GvL</token>
+   </variation>
+   <variation>
+    <token>Effects</token>
+    <token>GvL</token>
+   </variation>
+   <variation>
+    <token>Reactions</token>
+    <token>GvL</token>
+   </variation>
+   <variation>
+    <token>Reponses</token>
+    <token>GvL</token>
+   </variation>
+   <variation>
+    <token>Graft versus Leukemia Response</token>
+   </variation>
+   <variation>
+    <token>Graft versus Leukemia Effect</token>
+   </variation>
+   <variation>
+    <token>Effect</token>
+    <token>Graft versus Leukemia</token>
+   </variation>
+   <variation>
+    <token>Effects</token>
+    <token>Graft versus Leukemia</token>
+   </variation>
+   <variation>
+    <token>Graft versus Leukemia Effects</token>
+   </variation>
+   <variation>
+    <token>Graft versus Leukemia Responses</token>
+   </variation>
+   <variation>
+    <token>Response</token>
+    <token>Graft versus Leukemia</token>
+   </variation>
+   <variation>
+    <token>Responses</token>
+    <token>Graft versus Leukemia</token>
+   </variation>
+   <variation>
+    <token>Graft versus Leukemia</token>
+   </variation>
+   <variation>
+    <token>Graft versus leukaemia</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015328" parent-id="D015322">
+  <canonic>Gene Rearrangement, B-Lymphocyte, Light Chain</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Ordered rearrangement of B-lymphocyte variable gene regions coding for the kappa or lambda IMMUNOGLOBULIN LIGHT CHAINS, thereby contributing to antibody diversity. It occurs during the second stage of differentiation of the IMMATURE B-LYMPHOCYTES.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Gene Rearrangement, B-Lymphocyte, Light Chain</synonym>
+   <synonym>B-Cell Light Chain Gene Rearrangement</synonym>
+   <synonym>B-Lymphocyte Light Chain Gene Rearrangement</synonym>
+   <synonym>B-Lymphocyte kappa-Chain Gene Rearrangement</synonym>
+   <synonym>B-Lymphocyte lambda-Chain Gene Rearrangement</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>B Cell Light Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B Cell kappa-Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B Cell lambda-Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B Lymphocyte Light Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B Cell kappa Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B Cell lambda Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B Lymphocyte kappa Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B Lymphocyte lambda Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B Lymphocyte, Light</token>
+    <token>Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B Lymphocyte, lambda</token>
+    <token>Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B Lymphocyte, kappa</token>
+    <token>Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B cell, Light Chain</token>
+    <token>Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B cell, lambda</token>
+    <token>Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B cell, kappa</token>
+    <token>Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B Lymphocyte, Light</token>
+    <token>Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B Lymphocyte, lambda</token>
+    <token>Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B Lymphocyte, kappa</token>
+    <token>Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B cell, Light Chain</token>
+    <token>Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B cell, lambda</token>
+    <token>Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B cell, kappa</token>
+    <token>Rearrangement</token>
+   </variation>
+   <variation>
+    <token>B Lymphocyte, Light</token>
+    <token>Re arrangement</token>
+   </variation>
+   <variation>
+    <token>B Lymphocyte, lambda</token>
+    <token>Re arrangement</token>
+   </variation>
+   <variation>
+    <token>B Lymphocyte, kappa</token>
+    <token>Re arrangement</token>
+   </variation>
+   <variation>
+    <token>B cell, Light Chain</token>
+    <token>Re arrangement</token>
+   </variation>
+   <variation>
+    <token>B cell, lambda</token>
+    <token>Re arrangement</token>
+   </variation>
+   <variation>
+    <token>B cell, kappa</token>
+    <token>Re arrangement</token>
+   </variation>
+   <variation>
+    <token>B Lymphocyte, Light</token>
+    <token>Re arrange</token>
+   </variation>
+   <variation>
+    <token>B Lymphocyte, lambda</token>
+    <token>Re arrange</token>
+   </variation>
+   <variation>
+    <token>B Lymphocyte, kappa</token>
+    <token>Re arrange</token>
+   </variation>
+   <variation>
+    <token>B cell, Light Chain</token>
+    <token>Re arrange</token>
+   </variation>
+   <variation>
+    <token>B cell, lambda</token>
+    <token>Re arrange</token>
+   </variation>
+   <variation>
+    <token>B cell, kappa</token>
+    <token>Re arrange</token>
+   </variation>
+   <variation>
+    <token>B Lymphocyte, Light</token>
+    <token>Rearrange</token>
+   </variation>
+   <variation>
+    <token>B Lymphocyte, lambda</token>
+    <token>Rearrange</token>
+   </variation>
+   <variation>
+    <token>B Lymphocyte, kappa</token>
+    <token>Rearrange</token>
+   </variation>
+   <variation>
+    <token>B cell, Light Chain</token>
+    <token>Rearrange</token>
+   </variation>
+   <variation>
+    <token>B cell, lambda</token>
+    <token>Rearrange</token>
+   </variation>
+   <variation>
+    <token>B cell, kappa</token>
+    <token>Rearrange</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D027041">
+  <canonic>Somatic Hypermutation, Immunoglobulin</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A programmed mutation process whereby changes are introduced to the nucleotide sequence of immunoglobulin gene DNA during development.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Somatic Hypermutation, Immunoglobulin</synonym>
+   <synonym>Hypermutation, Somatic, Immunoglobulin</synonym>
+   <synonym>Ig Somatic Hypermutation</synonym>
+   <synonym>Immunoglobulin Somatic Hypermutation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Somatic Hypermutation</token>
+    <token>Ig</token>
+   </variation>
+   <variation>
+    <token>Hypermutation</token>
+    <token>Ig Somatic</token>
+   </variation>
+   <variation>
+    <token>Hypermutation</token>
+    <token>Immunoglobulin Somatic</token>
+   </variation>
+   <variation>
+    <token>Hypermutations</token>
+    <token>Ig Somatic</token>
+   </variation>
+   <variation>
+    <token>Hypermutations</token>
+    <token>Immunoglobulin Somatic</token>
+   </variation>
+   <variation>
+    <token>Ig Somatic Hypermutations</token>
+   </variation>
+   <variation>
+    <token>Immunoglobulin Somatic Hypermutations</token>
+   </variation>
+   <variation>
+    <token>Somatic Hypermutations</token>
+    <token>Ig</token>
+   </variation>
+   <variation>
+    <token>Somatic Hypermutations</token>
+    <token>Immunoglobulin</token>
+   </variation>
+   <variation>
+    <token>Somatic, Hypermutation</token>
+    <token>Ig</token>
+   </variation>
+   <variation>
+    <token>Somatic, Hypermutation</token>
+    <token>Immunoglobulin</token>
+   </variation>
+   <variation>
+    <token>Somatic</token>
+    <token>Hypermutation</token>
+   </variation>
+   <variation>
+    <token>Somatic, Hypermutation</token>
+    <token>SHM</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015332" parent-id="D015329">
+  <canonic>Gene Rearrangement, alpha-Chain T-Cell Antigen Receptor</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Ordered rearrangement of T-cell variable gene regions coding for the alpha-chain of antigen receptors.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>T-Cell Antigen Receptor alpha-Chain Gene Rearrangement</synonym>
+   <synonym>T-Lymphocyte Antigen Receptor alpha-Chain Gene Rearrangement</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Gene Rearrangement</token>
+    <token>alpha-Chain T-Cell Antigen Receptor</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangement</token>
+    <token>alpha-Chain T Cell Antigen Receptor</token>
+   </variation>
+   <variation>
+    <token>T Cell alpha-Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>T Lymphocyte alpha-Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangement</token>
+    <token>alpha Chain T Cell Antigen Receptor</token>
+   </variation>
+   <variation>
+    <token>T Cell Antigen Receptor alpha Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>T Cell alpha Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>T Lymphocyte Antigen Receptor alpha Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>T Lymphocyte alpha Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>Rearrangement</token>
+    <token>T cell receptor alpha</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangement</token>
+    <token>TCR alpha</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangements</token>
+    <token>TCR alpha</token>
+   </variation>
+   <variation>
+    <token>Rearrangement</token>
+    <token>TCR alpha</token>
+   </variation>
+   <variation>
+    <token>Rearrangements</token>
+    <token>TCR alpha</token>
+   </variation>
+   <variation>
+    <token>Gene Re arrangement</token>
+    <token>TCR alpha</token>
+   </variation>
+   <variation>
+    <token>Gene Re arrangements</token>
+    <token>TCR alpha</token>
+   </variation>
+   <variation>
+    <token>Re arrangement</token>
+    <token>TCR alpha</token>
+   </variation>
+   <variation>
+    <token>Re arrangements</token>
+    <token>TCR alpha</token>
+   </variation>
+   <variation>
+    <token>Rearrangement</token>
+    <token>TRA</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D013618" parent-id="D007108">
+  <canonic>Tachyphylaxis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Rapidly decreasing response to a drug or physiologically active agent after administration of a few doses. In immunology, it is the rapid immunization against the effect of toxic doses of an extract or serum by previous injection of small doses.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Tachyphylaxis</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="D019139">
+  <canonic>Tumor Escape</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The ability of tumors to evade destruction by the IMMUNE SYSTEM. Theories concerning possible mechanisms by which this takes place involve both cellular immunity ( IMMUNITY, CELLULAR) and humoral immunity ( ANTIBODY FORMATION), and also costimulatory pathways related to CD28 antigens (ANTIGENS, CD28) and CD80 antigens (ANTIGENS, CD80).</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Immune Escape, Tumor</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Tumor Escape</token>
+   </variation>
+   <variation>
+    <token>Immune Escape</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D020350" parent-id="D006087">
+  <canonic>Graft vs Tumor Effect</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Immunological rejection of tumor tissue/cells following bone marrow transplantation.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Graft vs Tumor Effect</synonym>
+   <synonym>Graft vs Neoplasm Effect</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Graft vs Neoplasm Response</token>
+   </variation>
+   <variation>
+    <token>Graft vs Tumor Response</token>
+   </variation>
+   <variation>
+    <token>Effect</token>
+    <token>Graft vs Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Effect</token>
+    <token>Graft vs Tumor</token>
+   </variation>
+   <variation>
+    <token>Effects</token>
+    <token>Graft vs Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Effects</token>
+    <token>Graft vs Tumor</token>
+   </variation>
+   <variation>
+    <token>Graft vs Neoplasm Effects</token>
+   </variation>
+   <variation>
+    <token>Graft vs Neoplasm Responses</token>
+   </variation>
+   <variation>
+    <token>Graft vs Tumor Effects</token>
+   </variation>
+   <variation>
+    <token>Graft vs Tumor Responses</token>
+   </variation>
+   <variation>
+    <token>Response</token>
+    <token>Graft vs Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Response</token>
+    <token>Graft vs Tumor</token>
+   </variation>
+   <variation>
+    <token>Responses</token>
+    <token>Graft vs Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Responses</token>
+    <token>Graft vs Tumor</token>
+   </variation>
+   <variation>
+    <token>Reaction</token>
+    <token>Graft vs Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Reactions</token>
+    <token>Graft vs Tumor</token>
+   </variation>
+   <variation>
+    <token>Activity</token>
+    <token>Graft vs Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Activities</token>
+    <token>Graft vs Tumor</token>
+   </variation>
+   <variation>
+    <token>Graft versus Tumor Effect</token>
+   </variation>
+   <variation>
+    <token>Graft versus Neoplasm Effect</token>
+   </variation>
+   <variation>
+    <token>Graft versus Neoplasm Response</token>
+   </variation>
+   <variation>
+    <token>Graft versus Tumor Response</token>
+   </variation>
+   <variation>
+    <token>Effect</token>
+    <token>Graft versus Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Effect</token>
+    <token>Graft versus Tumor</token>
+   </variation>
+   <variation>
+    <token>Effects</token>
+    <token>Graft versus Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Effects</token>
+    <token>Graft versus Tumor</token>
+   </variation>
+   <variation>
+    <token>Graft versus Neoplasm Effects</token>
+   </variation>
+   <variation>
+    <token>Graft versus Neoplasm Responses</token>
+   </variation>
+   <variation>
+    <token>Graft versus Tumor Effects</token>
+   </variation>
+   <variation>
+    <token>Graft versus Tumor Responses</token>
+   </variation>
+   <variation>
+    <token>Response</token>
+    <token>Graft versus Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Response</token>
+    <token>Graft versus Tumor</token>
+   </variation>
+   <variation>
+    <token>Responses</token>
+    <token>Graft versus Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Responses</token>
+    <token>Graft versus Tumor</token>
+   </variation>
+   <variation>
+    <token>Reaction</token>
+    <token>Graft versus Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Reactions</token>
+    <token>Graft versus Tumor</token>
+   </variation>
+   <variation>
+    <token>Activity</token>
+    <token>Graft versus Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Activities</token>
+    <token>Graft versus Tumor</token>
+   </variation>
+   <variation>
+    <token>Graft vs Tumor</token>
+   </variation>
+   <variation>
+    <token>Graft versus Tumor</token>
+   </variation>
+   <variation>
+    <token>Graft vs Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Graft versus Neoplasm</token>
+   </variation>
+   <variation>
+    <token>GvT</token>
+    <token>Graft vs Tumor</token>
+   </variation>
+   <variation>
+    <token>GvT</token>
+    <token>Graft versus Tumor</token>
+   </variation>
+   <variation>
+    <token>GvT</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016694" parent-id="D015329">
+  <canonic>Gene Rearrangement, delta-Chain T-Cell Antigen Receptor</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Ordered rearrangement of T-cell variable gene regions coding for the delta-chain of antigen receptors.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>T-Cell Antigen Receptor delta-Chain Gene Rearrangement</synonym>
+   <synonym>T-Lymphocyte Antigen Receptor delta-Chain Gene Rearrangement</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Gene Rearrangement</token>
+    <token>delta-Chain T-Cell Antigen Receptor</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangement</token>
+    <token>delta-Chain T Cell Antigen Receptor</token>
+   </variation>
+   <variation>
+    <token>T Cell delta-Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>T Lymphocyte delta-Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>Gene Rearrangement</token>
+    <token>delta Chain T Cell Antigen Receptor</token>
+   </variation>
+   <variation>
+    <token>T Cell Antigen Receptor delta Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>T Cell delta Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>T Lymphocyte Antigen Receptor delta Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>T Lymphocyte delta Chain Gene Rearrangement</token>
+   </variation>
+   <variation>
+    <token>Rearrangement</token>
+    <token>TCR delta</token>
+   </variation>
+   <variation>
+    <token>Re arrangement</token>
+    <token>TCR delta</token>
+   </variation>
+   <variation>
+    <token>Rearrange</token>
+    <token>TCR delta</token>
+   </variation>
+   <variation>
+    <token>Re arrange</token>
+    <token>TCR delta</token>
+   </variation>
+   <variation>
+    <token>Rearranged</token>
+    <token>TCR delta</token>
+   </variation>
+   <variation>
+    <token>Re arranged</token>
+    <token>TCR delta</token>
+   </variation>
+   <variation>
+    <token>Rearrangement</token>
+    <token>TCRD</token>
+   </variation>
+   <variation>
+    <token>Re arrangement</token>
+    <token>TCRD</token>
+   </variation>
+   <variation>
+    <token>Rearrange</token>
+    <token>TCRD</token>
+   </variation>
+   <variation>
+    <token>Re arrange</token>
+    <token>TCRD</token>
+   </variation>
+   <variation>
+    <token>Rearranged</token>
+    <token>TCRD</token>
+   </variation>
+   <variation>
+    <token>Re arranged</token>
+    <token>TCRD</token>
+   </variation>
+   <variation>
+    <token>Gene, Rearrangement</token>
+    <token>TCR delta</token>
+   </variation>
+   <variation>
+    <token>Gene, Re arrangement</token>
+    <token>TCR delta</token>
+   </variation>
+   <variation>
+    <token>Gene, Rearrange</token>
+    <token>TCR delta</token>
+   </variation>
+   <variation>
+    <token>Gene, Re arrange</token>
+    <token>TCR delta</token>
+   </variation>
+   <variation>
+    <token>Gene, Rearranged</token>
+    <token>TCR delta</token>
+   </variation>
+   <variation>
+    <token>Gene, Re arranged</token>
+    <token>TCR delta</token>
+   </variation>
+   <variation>
+    <token>Gene, Rearrangement</token>
+    <token>TCRD</token>
+   </variation>
+   <variation>
+    <token>Gene, Re arrangement</token>
+    <token>TCRD</token>
+   </variation>
+   <variation>
+    <token>Gene, Rearrange</token>
+    <token>TCRD</token>
+   </variation>
+   <variation>
+    <token>Gene, Re arrange</token>
+    <token>TCRD</token>
+   </variation>
+   <variation>
+    <token>Gene, Rearranged</token>
+    <token>TCRD</token>
+   </variation>
+   <variation>
+    <token>Gene, Re arranged</token>
+    <token>TCRD</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D007126">
+  <canonic>Immunoglobulin Allotypes</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Allelic variants of the immunoglobulin light chains (IMMUNOGLOBULIN LIGHT CHAINS) or heavy chains (IMMUNOGLOBULIN HEAVY CHAINS) encoded by ALLELES of IMMUNOGLOBULIN GENES.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Immunoglobulin Allotypes</synonym>
+   <synonym>Allotypes, Immunoglobulin</synonym>
+   <synonym>Allotypic Antibodies</synonym>
+   <synonym>Antibodies, Allotypic</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Ig Allotypes</token>
+   </variation>
+   <variation>
+    <token>Allotype</token>
+    <token>Ig</token>
+   </variation>
+   <variation>
+    <token>Allotype</token>
+    <token>Immunoglobulin</token>
+   </variation>
+   <variation>
+    <token>Allotypes</token>
+    <token>Ig</token>
+   </variation>
+   <variation>
+    <token>Allotypic Antibody</token>
+   </variation>
+   <variation>
+    <token>Antibody</token>
+    <token>Allotypic</token>
+   </variation>
+   <variation>
+    <token>Antibody</token>
+    <token>Allotype</token>
+   </variation>
+   <variation>
+    <token>Ig Allotype</token>
+   </variation>
+   <variation>
+    <token>Immunoglobulin Allotype</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D007129" parent-id="D007126">
+  <canonic>Immunoglobulin Gm Allotypes</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Allelic variants of the gamma-immunoglobulin heavy chain (IMMUNOGLOBULIN GAMMA-CHAINS) encoded by ALLELES of IMMUNOGLOBULIN HEAVY CHAIN GENES.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Immunoglobulin Gm Allotypes</synonym>
+   <synonym>Allotypes, Immunoglobulin Gm</synonym>
+   <synonym>Gm Allotypes</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Allotype</token>
+    <token>Gm</token>
+   </variation>
+   <variation>
+    <token>Allotypic</token>
+    <token>Gm</token>
+   </variation>
+   <variation>
+    <token>Allotype</token>
+    <token>Immunoglobulin Gm</token>
+   </variation>
+   <variation>
+    <token>Allotypes</token>
+    <token>Gm</token>
+   </variation>
+   <variation>
+    <token>Gm Allotype</token>
+   </variation>
+   <variation>
+    <token>Gm Allotype</token>
+    <token>Immunoglobulin</token>
+   </variation>
+   <variation>
+    <token>Gm Allotypes</token>
+    <token>Immunoglobulin</token>
+   </variation>
+   <variation>
+    <token>Immunoglobulin Gm Allotype</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D007152" parent-id="D000937">
+  <canonic>Immunologic Capping</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>An energy dependent process following the crosslinking of B CELL ANTIGEN RECEPTORS by multivalent ligands (bivalent anti-antibodies, LECTINS or ANTIGENS), on the B-cell surface. The crosslinked ligand-antigen receptor complexes collect in patches which flow to and aggregate at one pole of the cell to form a large mass - the cap. The caps may then be endocytosed or shed into the environment.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Immunologic Capping</synonym>
+   <synonym>Capping, Immunologic</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Immunological Capping</token>
+   </variation>
+   <variation>
+    <token>Capping</token>
+    <token>Immunological</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D006789" parent-id="D014181">
+  <canonic>Host vs Graft Reaction</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The immune responses of a host to a graft. A specific response is GRAFT REJECTION.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Host vs Graft Reaction</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Host versus Graft Reaction</token>
+   </variation>
+   <variation>
+    <token>HvG</token>
+    <token>Reaction</token>
+   </variation>
+   <variation>
+    <token>HvG</token>
+    <token>Reactivity</token>
+   </variation>
+   <variation>
+    <token>Host vs Graft</token>
+    <token>Reaction</token>
+   </variation>
+   <variation>
+    <token>Host vs Graft</token>
+    <token>Reactivity</token>
+   </variation>
+   <variation>
+    <token>Host versus Graft</token>
+    <token>Reaction</token>
+   </variation>
+   <variation>
+    <token>Host versus Graft</token>
+    <token>Reactivity</token>
+   </variation>
+   <variation>
+    <token>HvG</token>
+   </variation>
+   <variation>
+    <token>HvG</token>
+   </variation>
+   <variation>
+    <token>Host versus Graft</token>
+   </variation>
+   <variation>
+    <token>Host vs Graft</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D037182">
+  <canonic>T-Cell Antigen Receptor Specificity</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The property of the T-CELL RECEPTOR which enables it to react with some antigens and not others. The specificity is derived from the structure of the receptor's variable region which has the ability to recognize certain antigens in conjunction with the MAJOR HISTOCOMPATIBILITY COMPLEX molecule.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>T-Cell Antigen Receptor Specificity</synonym>
+   <synonym>T-Cell Immunologic Specificity</synonym>
+   <synonym>T-Cell Specificity</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>T Cell Receptor Specificity</token>
+   </variation>
+   <variation>
+    <token>Immunologic Specificity</token>
+    <token>T Cell</token>
+   </variation>
+   <variation>
+    <token>Immunological Specificity</token>
+    <token>T Cell</token>
+   </variation>
+   <variation>
+    <token>Specificity</token>
+    <token>T Cell</token>
+   </variation>
+   <variation>
+    <token>Specificity, T Cell</token>
+    <token>Immunologic</token>
+   </variation>
+   <variation>
+    <token>Specificity, T Cell</token>
+    <token>Immunological</token>
+   </variation>
+   <variation>
+    <token>Immunologic Specificity</token>
+    <token>T Lymphocyte</token>
+   </variation>
+   <variation>
+    <token>Immunological Specificity</token>
+    <token>T Lymphocyte</token>
+   </variation>
+   <variation>
+    <token>Specificity</token>
+    <token>T Lymphocyte</token>
+   </variation>
+   <variation>
+    <token>Specificity, T Lymphocyte</token>
+    <token>Immunologic</token>
+   </variation>
+   <variation>
+    <token>Specificity, T Lymphocyte</token>
+    <token>Immunological</token>
+   </variation>
+   <variation>
+    <token>Immunologic Specificity</token>
+    <token>T Cells</token>
+   </variation>
+   <variation>
+    <token>Immunological Specificity</token>
+    <token>T Cells</token>
+   </variation>
+   <variation>
+    <token>Specificity</token>
+    <token>T Cells</token>
+   </variation>
+   <variation>
+    <token>Specificity, T Cells</token>
+    <token>Immunologic</token>
+   </variation>
+   <variation>
+    <token>Specificity, T Cells</token>
+    <token>Immunological</token>
+   </variation>
+   <variation>
+    <token>Immunologic Specificity</token>
+    <token>T Lymphocytes</token>
+   </variation>
+   <variation>
+    <token>Immunological Specificity</token>
+    <token>T Lymphocytes</token>
+   </variation>
+   <variation>
+    <token>Specificity</token>
+    <token>T Lymphocytes</token>
+   </variation>
+   <variation>
+    <token>Specificity, T Lymphocytes</token>
+    <token>Immunologic</token>
+   </variation>
+   <variation>
+    <token>Specificity, T Lymphocytes</token>
+    <token>Immunological</token>
+   </variation>
+   <variation>
+    <token>Specificity</token>
+    <token>T Cell Receptor</token>
+   </variation>
+   <variation>
+    <token>Specificity</token>
+    <token>TCR</token>
+   </variation>
+   <variation>
+    <token>T Cell Antigen Receptor Specificity</token>
+   </variation>
+   <variation>
+    <token>T Cell Immunologic Specificity</token>
+   </variation>
+   <variation>
+    <token>T Cell Receptor Specificity</token>
+   </variation>
+   <variation>
+    <token>T Cell Specificity</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D045142">
+  <canonic>Cross-Priming</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Class I-restricted activation of CD8-POSITIVE LYMPHOCYTES resulting from ANTIGEN PRESENTATION of exogenous ANTIGENS (cross-presentation). This is in contrast to normal activation of these lymphocytes (direct-priming) which results from presentation of endogenous antigens.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cross Priming</synonym>
+   <synonym>Cross Presentation</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="D013073" parent-id="D000371">
+  <canonic>Sperm Agglutination</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Agglutination of spermatozoa by antibodies or autoantibodies.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Sperm Agglutination</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Agglutination</token>
+    <token>Sperm</token>
+   </variation>
+   <variation>
+    <token>Agglutinations</token>
+    <token>Sperm</token>
+   </variation>
+   <variation>
+    <token>Agglutination</token>
+    <token>Sperms</token>
+   </variation>
+   <variation>
+    <token>Agglutinations</token>
+    <token>Sperms</token>
+   </variation>
+   <variation>
+    <token>Sperm Agglutinations</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016525" parent-id="D000937">
+  <canonic>Antigenic Modulation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Loss of detectable antigen from the surface of a cell after incubation with antibodies. This is one method in which some tumors escape detection by the immune system. Antigenic modulation of target antigens also reduces the therapeutic effectiveness of treatment by monoclonal antibodies.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Antigenic Modulation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Antigenic Modulations</token>
+   </variation>
+   <variation>
+    <token>Modulation</token>
+    <token>Antigenic</token>
+   </variation>
+   <variation>
+    <token>Modulations</token>
+    <token>Antigenic</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D037582" parent-id="D003167">
+  <canonic>Complement Pathway, Mannose-Binding Lectin</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Complement activation triggered by the interaction of microbial POLYSACCHARIDES with serum MANNOSE-BINDING LECTIN resulting in the activation of MANNOSE-BINDING PROTEIN-ASSOCIATED SERINE PROTEASES. As in the classical pathway, MASPs cleave COMPLEMENT C4 and COMPLEMENT C2 to form C3 CONVERTASE (C4B2A) and the subsequent C5 CONVERTASE (C4B2A3B) leading to cleavage of COMPLEMENT C5 and assembly of COMPLEMENT MEMBRANE ATTACK COMPLEX.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Mannan-Binding Lectin Complement Pathway</synonym>
+   <synonym>Mannose-Binding Lectin Complement Pathway</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Complement Pathway</token>
+    <token>Mannose Binding Lectin</token>
+   </variation>
+   <variation>
+    <token>Lectin-Complement Pathway</token>
+   </variation>
+   <variation>
+    <token>Mannan Binding Lectin Pathway</token>
+    <token>Complement</token>
+   </variation>
+   <variation>
+    <token>Complement Pathway</token>
+    <token>Mannose Binding Lectin</token>
+   </variation>
+   <variation>
+    <token>Lectin Complement Pathway</token>
+   </variation>
+   <variation>
+    <token>Lectin Pathway, Mannan-Binding</token>
+    <token>Complement</token>
+   </variation>
+   <variation>
+    <token>Lectin Pathways, Mannan-Binding</token>
+    <token>Complement</token>
+   </variation>
+   <variation>
+    <token>Lectin Complement Pathways</token>
+   </variation>
+   <variation>
+    <token>Mannan Binding Lectin Complement Pathway</token>
+   </variation>
+   <variation>
+    <token>Mannan Binding Lectin Pathway</token>
+    <token>Complement</token>
+   </variation>
+   <variation>
+    <token>Mannan-Binding Lectin Pathways Complement</token>
+   </variation>
+   <variation>
+    <token>Mannose Binding Lectin Complement Pathway</token>
+   </variation>
+   <variation>
+    <token>Pathway, Lectin</token>
+    <token>Complement</token>
+   </variation>
+   <variation>
+    <token>Pathways, Lectin</token>
+    <token>Complement</token>
+   </variation>
+   <variation>
+    <token>Pathway, Mannan Binding, Lectin</token>
+    <token>Complement</token>
+   </variation>
+   <variation>
+    <token>Pathways</token>
+    <token>Lectin Complement</token>
+   </variation>
+   <variation>
+    <token>Pathways, Mannan Binding Lectin</token>
+    <token>Complement</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D019067">
+  <canonic>Antibody-Dependent Enhancement</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Enhancement of viral infectivity caused by non-neutralizing antibodies. There are at least two mechanisms known to account for this: mediation by Fc receptors ( RECEPTORS, FC) or by complement receptors ( RECEPTORS, COMPLEMENT). Either the virus is complexed with antiviral IMMUNOGLOBULIN G and binds to Fc receptors, or virus is coated with antiviral IMMUNOGLOBULIN M and binds to complement receptors.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Antibody-Dependent Enhancement</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Antibody Dependent Enhancement</token>
+   </variation>
+   <variation>
+    <token>Antibody Dependent Enhancements</token>
+   </variation>
+   <variation>
+    <token>Enhancement</token>
+    <token>Antibody Dependent</token>
+   </variation>
+   <variation>
+    <token>Enhancements</token>
+    <token>Antibody Dependent</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D032521">
+  <canonic>Immunity, Herd</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The non-susceptibility to infection of a large group of individuals in a population. A variety of factors can be responsible for herd immunity and this gives rise to the different definitions used in the literature. Most commonly, herd immunity refers to the case when, if most of the population is immune, infection of a single individual will not cause an epidemic. Also, in such immunized populations, susceptible individuals are not likely to become infected. Herd immunity can also refer to the case when unprotected individuals fail to contract a disease because the infecting organism has been banished from the population.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Immunity, Herd</synonym>
+   <synonym>Herd Immunity</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="D007131" parent-id="D007126">
+  <canonic>Immunoglobulin Km Allotypes</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Allelic variants of the kappa light chains (IMMUNOGLOBULIN KAPPA-CHAINS) encoded by ALLELES of IMMUNOGLOBULIN LIGHT CHAIN GENES.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Immunoglobulin Km Allotypes</synonym>
+   <synonym>Allotypes, Immunoglobulin Inv</synonym>
+   <synonym>Immunoglobulin Inv Allotypes</synonym>
+   <synonym>Inv Allotypes</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Km Allotypes</token>
+   </variation>
+   <variation>
+    <token>Allotype</token>
+    <token>Immunoglobulin Inv</token>
+   </variation>
+   <variation>
+    <token>Allotype</token>
+    <token>Immunoglobulin Km</token>
+   </variation>
+   <variation>
+    <token>Allotype</token>
+    <token>Inv</token>
+   </variation>
+   <variation>
+    <token>Allotype</token>
+    <token>Km</token>
+   </variation>
+   <variation>
+    <token>Allotypes</token>
+    <token>Immunoglobulin Km</token>
+   </variation>
+   <variation>
+    <token>Allotypes</token>
+    <token>Inv</token>
+   </variation>
+   <variation>
+    <token>Allotypes</token>
+    <token>Km</token>
+   </variation>
+   <variation>
+    <token>Allotypes, Ig</token>
+    <token>Km</token>
+   </variation>
+   <variation>
+    <token>Allotypes, Ig</token>
+    <token>Inv</token>
+   </variation>
+   <variation>
+    <token>Allotype, Ig</token>
+    <token>Km</token>
+   </variation>
+   <variation>
+    <token>Allotype, Ig</token>
+    <token>Inv</token>
+   </variation>
+   <variation>
+    <token>Allotypic</token>
+    <token>Immunoglobulin Inv</token>
+   </variation>
+   <variation>
+    <token>Allotypic</token>
+    <token>Immunoglobulin Km</token>
+   </variation>
+   <variation>
+    <token>Allotypic</token>
+    <token>Inv</token>
+   </variation>
+   <variation>
+    <token>Allotypic</token>
+    <token>Km</token>
+   </variation>
+   <variation>
+    <token>Allotypic, Ig</token>
+    <token>Km</token>
+   </variation>
+   <variation>
+    <token>Allotypic, Ig</token>
+    <token>Inv</token>
+   </variation>
+   <variation>
+    <token>Immunoglobulin Inv Allotype</token>
+   </variation>
+   <variation>
+    <token>Immunoglobulin Km Allotype</token>
+   </variation>
+   <variation>
+    <token>Inv Allotype</token>
+   </variation>
+   <variation>
+    <token>Inv Allotype</token>
+    <token>Immunoglobulin</token>
+   </variation>
+   <variation>
+    <token>Inv Allotypes</token>
+    <token>Immunoglobulin</token>
+   </variation>
+   <variation>
+    <token>Km Allotype</token>
+   </variation>
+   <variation>
+    <token>Km Allotype</token>
+    <token>Immunoglobulin</token>
+   </variation>
+   <variation>
+    <token>Km Allotypes</token>
+    <token>Immunoglobulin</token>
+   </variation>
+  </variations>
+ </term>
+
+</terms>

@@ -8,7 +8,7 @@
 				<conceptlabel parametername="label" parametertype="java.lang.String">
 					ID_MAP_NCBI_GENES
 				</conceptlabel>
-				<facetlabels parametername="labels" tojson="true">
+				<facetlabels parametername="labels" tojson="true" elementtype="java.lang.String">
 					<facetlabel>FACET</facetlabel>
 					<facetlabel>BIO_PORTAL</facetlabel>
 				</facetlabels>

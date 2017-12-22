@@ -1,0 +1,666 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<terms facet="Hematopoietic Progenitor Cells">
+ <term id="D054448" parent-id="lymphoid_progenitor_cell">
+  <canonic>Immature B cells</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Lymphocyte progenitor cells that are restricted in their differentiation potential to the B lymphocyte lineage. The pro-B cell stage of B LYMPHOCYTE development precedes the pre-B cell stage.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>immature B-cell</synonym>
+   <synonym>immature B-lymphocyte</synonym>
+   <synonym>Precursor B-Cells</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>immature B-cell</token>
+   </variation>
+   <variation>
+    <token>immature B-lymphocyte</token>
+   </variation>
+   <variation>
+    <token>immature</token>
+    <token>B cell</token>
+   </variation>
+   <variation>
+    <token>immature</token>
+    <token>B lymphocyte</token>
+   </variation>
+   <variation>
+    <token>B-Lymphoid Precursor Cells</token>
+   </variation>
+   <variation>
+    <token>Immature B-Cells</token>
+   </variation>
+   <variation>
+    <token>Immature B-Lymphocytes</token>
+   </variation>
+   <variation>
+    <token>Precursor B-Lymphocytes</token>
+   </variation>
+   <variation>
+    <token>Precursor B-Lymphocyte</token>
+   </variation>
+   <variation>
+    <token>Precursor B-cell</token>
+   </variation>
+   <variation>
+    <token>B-cell Precursor</token>
+   </variation>
+   <variation>
+    <token>B-cell Precursors</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="pre_b_cell" parent-id="D054448">
+  <canonic>Pre-B cells</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A fully committed immature B cell that expresses the pre-B cell receptor.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>pre-B cell</synonym>
+   <synonym>pre B-cell</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="pro_b_cell" parent-id="lymphoid_progenitor_cell">
+  <canonic>Pro-B cells</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A progenitor cell of the B cell lineage, with some lineage specific activity such as early stages of recombination of B cell receptor genes, but not yet fully committed to the B cell lineage until the expression of PAX5 occurs.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>pro-B cell</synonym>
+   <synonym>pro B-cell</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="pro_t_cell" parent-id="lymphoid_progenitor_cell">
+  <canonic>Pro-T cells</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A progenitor cell of the T cell lineage, with some lineage specific marker expression, but not yet fully committed to the T cell lineage.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>pro-T cell</synonym>
+   <synonym>pro T-cell</synonym>
+   <synonym>DN1 thymocyte</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="D054504" parent-id="lymphoid_progenitor_cell">
+  <canonic>Immature T cells</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Lymphocyte progenitor cells that are restricted in their differentiation potential to the T lymphocyte lineage.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>immature T-cell</synonym>
+   <synonym>immature T-lymphocyte</synonym>
+   <synonym>T-Cell Precursors</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>T-Cell Precursor</token>
+   </variation>
+   <variation>
+    <token>Precursors</token>
+    <token>T-cell</token>
+   </variation>
+   <variation>
+    <token>Precursors</token>
+    <token>T-Lymphocyte</token>
+   </variation>
+   <variation>
+    <token>Precursors</token>
+    <token>T-cells</token>
+   </variation>
+   <variation>
+    <token>Precursors</token>
+    <token>T-Lymphocytes</token>
+   </variation>
+   <variation>
+    <token>immature T-cell</token>
+   </variation>
+   <variation>
+    <token>immature T-lymphocyte</token>
+   </variation>
+   <variation>
+    <token>immature</token>
+    <token>T cell</token>
+   </variation>
+   <variation>
+    <token>immature</token>
+    <token>T lymphocyte</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="thymocyte" parent-id="D054504">
+  <canonic>Thymocytes</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Thymocytes are T cell precursors which develop in the thymus. The processes of beta-selection, positive selection and negative selection shape the population thymocytes into a peripheral pool of T cells that are able to respond to foreign pathogens and are immunologically tolerant towards self antigens.</description>
+  <type>de.julielab.jules.types.Cell</type>
+  <synonyms>
+   <synonym>thymocyte</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="dn2_immature_t_cell" parent-id="D054504">
+  <canonic>DN2 thymocytes</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>An immature T cell in the thymus at the earliest stage of T cell receptor rearrangement of the beta, gamma, and delta T cell receptor chains.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>DN2 thymocyte</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="dn3_immature_t_cell" parent-id="D054504">
+  <canonic>DN3 thymocytes</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>An immature T cell in the thymus expressing the T cell receptor beta-chain in complex with the pre-T cell receptor alpha chain.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>DN3 thymocyte</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="dn4_alpha_beta_immature_t_cell" parent-id="D054504">
+  <canonic>DN4 thymocyte</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>An immature T cell in the thymus that has passed the beta-selection checkpoint and is rapidly proliferating and beginning to rearrange the T cell receptor alpha chain.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>DN4 thymocyte</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="hematopoietic_stem_cell">
+  <canonic>Hematopoietic stem cells</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A stem cell from which all cells of the lymphoid and myeloid lineages develop, including blood cells and cells of the immune system.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>HSC</synonym>
+   <synonym>hemopoietic stem cell</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="hematopoietic_progenitor_cell">
+  <canonic>Hematopoietic progenitor cells</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A progenitor cell of any hematopoietic lineage, potentially multipotent.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>HPC</synonym>
+   <synonym>CD34+ cell</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="common_lymphocyte_progenitor" parent-id="lymphoid_progenitor_cell">
+  <canonic>Common lymphocyte progenitors</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A progenitor cell committed to the lymphoid lineage.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>CLP</synonym>
+   <synonym>common lymphocyte progenitor</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="lymphoid_progenitor_cell" parent-id="hematopoietic_progenitor_cell">
+  <canonic>Early lymphocyte progenitors</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A progenitor cell of any lymphoid lineage, potentially multipotent.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>lymphoid stem cell</synonym>
+   <synonym>ELP</synonym>
+   <synonym>early lymphocyte progenitors</synonym>
+   <synonym>lymphoid progenitor cells</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="nk_cell_progenitor" parent-id="lymphoid_progenitor_cell">
+  <canonic>NK cell progenitors</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A progenitor committed to the natural killer cell lineage, expressing certain phenotypic markers of the natural killer cell lineage such as the IL-15 receptor, but lacking many of the phenotypic characteristics of later stages of natural killer cell development such as expression of NK activating and inhibitory molecules.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>NKP</synonym>
+   <synonym>NK cell progenitor</synonym>
+   <synonym>natural killer cell progenitor</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="common_myeloid_progenitor" parent-id="myeloid_progenitor_cell">
+  <canonic>Common myeloid progenitors</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A progenitor cell committed to myeloid lineage, including the megakaryocyte and erythroid lineages.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>CMP</synonym>
+   <synonym>common myeloid progenitor</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="myeloid_progenitor_cell" parent-id="hematopoietic_progenitor_cell">
+  <canonic>Myeloid progenitor cells</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A progenitor cell of any myeloid lineage, potentially multipotent.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>myeloid progenitor cell</synonym>
+   <synonym>MPC</synonym>
+   <synonym>myeloid stem cell</synonym>
+   <synonym>CFU-S</synonym>
+   <synonym>CFU-C</synonym>
+   <synonym>CFU-GEMM</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="granulocyte_monocyte_progenitor_cell" parent-id="myeloid_progenitor_cell">
+  <canonic>Granulocyte monocyte progenitor cells</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A progenitor cell committed to the granulocyte and monocyte lineages.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>granulocyte monocyte progenitor cell</synonym>
+   <synonym>CFU-GM</synonym>
+   <synonym>GMP</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="D042381" parent-id="myeloid_progenitor_cell">
+  <canonic>Granulocyte precursor cells</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The cells in the granulocytic series that give rise to mature granulocytes (NEUTROPHILS; EOSINOPHILS; and BASOPHILS.) These precursor cells include myeloblasts, promyelocytes, myelocytes and metamyelocytes.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Granulocytic Precursor Cells</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Myeloblasts</token>
+   </variation>
+   <variation>
+    <token>Promyelocytes</token>
+   </variation>
+   <variation>
+    <token>Metamyelocytes</token>
+   </variation>
+   <variation>
+    <token>Myeloblast</token>
+   </variation>
+   <variation>
+    <token>Myelocytes</token>
+   </variation>
+   <variation>
+    <token>Premyelocytes</token>
+   </variation>
+   <variation>
+    <token>Progranulocytes</token>
+   </variation>
+   <variation>
+    <token>Cell</token>
+    <token>Granulocyte Precursor</token>
+   </variation>
+   <variation>
+    <token>Cell</token>
+    <token>Granulocytic Precursor</token>
+   </variation>
+   <variation>
+    <token>Cells</token>
+    <token>Granulocyte Precursor</token>
+   </variation>
+   <variation>
+    <token>Cells</token>
+    <token>Granulocytic Precursor</token>
+   </variation>
+   <variation>
+    <token>Granulocyte Precursor Cell</token>
+   </variation>
+   <variation>
+    <token>Granulocytic Precursor Cell</token>
+   </variation>
+   <variation>
+    <token>Metamyelocyte</token>
+   </variation>
+   <variation>
+    <token>Myelocyte</token>
+   </variation>
+   <variation>
+    <token>Precursor Cell</token>
+    <token>Granulocyte</token>
+   </variation>
+   <variation>
+    <token>Precursor Cell</token>
+    <token>Granulocytic</token>
+   </variation>
+   <variation>
+    <token>Precursor Cells</token>
+    <token>Granulocyte</token>
+   </variation>
+   <variation>
+    <token>Precursor Cells</token>
+    <token>Granulocytic</token>
+   </variation>
+   <variation>
+    <token>Premyelocyte</token>
+   </variation>
+   <variation>
+    <token>Progranulocyte</token>
+   </variation>
+   <variation>
+    <token>Promyelocyte</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="myeloblast" parent-id="D042381">
+  <canonic>Myeloblasts</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The most primitive precursor in the granulocytic series, having fine, evenly distributed chromatin, several nucleoli, and a nongranular basophilic cytoplasm.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>myeloblast</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="promyelocyte" parent-id="D042381">
+  <canonic>Promyelocytes</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A precursor in the granulocytic series, being a cell intermediate in development between a myeloblast and myelocyte, and containing a few, as yet undifferentiated, cytoplasmic granules.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>promyelocyte</synonym>
+   <synonym>HL-60 cells</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="basophil_progenitor_cell" parent-id="D042381">
+  <canonic>Basophil progenitor cells</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A progenitor cell committed to the basophil lineage.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>basophil progenitor cells</synonym>
+   <synonym>CFU-Bas</synonym>
+   <synonym>basophil stem cell</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="eosinophil_myeloblast" parent-id="myeloblast">
+  <canonic>Eosinophil myeloblasts</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A myeloblast committed to the eosinophil lineage. A myeloblast is the most primitive precursor in the granulocytic series, having fine, evenly distributed chromatin, several nucleoli, and a nongranular basophilic cytoplasm.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>eosinophil myeloblast</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="eosinophil_promyelocyte" parent-id="promyelocyte">
+  <canonic>Eosinophil promyelocytes</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>An eosinophil precursor in the granulocytic series, being a cell intermediate in development between a myeloblast and myelocyte, and containing a few, as yet undifferentiated, cytoplasmic granules.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>eosinophil promyelocyte</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="eosinophil_myelocyte" parent-id="D042381">
+  <canonic>Eosinophil myelocytes</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A eosinophil precursor in the granulocytic series, being a cell intermediate in development between a promyelocyte and a metamyelocyte; in this stage, differentiation of cytoplasmic granules has begun.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>eosinophil myelocyte</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="eosinophil_metamyelocyte" parent-id="D042381">
+  <canonic>Eosinophil metamyelocytes</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A eosinophil precursor in the granulocytic series, being a cell intermediate in development between a eosinophilic myelocyte and a band form eosinophil.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>eosinophil metamyelocyte</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="eosinophil_band" parent-id="D042381">
+  <canonic>Band form eosinophils</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A late eosinophilic metamyelocyte in which the nucleus is in the form of a curved or coiled band, not having acquired the typical multilobar shape of the mature basophil.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>band form eosinophil</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="eosinophil_progenitor_cell" parent-id="D042381">
+  <canonic>Eosinophil progenitor cells</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A progenitor cell committed to the eosinophil lineage.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>eosinophil progenitor cell</synonym>
+   <synonym>CFU-Eo</synonym>
+   <synonym>eosinophil stem cell</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="neutrophil_myeloblast" parent-id="myeloblast">
+  <canonic>Neutrophilic myeloblasts</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A myeloblast committed to the neutrophil lineage. A myeloblast is the most primitive precursor in the granulocytic series, having fine, evenly distributed chromatin, several nucleoli, and a nongranular basophilic cytoplasm.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>neutrophil myeloblast</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="neutrophil_progenitor_cell" parent-id="D042381">
+  <canonic>Neutrophil progenitor cells</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A progenitor cell of the neutrophil lineage.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>neutrophil progenitor cells</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="neutrophil_promyelocyte" parent-id="promyelocyte">
+  <canonic>Neutrophil promyelocytes</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A neutrophil precursor in the granulocytic series, being a cell intermediate in development between a myeloblast and myelocyte, and containing a few, as yet undifferentiated, cytoplasmic granules.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>neutrophil promyelocyte</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="neutrophil_myelocyte" parent-id="D042381">
+  <canonic>Neutrophil myelocytes</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A neutrophil precursor in the granulocytic series, being a cell intermediate in development between a promyelocyte and a metamyelocyte; in this stage, differentiation of cytoplasmic granules has begun.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>neutrophil myelocyte</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="neutrophil_metamyelocyte" parent-id="D042381">
+  <canonic>Neutrophil metamyelocytes</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A neutrophil precursor in the granulocytic series, being a cell intermediate in development between a meylocyte and the band form neutrophil. The protein synthesis seen in earlier stages decreases or stops; the nucleus becomes indented and its chromatin becomes coarse and clumped; and the cytoplasm becomes pink like that of a mature granulocyte.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>neutrophil metamyelocyte</synonym>
+   <synonym>juvenile neutrophil</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="neutrophil_band" parent-id="D042381">
+  <canonic>Band form neutrophils</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A late neutrophilic metamyelocyte in which the nucleus is in the form of a curved or coiled band, not having acquired the typical multilobar shape of the mature neutrophil.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>band cell</synonym>
+   <synonym>rod neutrophil</synonym>
+   <synonym>stab cell</synonym>
+   <synonym>band form neutrophil</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="mast_cell_progenitor" parent-id="myeloid_progenitor_cell">
+  <canonic>Mast cell progenitors</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A progenitor cell of the mast cell lineage.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>Mast cell progenitors</synonym>
+   <synonym>Mast cell progenitors</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>mast cell progenitor</token>
+   </variation>
+   <variation>
+    <token>mast cell precursors</token>
+   </variation>
+   <variation>
+    <token>mast cell precursor</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="monoblast" parent-id="myeloid_progenitor_cell">
+  <canonic>Monoblasts</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A progenitor cell committed to the monocyte lineage.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>Monoblasts</synonym>
+   <synonym>CFU-M</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Monoblast</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="promonocyte" parent-id="myeloid_progenitor_cell">
+  <canonic>Promonocytes</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A precursor in the monocytic series, being a cell intermediate in development between the monoblast and monocyte.</description>
+  <type>de.julielab.jules.types.HematopoieticProgenitorCell</type>
+  <synonyms>
+   <synonym>Promonocytes</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Promonocyte</token>
+   </variation>
+  </variations>
+ </term>
+
+</terms>

@@ -1,0 +1,2764 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<terms facet="Cellular Processes">
+ <term id="D017209" parent-id="D016923">
+  <canonic>Apoptosis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>One of the mechanisms by which CELL DEATH occurs (compare with NECROSIS and AUTOPHAGOCYTOSIS). Apoptosis is the mechanism responsible for the physiological deletion of cells and appears to be intrinsically programmed. It is characterized by distinctive morphologic changes in the nucleus and cytoplasm, chromatin cleavage at regularly spaced sites, and the endonucleolytic cleavage of genomic DNA; ( DNA FRAGMENTATION); at internucleosomal sites. This mode of cell death serves as a balance to mitosis in regulating the size of animal tissues and in mediating pathologic processes associated with tumor growth.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Apoptosis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Apoptosis</token>
+    <token>Extrinsic Pathway</token>
+   </variation>
+   <variation>
+    <token>Apoptosis</token>
+    <token>Intrinsic Pathway</token>
+   </variation>
+   <variation>
+    <token>Programmed Cell Death</token>
+    <token>Type I</token>
+   </variation>
+   <variation>
+    <token>Apoptoses</token>
+    <token>Extrinsic Pathway</token>
+   </variation>
+   <variation>
+    <token>Apoptoses</token>
+    <token>Intrinsic Pathwa</token>
+   </variation>
+   <variation>
+    <token>Extrinsic Pathway Apoptoses</token>
+   </variation>
+   <variation>
+    <token>Extrinsic Pathway Apoptosis</token>
+   </variation>
+   <variation>
+    <token>Intrinsic Pathway Apoptoses</token>
+   </variation>
+   <variation>
+    <token>Intrinsic Pathway Apoptosis</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015398" parent-id="D002450">
+  <canonic>Signal Transduction</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The intercellular or intracellular transfer of information (biological activation/inhibition) through a signal pathway. In each signal transduction system, an activation/inhibition signal from a biologically active molecule (hormone, neurotransmitter) is mediated via the coupling of a receptor/enzyme to a second messenger system or to an ion channel. Signal transduction plays an important role in activating cellular functions, cell differentiation, and cell proliferation. Examples of signal transduction systems are the GAMMA-AMINOBUTYRIC ACID-postsynaptic receptor-calcium ion channel system, the receptor-mediated T-cell activation pathway, and the receptor-mediated activation of phospholipases. Those coupled to membrane depolarization or intracellular release of calcium include the receptor-mediated activation of cytotoxic functions in granulocytes and the synaptic potentiation of protein kinase activation. Some signal transduction pathways may be part of larger signal transduction pathways; for example, protein kinase activation is part of the platelet activation signal pathway.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Signal Transduction</synonym>
+   <synonym>Receptor-Mediated Signal Transduction</synonym>
+   <synonym>Signal Pathways</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Receptor Mediated Signal Transduction</token>
+   </variation>
+   <variation>
+    <token>Signal Transduction Pathways</token>
+   </variation>
+   <variation>
+    <token>Signal Transduction Systems</token>
+   </variation>
+   <variation>
+    <token>Pathway</token>
+    <token>Signal</token>
+   </variation>
+   <variation>
+    <token>Pathway</token>
+    <token>Signal Transduction</token>
+   </variation>
+   <variation>
+    <token>Pathways</token>
+    <token>Signal</token>
+   </variation>
+   <variation>
+    <token>Pathways</token>
+    <token>Signal Transduction</token>
+   </variation>
+   <variation>
+    <token>Receptor Mediated Signal Transductions</token>
+   </variation>
+   <variation>
+    <token>Signal Pathway</token>
+   </variation>
+   <variation>
+    <token>Signal Transduction Pathway</token>
+   </variation>
+   <variation>
+    <token>Signal Transduction System</token>
+   </variation>
+   <variation>
+    <token>Signal Transduction</token>
+    <token>Receptor Mediated</token>
+   </variation>
+   <variation>
+    <token>Signal Transductions</token>
+   </variation>
+   <variation>
+    <token>Signal Transductions</token>
+    <token>Receptor-Mediated</token>
+   </variation>
+   <variation>
+    <token>System</token>
+    <token>Signal Transduction</token>
+   </variation>
+   <variation>
+    <token>Systems</token>
+    <token>Signal Transduction</token>
+   </variation>
+   <variation>
+    <token>Transduction</token>
+    <token>Signal</token>
+   </variation>
+   <variation>
+    <token>Transductions</token>
+    <token>Signal</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D002455" parent-id="D002453">
+  <canonic>Cell Division</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The fission of a CELL. It includes CYTOKINESIS, when the CYTOPLASM of a cell is divided, and CELL NUCLEUS DIVISION.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cell Division</synonym>
+   <synonym>M Phase</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Cell Division Phase</token>
+   </variation>
+   <variation>
+    <token>Cell Divisions</token>
+   </variation>
+   <variation>
+    <token>Division Phase</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Division</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Divisions</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>M Phases</token>
+   </variation>
+   <variation>
+    <token>Phase</token>
+    <token>Cell Division</token>
+   </variation>
+   <variation>
+    <token>Phase</token>
+    <token>M</token>
+   </variation>
+   <variation>
+    <token>Phases</token>
+    <token>M</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D002454">
+  <canonic>Cell Differentiation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Progressive restriction of the developmental potential and increasing specialization of function that leads to the formation of specialized cells, tissues, and organs.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cell Differentiation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Differentiation</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Cell Differentiations</token>
+   </variation>
+   <variation>
+    <token>Differentiations</token>
+    <token>Cell</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D002470">
+  <canonic>Cell Survival</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The span of viability of a cell characterized by the capacity to perform certain functions such as metabolism, growth, reproduction, some form of responsiveness, and adaptability.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cell Survival</synonym>
+   <synonym>Cell Viability</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Cell Viabilities</token>
+   </variation>
+   <variation>
+    <token>Survival</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Viabilities</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Viability</token>
+    <token>Cell</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D002448">
+  <canonic>Cell Adhesion</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Adherence of cells to surfaces or to other cells.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cell Adhesion</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Adhesion</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Adhesions</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Cell Adhesions</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D002465">
+  <canonic>Cell Movement</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The movement of cells from one location to another. Distinguish from CYTOKINESIS which is the process of dividing the CYTOPLASM of a cell.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cell Movement</synonym>
+   <synonym>Cell Migration</synonym>
+   <synonym>Cell Locomotion</synonym>
+   <synonym>Cell Motility</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Locomotion</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Migration</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Motility</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Movement</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Cell Movements</token>
+   </variation>
+   <variation>
+    <token>Movements</token>
+    <token>Cell</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D002453">
+  <canonic>Cell Cycle</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The complex series of phenomena, occurring between the end of one CELL DIVISION and the end of the next, by which cellular material is duplicated and then divided between two daughter cells. The cell cycle includes INTERPHASE, which includes G0 PHASE; G1 PHASE; S PHASE; and G2 PHASE, and CELL DIVISION PHASE.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cell Cycle</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Cell Division Cycle</token>
+   </variation>
+   <variation>
+    <token>Cell Cycles</token>
+   </variation>
+   <variation>
+    <token>Cell Division Cycles</token>
+   </variation>
+   <variation>
+    <token>Cycle</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Cycle</token>
+    <token>Cell Division</token>
+   </variation>
+   <variation>
+    <token>Cycles</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Cycles</token>
+    <token>Cell Division</token>
+   </variation>
+   <variation>
+    <token>Division Cycle</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Division Cycles</token>
+    <token>Cell</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D049109" parent-id="D048708">
+  <canonic>Cell Proliferation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>All of the processes involved in increasing CELL NUMBER including CELL DIVISION.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cell Proliferation</synonym>
+   <synonym>Cell Growth in Number</synonym>
+   <synonym>Cellular Proliferation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Cell Multiplication</token>
+   </variation>
+   <variation>
+    <token>Cell Number Growth</token>
+   </variation>
+   <variation>
+    <token>Growth</token>
+    <token>Cell Number</token>
+   </variation>
+   <variation>
+    <token>Multiplication</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Number Growth</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Proliferation</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Proliferation</token>
+    <token>Cellular</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D010587" parent-id="D004705">
+  <canonic>Phagocytosis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The engulfing of microorganisms, other cells, and foreign particles by phagocytic cells ( PHAGOCYTES).</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Phagocytosis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Phagocytoses</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016923">
+  <canonic>Cell Death</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The termination of the cell's ability to carry out vital functions such as metabolism, growth, reproduction, responsiveness, and adaptability.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cell Death</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Death</token>
+    <token>Cell</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D002450">
+  <canonic>Cell Communication</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Any of several ways in which living cells of an organism communicate with one another, whether by direct contact between cells or by means of chemical signals carried by neurotransmitter substances, hormones, and cyclic AMP.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cell Communication</synonym>
+   <synonym>Cell Interaction</synonym>
+   <synonym>Cell-to-Cell Interaction</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Cell Communications</token>
+   </variation>
+   <variation>
+    <token>Cell Interactions</token>
+   </variation>
+   <variation>
+    <token>Cell to Cell Interaction</token>
+   </variation>
+   <variation>
+    <token>Cell-to-Cell Interactions</token>
+   </variation>
+   <variation>
+    <token>Communication</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Communications</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Interaction</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Interaction</token>
+    <token>Cell-to-Cell</token>
+   </variation>
+   <variation>
+    <token>Interactions</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Interactions</token>
+    <token>Cell-to-Cell</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D008938" parent-id="D048750">
+  <canonic>Mitosis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A type of CELL NUCLEUS division by means of which the two daughter nuclei normally receive identical complements of the number of CHROMOSOMES of the somatic cells of the species.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Mitosis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>M Phase</token>
+    <token>Mitotic</token>
+   </variation>
+   <variation>
+    <token>Mitotic M Phase</token>
+   </variation>
+   <variation>
+    <token>M Phases</token>
+    <token>Mitotic</token>
+   </variation>
+   <variation>
+    <token>Mitoses</token>
+   </variation>
+   <variation>
+    <token>Mitotic M Phases</token>
+   </variation>
+   <variation>
+    <token>Phase</token>
+    <token>Mitotic M</token>
+   </variation>
+   <variation>
+    <token>Phases</token>
+    <token>Mitotic M</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D006410" parent-id="D002454">
+  <canonic>Hematopoiesis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The development and formation of various types of BLOOD CELLS. Hematopoiesis can take place in the BONE MARROW (medullary) or outside the bone marrow ( HEMATOPOIESIS, EXTRAMEDULLARY).</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Hematopoiesis</synonym>
+   <synonym>Hematopoiesis, Medullary</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Haematopoiesis</token>
+   </variation>
+   <variation>
+    <token>haemopoiesis</token>
+   </variation>
+   <variation>
+    <token>hemopoiesis</token>
+   </variation>
+   <variation>
+    <token>Medullary Hematopoiesis</token>
+   </variation>
+   <variation>
+    <token>blood cell biosynthesis</token>
+   </variation>
+   <variation>
+    <token>blood cell formation</token>
+   </variation>
+   <variation>
+    <token>haemopoiesis</token>
+   </variation>
+   <variation>
+    <token>biosynthesis of blood cells</token>
+   </variation>
+   <variation>
+    <token>formation of blood cells</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D009336" parent-id="D016923">
+  <canonic>Necrosis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The pathological process occurring in cells that are dying from irreparable injuries. It is caused by the progressive, uncontrolled action of degradative ENZYMES, leading to MITOCHONDRIAL SWELLING, nuclear flocculation, and cell lysis. Distinguish it from APOPTOSIS which is a normal, regulated cellular process.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Necrosis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Necroses</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D002634" parent-id="D002633">
+  <canonic>Chemotaxis, Leukocyte</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The movement of leukocytes in response to a chemical concentration gradient or to products formed in an immunologic reaction.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Chemotaxis, Leukocyte</synonym>
+   <synonym>Leukotaxis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Leukocyte Chemotaxis</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D004705">
+  <canonic>Endocytosis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Cellular uptake of extracellular materials within membrane-limited vacuoles or microvesicles. ENDOSOMES play a central role in endocytosis.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Endocytosis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Endocytoses</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D009435" parent-id="D015398">
+  <canonic>Synaptic Transmission</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The communication from a NEURON to a target (neuron, muscle, or secretory cell) across a SYNAPSE. In chemical synaptic transmission, the presynaptic neuron releases a NEUROTRANSMITTER that diffuses across the synaptic cleft and binds to specific synaptic receptors, activating them. The activated receptors modulate specific ion channels and/or second-messenger systems in the postsynaptic cell. In electrical synaptic transmission, electrical signals are communicated as an ionic current flow across ELECTRICAL SYNAPSES.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Synaptic Transmission</synonym>
+   <synonym>Neural Transmission</synonym>
+   <synonym>Synaptic Potentials</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Transmission</token>
+    <token>Neural</token>
+   </variation>
+   <variation>
+    <token>Transmission</token>
+    <token>Synaptic</token>
+   </variation>
+   <variation>
+    <token>Potentials</token>
+    <token>Synaptic</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D020935" parent-id="D015398">
+  <canonic>MAP Kinase Signaling System</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>An intracellular signaling system involving the MAP kinase cascades (three-membered protein kinase cascades). Various upstream activators, which act in response to extracellular stimuli, trigger the cascades by activating the first member of a cascade, MAP KINASE KINASE KINASES; (MAPKKKs). Activated MAPKKKs phosphorylate MITOGEN-ACTIVATED PROTEIN KINASE KINASES which in turn phosphorylate the MITOGEN-ACTIVATED PROTEIN KINASES; (MAPKs). The MAPKs then act on various downstream targets to affect gene expression. In mammals, there are several distinct MAP kinase pathways including the ERK (extracellular signal-regulated kinase) pathway, the SAPK/JNK (stress-activated protein kinase/c-jun kinase) pathway, and the p38 kinase pathway. There is some sharing of components among the pathways depending on which stimulus originates activation of the cascade.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>MAP Kinase Signaling System</synonym>
+   <synonym>MAP Kinase Cascade</synonym>
+   <synonym>MAP Kinase Signaling Pathways</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>MAP Kinase Modules</token>
+   </variation>
+   <variation>
+    <token>MAP Kinase Signaling Cascades</token>
+   </variation>
+   <variation>
+    <token>Cascade</token>
+    <token>MAP Kinase</token>
+   </variation>
+   <variation>
+    <token>Cascades</token>
+    <token>MAP Kinase</token>
+   </variation>
+   <variation>
+    <token>Kinase Cascade</token>
+    <token>MAP</token>
+   </variation>
+   <variation>
+    <token>Kinase Cascades</token>
+    <token>MAP</token>
+   </variation>
+   <variation>
+    <token>Kinase Module</token>
+    <token>MAP</token>
+   </variation>
+   <variation>
+    <token>Kinase Modules</token>
+    <token>MAP</token>
+   </variation>
+   <variation>
+    <token>MAP Kinase Cascades</token>
+   </variation>
+   <variation>
+    <token>MAP Kinase Module</token>
+   </variation>
+   <variation>
+    <token>Module</token>
+    <token>MAP Kinase</token>
+   </variation>
+   <variation>
+    <token>Modules</token>
+    <token>MAP Kinase</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016196" parent-id="D007399">
+  <canonic>S Phase</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Phase of the CELL CYCLE following G1 and preceding G2 when the entire DNA content of the nucleus is replicated. It is achieved by bidirectional replication at multiple sites along each chromosome.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>S Phase</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>S Period</token>
+   </variation>
+   <variation>
+    <token>Period</token>
+    <token>S</token>
+   </variation>
+   <variation>
+    <token>Periods</token>
+    <token>S</token>
+   </variation>
+   <variation>
+    <token>Phase</token>
+    <token>S</token>
+   </variation>
+   <variation>
+    <token>Phases</token>
+    <token>S</token>
+   </variation>
+   <variation>
+    <token>S Periods</token>
+   </variation>
+   <variation>
+    <token>S Phases</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D002463">
+  <canonic>Cell Membrane Permeability</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A quality of cell membranes which permits the passage of solvents and solutes into and out of cells.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cell Membrane Permeability</synonym>
+   <synonym>Permeability, Cell Membrane</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="D016193" parent-id="D007399">
+  <canonic>G1 Phase</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The period of the CELL CYCLE preceding DNA REPLICATION in S PHASE. Subphases of G1 include "competence" (to respond to growth factors), G1a (entry into G1), G1b (progression), and G1c (assembly). Progression through the G1 subphases is effected by limiting growth factors, nutrients, or inhibitors.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>G1 Phase</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>First Gap Phase</token>
+   </variation>
+   <variation>
+    <token>G1a Phase</token>
+   </variation>
+   <variation>
+    <token>G1b Phase</token>
+   </variation>
+   <variation>
+    <token>Gap Phase 1</token>
+   </variation>
+   <variation>
+    <token>1</token>
+    <token>Gap Phase</token>
+   </variation>
+   <variation>
+    <token>First Gap Phases</token>
+   </variation>
+   <variation>
+    <token>G1 Phases</token>
+   </variation>
+   <variation>
+    <token>G1a Phases</token>
+   </variation>
+   <variation>
+    <token>G1b Phases</token>
+   </variation>
+   <variation>
+    <token>Gap Phase</token>
+    <token>First</token>
+   </variation>
+   <variation>
+    <token>Gap Phases</token>
+    <token>First</token>
+   </variation>
+   <variation>
+    <token>Phase 1</token>
+    <token>Gap</token>
+   </variation>
+   <variation>
+    <token>Phase</token>
+    <token>First Gap</token>
+   </variation>
+   <variation>
+    <token>Phase</token>
+    <token>G1</token>
+   </variation>
+   <variation>
+    <token>Phase</token>
+    <token>G1a</token>
+   </variation>
+   <variation>
+    <token>Phase</token>
+    <token>G1b</token>
+   </variation>
+   <variation>
+    <token>Phases</token>
+    <token>First Gap</token>
+   </variation>
+   <variation>
+    <token>Phases</token>
+    <token>G1</token>
+   </variation>
+   <variation>
+    <token>Phases</token>
+    <token>G1a</token>
+   </variation>
+   <variation>
+    <token>Phases</token>
+    <token>G1b</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D002451">
+  <canonic>Cell Compartmentation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A partitioning within cells due to the selectively permeable membranes which enclose each of the separate parts, e.g., mitochondria, lysosomes, etc.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cell Compartmentation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Cell Compartmentations</token>
+   </variation>
+   <variation>
+    <token>Compartmentation</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Compartmentations</token>
+    <token>Cell</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D002633" parent-id="D002465">
+  <canonic>Chemotaxis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The movement of cells or organisms toward or away from a substance in response to its concentration gradient.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Chemotaxis</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="D008540" parent-id="D048750">
+  <canonic>Meiosis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A type of CELL NUCLEUS division, occurring during maturation of the GERM CELLS. Two successive cell nucleus divisions following a single chromosome duplication ( S PHASE) result in daughter cells with half the number of CHROMOSOMES as the parent cells.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Meiosis</synonym>
+   <synonym>M Phase, Meiotic</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Meiotic M Phase</token>
+   </variation>
+   <variation>
+    <token>Meioses</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D020013" parent-id="D015290">
+  <canonic>Calcium Signaling</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Signal transduction mechanisms whereby calcium mobilization (from outside the cell or from intracellular storage pools) to the cytoplasm is triggered by external stimuli. Calcium signals are often seen to propagate as waves, oscillations, spikes or puffs. The calcium acts as an intracellular messenger by activating calcium-responsive proteins.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Calcium Signaling</synonym>
+   <synonym>Calcium Oscillations</synonym>
+   <synonym>Calcium Waves</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Calcium Puffs</token>
+   </variation>
+   <variation>
+    <token>Calcium Spikes</token>
+   </variation>
+   <variation>
+    <token>Calcium Oscillation</token>
+   </variation>
+   <variation>
+    <token>Calcium Puff</token>
+   </variation>
+   <variation>
+    <token>Calcium Signalings</token>
+   </variation>
+   <variation>
+    <token>Calcium Spike</token>
+   </variation>
+   <variation>
+    <token>Calcium Wave</token>
+   </variation>
+   <variation>
+    <token>Oscillation</token>
+    <token>Calcium</token>
+   </variation>
+   <variation>
+    <token>Oscillations</token>
+    <token>Calcium</token>
+   </variation>
+   <variation>
+    <token>Puff</token>
+    <token>Calcium</token>
+   </variation>
+   <variation>
+    <token>Puffs</token>
+    <token>Calcium</token>
+   </variation>
+   <variation>
+    <token>Signaling</token>
+    <token>Calcium</token>
+   </variation>
+   <variation>
+    <token>Signalings</token>
+    <token>Calcium</token>
+   </variation>
+   <variation>
+    <token>Spike</token>
+    <token>Calcium</token>
+   </variation>
+   <variation>
+    <token>Spikes</token>
+    <token>Calcium</token>
+   </variation>
+   <variation>
+    <token>Wave</token>
+    <token>Calcium</token>
+   </variation>
+   <variation>
+    <token>Waves</token>
+    <token>Calcium</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015640" parent-id="D015398">
+  <canonic>Ion Channel Gating</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The opening and closing of ion channels due to a stimulus. The stimulus can be a change in membrane potential (voltage-gated), drugs or chemical transmitters (ligand-gated), or a mechanical deformation. Gating is thought to involve conformational changes of the ion channel which alters selective permeability.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Ion Channel Gating</synonym>
+   <synonym>Gating, Ion Channel</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Gatings</token>
+    <token>Ion Channel</token>
+   </variation>
+   <variation>
+    <token>Ion Channel Gatings</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016922">
+  <canonic>Cell Aging</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The decrease in the cell's ability to proliferate with the passing of time. Each cell is programmed for a certain number of cell divisions and at the end of that time proliferation halts. The cell enters a quiescent state after which it experiences CELL DEATH via the process of APOPTOSIS.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cell Aging</synonym>
+   <synonym>Aging, Cell</synonym>
+   <synonym>Cell Senescence</synonym>
+   <synonym>Replicative Senescence</synonym>
+   <synonym>Senescence, Cellular</synonym>
+   <synonym>Senescence, Replicative</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Cellular Aging</token>
+   </variation>
+   <variation>
+    <token>Aging</token>
+    <token>Cellular</token>
+   </variation>
+   <variation>
+    <token>Cellular Senescence</token>
+   </variation>
+   <variation>
+    <token>Senescence</token>
+    <token>Cell</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016897" parent-id="D019069">
+  <canonic>Respiratory Burst</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A large increase in oxygen uptake by neutrophils and most types of tissue macrophages through activation of an NADPH-cytochrome b-dependent oxidase that reduces oxygen to a superoxide. Individuals with an inherited defect in which the oxidase that reduces oxygen to superoxide is decreased or absent (GRANULOMATOUS DISEASE, CHRONIC) often die as a result of recurrent bacterial infections.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Respiratory Burst</synonym>
+   <synonym>Oxidative Burst</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Burst</token>
+    <token>Oxidative</token>
+   </variation>
+   <variation>
+    <token>Burst</token>
+    <token>Respiratory</token>
+   </variation>
+   <variation>
+    <token>Bursts</token>
+    <token>Oxidative</token>
+   </variation>
+   <variation>
+    <token>Bursts</token>
+    <token>Respiratory</token>
+   </variation>
+   <variation>
+    <token>Oxidative Bursts</token>
+   </variation>
+   <variation>
+    <token>Respiratory Bursts</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015687" parent-id="D019069">
+  <canonic>Cell Hypoxia</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A condition of decreased oxygen content at the cellular level.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cell Hypoxia</synonym>
+   <synonym>Anoxia, Cellular</synonym>
+   <synonym>Cell Anoxia</synonym>
+   <synonym>Hypoxia, Cellular</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Anoxia</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Anoxias</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Anoxias</token>
+    <token>Cellular</token>
+   </variation>
+   <variation>
+    <token>Cell Anoxias</token>
+   </variation>
+   <variation>
+    <token>Cell Hypoxias</token>
+   </variation>
+   <variation>
+    <token>Cellular Anoxia</token>
+   </variation>
+   <variation>
+    <token>Cellular Anoxias</token>
+   </variation>
+   <variation>
+    <token>Cellular Hypoxia</token>
+   </variation>
+   <variation>
+    <token>Cellular Hypoxias</token>
+   </variation>
+   <variation>
+    <token>Hypoxia</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Hypoxias</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Hypoxias</token>
+    <token>Cellular</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D007399" parent-id="D002453">
+  <canonic>Interphase</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The interval between two successive CELL DIVISIONS during which the CHROMOSOMES are not individually distinguishable. It is composed of the G phases (G1 PHASE; G0 PHASE; AND G2 PHASE) and S PHASE (when DNA replication occurs).</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Interphase</synonym>
+   <synonym>karyostasis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Interphases</token>
+   </variation>
+   <variation>
+    <token>resting phase</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D013091" parent-id="D005718">
+  <canonic>Spermatogenesis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The process of germ cell development in the male from the primordial germ cells, through SPERMATOGONIA; SPERMATOCYTES; SPERMATIDS; to the mature haploid SPERMATOZOA, SPERM.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Spermatogenesis</synonym>
+   <synonym>Spermatocytogenesis</synonym>
+   <synonym>Spermiogenesis</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="D002459">
+  <canonic>Cell Fusion</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Fusion of somatic cells in vitro or in vivo, which results in somatic cell hybridization.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cell Fusion</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Cell Fusions</token>
+   </variation>
+   <variation>
+    <token>Fusion</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Fusions</token>
+    <token>Cell</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D002449" parent-id="D002465">
+  <canonic>Cell Aggregation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The phenomenon by which dissociated cells intermixed in vitro tend to group themselves with cells of their own type.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cell Aggregation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Aggregation</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Aggregations</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Cell Aggregations</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015550" parent-id="D005089">
+  <canonic>Cell Degranulation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The process of losing secretory granules ( SECRETORY VESICLES). This occurs, for example, in mast cells, basophils, neutrophils, eosinophils, and platelets when secretory products are released from the granules by EXOCYTOSIS.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cell Degranulation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Degranulation</token>
+    <token>Cell</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D005089">
+  <canonic>Exocytosis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Cellular release of material within membrane-limited vesicles by fusion of the vesicles with the CELL MEMBRANE.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Exocytosis</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="D008561">
+  <canonic>Membrane Fusion</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The adherence and merging of cell membranes, intracellular membranes, or artificial membranes to each other or to viruses, parasites, or interstitial particles through a variety of chemical and physical processes.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Membrane Fusion</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Fusion</token>
+    <token>Membrane</token>
+   </variation>
+   <variation>
+    <token>Fusions</token>
+    <token>Membrane</token>
+   </variation>
+   <variation>
+    <token>Membrane Fusions</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016195" parent-id="D007399">
+  <canonic>G2 Phase</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The period of the CELL CYCLE following DNA synthesis ( S PHASE) and preceding M PHASE (cell division phase). The CHROMOSOMES are tetraploid in this point.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>G2 Phase</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Gap Phase 2</token>
+   </variation>
+   <variation>
+    <token>Second Gap Phase</token>
+   </variation>
+   <variation>
+    <token>2</token>
+    <token>Gap Phase</token>
+   </variation>
+   <variation>
+    <token>G2 Phases</token>
+   </variation>
+   <variation>
+    <token>Gap Phase</token>
+    <token>Second</token>
+   </variation>
+   <variation>
+    <token>Gap Phases</token>
+    <token>Second</token>
+   </variation>
+   <variation>
+    <token>Phase 2</token>
+    <token>Gap</token>
+   </variation>
+   <variation>
+    <token>Phase</token>
+    <token>G2</token>
+   </variation>
+   <variation>
+    <token>Phase</token>
+    <token>Second Gap</token>
+   </variation>
+   <variation>
+    <token>Phases</token>
+    <token>G2</token>
+   </variation>
+   <variation>
+    <token>Phases</token>
+    <token>Second Gap</token>
+   </variation>
+   <variation>
+    <token>Second Gap Phases</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015290" parent-id="D015398">
+  <canonic>Second Messenger Systems</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Systems in which an intracellular signal is generated in response to an intercellular primary messenger such as a hormone or neurotransmitter. They are intermediate signals in cellular processes such as metabolism, secretion, contraction, phototransduction, and cell growth. Examples of second messenger systems are the adenyl cyclase-cyclic AMP system, the phosphatidylinositol diphosphate-inositol triphosphate system, and the cyclic GMP system.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Second Messenger Systems</synonym>
+   <synonym>Intracellular Second Messengers</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Second Messengers</token>
+   </variation>
+   <variation>
+    <token>Intracellular Second Messenger</token>
+   </variation>
+   <variation>
+    <token>Messenger</token>
+    <token>Second</token>
+   </variation>
+   <variation>
+    <token>Messengers</token>
+    <token>Intracellular Second</token>
+   </variation>
+   <variation>
+    <token>Messengers</token>
+    <token>Second</token>
+   </variation>
+   <variation>
+    <token>Second Messenger</token>
+   </variation>
+   <variation>
+    <token>Second Messenger System</token>
+   </variation>
+   <variation>
+    <token>Second Messenger</token>
+    <token>Intracellular</token>
+   </variation>
+   <variation>
+    <token>Second Messengers</token>
+    <token>Intracellular</token>
+   </variation>
+   <variation>
+    <token>System</token>
+    <token>Second Messenger</token>
+   </variation>
+   <variation>
+    <token>Systems</token>
+    <token>Second Messenger</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D004920" parent-id="D006410">
+  <canonic>Erythropoiesis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The production of red blood cells ( ERYTHROCYTES). In humans, erythrocytes are produced by the YOLK SAC in the first trimester; by the liver in the second trimester; by the BONE MARROW in the third trimester and after birth. In normal individuals, the erythrocyte count in the peripheral blood remains relatively constant implying a balance between the rate of erythrocyte production and rate of destruction.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Erythropoiesis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Erythropoieses</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D008677" parent-id="D008938">
+  <canonic>Metaphase</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The phase of cell nucleus division following PROMETAPHASE, in which the CHROMOSOMES line up across the equatorial plane of the MITOTIC SPINDLE APPARATUS prior to separation.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Metaphase</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Metaphases</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D004627" parent-id="D002454">
+  <canonic>Embryonic Induction</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The complex processes of initiating CELL DIFFERENTIATION in the embryo. The precise regulation by cell interactions leads to diversity of cell types and specific pattern of organization (EMBRYOGENESIS).</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Embryonic Induction</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Embryonic Inductions</token>
+   </variation>
+   <variation>
+    <token>Induction</token>
+    <token>Embryonic</token>
+   </variation>
+   <variation>
+    <token>Inductions</token>
+    <token>Embryonic</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D013081" parent-id="D002465">
+  <canonic>Sperm Motility</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Movement characteristics of SPERMATOZOA in a fresh specimen. It is measured as the percentage of sperms that are moving, and as the percentage of sperms with productive flagellar motion such as rapid, linear, and forward progression.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Sperm Motility</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Motilities</token>
+    <token>Sperm</token>
+   </variation>
+   <variation>
+    <token>Motility</token>
+    <token>Sperm</token>
+   </variation>
+   <variation>
+    <token>Sperm Motilities</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D009866" parent-id="D005718">
+  <canonic>Oogenesis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The process of germ cell development in the female from the primordial germ cells through OOGONIA to the mature haploid ova ( OVUM).</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Oogenesis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Oogeneses</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D020090" parent-id="D048750">
+  <canonic>Chromosome Segregation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The orderly segregation of CHROMOSOMES during MEIOSIS or MITOSIS.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Chromosome Segregation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Chromosome Segregations</token>
+   </variation>
+   <variation>
+    <token>Segregation</token>
+    <token>Chromosome</token>
+   </variation>
+   <variation>
+    <token>Segregations</token>
+    <token>Chromosome</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D019898" parent-id="D002450">
+  <canonic>Autocrine Communication</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Mode of communication wherein a bound hormone affects the function of the cell type that produced the hormone.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Autocrine Communication</synonym>
+   <synonym>Autocrine Signaling</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Autocrine Communications</token>
+   </variation>
+   <variation>
+    <token>Autocrine Signalings</token>
+   </variation>
+   <variation>
+    <token>Communication</token>
+    <token>Autocrine</token>
+   </variation>
+   <variation>
+    <token>Communications</token>
+    <token>Autocrine</token>
+   </variation>
+   <variation>
+    <token>Signaling</token>
+    <token>Autocrine</token>
+   </variation>
+   <variation>
+    <token>Signalings</token>
+    <token>Autocrine</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016192" parent-id="D007399">
+  <canonic>G0 Phase</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A quiescent state of cells during G1 PHASE.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>G0 Phase</synonym>
+   <synonym>Resting Phase</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>G0 Phases</token>
+   </variation>
+   <variation>
+    <token>Phase</token>
+    <token>G0</token>
+   </variation>
+   <variation>
+    <token>Phases</token>
+    <token>G0</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D011940">
+  <canonic>Receptor Aggregation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Chemically stimulated aggregation of cell surface receptors, which potentiates the action of the effector cell.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Receptor Aggregation</synonym>
+   <synonym>Aggregation, Receptor</synonym>
+   <synonym>Capping, Receptor</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Receptor Capping</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D048708">
+  <canonic>Cell Growth Processes</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Processes required for CELL ENLARGEMENT and CELL PROLIFERATION.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cell Growth Processes</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Processes</token>
+    <token>Cell Growth</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D008211">
+  <canonic>Lymphocyte Cooperation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>T-cell enhancement of the B-cell response to thymic-dependent antigens.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Lymphocyte Cooperation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Cooperation</token>
+    <token>Lymphocyte</token>
+   </variation>
+   <variation>
+    <token>Cooperations</token>
+    <token>Lymphocyte</token>
+   </variation>
+   <variation>
+    <token>Lymphocyte Cooperations</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D019899" parent-id="D002450">
+  <canonic>Paracrine Communication</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Cellular signaling in which a factor secreted by a cell affects other cells in the local environment. This term is often used to denote the action of INTERCELLULAR SIGNALING PEPTIDES AND PROTEINS on surrounding cells.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Paracrine Communication</synonym>
+   <synonym>Paracrine Signaling</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Communication</token>
+    <token>Paracrine</token>
+   </variation>
+   <variation>
+    <token>Communications</token>
+    <token>Paracrine</token>
+   </variation>
+   <variation>
+    <token>Paracrine Communications</token>
+   </variation>
+   <variation>
+    <token>Paracrine Signalings</token>
+   </variation>
+   <variation>
+    <token>Signaling</token>
+    <token>Paracrine</token>
+   </variation>
+   <variation>
+    <token>Signalings</token>
+    <token>Paracrine</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D001370" parent-id="D003595">
+  <canonic>Axonal Transport</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The directed transport of ORGANELLES and molecules along nerve cell AXONS. Transport can be anterograde (from the cell body) or retrograde (toward the cell body).</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Axonal Transport</synonym>
+   <synonym>Axoplasmic Flow</synonym>
+   <synonym>Axoplasmic Transport</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Axoplasmic Streaming</token>
+   </variation>
+   <variation>
+    <token>Axonal Transports</token>
+   </variation>
+   <variation>
+    <token>Axoplasmic Flows</token>
+   </variation>
+   <variation>
+    <token>Axoplasmic Transports</token>
+   </variation>
+   <variation>
+    <token>Streaming</token>
+    <token>Axoplasmic</token>
+   </variation>
+   <variation>
+    <token>Transport</token>
+    <token>Axonal</token>
+   </variation>
+   <variation>
+    <token>Transport</token>
+    <token>Axoplasmic</token>
+   </variation>
+   <variation>
+    <token>Transports</token>
+    <token>Axonal</token>
+   </variation>
+   <variation>
+    <token>Transports</token>
+    <token>Axoplasmic</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D002464" parent-id="D002465">
+  <canonic>Cell Migration Inhibition</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Phenomenon of cell-mediated immunity measured by in vitro inhibition of the migration or phagocytosis of antigen-stimulated LEUKOCYTES or MACROPHAGES. Specific CELL MIGRATION ASSAYS have been developed to estimate levels of migration inhibitory factors, immune reactivity against tumor-associated antigens, and immunosuppressive effects of infectious microorganisms.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cell Migration Inhibition</synonym>
+   <synonym>Down Regulation of Chemotaxis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Chemotaxis Inhibition</token>
+   </variation>
+   <variation>
+    <token>Chemotaxis Inhibitions</token>
+   </variation>
+   <variation>
+    <token>Inhibition</token>
+    <token>Chemotaxis</token>
+   </variation>
+   <variation>
+    <token>Inhibitions</token>
+    <token>Chemotaxis</token>
+   </variation>
+   <variation>
+    <token>downregulation of chemotaxis</token>
+   </variation>
+   <variation>
+    <token>inhibition of chemotaxis </token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D020239">
+  <canonic>Receptor Cross Talk</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The simultaneous or sequential binding of multiple cell surface receptors to different ligands resulting in coordinated stimulation or suppression of signal transduction.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Receptor Cross Talk</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Receptor Cross Talk</token>
+   </variation>
+   <variation>
+    <token>Cross Talk</token>
+    <token>Receptor</token>
+   </variation>
+   <variation>
+    <token>Cross-Talk</token>
+    <token>Receptor</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D001343" parent-id="D016923">
+  <canonic>Autophagy</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The segregation and degradation of damaged or unwanted cytoplasmic constituents by autophagic vacuoles (cytolysosomes) composed of LYSOSOMES containing cellular components in the process of digestion; it plays an important role in BIOLOGICAL METAMORPHOSIS of amphibians, in the removal of bone by osteoclasts, and in the degradation of normal cell components in nutritional deficiency states.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Autophagy</synonym>
+   <synonym>Autophagocytosis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Autophagic Cell Death</token>
+   </variation>
+   <variation>
+    <token>Autophagic Programmed Cell Death</token>
+   </variation>
+   <variation>
+    <token>Autophagy</token>
+    <token>Cellular</token>
+   </variation>
+   <variation>
+    <token>Programmed Cell Death</token>
+    <token>Type II</token>
+   </variation>
+   <variation>
+    <token>Autophagic Cell Deaths</token>
+   </variation>
+   <variation>
+    <token>Autophagies</token>
+   </variation>
+   <variation>
+    <token>Autophagies</token>
+    <token>Cellular</token>
+   </variation>
+   <variation>
+    <token>Cell Death</token>
+    <token>Autophagic</token>
+   </variation>
+   <variation>
+    <token>Cell Deaths</token>
+    <token>Autophagic</token>
+   </variation>
+   <variation>
+    <token>Cellular Autophagies</token>
+   </variation>
+   <variation>
+    <token>Cellular Autophagy</token>
+   </variation>
+   <variation>
+    <token>Death</token>
+    <token>Autophagic Cell</token>
+   </variation>
+   <variation>
+    <token>Deaths</token>
+    <token>Autophagic Cell</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D004905" parent-id="D016922">
+  <canonic>Erythrocyte Aging</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The senescence of RED BLOOD CELLS. Lacking the organelles that make protein synthesis possible, the mature erythrocyte is incapable of self-repair, reproduction, and carrying out certain functions performed by other cells. This limits the average life span of an erythrocyte to 120 days.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Erythrocyte Aging</synonym>
+   <synonym>Erythrocyte Survival</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Aging</token>
+    <token>Erythrocyte</token>
+   </variation>
+   <variation>
+    <token>Survival</token>
+    <token>Erythrocyte</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D000705" parent-id="D008938">
+  <canonic>Anaphase</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The phase of cell nucleus division following METAPHASE, in which the CHROMATIDS separate and migrate to opposite poles of the spindle.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Anaphase</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Anaphases</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D019069">
+  <canonic>Cell Respiration</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The metabolic process of all living cells (animal and plant) in which oxygen is used to provide a source of energy for the cell.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cell Respiration</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Cellular Respiration</token>
+   </variation>
+   <variation>
+    <token>Respiration</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Cell Respirations</token>
+   </variation>
+   <variation>
+    <token>Cellular Respirations</token>
+   </variation>
+   <variation>
+    <token>Respiration</token>
+    <token>Cellular</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D006411" parent-id="D006410">
+  <canonic>Hematopoiesis, Extramedullary</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The formation and development of blood cells outside the BONE MARROW, as in the SPLEEN; LIVER; or LYMPH NODES.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Hematopoiesis, Extramedullary</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Extramedullary Hematopoieses</token>
+   </variation>
+   <variation>
+    <token>Extramedullary Hematopoiesis</token>
+   </variation>
+   <variation>
+    <token>Hematopoieses</token>
+    <token>Extramedullary</token>
+   </variation>
+   <variation>
+    <token>blood cell biosynthesis</token>
+    <token>Extramedullary</token>
+   </variation>
+   <variation>
+    <token>blood cell formation</token>
+    <token>Extramedullary</token>
+   </variation>
+   <variation>
+    <token>haemopoiesis</token>
+    <token>Extramedullary</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D040542" parent-id="D015398">
+  <canonic>Mechanotransduction, Cellular</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The process by which cells convert mechanical stimuli into a chemical response. It can occur in both cells specialized for sensing mechanical cues such as MECHANORECEPTORS, and in parenchymal cells whose primary function is not mechanosensory.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Mechanotransduction, Cellular</synonym>
+   <synonym>Cellular Mechanotransduction</synonym>
+   <synonym>Mechanosensory Transduction</synonym>
+   <synonym>Signal Transduction, Mechanical</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Mechanical Signal Transduction</token>
+   </variation>
+   <variation>
+    <token>Transduction</token>
+    <token>Mechanosensory</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D024201" parent-id="D002450">
+  <canonic>Bystander Effect</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The result of a positive or negative response (to drugs, for example) in one cell being passed onto other cells via the GAP JUNCTIONS or the intracellular milieu.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Bystander Effect</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Bystander Help</token>
+   </variation>
+   <variation>
+    <token>Bystander Suppression</token>
+   </variation>
+   <variation>
+    <token>Bystander Effects</token>
+   </variation>
+   <variation>
+    <token>Effect</token>
+    <token>Bystander</token>
+   </variation>
+   <variation>
+    <token>Effects</token>
+    <token>Bystander</token>
+   </variation>
+   <variation>
+    <token>Help</token>
+    <token>Bystander</token>
+   </variation>
+   <variation>
+    <token>Suppression</token>
+    <token>Bystander</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D038041" parent-id="D019891">
+  <canonic>Lymphopoiesis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Formation of LYMPHOCYTES and PLASMA CELLS from the lymphoid stem cells which develop from the pluripotent HEMATOPOIETIC STEM CELLS in the BONE MARROW. These lymphoid stem cells differentiate into T-LYMPHOCYTES; B-LYMPHOCYTES; PLASMA CELLS; or NK-cells ( KILLER CELLS, NATURAL) depending on the organ or tissues ( LYMPHOID TISSUE) to which they migrate.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Lymphopoiesis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>lymphocytopoiesis</token>
+   </variation>
+   <variation>
+    <token>lymphoid hematopoiesis</token>
+   </variation>
+   <variation>
+    <token>lymphoid haematopoiesis</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D042002" parent-id="D042003">
+  <canonic>Chromatin Assembly and Disassembly</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The mechanisms effecting establishment, maintenance, and modification of that specific physical conformation of CHROMATIN determining the transcriptional accessibility or inaccessibility of the DNA.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Chromatin Assembly and Disassembly</synonym>
+   <synonym>Chromatin Remodeling</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Chromatin Assembly</token>
+   </variation>
+   <variation>
+    <token>Chromatin</token>
+    <token>Assembly</token>
+   </variation>
+   <variation>
+    <token>Chromatin Disassembly</token>
+   </variation>
+   <variation>
+    <token>Chromatin Modeling</token>
+   </variation>
+   <variation>
+    <token>Chromatin Disassemblies</token>
+   </variation>
+   <variation>
+    <token>Disassembly</token>
+    <token>Chromatin</token>
+   </variation>
+   <variation>
+    <token>Remodeling</token>
+    <token>Chromatin</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D019891" parent-id="D006410">
+  <canonic>Leukopoiesis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The process of generating white blood cells ( LEUKOCYTES) from the pluripotent HEMATOPOIETIC STEM CELLS of the BONE MARROW. There are two significant pathways to generate various types of leukocytes: MYELOPOIESIS, in which leukocytes in the blood are derived from MYELOID STEM CELLS, and LYMPHOPOIESIS, in which leukocytes of the lymphatic system ( LYMPHOCYTES) are generated from lymphoid stem cells.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Leukopoiesis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>leukocytopoiesis</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D010873" parent-id="D004705">
+  <canonic>Pinocytosis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The engulfing of liquids by cells by a process of invagination and closure of the cell membrane to form fluid-filled vacuoles.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Pinocytosis</synonym>
+   <synonym>Fluid-Phase Endocytosis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Pinocytoses</token>
+   </variation>
+   <variation>
+    <token>Fluid Phase Endocytosis</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D023102" parent-id="D017209">
+  <canonic>Anoikis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>APOPTOSIS triggered by loss of contact with the EXTRACELLULAR MATRIX.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Anoikis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>detachment induced cell death</token>
+   </variation>
+   <variation>
+    <token>detachment induced apoptosis</token>
+   </variation>
+   <variation>
+    <token>suspension induced apoptosis</token>
+   </variation>
+   <variation>
+    <token>suspension induced cell death</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D003260">
+  <canonic>Contact Inhibition</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Arrest of cell locomotion or cell division when two cells come into contact.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Contact Inhibition</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Inhibition</token>
+    <token>Contact</token>
+   </variation>
+   <variation>
+    <token>Contact Inhibitions</token>
+   </variation>
+   <variation>
+    <token>Inhibitions</token>
+    <token>Contact</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D011418" parent-id="D008938">
+  <canonic>Prophase</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The first phase of cell nucleus division, in which the CHROMOSOMES become visible, the CELL NUCLEUS starts to lose its identity, the MITOTIC SPINDLE APPARATUS appears, and the CENTRIOLES migrate toward opposite poles.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Prophase</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Prophases</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D036904" parent-id="D002634">
+  <canonic>Leukocyte Rolling</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Movement of tethered, spherical LEUKOCYTES along the endothelial surface of the microvasculature. The tethering and rolling involves interaction with SELECTINS and other adhesion molecules in both the ENDOTHELIUM and leukocyte. The rolling leukocyte then becomes activated by CHEMOKINES, flattens out, and firmly adheres to the endothelial surface in preparation for transmigration through the interendothelial cell junction.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Leukocyte Rolling</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Leucocyte Rolling</token>
+   </variation>
+   <variation>
+    <token>Rolling</token>
+    <token>Leucocyte</token>
+   </variation>
+   <variation>
+    <token>Rolling</token>
+    <token>Leukocyte</token>
+   </variation>
+   <variation>
+    <token>Leukocyte Tethering</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D019174" parent-id="D015398">
+  <canonic>Phototransduction</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The transducing of light energy to afferent nerve impulses, such as takes place in the retinal rods and cones. After light photons are absorbed by the photopigments, the signal is transmitted to the outer segment membrane by the cyclic GMP second messenger system, where it closes the sodium channels. This channel gating ultimately generates an action potential in the inner retina.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Phototransduction</synonym>
+   <synonym>Light Signal Transduction</synonym>
+   <synonym>Signal Transduction, Light</synonym>
+   <synonym>Visual Transduction</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Light Signal Transductions</token>
+   </variation>
+   <variation>
+    <token>Phototransductions</token>
+   </variation>
+   <variation>
+    <token>Signal Transductions</token>
+    <token>Light</token>
+   </variation>
+   <variation>
+    <token>Visual Transductions</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D008933">
+  <canonic>Mitochondrial Swelling</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>An increase in MITOCHONDRIAL VOLUME due to an influx of fluid; it occurs in hypotonic solutions due to osmotic pressure and in isotonic solutions as a result of altered permeability of the membranes of respiring mitochondria.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Mitochondrial Swelling</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Mitochondrial Swellings</token>
+   </variation>
+   <variation>
+    <token>Swelling</token>
+    <token>Mitochondrial</token>
+   </variation>
+   <variation>
+    <token>Swellings</token>
+    <token>Mitochondrial</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D007152" parent-id="D011940">
+  <canonic>Immunologic Capping</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>An energy dependent process following the crosslinking of B CELL ANTIGEN RECEPTORS by multivalent ligands (bivalent anti-antibodies, LECTINS or ANTIGENS), on the B-cell surface. The crosslinked ligand-antigen receptor complexes collect in patches which flow to and aggregate at one pole of the cell to form a large mass - the cap. The caps may then be endocytosed or shed into the environment.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Immunologic Capping</synonym>
+   <synonym>Capping, Immunologic</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Immunological Capping</token>
+   </variation>
+   <variation>
+    <token>Capping</token>
+    <token>Immunological</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D005718" parent-id="D002454">
+  <canonic>Gametogenesis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The process of germ cell development from the primordial germ cells to the mature haploid gametes: ova in the female ( OOGENESIS) or sperm in the male ( SPERMATOGENESIS).</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Gametogenesis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Gametogeneses</token>
+   </variation>
+   <variation>
+    <token>Gamete Generation</token>
+   </variation>
+   <variation>
+    <token>Generation of Gametes</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D038042" parent-id="D019891">
+  <canonic>Myelopoiesis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Formation of MYELOID CELLS from the pluripotent HEMATOPOIETIC STEM CELLS in the BONE MARROW via MYELOID STEM CELLS. Myelopoiesis generally refers to the production of leukocytes in blood, such as MONOCYTES and GRANULOCYTES. This process also produces precursor cells for MACROPHAGE and DENDRITIC CELLS found in the lymphoid tissue.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Myelopoiesis</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="D048749" parent-id="D002455">
+  <canonic>Cytokinesis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The process by which the CYTOPLASM of a cell is divided.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cytokinesis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Cytoplasmic Division</token>
+   </variation>
+   <variation>
+    <token>Cytokineses</token>
+   </variation>
+   <variation>
+    <token>Cytoplasmic Divisions</token>
+   </variation>
+   <variation>
+    <token>Division</token>
+    <token>Cytoplasmic</token>
+   </variation>
+   <variation>
+    <token>Divisions</token>
+    <token>Cytoplasmic</token>
+   </variation>
+   <variation>
+    <token>cytokinetic process</token>
+   </variation>
+   <variation>
+    <token>cytokinetic processes</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D023902" parent-id="D049469">
+  <canonic>Chromosome Pairing</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The alignment of CHROMOSOMES at homologous sequences.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Chromosome Pairing</synonym>
+   <synonym>Synapsis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Synapsis</token>
+    <token>Chromosomal</token>
+   </variation>
+   <variation>
+    <token>Chromosomal Synapsis</token>
+   </variation>
+   <variation>
+    <token>Chromosome Pairings</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D034061" parent-id="D006410">
+  <canonic>Thrombopoiesis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The process of generating thrombocytes ( BLOOD PLATELETS) from the pluripotent HEMATOPOIETIC STEM CELLS in the BONE MARROW via the MEGAKARYOCYTES. The humoral factor with thrombopoiesis-stimulating activity is designated THROMBOPOIETIN.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Thrombopoiesis</synonym>
+   <synonym>Megakaryocytopoiesis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Thrombocytopoiesis</token>
+   </variation>
+   <variation>
+    <token>Megakaryocytopoieses</token>
+   </variation>
+   <variation>
+    <token>Thrombocytopoieses</token>
+   </variation>
+   <variation>
+    <token>Thrombopoieses</token>
+   </variation>
+   <variation>
+    <token>thrombogenesis</token>
+   </variation>
+   <variation>
+    <token>clot formation</token>
+   </variation>
+   <variation>
+    <token>formation of thrombocytes</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D014818" parent-id="D009866">
+  <canonic>Vitellogenesis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The active production and accumulation of VITELLINS (egg yolk proteins) in the non-mammalian OOCYTES from circulating precursors, VITELLOGENINS. Vitellogenesis usually begins after the first MEIOSIS and is regulated by estrogenic hormones.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Vitellogenesis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Vitellogeneses</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D050156" parent-id="D002454">
+  <canonic>Adipogenesis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The differentiation of pre-adipocytes into mature ADIPOCYTES.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Adipogenesis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Adipogeneses</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D049108" parent-id="D048708">
+  <canonic>Cell Enlargement</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Growth processes that result in an increase in CELL SIZE</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cell Enlargement</synonym>
+   <synonym>Cell Growth in Size</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Cell Size Growth</token>
+   </variation>
+   <variation>
+    <token>Enlargement</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Growth</token>
+    <token>Cell Size</token>
+   </variation>
+   <variation>
+    <token>Growths</token>
+    <token>Cell Size</token>
+   </variation>
+   <variation>
+    <token>Size Growth</token>
+    <token>Cell</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D013079" parent-id="D013091">
+  <canonic>Sperm Maturation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The maturing process of SPERMATOZOA after leaving the testicular SEMINIFEROUS TUBULES. Maturation in SPERM MOTILITY and FERTILITY takes place in the EPIDIDYMIS as the sperm migrate from caput epididymis to cauda epididymis.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Sperm Maturation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Maturation of Spermatozoa</token>
+   </variation>
+   <variation>
+    <token>Maturation</token>
+    <token>Sperm</token>
+   </variation>
+   <variation>
+    <token>Spermatozoa Maturation</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D013692" parent-id="D008938">
+  <canonic>Telophase</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The final phase of cell nucleus division following ANAPHASE, in which two daughter nuclei are formed, the CYTOPLASM completes division, and the CHROMOSOMES lose their distinctness and are transformed into CHROMATIN threads.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Telophase</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Telophases</token>
+   </variation>
+   <variation>
+    <token>Telephase</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D053038" parent-id="D002450">
+  <canonic>Quorum Sensing</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A phenomenon where microorganisms communicate and coordinate their behavior by the accumulation of signaling molecules. A reaction occurs when a substance accumulates to a sufficient concentration. This is most commonly seen in bacteria.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Quorum Sensing</synonym>
+   <synonym>Quorum Quenching</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Quenching</token>
+    <token>Quorum</token>
+   </variation>
+   <variation>
+    <token>Quenchings</token>
+    <token>Quorum</token>
+   </variation>
+   <variation>
+    <token>Quorum Quenchings</token>
+   </variation>
+   <variation>
+    <token>Sensing</token>
+    <token>Quorum</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D003595">
+  <canonic>Cytoplasmic Streaming</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The movement of CYTOPLASM within a CELL. It serves as an internal transport system for moving essential substances throughout the cell, and in single-celled organisms, such as the AMOEBA, it is responsible for the movement ( CELL MOVEMENT) of the entire cell.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cytoplasmic Streaming</synonym>
+   <synonym>Protoplasmic Streaming</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Cytoplasmic Streamings</token>
+   </variation>
+   <variation>
+    <token>Protoplasmic Streamings</token>
+   </variation>
+   <variation>
+    <token>Streaming</token>
+    <token>Cytoplasmic</token>
+   </variation>
+   <variation>
+    <token>Streaming</token>
+    <token>Protoplasmic</token>
+   </variation>
+   <variation>
+    <token>Streamings</token>
+    <token>Cytoplasmic</token>
+   </variation>
+   <variation>
+    <token>Streamings</token>
+    <token>Protoplasmic</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D049471" parent-id="D049469">
+  <canonic>Pachytene Stage</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The stage in the first meiotic prophase, following ZYGOTENE STAGE, when CROSSING OVER between homologous CHROMOSOMES begins.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Pachytene Stage</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Pachynema</token>
+   </variation>
+   <variation>
+    <token>Pachynemas</token>
+   </variation>
+   <variation>
+    <token>Pachytene Stages</token>
+   </variation>
+   <variation>
+    <token>Stage</token>
+    <token>Pachytene</token>
+   </variation>
+   <variation>
+    <token>Stages</token>
+    <token>Pachytene</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D013083" parent-id="D002465">
+  <canonic>Sperm Transport</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Passive or active movement of SPERMATOZOA from the testicular SEMINIFEROUS TUBULES through the male reproductive tract as well as within the female reproductive tract.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Sperm Transport</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Transport</token>
+    <token>Sperm</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D042003">
+  <canonic>DNA Packaging</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The folding of an organism's DNA molecule into a compact, orderly structure that fits within the limited space of a CELL or VIRUS PARTICLE.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>DNA Packaging</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Packaging</token>
+    <token>DNA</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D049469" parent-id="D011418">
+  <canonic>Meiotic Prophase I</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The prophase of the first division of MEIOSIS (in which homologous CHROMOSOME SEGREGATION occurs). It is divided into five stages: leptonema, zygonema, PACHYNEMA, diplonema, and diakinesis.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Meiotic Prophase I</synonym>
+   <synonym>Leptotene Stage</synonym>
+   <synonym>Zygotene Stage</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Diakinesis</token>
+   </variation>
+   <variation>
+    <token>Diplonema</token>
+   </variation>
+   <variation>
+    <token>Diplotene Stage</token>
+   </variation>
+   <variation>
+    <token>diplotene</token>
+   </variation>
+   <variation>
+    <token>Meiotic Prophase 1</token>
+   </variation>
+   <variation>
+    <token>Prophase 1</token>
+   </variation>
+   <variation>
+    <token>Prophase I</token>
+   </variation>
+   <variation>
+    <token>Zygonema</token>
+   </variation>
+   <variation>
+    <token>Diakineses</token>
+   </variation>
+   <variation>
+    <token>Diplonemas</token>
+   </variation>
+   <variation>
+    <token>prophase I in meiosis</token>
+   </variation>
+   <variation>
+    <token>Prophase I</token>
+    <token>Meiotic</token>
+   </variation>
+   <variation>
+    <token>Stage</token>
+    <token>Diplotene</token>
+   </variation>
+   <variation>
+    <token>Stage</token>
+    <token>Leptotene</token>
+   </variation>
+   <variation>
+    <token>Stage</token>
+    <token>Zygotene</token>
+   </variation>
+   <variation>
+    <token>Stages</token>
+    <token>Zygotene</token>
+   </variation>
+   <variation>
+    <token>Zygonemas</token>
+   </variation>
+   <variation>
+    <token>Zygotene Stages</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D010066" parent-id="D002465">
+  <canonic>Ovum Transport</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Transport of the OVUM or fertilized ovum ( ZYGOTE) from the mammalian oviduct ( FALLOPIAN TUBES) to the site of EMBRYO IMPLANTATION in the UTERUS.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Ovum Transport</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="D048750" parent-id="D002455">
+  <canonic>Cell Nucleus Division</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The process by which the CELL NUCLEUS is divided.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cell Nucleus Division</synonym>
+   <synonym>Cell Nucleus Division Phases</synonym>
+   <synonym>Karyokinesis</synonym>
+   <synonym>Nuclear Division</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Cell Nucleus Divisions</token>
+   </variation>
+   <variation>
+    <token>Division</token>
+    <token>Cell Nucleus</token>
+   </variation>
+   <variation>
+    <token>Division</token>
+    <token>Nuclear</token>
+   </variation>
+   <variation>
+    <token>Divisions</token>
+    <token>Cell Nucleus</token>
+   </variation>
+   <variation>
+    <token>Divisions</token>
+    <token>Nuclear</token>
+   </variation>
+   <variation>
+    <token>Nuclear Divisions</token>
+   </variation>
+   <variation>
+    <token>Nucleus Division</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Nucleus Divisions</token>
+    <token>Cell</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D049468" parent-id="D008938">
+  <canonic>Prometaphase</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The phase of cell nucleus division following PROPHASE, when the breakdown of the NUCLEAR ENVELOPE occurs and the MITOTIC SPINDLE APPARATUS enters the nuclear region and attaches to the KINETOCHORES.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Prometaphase</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Pro-Metaphase</token>
+   </variation>
+   <variation>
+    <token>Pro Metaphase</token>
+   </variation>
+   <variation>
+    <token>Pro-Metaphases</token>
+   </variation>
+   <variation>
+    <token>Prometaphases</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D045584" parent-id="D002451">
+  <canonic>Chromosome Positioning</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The mechanisms of eukaryotic CELLS that place or keep the CHROMOSOMES in a particular SUBNUCLEAR SPACE.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Chromosome Positioning</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Positioning</token>
+    <token>Chromosome</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D053836" parent-id="D009336">
+  <canonic>DNA Degradation, Necrotis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The random catabolism of DNA accompaning the irreversible damage to tissue which leads to the pathological death of one or more cells.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>DNA Degradation, Necrotic</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Necrotic DNA Degradation</token>
+   </variation>
+  </variations>
+ </term>
+
+</terms>

@@ -1,0 +1,262 @@
+! This file contains one line for descriptor renaming. 
+! First column: old descriptor name. 
+! Second column: new descriptor name. 
+
+Adhesions,	Tissue Adhesions
+Algae, Brown,	Phaeophyta
+Algae, Green,	Chlorophyta
+Algae, Red,	Rhodophyta
+alpha-Amylase,	alpha-Amylases
+Amphibia,	Amphibians
+Amplifiers,	Amplifiers, Electronic
+Animal Nutrition Physiology,	Animal Nutritional Physiological Phenomena
+Antigua,	Antigua and Barbuda
+Antilipemic Agents,	Hypolipidemic Agents
+Antiplasmin,	alpha-2-Antiplasmin
+Atelectasis,	Pulmonary Atelectasis
+Atlas,	Cervical Atlas
+Autobiography,	Autobiography as Topic
+Bacillus stearothermophilus,	Geobacillus stearothermophilus
+Balloon Dilatation,	Balloon Dilation
+Beta Rays,	Beta Particles
+Biofeedback (Psychology),	Biofeedback, Psychology
+Biological Products,	Biological Agents
+Biological Sciences,	Biological Science Disciplines
+Blood Physiology,	Blood Physiological Phenomena
+Byelarus,	Republic of Belarus
+Capillarity,	Capillary Action
+Caplan's Syndrome,	Caplan Syndrome
+Capreomycin Sulfate,	Capreomycin
+Carboxymethylcellulose,	Carboxymethylcellulose Sodium
+Cardiovascular Physiology,	Cardiovascular Physiological Phenomena
+Cell Physiology,	Cell Physiological Phenomena
+Ceramide Trihexosidase,	Galactosylgalactosylglucosylceramidase
+Chemical and Pharmacologic Phenomena,	Pharmacological Phenomena
+Chemistry, Analytical,	Chemistry Techniques, Analytical
+Chemoreceptors,	Chemoreceptor Cells
+Child Nutrition Physiology,	Child Nutritional Physiological Phenomena
+Chloroguanide,	Proguanil
+Cholestyramine,	Cholestyramine Resin
+Chronobiology,	Chronobiology Phenomena
+Circulatory and Respiratory Physiology,	Circulatory and Respiratory Physiological Phenomena
+Coin Lesion, Pulmonary,	Solitary Pulmonary Nodule
+Cold,	Cold Temperature
+Community Health Aides,	Community Health Workers
+Cookery,	Cooking
+Cytology,	Cell Biology
+Digestive Physiology,	Digestive System Physiological Phenomena
+Dipeptidyl Peptidases,	Dipeptidyl-Peptidases and Tripeptidyl-Peptidases
+Drugs, Non-Prescription,	Nonprescription Drugs
+Dupuytren's Contracture,	Dupuytren Contracture
+Dynein ATPase,	Dyneins
+Education of Mentally Retarded,	Education of Intellectually Disabled
+Enhancer Elements (Genetics),	Enhancer Elements, Genetic
+Musculoskeletal Equilibrium,	Postural Balance
+Evolution,	Biological Evolution
+Exertion,	Physical Exertion
+Fiber Optics,	Fiber Optic Technology
+Plasmin,	Fibrinolysin
+Fleas,	Siphonaptera
+Food Poisoning,	Foodborne Diseases
+Formularies,	Formularies as Topic
+Gastric Mucin,	Gastric Mucins
+Genetic Screening,	Genetic Testing
+Gluten,	Glutens
+Heat,	Hot Temperature
+Hela Cells,	HeLa Cells
+Hemorrhagic Disease of Newborn,	Vitamin K Deficiency Bleeding
+Bisbenzimide,	Bisbenzimidazole
+Immunity, Natural,	Immunity, Innate
+Incunabula,	Incunabula as Topic
+Indigotindisulfonate Sodium,	Indigo Carmine
+Infant Nutrition Physiology,	Infant Nutritional Physiological Phenomena
+Interferon Type II,	Interferon-gamma
+Intervertebral Disk,	Intervertebral Disc
+Intervertebral Disk Chemolysis,	Intervertebral Disc Chemolysis
+Intervertebral Disk Displacement,	Intervertebral Disc Displacement
+Inversion, Chromosome,	Chromosome Inversion
+Irrigation,	Therapeutic Irrigation
+Kearns-Sayer Syndrome,	Kearns-Sayre Syndrome
+Keratosis Follicularis,	Darier Disease
+Legg-Perthes Disease,	Legg-Calve-Perthes Disease
+Lice,	Phthiraptera
+Linkage (Genetics),	Genetic Linkage
+Listeria Infections,	Listeriosis
+Lysine Vasopressin,	Lypressin
+Macao,	Macau
+Maduromycosis,	Mycetoma
+Medicine, Oriental Traditional,	Medicine, East Asian Traditional
+Mental Retardation,	Intellectual Disability
+Thiopronine,	Tiopronin
+Meteorological Factors,	Meteorological Concepts
+Mice, Inbred HRS,	Mice, Hairless
+Microbiologic Phenomena,	Microbiological Phenomena
+Microfilaments,	Actin Cytoskeleton
+Mollicutes,	Tenericutes
+Monoclonal Gammopathies, Benign,	Monoclonal Gammopathy of Undetermined Significance
+Monsters,	Abnormalities, Severe Teratoid
+Dental Physiology,	Dental Physiological Phenomena
+Musculoskeletal Physiology,	Musculoskeletal Physiological Phenomena
+Mycobacterium Infections, Atypical,	Mycobacterium Infections, Nontuberculous
+Mycobacteria, Atypical,	Nontuberculous Mycobacteria
+NADP Transhydrogenase,	NADP Transhydrogenases
+Neoplasm Circulating Cells,	Neoplastic Cells, Circulating
+Nervous System Physiology,	Nervous System Physiological Phenomena
+Nutrition Physiology,	Nutritional Physiological Phenomena
+Ocular Physiology,	Ocular Physiological Phenomena
+Operator Regions (Genetics),	Operator Regions, Genetic
+Orciprenaline,	Metaproterenol
+p-Aminosalicylic Acid,	Aminosalicylic Acid
+Paget's Disease, Extramammary,	Paget Disease, Extramammary
+Pancoast's Syndrome,	Pancoast Syndrome
+Penicillin G, Benzathine,	Penicillin G Benzathine
+Penicillin G, Procaine,	Penicillin G Procaine
+Periodontitis, Juvenile,	Aggressive Periodontitis
+Photoreceptors,	Photoreceptor Cells
+Natural Sciences,	Natural Science Disciplines
+Physiological Processes,	Physiological Phenomena
+Plaque Assay,	Viral Plaque Assay
+Poetry,	Poetry as Topic
+Precipitation,	Chemical Precipitation
+Prescriptions, Drug,	Drug Prescriptions
+Primary Nursing Care,	Primary Nursing
+Procetofen,	Fenofibrate
+Promoter Regions (Genetics),	Promoter Regions, Genetic
+Protein-Arginine N-Methyltransferase,	Protein-Arginine N-Methyltransferases
+Proteochondroitin Sulfates,	Chondroitin Sulfate Proteoglycans
+Receptors, Sensory,	Sensory Receptor Cells
+Relaxation Techniques,	Relaxation Therapy
+Repression,	Repression, Psychology
+Reproductive and Urinary Physiology,	Reproductive and Urinary Physiological Phenomena
+Respiratory Physiology,	Respiratory Physiological Phenomena
+Rod Outer Segments,	Rod Cell Outer Segment
+Salivary Proteins,	Salivary Proteins and Peptides
+Sarcoma, Ewing's,	Sarcoma, Ewing
+Scheuermann's Disease,	Scheuermann Disease
+Scopolamine,	Scopolamine Hydrobromide
+Selection (Genetics),	Selection, Genetic
+Self Assessment (Psychology),	Self-Assessment
+Sex Determination (Analysis),	Sex Determination Analysis
+Sex Differentiation Disorders,	Disorders of Sex Development
+Skin Physiology,	Skin Physiological Phenomena
+Specialism,	Specialization
+Spreading Cortical Depression,	Cortical Spreading Depression
+Stress,	Stress, Physiological
+Surgery,	General Surgery
+Technology, Medical,	Medical Laboratory Science
+Temperature Sense,	Thermosensing
+Terminator Regions (Genetics),	Terminator Regions, Genetic
+Testosterone 5-alpha-Reductase,	3-Oxo-5-alpha-Steroid 4-Dehydrogenase
+Thrombocythemia, Hemorrhagic,	Thrombocythemia, Essential
+Thyroid Gland, Desiccated,	Thyroid (USP)
+Tiapride,	Tiapamil Hydrochloride
+Tiron,	1,2-Dihydroxybenzene-3,5-Disulfonic Acid Disodium Salt
+Tonsil,	Palatine Tonsil
+Toothpaste,	Toothpastes
+Transistors,	Transistors, Electronic
+Trenbolone,	Trenbolone Acetate
+Trichinosis,	Trichinellosis
+Triethylenetetramine,	Trientine
+Urinary Tract Physiology,	Urinary Tract Physiological Phenomena
+Urinary Plasminogen Activator,	Urokinase-Type Plasminogen Activator
+Variation (Genetics),	Genetic Variation
+Vehicles,	Pharmaceutical Vehicles
+Vision,	Vision, Ocular
+von Willebrand Disease,	von Willebrand Diseases
+Site-Specific DNA Methyltransferase (Cytosine-Specific),	DNA-Cytosine Methylases
+Pulmonary Disease (Specialty),	Pulmonary Medicine
+Hereditary Motor and Sensory Neuropathies,	Hereditary Sensory and Motor Neuropathy
+Trans-Activation (Genetics),	Transcriptional Activation
+Erythroid Progenitor Cells,	Erythroid Precursor Cells
+Aspergillus Nuclease S1,	Single-Strand Specific DNA and RNA Endonucleases
+Angioplasty, Transluminal, Percutaneous Coronary,	Angioplasty, Balloon, Coronary
+Effect Modifiers (Epidemiology),	Effect Modifier, Epidemiologic
+Amyloid beta-Protein,	Amyloid beta-Peptides
+Aspartic Endopeptidases,	Aspartic Acid Endopeptidases
+Sweet's Syndrome,	Sweet Syndrome
+Ovarian Failure, Premature,	Primary Ovarian Insufficiency
+Granuloma, Plasma Cell, Pulmonary,	Plasma Cell Granuloma, Pulmonary
+Granuloma, Plasma Cell, Orbital,	Orbital Pseudotumor
+Rhizobium radiobacter,	Agrobacterium tumefaciens
+Laboratory Personnel,	Medical Laboratory Personnel
+Adolescent Nutrition Physiology,	Adolescent Nutritional Physiological Phenomena
+Medroxyprogesterone 17-Acetate,	Medroxyprogesterone Acetate
+Opsin,	Rod Opsins
+Triptorelin,	Triptorelin Pamoate
+Serotonin Agonists,	Serotonin Receptor Agonists
+Signal Detection (Psychology),	Signal Detection, Psychological
+Epidemiology, Molecular,	Molecular Epidemiology
+Disease Transmission, Professional-to-Patient,	Infectious Disease Transmission, Professional-to-Patient
+Disease Transmission, Patient-to-Professional,	Infectious Disease Transmission, Patient-to-Professional
+Rods (Retina),	Retinal Rod Photoreceptor Cells
+Cones (Retina),	Retinal Cone Photoreceptor Cells
+Photoreceptors, Invertebrate,	Photoreceptor Cells, Invertebrate
+Acrospiroma, Eccrine,	Acrospiroma
+Vasculitis, Hypersensitivity,	Vasculitis, Leukocytoclastic, Cutaneous
+Bay Region (Chemistry),	Bay-Region, Polycyclic Aromatic Hydrocarbon
+CA-15-3 Antigen,	Mucin-1
+Viral Physiology,	Virus Physiological Phenomena
+Bacterial Physiology,	Bacterial Physiological Phenomena
+Disease Transmission, Vertical,	Infectious Disease Transmission, Vertical
+Gravity Perception,	Gravity Sensing
+Muscle Fibers,	Muscle Fibers, Skeletal
+Plant Components,	Plant Structures
+Plant Physiology,	Plant Physiological Phenomena
+Bronchiolitis Obliterans Organizing Pneumonia,	Cryptogenic Organizing Pneumonia
+Disease Transmission,	Disease Transmission, Infectious
+Volcanic Eruption,	Volcanic Eruptions
+Marginal Adaptation (Dentistry),	Dental Marginal Adaptation
+Accidents, Radiation,	Radioactive Hazard Release
+Antigens, CD26,	Dipeptidyl Peptidase 4
+Carbohydrate-Deficient Glycoprotein Syndrome,	Congenital Disorders of Glycosylation
+Mind-Body Relations (Metaphysics),	Mind-Body Relations, Metaphysical
+Temporomandibular Joint Disk,	Temporomandibular Joint Disc
+Botulinum Toxin Type A,	Botulinum Toxins, Type A
+Instruction,	Instructional Films and Videos
+Plant Families and Groups,	Embryophyta
+Protein Disulfide-Isomerase,	Protein Disulfide-Isomerases
+Sex Determination (Genetics),	Sex Determination Processes
+1-Phosphatidylinositol 3-Kinase,	Phosphatidylinositol 3-Kinases
+Neocallimasticales,	Neocallimastigales
+Aroclor 1254,	Chlorodiphenyl (54% Chlorine)
+Photoreceptors, Vertebrate,	Photoreceptor Cells, Vertebrate
+Personal Narratives,	Autobiography
+Dipeptidyl Peptidase I,	Cathepsin C
+Acute Toxicity Tests,	Toxicity Tests, Acute
+Feedback, Biochemical,	Feedback, Physiological
+Mind-Body and Relaxation Techniques,	Mind-Body Therapies
+LDL-Receptor Related Protein 1,	Low Density Lipoprotein Receptor-Related Protein-1
+LDL-Receptor Related Protein 2,	Low Density Lipoprotein Receptor-Related Protein-2
+Physical Therapy (Specialty),	Physical Therapy Specialty
+Medicine, Herbal,	Herbal Medicine
+Gestational Trophoblastic Neoplasms,	Gestational Trophoblastic Disease
+Mass Immunization,	Mass Vaccination
+Double Effect,	Double Effect Principle
+Maternal Nutrition Physiology,	Maternal Nutritional Physiological Phenomena
+Prenatal Nutrition Physiology,	Prenatal Nutritional Physiological Phenomena
+Leptospira Interrogans serovar canicola,	Leptospira interrogans serovar canicola
+Flexibacteraceae,	Cytophagaceae
+Carboxypeptidase C,	Cathepsin A
+Musculoskeletal Physiologic Processes,	Musculoskeletal Physiological Processes
+Ocular Physiologic Processes,	Ocular Physiological Processes
+Enterobacter sakazakii,	Cronobacter sakazakii
+Yersinia rucker,	Yersinia ruckeri
+Vibrio salmonicida,	Aliivibrio salmonicida
+Algae, Golden-Brown,	Chrysophyta
+Respiratory Physiologic Processes,	Respiratory Physiological Processes
+Blood Physiologic Processes,	Blood Physiological Processes
+Cardiovascular Physiologic Processes,	Cardiovascular Physiological Processes
+Flexibacteraceae Infections,	Cytophagaceae Infections
+Acidaminococcaceae,	Veillonellaceae
+Vibrio fischeri,	Aliivibrio fischeri
+Hermaphroditism, True,	Ovotesticular Disorders of Sex Development
+Selenoprotein R,	Methionine Sulfoxide Reductases
+Kangai-1 Protein,	Antigens, CD82
+Antigens, CD94,	NK Cell Lectin-Like Receptor Subfamily D
+Ferrosoferric Oxide,	Ferumoxytol
+Nervous System Physiologic Processes,	Nervous System Physiological Processes
+Kaplan-Meiers Estimate,	Kaplan-Meier Estimate
+Nevus Sebaceous of Jadassohn,	Nevus, Sebaceous of Jadassohn
+Angioedema, Hereditary,	Angioedemas, Hereditary
+Von Ebner Glands,	von Ebner Glands
+Microbiome,	Metagenome
