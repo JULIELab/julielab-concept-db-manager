@@ -1,5 +1,9 @@
 package de.julielab.concepts.db.core;
 
+import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.CONFKEY_PLUGIN_ENDPOINT;
+import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.CONFKEY_PLUGIN_NAME;
+import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.SERVER_PLUGIN_PATH_FMT;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
@@ -26,10 +30,7 @@ import de.julielab.java.utilities.FileUtilities;
 
 public class ServerPluginExporter extends DataExporterBase {
 
-	private static final String CONFKEY_PLUGIN_ENDPOINT = "configuration.pluginendpoint";
-	private static final String CONFKEY_PLUGIN_NAME = "configuration.pluginname";
 	private static final String CONFKEY_DECODING = "configuration.decoding";
-	private static final String ADDRESS_FMT = "/db/data/ext/%s/graphdb/%s";
 
 	private static final Logger log = LoggerFactory.getLogger(ServerPluginExporter.class);
 
@@ -49,7 +50,7 @@ public class ServerPluginExporter extends DataExporterBase {
 				.collect(Collectors.toMap(Parameter::getName, Parameter::getRequestValue));
 
 		HttpConnectionService httpService = HttpConnectionService.getInstance();
-		String completePluginEndpointUri = baseUri + String.format(ADDRESS_FMT, pluginName, pluginEndpoint);
+		String completePluginEndpointUri = baseUri + String.format(SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint);
 		HttpPost request = httpService.getHttpPostRequest(parameterConfiguration, completePluginEndpointUri);
 		Gson gson = new Gson();
 		String response = null;

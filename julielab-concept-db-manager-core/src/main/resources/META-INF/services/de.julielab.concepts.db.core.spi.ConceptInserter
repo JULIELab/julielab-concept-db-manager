@@ -1,2 +1,2 @@
 de.julielab.concepts.db.core.FileConceptInserter
-de.julielab.concepts.db.core.BoltConceptInserter
+de.julielab.concepts.db.core.ServerPluginConceptInserter

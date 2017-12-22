@@ -1,5 +1,6 @@
 package de.julielab.concepts.db.core;
 
+import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.neo4j.graphdb.GraphDatabaseService;
@@ -36,7 +37,7 @@ public class FileConceptInserter implements ConceptInserter {
 	}
 
 	@Override
-	public void insertConcepts(ImportConcepts concepts) throws ConceptInsertionException {
+	public void insertConcepts(HierarchicalConfiguration<ImmutableNode> importConfiguration, ImportConcepts concepts) throws ConceptInsertionException {
 		if (graphDb == null)
 			throw new ConceptInsertionException(
 					"No access to a file-based graph database. The FileConceptInserter has not been initialized properly. Call setConfiguration() and check its return value before calling this method.");
@@ -76,19 +77,23 @@ public class FileConceptInserter implements ConceptInserter {
 	}
 
 	@Override
-	public boolean setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
+	public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
 			throws ConceptDatabaseConnectionException {
 		this.connectionConfiguration = connectionConfiguration;
 		graphDb = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
-//		if (graphDb != null) {
-//			if (graphDb.findNodes(VersionLabel.VERSION).stream().findAny().isPresent()) {
-//				throw new ConceptDatabaseCreationException("The database connected to through configuration "
-//						+ ConfigurationUtils.toString(connectionConfiguration)
-//						+ " already has a version tag. Changing it is against the version contract.");
-//			}
-//			graphDb.createNode(VersionLabel.VERSION).setProperty("version", version);
-//		}
-		return graphDb != null;
+		// if (graphDb != null) {
+		// if (graphDb.findNodes(VersionLabel.VERSION).stream().findAny().isPresent()) {
+		// throw new ConceptDatabaseCreationException("The database connected to through
+		// configuration "
+		// + ConfigurationUtils.toString(connectionConfiguration)
+		// + " already has a version tag. Changing it is against the version
+		// contract.");
+		// }
+		// graphDb.createNode(VersionLabel.VERSION).setProperty("version", version);
+		// }
+		if (graphDb == null)
+			throw new ConceptDatabaseConnectionException("Could not create a file database for connection "
+					+ ConfigurationUtils.toString(connectionConfiguration));
 	}
 
 }

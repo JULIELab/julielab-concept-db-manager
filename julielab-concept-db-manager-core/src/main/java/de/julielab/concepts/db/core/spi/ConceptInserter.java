@@ -8,8 +8,8 @@ import de.julielab.concepts.util.ConceptInsertionException;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 
 public interface ConceptInserter {
-	void insertConcepts(ImportConcepts concepts) throws ConceptInsertionException;
+	void insertConcepts(HierarchicalConfiguration<ImmutableNode> importConfiguration, ImportConcepts concepts) throws ConceptInsertionException;
 
-	boolean setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
+	void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
 			throws ConceptDatabaseConnectionException;
 }

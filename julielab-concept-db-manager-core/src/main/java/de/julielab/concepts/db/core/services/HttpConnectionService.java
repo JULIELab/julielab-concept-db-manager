@@ -44,6 +44,8 @@ public class HttpConnectionService {
 			throws ConceptDatabaseConnectionException {
 		try {
 			String uri = connectionConfiguration.getString(CONFKEY_URI);
+			if (uri == null)
+				throw new ConceptDatabaseConnectionException("No URI was specified.");
 			if (httpUri != null)
 				uri = httpUri;
 			String user = connectionConfiguration.getString(CONFKEY_USER);

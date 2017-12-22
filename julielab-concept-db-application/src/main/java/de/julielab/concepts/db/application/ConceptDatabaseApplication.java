@@ -1,5 +1,8 @@
 package de.julielab.concepts.db.application;
 
+import static de.julielab.concepts.db.core.RootConfigurationConstants.CONFKEY_CONNECTION;
+import static de.julielab.concepts.db.core.RootConfigurationConstants.CONFKEY_IMPORT;
+
 import java.io.File;
 import java.util.List;
 import java.util.stream.Stream;
@@ -23,9 +26,6 @@ import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 public class ConceptDatabaseApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(ConceptDatabaseApplication.class);
-
-	public static final String CONFKEY_IMPORT = "imports.import";
-	public static final String CONFKEY_CONNECTION = "connection";
 
 	public static void main(String[] args) {
 		if (args.length != 1) {
@@ -61,7 +61,7 @@ public class ConceptDatabaseApplication {
 		List<HierarchicalConfiguration<ImmutableNode>> importConfigs = configuration.configurationsAt(CONFKEY_IMPORT);
 		for (HierarchicalConfiguration<ImmutableNode> importConfig : importConfigs) {
 			Stream<ImportConcepts> concepts = conceptCreationService.createConcepts(importConfig);
-			insertionService.insertConcepts(concepts);
+			insertionService.insertConcepts(importConfig, concepts);
 		}
 	}
 

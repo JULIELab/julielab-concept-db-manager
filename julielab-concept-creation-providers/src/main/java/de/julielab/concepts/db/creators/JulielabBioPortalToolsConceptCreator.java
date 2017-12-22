@@ -1,5 +1,8 @@
 package de.julielab.concepts.db.creators;
 
+import static de.julielab.concepts.util.ConfigurationHelper.checkFilesExist;
+import static de.julielab.concepts.util.ConfigurationHelper.checkParameters;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +22,7 @@ import de.julielab.bioportal.ontologies.data.OntologyClass;
 import de.julielab.bioportal.util.BioPortalToolUtils;
 import de.julielab.concepts.db.core.spi.ConceptCreator;
 import de.julielab.concepts.util.ConceptCreationException;
+import de.julielab.concepts.util.ConfigurationHelper;
 import de.julielab.concepts.util.UncheckedConceptDBManagerException;
 import de.julielab.java.utilities.FileUtilities;
 import de.julielab.neo4j.plugins.datarepresentation.ConceptCoordinates;

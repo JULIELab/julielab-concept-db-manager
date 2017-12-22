@@ -1,5 +1,6 @@
 package de.julielab.concepts.db.application;
 
+import static de.julielab.concepts.db.core.RootConfigurationConstants.CONFKEY_CONNECTION;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -47,7 +48,7 @@ public class ConceptDatabaseApplicationTest {
 		databaseService.shutdown();
 		// For the test, the URI will always be a relative file path
 		File dbPath = new File(configuration
-				.getString(ConceptDatabaseApplication.CONFKEY_CONNECTION + "." + FileConnectionService.CONFKEY_URI));
+				.getString(CONFKEY_CONNECTION + "." + FileConnectionService.CONFKEY_URI));
 		FileUtils.deleteDirectory(dbPath);
 	}
 
@@ -58,7 +59,7 @@ public class ConceptDatabaseApplicationTest {
 		// Check if the Plant Ontology has been imported as expected.
 		FileConnectionService databaseService = FileConnectionService.getInstance();
 		GraphDatabaseService graphdb = databaseService
-				.getDatabase(configuration.configurationAt(ConceptDatabaseApplication.CONFKEY_CONNECTION));
+				.getDatabase(configuration.configurationAt(CONFKEY_CONNECTION));
 		try (Transaction tx = graphdb.beginTx()) {
 			List<Node> facets = graphdb.findNodes(FacetManager.FacetLabel.FACET).stream().collect(Collectors.toList());
 			assertEquals(1, facets.size());

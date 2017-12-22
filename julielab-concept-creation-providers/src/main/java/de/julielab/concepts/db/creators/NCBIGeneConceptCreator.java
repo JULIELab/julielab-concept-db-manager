@@ -1,5 +1,6 @@
 package de.julielab.concepts.db.creators;
 
+import static de.julielab.concepts.util.ConfigurationHelper.checkParameters;
 import static java.util.stream.Collectors.joining;
 
 import java.io.BufferedReader;
@@ -111,7 +112,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 				homologuousGeneSources.add(NCBI_GENE_SOURCE);
 				homologuousGeneCoords.add(geneCoords);
 			}
-			// Only continue if more than one gene in this homologene cluster are included in our gene_info
+			// Only continue if more than one gene in this homologene cluster are included
+			// in our gene_info
 			if (homologuousGeneCoords.size() >= 1) {
 				ImportConcept aggregate = new ImportConcept(homologuousGeneCoords, aggregateCopyProperties);
 				aggregate.coordinates = new ConceptCoordinates();
@@ -521,6 +523,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 		String groupId;
 	}
 
+	public static final String CONFKEY_BASE_PATH = "configuration.basepath";
 	public static final String CONFKEY_GENE_INFO = "configuration.gene_info";
 	public static final String CONFKEY_GENE_DESCRIPTIONS = "configuration.genedescriptions";
 	public static final String CONFKEY_ORGANISMS = "configuration.organismlist";
@@ -567,12 +570,13 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 		checkParameters(importConfig, CONFKEY_GENE_INFO, CONFKEY_GENE_DESCRIPTIONS, CONFKEY_ORGANISMS,
 				CONFKEY_ORGANISMS_NAMES, CONFKEY_HOMOLOGENE, CONFKEY_GENE_GROUP);
 
-		File geneInfo = new File(importConfig.getString(CONFKEY_GENE_INFO));
-		File geneDescriptions = new File(importConfig.getString(CONFKEY_GENE_DESCRIPTIONS));
-		File organisms = new File(importConfig.getString(CONFKEY_ORGANISMS));
-		File ncbiTaxNames = new File(importConfig.getString(CONFKEY_ORGANISMS_NAMES));
-		File homologene = new File(importConfig.getString(CONFKEY_HOMOLOGENE));
-		File geneGroup = new File(importConfig.getString(CONFKEY_GENE_GROUP));
+		String basepath = importConfig.getString(CONFKEY_BASE_PATH, "");
+		File geneInfo = new File(basepath + importConfig.getString(CONFKEY_GENE_INFO));
+		File geneDescriptions = new File(basepath + importConfig.getString(CONFKEY_GENE_DESCRIPTIONS));
+		File organisms = new File(basepath + importConfig.getString(CONFKEY_ORGANISMS));
+		File ncbiTaxNames = new File(basepath + importConfig.getString(CONFKEY_ORGANISMS_NAMES));
+		File homologene = new File(basepath + importConfig.getString(CONFKEY_HOMOLOGENE));
+		File geneGroup = new File(basepath + importConfig.getString(CONFKEY_GENE_GROUP));
 		List<File> notFound = new ArrayList<>();
 		for (File f : Arrays.asList(geneInfo, geneDescriptions, organisms, ncbiTaxNames, homologene, geneGroup)) {
 			if (!f.exists())

@@ -7,6 +7,8 @@ import java.util.stream.Stream;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.julielab.concepts.db.core.spi.ConceptInserter;
 import de.julielab.concepts.util.ConceptDBManagerException;
@@ -16,6 +18,9 @@ import de.julielab.concepts.util.UncheckedConceptDBManagerException;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 
 public class ConceptInsertionService {
+	
+	private static final Logger log = LoggerFactory.getLogger(ConceptInsertionService.class);
+	
 	public static final String CONFKEY_PROVIDERNAME = "providername";
 	public static final String CONFKEY_CONFIGURATION = "configuration";
 
@@ -35,15 +40,18 @@ public class ConceptInsertionService {
 		return service;
 	}
 
-	public void insertConcepts(ImportConcepts concepts)
+	public void insertConcepts(HierarchicalConfiguration<ImmutableNode> importConfiguration, ImportConcepts concepts)
 			throws ConceptInsertionException, ConceptDatabaseConnectionException {
 		Iterator<ConceptInserter> inserterIt = loader.iterator();
 		boolean inserterFound = false;
 		while (inserterIt.hasNext()) {
 			ConceptInserter inserter = inserterIt.next();
-			if (inserter.setConnection(connectionConfiguration)) {
-				inserter.insertConcepts(concepts);
+			try {
+				inserter.setConnection(connectionConfiguration); 
+				inserter.insertConcepts(importConfiguration, concepts);
 				inserterFound = true;
+			} catch (ConceptDatabaseConnectionException e) {
+				log.debug("Concept inserter " + inserter.getClass().getCanonicalName() + " did reject the connection configuration " + ConfigurationUtils.toString(connectionConfiguration));
 			}
 		}
 		if (!inserterFound)
@@ -54,12 +62,12 @@ public class ConceptInsertionService {
 							+ ConceptInserter.class.getCanonicalName() + " file.");
 	}
 
-	public void insertConcepts(Stream<ImportConcepts> concepts) throws ConceptInsertionException {
+	public void insertConcepts(HierarchicalConfiguration<ImmutableNode> importConfiguration, Stream<ImportConcepts> concepts) throws ConceptInsertionException {
 		if (concepts == null)
 			throw new ConceptInsertionException("The passed concepts object is null.");
 		concepts.forEach(t -> {
 			try {
-				insertConcepts(t);
+				insertConcepts(importConfiguration, t);
 			} catch (ConceptDBManagerException e) {
 				throw new UncheckedConceptDBManagerException(e);
 			}

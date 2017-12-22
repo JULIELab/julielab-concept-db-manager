@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<note xmlns="https://www.w3schools.com"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="https://www.w3schools.com note.xsd">
+
+<db>
+	<connection>
+		<url>src/test/resources/graph.db</url>
+	</connection>
+	<imports>
+		<import>
+			<conceptcreator>de.julielab.concepts.db.creators.NCBIGeneConceptCreator</conceptcreator>
+			<configuration>
+				<basepath>src/test/resources/geneconcepts/</basepath>
+				<gene_info>genes/gene_info_test</gene_info>
+				<genedescriptions>genes/gene2summary_test</genedescriptions>
+				<organismlist>organisms/taxIdsForTests.lst</organismlist>
+				<organismnames>organisms/names_test.dmp</organismnames>
+				<homologene>genes/homologene_test.data</homologene>
+				<gene_group>genes/gene_group_test</gene_group>
+			</configuration>
+		</import>
+	</imports>
+</db>
