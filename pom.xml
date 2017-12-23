@@ -7,7 +7,7 @@
 		<version>2.0.1</version>
 	</parent>
 	<artifactId>julielab-concept-db-manager</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.1</version>
 	<name>JULIE Lab Concept Database Manager</name>
 	<description>This project is a collection of tools with the goal to import ontological concepts into a graph database. The graph database then allows to traverse the imported data with a graph-specific query language. In case of a Neo4j database, which is the one employed by this tool, uses the Cypher query language.</description>
 	
