@@ -1,0 +1,8 @@
+<db>
+	<version>1.0</version>
+	<connection>
+		<uri>http://localhost:7474</uri>
+		<user>neo4j</user>
+		<password>erik</password>
+	</connection>
+</db>

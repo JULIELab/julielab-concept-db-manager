@@ -6,7 +6,8 @@
 	<xs:element name="conceptdatabase">
 		<xs:complexType>
 			<xs:all>
-				<xs:element name="connection" minOccurs="1">
+				<xs:element name="version" type="xs:string"/>
+				<xs:element name="connection">
 					<xs:complexType>
 						<xs:all>
 							<xs:element name="uri"></xs:element>
@@ -52,7 +53,7 @@
 												</xs:documentation>
 											</xs:annotation>
 										</xs:element>
-										<xs:element name="configuration" minOccurs="0">
+										<xs:element name="configuration" minOccurs="1">
 											<xs:complexType>
 												<xs:sequence>
 													<!-- <xs:element name="pluginname" /> -->

@@ -18,11 +18,17 @@ import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import de.julielab.concepts.db.core.http.Response;
+import de.julielab.concepts.db.core.http.Statements;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 
 public class HttpConnectionService {
@@ -100,6 +106,25 @@ public class HttpConnectionService {
 		} catch (ParseException | IOException e) {
 			throw new ConceptDatabaseConnectionException(e);
 		}
+	}
+
+	public Response sendStatements(Statements statements, String transactionalUri,
+			HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
+			throws ConceptDatabaseConnectionException, IOException {
+		ObjectMapper jsonMapper = new ObjectMapper();
+		jsonMapper.setSerializationInclusion(Include.NON_NULL);
+		jsonMapper.setSerializationInclusion(Include.NON_EMPTY);
+
+		HttpConnectionService httpService = HttpConnectionService.getInstance();
+		HttpPost httpPost = httpService.getHttpPostRequest(connectionConfiguration, transactionalUri);
+		// taken from
+		// https://neo4j.com/docs/developer-manual/3.3/http-api/#http-api-transactional
+		httpPost.addHeader("Accept", "application/json; charset=UTF-8");
+		httpPost.addHeader("Content-Type", "application/json");
+		String jsonStatements = jsonMapper.writeValueAsString(statements);
+		httpPost.setEntity(new StringEntity(jsonStatements));
+		String responseString = httpService.sendRequest(httpPost);
+		return jsonMapper.readValue(responseString, Response.class);
 	}
 
 }
