@@ -8,7 +8,7 @@ import de.julielab.concepts.util.VersionRetrievalException;
 import de.julielab.concepts.util.VersioningException;
 
 public interface Versioning {
-	void setVersion(String version) throws VersioningException;
+	void setVersion(HierarchicalConfiguration<ImmutableNode> versioningConfig) throws VersioningException;
 	String getVersion() throws VersionRetrievalException;
 	void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
 			throws ConceptDatabaseConnectionException;

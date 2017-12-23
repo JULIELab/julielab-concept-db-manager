@@ -7,6 +7,7 @@ import static de.julielab.concepts.db.core.services.NetworkConnectionCredentials
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.configuration2.ConfigurationUtils;
@@ -24,6 +25,10 @@ public class BoltConnectionService {
 	private Map<NetworkConnectionCredentials, Driver> drivers;
 	private static BoltConnectionService service;
 
+	public BoltConnectionService() {
+		this.drivers = new HashMap<>();
+	}
+	
 	public static BoltConnectionService getInstance() {
 		if (service == null)
 			service = new BoltConnectionService();
@@ -47,7 +52,7 @@ public class BoltConnectionService {
 		} catch (Exception e) {
 			throw new ConceptDatabaseConnectionException(
 					"Failed to connect to Neo4j database via bolt with the configuration "
-							+ ConfigurationUtils.toString(connectionConfiguration));
+							+ ConfigurationUtils.toString(connectionConfiguration), e);
 		}
 	}
 

@@ -11,8 +11,10 @@ import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.julielab.concepts.db.core.VersioningConstants;
 import de.julielab.concepts.db.core.spi.Versioning;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
+import de.julielab.concepts.util.VersionRetrievalException;
 import de.julielab.concepts.util.VersioningException;
 
 public class VersioningService {
@@ -35,16 +37,32 @@ public class VersioningService {
 		return serviceMap.computeIfAbsent(connectionConfiguration, VersioningService::new);
 	}
 	
-	public void setVersion(String version) throws VersioningException {
+	public void setVersion(HierarchicalConfiguration<ImmutableNode> versioningConfig) throws VersioningException {
 		Iterator<Versioning> iterator = loader.iterator();
 		while (iterator.hasNext()) {
 			Versioning versioning = iterator.next();
 			try {
 				versioning.setConnection(connectionConfiguration);
-				versioning.setVersion(version);
+				versioning.setVersion(versioningConfig);
 			} catch (ConceptDatabaseConnectionException e) {
-				log.debug("Versioning " + versioning.getClass().getCanonicalName() + " could not serve connection " + ConfigurationUtils.toString(connectionConfiguration));
+				log.debug("Versioning " + versioning.getClass().getCanonicalName() + " could not serve connection " + ConfigurationUtils.toString(connectionConfiguration) + ": {}", e.getMessage());
+				log.trace("Full stack trace:", e);
 			}
 		}
+	}
+
+	public String getVersion(HierarchicalConfiguration<ImmutableNode> versioningConfig) throws VersionRetrievalException {
+		Iterator<Versioning> iterator = loader.iterator();
+		while (iterator.hasNext()) {
+			Versioning versioning = iterator.next();
+			try {
+				versioning.setConnection(connectionConfiguration);
+				return versioning.getVersion();
+			} catch (ConceptDatabaseConnectionException e) {
+				log.debug("Versioning " + versioning.getClass().getCanonicalName() + " could not serve connection " + ConfigurationUtils.toString(connectionConfiguration) + ": {}", e.getMessage());
+				log.trace("Full stack trace:", e);
+			}
+		}
+		return null;
 	}
 }

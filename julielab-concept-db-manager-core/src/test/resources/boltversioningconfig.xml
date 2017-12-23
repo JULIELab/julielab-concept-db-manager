@@ -1,0 +1,10 @@
+<db>
+	<versioning>
+		<version>1.0-bolt</version>
+	</versioning>
+	<connection>
+		<uri>bolt://localhost:7687</uri>
+		<user>neo4j</user>
+		<password>erik</password>
+	</connection>
+</db>

@@ -1,5 +1,8 @@
 package de.julielab.concepts.db.core;
 
+import static de.julielab.concepts.db.core.VersioningConstants.CREATE_VERSION;
+import static de.julielab.concepts.db.core.VersioningConstants.PROP_VERSION;
+
 import java.io.IOException;
 
 import org.apache.commons.configuration2.HierarchicalConfiguration;
@@ -25,17 +28,17 @@ public class HttpVersioning implements Versioning {
 
 	private static final Logger log = LoggerFactory.getLogger(HttpVersioning.class);
 	private static final String TRANSACTION_ENDPOINT = "/db/data/transaction/commit";
-	private static final String PROP_VERSION = "version";
 	private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
 	private HttpConnectionService httpService;
 
 	@Override
-	public void setVersion(String version) throws VersioningException {
+	public void setVersion(HierarchicalConfiguration<ImmutableNode> versioningConfig) throws VersioningException {
+		String version = versioningConfig.getString(VersioningConstants.CONFKEY_VERSION);
 		String existingVersion = getVersion();
 		if (null != existingVersion)
 			throw new VersioningException("The database already has a version: " + existingVersion);
 		Statements statements = new Statements(
-				new Statement("CREATE (v:VERSION {version: {version}})", PROP_VERSION, version));
+				new Statement(CREATE_VERSION, PROP_VERSION, version));
 		String baseUri = connectionConfiguration.getString(NetworkConnectionCredentials.CONFKEY_URI);
 		String transactionalUri = baseUri + TRANSACTION_ENDPOINT;
 		try {
@@ -45,12 +48,13 @@ public class HttpVersioning implements Versioning {
 						"Error happened when trying to create a version node: " + response.getErrors());
 			log.info("Created database version node for version {}", version);
 			statements = new Statements(
-					new Statement("CREATE CONSTRAINT ON (v:VERSION) ASSERT v." + PROP_VERSION + " IS UNIQUE"));
+					new Statement(VersioningConstants.CREATE_UNIQUE_CONSTRAINT));
 			response = httpService.sendStatements(statements, transactionalUri, connectionConfiguration);
 			if (!response.getErrors().isEmpty())
 				throw new VersioningException(
 						"Error happened when trying to create the unique constraint on VERSION.version: "
 								+ response.getErrors());
+			log.info("Created UNIQUE constraint on the version node.");
 		} catch (ConceptDatabaseConnectionException | IOException e) {
 			throw new VersioningException(e);
 		}
@@ -58,7 +62,7 @@ public class HttpVersioning implements Versioning {
 
 	@Override
 	public String getVersion() throws VersionRetrievalException {
-		Statements statements = new Statements(new Statement("MATCH (v:VERSION) return v." + PROP_VERSION));
+		Statements statements = new Statements(new Statement(VersioningConstants.GET_VERSION));
 		ObjectMapper jsonMapper = new ObjectMapper();
 		jsonMapper.setSerializationInclusion(Include.NON_NULL);
 		jsonMapper.setSerializationInclusion(Include.NON_EMPTY);

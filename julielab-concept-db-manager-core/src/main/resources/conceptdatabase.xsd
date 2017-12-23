@@ -6,7 +6,13 @@
 	<xs:element name="conceptdatabase">
 		<xs:complexType>
 			<xs:all>
-				<xs:element name="version" type="xs:string"/>
+				<xs:element name="versioning">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="version" type="xs:string" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
 				<xs:element name="connection">
 					<xs:complexType>
 						<xs:all>
@@ -23,7 +29,7 @@
 								<xs:complexType>
 									<xs:sequence>
 										<xs:element name="conceptcreator" type="xs:string">
-										<xs:annotation>
+											<xs:annotation>
 												<xs:documentation>
 													<!-- suggested enumerations -->
 													<xs:enumeration value="julielabgenes" />

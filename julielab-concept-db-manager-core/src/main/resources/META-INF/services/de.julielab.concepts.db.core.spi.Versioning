@@ -1,1 +1,2 @@
 de.julielab.concepts.db.core.HttpVersioning
+de.julielab.concepts.db.core.BoltVersioning

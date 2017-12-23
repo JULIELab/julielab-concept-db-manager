@@ -1,5 +1,7 @@
 <db>
-	<version>1.0</version>
+	<versioning>
+		<version>1.0-http</version>
+	</versioning>
 	<connection>
 		<uri>http://localhost:7474</uri>
 		<user>neo4j</user>
