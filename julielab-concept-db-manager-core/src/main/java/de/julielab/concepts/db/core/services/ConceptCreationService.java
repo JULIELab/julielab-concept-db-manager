@@ -52,14 +52,14 @@ public class ConceptCreationService {
 			ConceptCreator conceptCreator = providerIt.next();
 			if (conceptCreator.hasName(providername)) {
 				log.debug("Invoking concept creator {}", providername);
-				Stream<ImportConcepts> concepts = conceptCreator
-						.createConcepts(importConfig);
+				Stream<ImportConcepts> concepts = conceptCreator.createConcepts(importConfig);
 				if (concepts == null)
 					throw new ConceptCreationException("Concept creator " + providername + " did return null.");
 				return concepts;
 			}
 		}
 		throw new ConceptCreationException("No concept creator was found for the name " + providername
-				+ ". Make sure that the desired concept creation provider is present in the META-INF/services/de.julielab.concepts.db.spi.ConceptCreator file.");
+				+ ". Make sure that the desired concept creation provider is present in the META-INF/services/"
+				+ ConceptCreator.class.getCanonicalName() + " file.");
 	}
 }

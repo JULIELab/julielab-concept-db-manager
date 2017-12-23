@@ -1,6 +1,8 @@
 package de.julielab.concepts.db.core.services;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.stream.Stream;
 
@@ -25,19 +27,28 @@ public class ConceptInsertionService {
 	public static final String CONFKEY_CONFIGURATION = "configuration";
 
 	private ServiceLoader<ConceptInserter> loader;
-	private static ConceptInsertionService service;
+
 	private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
+	private static ConceptInsertionService service;
+	private static Map<HierarchicalConfiguration<ImmutableNode>, ConceptInsertionService> serviceMap;
 
 	private ConceptInsertionService(HierarchicalConfiguration<ImmutableNode> connectionConfiguration) {
 		this.connectionConfiguration = connectionConfiguration;
 		loader = ServiceLoader.load(ConceptInserter.class);
 	}
 
-	public static ConceptInsertionService getInstance(
+	/**
+	 * Returns the data export service singleton specifically created for this
+	 * passed configuration.
+	 * 
+	 * @param connectionConfiguration
+	 * @return
+	 */
+	public static synchronized ConceptInsertionService getInstance(
 			HierarchicalConfiguration<ImmutableNode> connectionConfiguration) {
-		if (service == null)
-			service = new ConceptInsertionService(connectionConfiguration);
-		return service;
+		if (serviceMap == null)
+			serviceMap = new HashMap<>();
+		return serviceMap.computeIfAbsent(connectionConfiguration, ConceptInsertionService::new);
 	}
 
 	public void insertConcepts(HierarchicalConfiguration<ImmutableNode> importConfiguration, ImportConcepts concepts)
@@ -51,7 +62,7 @@ public class ConceptInsertionService {
 				inserter.insertConcepts(importConfiguration, concepts);
 				inserterFound = true;
 			} catch (ConceptDatabaseConnectionException e) {
-				log.debug("Concept inserter " + inserter.getClass().getCanonicalName() + " did reject the connection configuration " + ConfigurationUtils.toString(connectionConfiguration));
+				log.debug("Concept inserter " + inserter.getClass().getCanonicalName() + " could not serve the connection configuration " + ConfigurationUtils.toString(connectionConfiguration));
 			}
 		}
 		if (!inserterFound)

@@ -5,6 +5,8 @@ import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.CONFK
 import static de.julielab.concepts.util.ConfigurationHelper.checkParameters;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
@@ -13,13 +15,18 @@ import org.apache.http.entity.StringEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 
 import de.julielab.concepts.db.core.services.HttpConnectionService;
+import de.julielab.concepts.db.core.services.NetworkConnectionCredentials;
 import de.julielab.concepts.db.core.spi.ConceptInserter;
 import de.julielab.concepts.util.ConceptCreationException;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.ConceptInsertionException;
+import de.julielab.neo4j.plugins.ConceptManager;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 
 public class ServerPluginConceptInserter implements ConceptInserter {
@@ -33,17 +40,28 @@ public class ServerPluginConceptInserter implements ConceptInserter {
 		try {
 			checkParameters(importConfig, CONFKEY_PLUGIN_NAME, CONFKEY_PLUGIN_ENDPOINT);
 
+			ObjectMapper jsonMapper = new ObjectMapper().registerModule(new Jdk8Module());
+			jsonMapper.setSerializationInclusion(Include.NON_NULL);
+			jsonMapper.setSerializationInclusion(Include.NON_EMPTY);
+
+			String serverUri = connectionConfiguration.getString(NetworkConnectionCredentials.CONFKEY_URI);
 			String pluginName = importConfig.getString(CONFKEY_PLUGIN_NAME);
 			String pluginEndpoint = importConfig.getString(CONFKEY_PLUGIN_ENDPOINT);
 			HttpConnectionService httpService = HttpConnectionService.getInstance();
-			Gson gson = new Gson();
-			HttpPost httpPost = httpService.getHttpPostRequest(connectionConfiguration,
-					String.format(ServerPluginConnectionConstants.SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint));
-			httpPost.setEntity(new StringEntity(gson.toJson(concepts)));
+			HttpPost httpPost = httpService.getHttpPostRequest(connectionConfiguration, serverUri + String
+					.format(ServerPluginConnectionConstants.SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint));
+			Map<String, String> dataMap = new HashMap<>();
+			dataMap.put(ConceptManager.KEY_CONCEPTS, jsonMapper.writeValueAsString(concepts.getConcepts()));
+			dataMap.put(ConceptManager.KEY_FACET, jsonMapper.writeValueAsString(concepts.getFacet()));
+			if (concepts.getImportOptions() != null)
+				dataMap.put(ConceptManager.KEY_IMPORT_OPTIONS,
+						jsonMapper.writeValueAsString(concepts.getImportOptions()));
+			httpPost.setEntity(new StringEntity(jsonMapper.writeValueAsString(dataMap)));
 
 			String response = HttpConnectionService.getInstance().sendRequest(httpPost);
 			log.debug("Server plugin response to concept insertion: {}", response);
-		} catch (ConceptDatabaseConnectionException | UnsupportedEncodingException | ConceptCreationException e) {
+		} catch (ConceptDatabaseConnectionException | JsonProcessingException | UnsupportedEncodingException
+				| ConceptCreationException e) {
 			throw new ConceptInsertionException(e);
 		}
 	}

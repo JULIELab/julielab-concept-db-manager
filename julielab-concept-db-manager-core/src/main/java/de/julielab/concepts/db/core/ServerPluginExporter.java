@@ -51,7 +51,7 @@ public class ServerPluginExporter extends DataExporterBase {
 
 		HttpConnectionService httpService = HttpConnectionService.getInstance();
 		String completePluginEndpointUri = baseUri + String.format(SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint);
-		HttpPost request = httpService.getHttpPostRequest(parameterConfiguration, completePluginEndpointUri);
+		HttpPost request = httpService.getHttpPostRequest(connectionConfiguration, completePluginEndpointUri);
 		Gson gson = new Gson();
 		String response = null;
 		try {

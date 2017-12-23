@@ -156,11 +156,10 @@ public abstract class DataExporterBase implements DataExporter {
 											+ parameterElementName + "\" for the parameter key \"" + key + "\".");
 						if ((parameter.isList() && key.contains("."))) {
 							Class<?> elementType = parameter.getElementType();
-							if (elementType == null)
-								throw new DataExportException(
-										"A multi-valued parameter did not specify its element type. The parameter is: "
-												+ parameter);
-							parameter.setValue(parameterConfiguration.getList(elementType, key));
+							if (elementType != null)
+								parameter.setValue(parameterConfiguration.getList(elementType, key));
+							else
+								parameter.setValue(parameterConfiguration.getList(key));
 						}
 						if (!parameter.isList() && !key.contains(".") && !key.contains("@"))
 							parameter.setValue(parameterConfiguration.getString(key));

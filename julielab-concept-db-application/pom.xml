@@ -83,6 +83,7 @@
 			<groupId>de.julielab</groupId>
 			<artifactId>julielab-concept-creation-bioportal</artifactId>
 			<version>${project.parent.version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

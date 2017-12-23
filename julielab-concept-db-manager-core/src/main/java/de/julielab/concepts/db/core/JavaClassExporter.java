@@ -2,6 +2,7 @@ package de.julielab.concepts.db.core;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -30,6 +31,7 @@ public class JavaClassExporter extends DataExporterBase {
 			Object exporterInstance = Class.forName(className).newInstance();
 			Class<?>[] parameterTypes = parsedParameters.values().stream().map(Parameter::getType)
 					.toArray(i -> new Class<?>[i]);
+			checkTypesForNull(parameterTypes, parsedParameters);
 			Method exporterMethod = exporterInstance.getClass().getDeclaredMethod(methodName, parameterTypes);
 			if (exporterMethod.getReturnType() != String.class)
 				throw new DataExportException("The method " + methodName + " does return an object of type "
@@ -43,6 +45,18 @@ public class JavaClassExporter extends DataExporterBase {
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException
 				| SecurityException | IllegalArgumentException | InvocationTargetException e) {
 			throw new DataExportException(e);
+		}
+	}
+
+	private void checkTypesForNull(Class<?>[] parameterTypes, Map<String, Parameter> parsedParameters) throws DataExportException {
+		Iterator<Parameter> parametersIt = parsedParameters.values().iterator();
+		for (int i = 0; i < parameterTypes.length; i++) {
+			Parameter parameter = parametersIt.next();
+			Class<?> parameterClass = parameterTypes[i];
+			if (parameterClass == null)
+				throw new DataExportException(
+						"A multi-valued parameter did not specify its element type. The parameter is: "
+								+ parameter);
 		}
 	}
 

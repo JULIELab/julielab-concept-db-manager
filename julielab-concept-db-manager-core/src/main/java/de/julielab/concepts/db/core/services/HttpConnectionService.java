@@ -9,6 +9,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.apache.commons.lang3.StringUtils;
@@ -45,7 +46,8 @@ public class HttpConnectionService {
 		try {
 			String uri = connectionConfiguration.getString(CONFKEY_URI);
 			if (uri == null)
-				throw new ConceptDatabaseConnectionException("No URI was specified.");
+				throw new ConceptDatabaseConnectionException("No URI was specified in connection configuration "
+						+ ConfigurationUtils.toString(connectionConfiguration));
 			if (httpUri != null)
 				uri = httpUri;
 			String user = connectionConfiguration.getString(CONFKEY_USER);
@@ -64,8 +66,9 @@ public class HttpConnectionService {
 			throw new ConceptDatabaseConnectionException(e);
 		}
 	}
-	
-	public HttpPost getHttpPostRequest(HierarchicalConfiguration<ImmutableNode> connectionConfiguration) throws ConceptDatabaseConnectionException {
+
+	public HttpPost getHttpPostRequest(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
+			throws ConceptDatabaseConnectionException {
 		return getHttpPostRequest(connectionConfiguration, null);
 	}
 
@@ -99,5 +102,4 @@ public class HttpConnectionService {
 		}
 	}
 
-	
 }
