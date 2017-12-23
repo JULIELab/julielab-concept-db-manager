@@ -37,6 +37,6 @@ public class VersioningServiceTest {
 		VersioningService instance = VersioningService.getInstance(connectionConfiguration);
 		instance.setVersion(versioningConfig);
 		
-		assertEquals("1.0-file", instance.getVersion(connectionConfiguration));
+		assertEquals("1.0-file", instance.getVersion());
 	}
 }

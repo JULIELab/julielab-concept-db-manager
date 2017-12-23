@@ -51,7 +51,7 @@ public class VersioningService {
 		}
 	}
 
-	public String getVersion(HierarchicalConfiguration<ImmutableNode> versioningConfig) throws VersionRetrievalException {
+	public String getVersion() throws VersionRetrievalException {
 		Iterator<Versioning> iterator = loader.iterator();
 		while (iterator.hasNext()) {
 			Versioning versioning = iterator.next();

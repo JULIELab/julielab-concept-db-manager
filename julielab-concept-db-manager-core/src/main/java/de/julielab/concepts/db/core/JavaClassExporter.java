@@ -1,5 +1,6 @@
 package de.julielab.concepts.db.core;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Iterator;
@@ -13,12 +14,14 @@ import org.neo4j.graphdb.GraphDatabaseService;
 import de.julielab.concepts.db.core.services.FileConnectionService;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DataExportException;
+import de.julielab.concepts.util.VersionRetrievalException;
 
 public class JavaClassExporter extends DataExporterBase {
 
 	private static final String CONFKEY_CLASS_NAME = "configuration.class";
 	private static final String CONFKEY_METHOD_NAME = "configuration.method";
 	private GraphDatabaseService graphDb;
+	private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
 
 	@Override
 	public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig)
@@ -41,9 +44,10 @@ public class JavaClassExporter extends DataExporterBase {
 			paramValueStream = Stream.concat(Stream.of(graphDb), paramValueStream);
 			Object[] values = paramValueStream.toArray(i -> new Object[i]);
 			String result = (String) exporterMethod.invoke(exporterInstance, values);
+			result = getResourceHeader(connectionConfiguration) + result;
 			writeBase64GzipToFile(outputFile, result);
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException
-				| SecurityException | IllegalArgumentException | InvocationTargetException e) {
+				| SecurityException | IllegalArgumentException | InvocationTargetException | VersionRetrievalException | IOException e) {
 			throw new DataExportException(e);
 		}
 	}
@@ -68,6 +72,7 @@ public class JavaClassExporter extends DataExporterBase {
 	@Override
 	public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
 			throws ConceptDatabaseConnectionException {
+		this.connectionConfiguration = connectionConfiguration;
 		graphDb = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
 	}
 

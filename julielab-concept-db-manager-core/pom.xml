@@ -1,14 +1,33 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>de.julielab</groupId>
-    <artifactId>julielab-concept-db-manager</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
-  <artifactId>julielab-concept-db-manager-core</artifactId>
-  <name>JULIE Lab Concept Database Manager Core</name>
-  <description>The central interfaces and services for the concept database manager.</description>
-  <dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>de.julielab</groupId>
+		<artifactId>julielab-concept-db-manager</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>julielab-concept-db-manager-core</artifactId>
+	<name>JULIE Lab Concept Database Manager Core</name>
+	<description>The central interfaces and services for the concept database manager.</description>
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/concept-db-manager-version.txt</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>**/concept-db-manager-version.txt</exclude>
+				</excludes>
+			</resource>
+		</resources>
+	</build>
+	<dependencies>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -77,5 +96,5 @@
 			<artifactId>neo4j-cypher</artifactId>
 			<version>3.3.1</version>
 		</dependency>
-  </dependencies>
+	</dependencies>
 </project>

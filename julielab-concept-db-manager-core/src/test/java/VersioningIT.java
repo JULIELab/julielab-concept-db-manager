@@ -22,10 +22,10 @@ import de.julielab.concepts.db.core.services.VersioningService;
 import de.julielab.concepts.util.ConfigurationHelper;
 import de.julielab.concepts.util.VersioningException;
 
-public class VersioningTest {
+public class VersioningIT {
 
 	
-	private static final Logger log = LoggerFactory.getLogger(VersioningTest.class);
+	private static final Logger log = LoggerFactory.getLogger(VersioningIT.class);
 	
 	@Before
 	@After
@@ -53,7 +53,7 @@ public class VersioningTest {
 		VersioningService instance = VersioningService.getInstance(connectionConfiguration);
 		instance.setVersion(versioningConfig);
 		
-		assertEquals("1.0-http", instance.getVersion(connectionConfiguration));
+		assertEquals("1.0-http", instance.getVersion());
 	}
 	
 	@Test
@@ -67,6 +67,6 @@ public class VersioningTest {
 		VersioningService instance = VersioningService.getInstance(connectionConfiguration);
 		instance.setVersion(versioningConfig);
 		
-		assertEquals("1.0-bolt", instance.getVersion(connectionConfiguration));
+		assertEquals("1.0-bolt", instance.getVersion());
 	}
 }

@@ -26,6 +26,7 @@ import de.julielab.concepts.db.core.services.HttpConnectionService;
 import de.julielab.concepts.db.core.services.NetworkConnectionCredentials;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DataExportException;
+import de.julielab.concepts.util.VersionRetrievalException;
 import de.julielab.java.utilities.FileUtilities;
 
 public class ServerPluginExporter extends DataExporterBase {
@@ -61,9 +62,7 @@ public class ServerPluginExporter extends DataExporterBase {
 			response = httpService.sendRequest(request);
 			log.info("Writing file {}", outputFile);
 			String decodedResponse = decode(response, exportConfig.configurationAt(CONFKEY_DECODING));
-			try (BufferedWriter bw = FileUtilities.getWriterToFile(new File(outputFile))) {
-				bw.write(decodedResponse);
-			}
+			writeData(outputFile, decodedResponse);
 			log.info("Done.");
 		} catch (UnsupportedEncodingException e) {
 			throw new ConceptDatabaseConnectionException(e);
@@ -76,6 +75,15 @@ public class ServerPluginExporter extends DataExporterBase {
 					+ ConfigurationUtils.toString(exportConfig.configurationAt(CONFKEY_DECODING)), e);
 		} catch (JSONException e) {
 			log.error("Converting the retrieved data into a JSON structure failed. The data was {}", response, e);
+		}
+	}
+
+	public void writeData(String outputFile, String decodedResponse) throws IOException, DataExportException {
+		try (BufferedWriter bw = FileUtilities.getWriterToFile(new File(outputFile))) {
+			bw.write(getResourceHeader(connectionConfiguration));
+			bw.write(decodedResponse);
+		} catch (VersionRetrievalException e) {
+			throw new DataExportException("Exception when retrieving database version", e);
 		}
 	}
 

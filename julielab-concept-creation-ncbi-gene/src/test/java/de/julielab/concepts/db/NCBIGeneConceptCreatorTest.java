@@ -177,34 +177,4 @@ public class NCBIGeneConceptCreatorTest {
 		assertTrue("The following gene IDs where not found in the database: " + expectedGeneIds,
 				expectedGeneIds.isEmpty());
 	}
-
-	@Test
-	public void importNcbiGeneConceptsTest2() throws Exception {
-		// This test performs an insertion a few genes excerpted from the full
-		// resources.
-		// Note that not even all genes in the given gene_info file are imported but
-		// only
-		// those belonging to taxonomy IDs given in the taxIdsForTests.lst file
-		// referenced
-		// in the configuration file. This restricts the final imported genes to a
-		// rather
-		// small set.
-
-		XMLConfiguration configuration = ConfigurationHelper
-				.loadXmlConfiguration(new File("src/test/resources/gene-database.xml"));
-		ConceptCreationService conceptCreationService = ConceptCreationService.getInstance();
-		HierarchicalConfiguration<ImmutableNode> connectionConfiguration = configuration
-				.configurationAt(CONFKEY_CONNECTION);
-		ConceptInsertionService insertionService = ConceptInsertionService.getInstance(connectionConfiguration);
-
-		HierarchicalConfiguration<ImmutableNode> importConfiguration = configuration.configurationAt(CONFKEY_IMPORT);
-		Stream<ImportConcepts> concepts = conceptCreationService.createConcepts(importConfiguration);
-		insertionService.insertConcepts(importConfiguration, concepts);
-
-		List<HierarchicalConfiguration<ImmutableNode>> exportConfigs = configuration
-				.configurationsAt(RootConfigurationConstants.CONFKEY_EXPORT);
-		DataExportService exportService = DataExportService.getInstance(connectionConfiguration);
-		for (HierarchicalConfiguration<ImmutableNode> exportConfig : exportConfigs)
-			exportService.exportData(exportConfig);
-	}
 }

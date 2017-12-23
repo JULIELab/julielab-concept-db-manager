@@ -25,6 +25,7 @@ import org.neo4j.graphdb.Transaction;
 import de.julielab.concepts.db.core.services.FileConnectionService;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DataExportException;
+import de.julielab.concepts.util.VersioningException;
 import de.julielab.neo4j.plugins.ConceptManager;
 import de.julielab.neo4j.plugins.FacetManager;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
@@ -54,7 +55,7 @@ public class ConceptDatabaseApplicationTest {
 	}
 
 	@Test
-	public void testConceptImport() throws URISyntaxException, ConceptDatabaseConnectionException, DataExportException {
+	public void testConceptImport() throws URISyntaxException, ConceptDatabaseConnectionException, DataExportException, VersioningException {
 		ConceptDatabaseApplication.main(new String[] { "import", TESTCONFIG });
 
 		// Check if the Plant Ontology has been imported as expected.

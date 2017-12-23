@@ -20,26 +20,28 @@ import de.julielab.concepts.db.core.RootConfigurationConstants;
 import de.julielab.concepts.db.core.services.ConceptCreationService;
 import de.julielab.concepts.db.core.services.ConceptInsertionService;
 import de.julielab.concepts.db.core.services.DataExportService;
+import de.julielab.concepts.db.core.services.VersioningService;
 import de.julielab.concepts.util.ConceptCreationException;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.ConceptInsertionException;
 import de.julielab.concepts.util.DataExportException;
 import de.julielab.concepts.util.FacetCreationException;
+import de.julielab.concepts.util.VersioningException;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 
 public class ConceptDatabaseApplication {
 
 	public enum Task {
-		IMPORT, EXPORT, ALL
+		IMPORT, EXPORT, ALL, SET_VERSION
 	}
 
 	private static final Logger log = LoggerFactory.getLogger(ConceptDatabaseApplication.class);
 
-	public static void main(String[] args) throws DataExportException, ConceptDatabaseConnectionException {
+	public static void main(String[] args) throws DataExportException, ConceptDatabaseConnectionException, VersioningException {
 		if (args.length != 2) {
 			log.error("Usage: {} <task> <XML configuration file>", ConceptDatabaseApplication.class.getSimpleName());
 			log.error(
-					"The task is either import, export or all. The last case first performs the import and then the export.");
+					"The task is either import, export, set_version or all. The last case first performs the import and then the export.");
 			System.exit(1);
 		}
 
@@ -65,7 +67,7 @@ public class ConceptDatabaseApplication {
 	}
 
 	private static void run(Task task, XMLConfiguration configuration) throws ConceptCreationException,
-			FacetCreationException, ConceptInsertionException, DataExportException, ConceptDatabaseConnectionException {
+			FacetCreationException, ConceptInsertionException, DataExportException, ConceptDatabaseConnectionException, VersioningException {
 		HierarchicalConfiguration<ImmutableNode> connectionConfiguration = configuration
 				.configurationAt(CONFKEY_CONNECTION);
 		
@@ -78,6 +80,10 @@ public class ConceptDatabaseApplication {
 				Stream<ImportConcepts> concepts = conceptCreationService.createConcepts(importConfig);
 				insertionService.insertConcepts(importConfig, concepts);
 			}
+		}
+		if (task == Task.SET_VERSION || task == Task.ALL) {
+			HierarchicalConfiguration<ImmutableNode> versioningConfig = configuration.configurationAt(RootConfigurationConstants.VERSIONING);
+			VersioningService.getInstance(connectionConfiguration).setVersion(versioningConfig);
 		}
 		if (task == Task.EXPORT || task == Task.ALL) {
 			DataExportService dataExportService = DataExportService.getInstance(connectionConfiguration);
