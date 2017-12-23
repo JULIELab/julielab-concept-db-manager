@@ -1,0 +1,8 @@
+<db>
+	<versioning>
+		<version>1.0-file</version>
+	</versioning>
+	<connection>
+		<uri>src/test/resources/graph.db</uri>
+	</connection>
+</db>

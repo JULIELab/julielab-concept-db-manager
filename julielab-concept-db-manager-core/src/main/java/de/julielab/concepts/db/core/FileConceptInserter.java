@@ -81,16 +81,6 @@ public class FileConceptInserter implements ConceptInserter {
 			throws ConceptDatabaseConnectionException {
 		this.connectionConfiguration = connectionConfiguration;
 		graphDb = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
-		// if (graphDb != null) {
-		// if (graphDb.findNodes(VersionLabel.VERSION).stream().findAny().isPresent()) {
-		// throw new ConceptDatabaseCreationException("The database connected to through
-		// configuration "
-		// + ConfigurationUtils.toString(connectionConfiguration)
-		// + " already has a version tag. Changing it is against the version
-		// contract.");
-		// }
-		// graphDb.createNode(VersionLabel.VERSION).setProperty("version", version);
-		// }
 		if (graphDb == null)
 			throw new ConceptDatabaseConnectionException("Could not create a file database for connection "
 					+ ConfigurationUtils.toString(connectionConfiguration));

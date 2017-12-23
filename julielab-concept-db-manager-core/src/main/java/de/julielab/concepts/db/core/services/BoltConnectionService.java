@@ -59,7 +59,7 @@ public class BoltConnectionService {
 	private void checkForBoltScheme(String boltUri) throws ConceptDatabaseConnectionException {
 		try {
 			URI uri = new URI(boltUri);
-			if (!uri.getScheme().equals("bolt"))
+			if (uri.getScheme() == null || !uri.getScheme().equalsIgnoreCase("bolt"))
 				throw new ConceptDatabaseConnectionException(
 						"The given URI " + boltUri + " does not specify the bolt scheme.");
 		} catch (URISyntaxException e1) {
