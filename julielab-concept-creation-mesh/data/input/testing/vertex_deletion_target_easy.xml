@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<DescriptorRecordSet>
+<DescriptorRecord>
+  <DescriptorUI>D01</DescriptorUI>
+  <LocationList>
+   <Location>
+    <VertexName>V01</VertexName>
+	<ParentVertexName></ParentVertexName>
+   </Location>
+  </LocationList>
+  <ConceptList>
+   <Concept PreferredConceptYN="Y">
+    <ScopeNote>A scope note.
+    </ScopeNote>
+    <TermList>
+     <Term  ConceptPreferredTermYN="Y">
+      <TermUI>T01</TermUI>
+      <String>Term1</String>
+     </Term>
+    </TermList>
+   </Concept>
+  </ConceptList>
+ </DescriptorRecord>
+ 
+ <DescriptorRecord>
+  <DescriptorUI>D03</DescriptorUI>
+  <LocationList>
+   <Location>
+    <VertexName>V03</VertexName>
+	<ParentVertexName>V01</ParentVertexName>
+   </Location>
+  </LocationList>
+  <ConceptList>
+   <Concept PreferredConceptYN="Y">
+    <ScopeNote>A scope note.
+    </ScopeNote>
+    <TermList>
+     <Term  ConceptPreferredTermYN="Y">
+      <TermUI>T03</TermUI>
+      <String>Term3</String>
+     </Term>
+    </TermList>
+   </Concept>
+  </ConceptList>
+ </DescriptorRecord>
+ 
+</DescriptorRecordSet>

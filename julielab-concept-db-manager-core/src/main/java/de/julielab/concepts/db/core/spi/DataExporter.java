@@ -28,7 +28,7 @@ import de.julielab.concepts.util.VersionRetrievalException;
  * @author faessler
  *
  */
-public interface DataExporter {
+public interface DataExporter extends ExtensionPoint, DatabaseConnected {
 	/**
 	 * Export data from the database to an external location.
 	 * 
@@ -39,11 +39,6 @@ public interface DataExporter {
 	 */
 	void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig)
 			throws ConceptDatabaseConnectionException, DataExportException;
-
-	boolean hasName(String providerName);
-
-	void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
-			throws ConceptDatabaseConnectionException;
 
 	default String getResourceHeader(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
 			throws VersionRetrievalException, IOException {

@@ -1,0 +1,2176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<terms facet="Transplantation">
+ <term id="D014184" parent-id="D014180">
+  <canonic>Transplantation, Homologous</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Transplantation between individuals of the same species. Usually refers to genetically disparate individuals in contradistinction to isogeneic transplantation for genetically identical individuals.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Allograft</synonym>
+   <synonym>Homograft</synonym>
+   <synonym>Unrelated Graft</synonym>
+   <synonym>Unrelated Transplantation</synonym>
+   <synonym>Transplantation, Allogeneic</synonym>
+   <synonym>Allogeneic Transplantations</synonym>
+   <synonym>MUD Transplantations</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Transplantation</token>
+    <token>Homologous</token>
+   </variation>
+   <variation>
+    <token>Unrelated Grafts</token>
+   </variation>
+   <variation>
+    <token>Unrelated Transplantations</token>
+   </variation>
+   <variation>
+    <token>Allogeneic Transplantation</token>
+   </variation>
+   <variation>
+    <token>Homologous Transplantation</token>
+   </variation>
+   <variation>
+    <token>Allogenic Transplantation</token>
+   </variation>
+   <variation>
+    <token>Homologuous Transplantation</token>
+   </variation>
+   <variation>
+    <token>MUD Transplantation</token>
+   </variation>
+   <variation>
+    <token>MUD</token>
+    <token>Transplantation</token>
+   </variation>
+   <variation>
+    <token>MUD</token>
+    <token>Transplantations</token>
+   </variation>
+   <variation>
+    <token>Allogenic Transplantations</token>
+   </variation>
+   <variation>
+    <token>Allografts</token>
+   </variation>
+   <variation>
+    <token>Homografts</token>
+   </variation>
+   <variation>
+    <token>Homologous Transplantations</token>
+   </variation>
+   <variation>
+    <token>Homologuous Transplantations</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Allogeneic</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Homologous</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Allogenic</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Homologuous</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016026" parent-id="D018380">
+  <canonic>Bone Marrow Transplantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The transference of BONE MARROW from one human or animal to another for a variety of purposes including HEMATOPOIETIC STEM CELL TRANSPLANTATION or MESENCHYMAL STEM CELL TRANSPLANTATION.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Bone Marrow Transplantation</synonym>
+   <synonym>Bone Marrow Grafting</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Bone Marrow Cell Transplantation</token>
+   </variation>
+   <variation>
+    <token>Grafting</token>
+    <token>Bone Marrow</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Bone Marrow</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Bone Marrow Cell</token>
+   </variation>
+   <variation>
+    <token>Bone Marrow Graft</token>
+   </variation>
+   <variation>
+    <token>Bone Marrow Grafts</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016031" parent-id="D016377">
+  <canonic>Liver Transplantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The transference of a part of or an entire liver from one human or animal to another.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Liver Transplantation</synonym>
+   <synonym>Hepatic Transplantation</synonym>
+   <synonym>Liver Grafting</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Grafting</token>
+    <token>Liver</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Hepatic</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Liver</token>
+   </variation>
+   <variation>
+    <token>Graftings</token>
+    <token>Liver</token>
+   </variation>
+   <variation>
+    <token>Hepatic Transplantations</token>
+   </variation>
+   <variation>
+    <token>Liver Graftings</token>
+   </variation>
+   <variation>
+    <token>Liver Transplantations</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Hepatic</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Liver</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016030" parent-id="D016377">
+  <canonic>Kidney Transplantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The transference of a kidney from one human or animal to another.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Kidney Transplantation</synonym>
+   <synonym>Renal Transplantation</synonym>
+   <synonym>Kidney Grafting</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Grafting</token>
+    <token>Kidney</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Kidney</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Renal</token>
+   </variation>
+   <variation>
+    <token>Kidney Transplantations</token>
+   </variation>
+   <variation>
+    <token>Renal Transplantations</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Kidney</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Renal</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D018380" parent-id="D033581">
+  <canonic>Hematopoietic Stem Cell Transplantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Transfer of HEMATOPOIETIC STEM CELLS from BONE MARROW or BLOOD between individuals within the same species ( TRANSPLANTATION, HOMOLOGOUS) or transfer within the same individual ( TRANSPLANTATION, AUTOLOGOUS). Hematopoietic stem cell transplantation has been used as an alternative to BONE MARROW TRANSPLANTATION in the treatment of a variety of neoplasms.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>HSCT</synonym>
+   <synonym>Hematopoietic Stem Cell Transplantation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Hematopoietic SCT</token>
+   </variation>
+   <variation>
+    <token>SCT</token>
+    <token>Hematopoietic</token>
+   </variation>
+   <variation>
+    <token>Stem Cell Transplantation</token>
+    <token>Hematopoietic</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Hematopoietic Stem Cell</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>HSC</token>
+   </variation>
+   <variation>
+    <token>Hematopoetic Stem Cell Transplantation</token>
+   </variation>
+   <variation>
+    <token>Hematopoetic SCT</token>
+   </variation>
+   <variation>
+    <token>SCT</token>
+    <token>Hematopoetic</token>
+   </variation>
+   <variation>
+    <token>Stem Cell Transplantation</token>
+    <token>Hematopoetic</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Hematopoetic Stem Cell</token>
+   </variation>
+   <variation>
+    <token>Hematopoitic Stem Cell Transplantation</token>
+   </variation>
+   <variation>
+    <token>Hematopoitic SCT</token>
+   </variation>
+   <variation>
+    <token>SCT</token>
+    <token>Hematopoitic</token>
+   </variation>
+   <variation>
+    <token>Stem Cell Transplantation</token>
+    <token>Hematopoitic</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Hematopoitic Stem Cell</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D014182" parent-id="D014180">
+  <canonic>Transplantation, Autologous</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Transplantation from another site in or on the body of the individual receiving it.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Transplantation, Autologous</synonym>
+   <synonym>Autograft</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Autotransplant</token>
+   </variation>
+   <variation>
+    <token>Autologous Transplantation</token>
+   </variation>
+   <variation>
+    <token>Autografts</token>
+   </variation>
+   <variation>
+    <token>Autologous Transplantations</token>
+   </variation>
+   <variation>
+    <token>Autotransplants</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Autologous</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Autologuous</token>
+   </variation>
+   <variation>
+    <token>Autologuous Transplantation</token>
+   </variation>
+   <variation>
+    <token>Autologuous Transplantations</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Autologuous</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Autologus</token>
+   </variation>
+   <variation>
+    <token>Autologus Transplantation</token>
+   </variation>
+   <variation>
+    <token>Autologus Transplantations</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Autologus</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D014183" parent-id="D014180">
+  <canonic>Transplantation, Heterologous</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Transplantation between animals of different species.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Transplantation, Heterologous</synonym>
+   <synonym>Heterograft</synonym>
+   <synonym>Xenograft</synonym>
+   <synonym>Xenotransplantation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Heterologous Transplantation</token>
+   </variation>
+   <variation>
+    <token>Heterografts</token>
+   </variation>
+   <variation>
+    <token>Heterologous Transplantations</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Heterologous</token>
+   </variation>
+   <variation>
+    <token>Xenografts</token>
+   </variation>
+   <variation>
+    <token>Xenotransplantations</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Heterologuous</token>
+   </variation>
+   <variation>
+    <token>Heterologuous Transplantation</token>
+   </variation>
+   <variation>
+    <token>Heterologuous Transplantations</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Heterologuous</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Heterologus</token>
+   </variation>
+   <variation>
+    <token>Heterologus Transplantation</token>
+   </variation>
+   <variation>
+    <token>Heterologus Transplantations</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Heterologus</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016027" parent-id="D016377">
+  <canonic>Heart Transplantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The transference of a heart from one human or animal to another.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Heart Transplantation</synonym>
+   <synonym>Cardiac Transplantation</synonym>
+   <synonym>Grafting, Heart</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Transplantation</token>
+    <token>Cardiac</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Heart</token>
+   </variation>
+   <variation>
+    <token>Cardiac Transplantations</token>
+   </variation>
+   <variation>
+    <token>Cardiac Graftings</token>
+   </variation>
+   <variation>
+    <token>Cardiac Graft</token>
+   </variation>
+   <variation>
+    <token>Cardiac Allograft</token>
+   </variation>
+   <variation>
+    <token>Cardiac Grafts</token>
+   </variation>
+   <variation>
+    <token>Cardiac Allografts</token>
+   </variation>
+   <variation>
+    <token>Cardiac Grafting</token>
+   </variation>
+   <variation>
+    <token>Graftings</token>
+    <token>Heart</token>
+   </variation>
+   <variation>
+    <token>Heart Grafting</token>
+   </variation>
+   <variation>
+    <token>Heart Graftings</token>
+   </variation>
+   <variation>
+    <token>Heart Transplantations</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Cardiac</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Heart</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016038" parent-id="D016378">
+  <canonic>Skin Transplantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The grafting of skin in humans or animals from one site to another to replace a lost portion of the body surface skin.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Skin Transplantation</synonym>
+   <synonym>Dermatoplasty</synonym>
+   <synonym>Grafting, Skin</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Transplantation</token>
+    <token>Skin</token>
+   </variation>
+   <variation>
+    <token>Dermatoplasties</token>
+   </variation>
+   <variation>
+    <token>Graftings</token>
+    <token>Skin</token>
+   </variation>
+   <variation>
+    <token>Skin Grafting</token>
+   </variation>
+   <variation>
+    <token>Skin Graftings</token>
+   </variation>
+   <variation>
+    <token>Skin Grafts</token>
+   </variation>
+   <variation>
+    <token>Skin Graft</token>
+   </variation>
+   <variation>
+    <token>Skin Transplantations</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Skin</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D033581" parent-id="D017690">
+  <canonic>Stem Cell Transplantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The transfer of STEM CELLS from one individual to another within the same species ( TRANSPLANTATION, HOMOLOGOUS) or between species ( XENOTRANSPLANTATION), or transfer within the same individual ( TRANSPLANTATION, AUTOLOGOUS). The source and location of the stem cells determines their potency or pluripotency to differentiate into various cell types.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Stem Cell Transplantation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Transplantation</token>
+    <token>SCT</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Stem Cell</token>
+   </variation>
+   <variation>
+    <token>Stem Cell Transplantations</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Stem Cell</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016025" parent-id="D016377">
+  <canonic>Bone Transplantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The grafting of bone from a donor site to a recipient site.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Bone Transplantation</synonym>
+   <synonym>Bone Grafting</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Grafting</token>
+    <token>Bone</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Bone</token>
+   </variation>
+   <variation>
+    <token>Bone Graftings</token>
+   </variation>
+   <variation>
+    <token>Bone Transplantations</token>
+   </variation>
+   <variation>
+    <token>Graftings</token>
+    <token>Bone</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Bone</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D017690" parent-id="D014180">
+  <canonic>Cell Transplantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Transference of cells within an individual, between individuals of the same species, or between individuals of different species.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cell Transplantation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Transplantation</token>
+    <token>Cell</token>
+   </variation>
+   <variation>
+    <token>Cell Transplantations</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Cell</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016332" parent-id="D016378">
+  <canonic>Fetal Tissue Transplantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Transference of fetal tissue between individuals of the same species or between individuals of different species.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Fetal Tissue Transplantation</synonym>
+   <synonym>Fetal Tissue Donation</synonym>
+   <synonym>Fetal Tissue Grafting</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Grafting</token>
+    <token>Fetal Tissue</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Fetal Tissue</token>
+   </variation>
+   <variation>
+    <token>Donation</token>
+    <token>Fetal Tissue</token>
+   </variation>
+   <variation>
+    <token>Donations</token>
+    <token>Fetal Tissue</token>
+   </variation>
+   <variation>
+    <token>Fetal Tissue Donations</token>
+   </variation>
+   <variation>
+    <token>Fetal Tissue Graftings</token>
+   </variation>
+   <variation>
+    <token>Fetal Tissue Transplantations</token>
+   </variation>
+   <variation>
+    <token>Graftings</token>
+    <token>Fetal Tissue</token>
+   </variation>
+   <variation>
+    <token>Tissue Donation</token>
+    <token>Fetal</token>
+   </variation>
+   <variation>
+    <token>Tissue Donations</token>
+    <token>Fetal</token>
+   </variation>
+   <variation>
+    <token>Tissue Grafting</token>
+    <token>Fetal</token>
+   </variation>
+   <variation>
+    <token>Tissue Graftings</token>
+    <token>Fetal</token>
+   </variation>
+   <variation>
+    <token>Tissue Transplantation</token>
+    <token>Fetal</token>
+   </variation>
+   <variation>
+    <token>Tissue Transplantations</token>
+    <token>Fetal</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Fetal Tissue</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016040" parent-id="D016377">
+  <canonic>Lung Transplantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The transference of either one or both of the lungs from one human or animal to another.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Lung Transplantation</synonym>
+   <synonym>Transplantation, Lung</synonym>
+   <synonym>Lung Grafting</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Grafting</token>
+    <token>Lung</token>
+   </variation>
+   <variation>
+    <token>Graftings</token>
+    <token>Lung</token>
+   </variation>
+   <variation>
+    <token>Lung Graftings</token>
+   </variation>
+   <variation>
+    <token>Lung Transplantations</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Lung</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015948" parent-id="D016039">
+  <canonic>Keratoplasty, Penetrating</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Partial or total replacement of all layers of a central portion of the cornea.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Keratoplasty, Penetrating</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Keratoplasties</token>
+    <token>Penetrating</token>
+   </variation>
+   <variation>
+    <token>Penetrating Keratoplasties</token>
+   </variation>
+   <variation>
+    <token>Penetrating Keratoplasty</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016039" parent-id="D016378">
+  <canonic>Corneal Transplantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Partial or total replacement of the CORNEA from one human or animal to another.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Corneal Transplantation</synonym>
+   <synonym>Keratoplasty</synonym>
+   <synonym>Corneal Grafting</synonym>
+   <synonym>Keratoplasties</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Grafting</token>
+    <token>Corneal</token>
+   </variation>
+   <variation>
+    <token>Keratoplasty</token>
+    <token>Lamellar</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Corneal</token>
+   </variation>
+   <variation>
+    <token>Cornea Transplantation</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Cornea</token>
+   </variation>
+   <variation>
+    <token>Cornea Transplantations</token>
+   </variation>
+   <variation>
+    <token>Corneal Graftings</token>
+   </variation>
+   <variation>
+    <token>Corneal Transplantations</token>
+   </variation>
+   <variation>
+    <token>Graftings</token>
+    <token>Corneal</token>
+   </variation>
+   <variation>
+    <token>Keratoplasties</token>
+    <token>Lamellar</token>
+   </variation>
+   <variation>
+    <token>Lamellar Keratoplasties</token>
+   </variation>
+   <variation>
+    <token>Lamellar Keratoplasty</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Cornea</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Corneal</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016380" parent-id="D016378">
+  <canonic>Brain Tissue Transplantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Transference of brain tissue, either from a fetus or from a born individual, between individuals of the same species or between individuals of different species.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Brain Tissue Transplantation</synonym>
+   <synonym>Brain Tissue Grafting</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Grafting</token>
+    <token>Brain Tissue</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Brain Tissue</token>
+   </variation>
+   <variation>
+    <token>Brain Tissue Graftings</token>
+   </variation>
+   <variation>
+    <token>Brain Tissue Transplantations</token>
+   </variation>
+   <variation>
+    <token>Graftings</token>
+    <token>Brain Tissue</token>
+   </variation>
+   <variation>
+    <token>Tissue Grafting</token>
+    <token>Brain</token>
+   </variation>
+   <variation>
+    <token>Tissue Graftings</token>
+    <token>Brain</token>
+   </variation>
+   <variation>
+    <token>Tissue Transplantation</token>
+    <token>Brain</token>
+   </variation>
+   <variation>
+    <token>Tissue Transplantations</token>
+    <token>Brain</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Brain Tissue</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016381" parent-id="D017690">
+  <canonic>Islets, Langerhans Transplantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The transference of pancreatic islets within an individual, between individuals of the same species, or between individuals of different species.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Islets, Langerhans Transplantation</synonym>
+   <synonym>Grafting, Islets, Langerhans</synonym>
+   <synonym>Pancreatic Islets Transplantation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Islets</token>
+    <token>Langerhans Grafting</token>
+   </variation>
+   <variation>
+    <token>Islets</token>
+    <token>Langerhans Graftings</token>
+   </variation>
+   <variation>
+    <token>Graftings, Islets</token>
+    <token>Langerhans</token>
+   </variation>
+   <variation>
+    <token>Transplantation, Islets</token>
+    <token>Langerhans</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Pancreatic Islets</token>
+   </variation>
+   <variation>
+    <token>Islands</token>
+    <token>Langerhans Transplantation</token>
+   </variation>
+   <variation>
+    <token>Islands</token>
+    <token>Pancreas Transplantation</token>
+   </variation>
+   <variation>
+    <token>Islet Transplantation</token>
+   </variation>
+   <variation>
+    <token>Transplantation, Islands</token>
+    <token>Langerhans</token>
+   </variation>
+   <variation>
+    <token>Transplantation, Islands</token>
+    <token>Pancreas</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Islet</token>
+   </variation>
+   <variation>
+    <token>Islet Transplantations</token>
+   </variation>
+   <variation>
+    <token>Islets Transplantation</token>
+    <token>Pancreatic</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Islet</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016042" parent-id="D014180">
+  <canonic>Transplantation, Heterotopic</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Transplantation of tissue typical of one area to a different recipient site. The tissue may be autologous, heterologous, or homologous.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Heterotopic Transplantation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Transplantation</token>
+    <token>Heterotopic</token>
+   </variation>
+   <variation>
+    <token>Heterotopic Transplantations</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Heterotopic</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D014185" parent-id="D014184">
+  <canonic>Transplantation, Isogeneic</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Transplantation between genetically identical individuals, i.e., members of the same species with identical histocompatibility antigens, such as monozygotic twins, members of the same inbred strain, or members of a hybrid population produced by crossing certain inbred strains.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Isograft</synonym>
+   <synonym>Isogeneic Transplantation</synonym>
+   <synonym>Syngeneic Transplantation</synonym>
+   <synonym>Isogeneic Homograft</synonym>
+   <synonym>Syngeneic Homograft</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Transplantation</token>
+    <token>Isogeneic</token>
+   </variation>
+   <variation>
+    <token>Homograft</token>
+    <token>Isogeneic</token>
+   </variation>
+   <variation>
+    <token>Homograft</token>
+    <token>Syngeneic</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Syngeneic</token>
+   </variation>
+   <variation>
+    <token>Isogeneic Transplantations</token>
+   </variation>
+   <variation>
+    <token>Syngeneic Transplantations</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Isogeneic</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Syngeneic</token>
+   </variation>
+   <variation>
+    <token>Homografts</token>
+    <token>Isogeneic</token>
+   </variation>
+   <variation>
+    <token>Homografts</token>
+    <token>Syngeneic</token>
+   </variation>
+   <variation>
+    <token>Isogeneic Homografts</token>
+   </variation>
+   <variation>
+    <token>Isografts</token>
+   </variation>
+   <variation>
+    <token>Syngeneic Homografts</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Isogenic</token>
+   </variation>
+   <variation>
+    <token>Homograft</token>
+    <token>Isogenic</token>
+   </variation>
+   <variation>
+    <token>Homograft</token>
+    <token>Syngenic</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Syngenic</token>
+   </variation>
+   <variation>
+    <token>Isogenic Transplantation</token>
+   </variation>
+   <variation>
+    <token>Isogenic Transplantations</token>
+   </variation>
+   <variation>
+    <token>Syngenic Transplantation</token>
+   </variation>
+   <variation>
+    <token>Syngenic Transplantations</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Isogenic</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Syngenic</token>
+   </variation>
+   <variation>
+    <token>Homografts</token>
+    <token>Isogenic</token>
+   </variation>
+   <variation>
+    <token>Homografts</token>
+    <token>Syngenic</token>
+   </variation>
+   <variation>
+    <token>Isogenic Homograft</token>
+   </variation>
+   <variation>
+    <token>Isogenic Homografts</token>
+   </variation>
+   <variation>
+    <token>Syngenic Homograft</token>
+   </variation>
+   <variation>
+    <token>Syngenic Homografts</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016377" parent-id="D014180">
+  <canonic>Organ Transplantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Transference of an organ between individuals of the same species or between individuals of different species.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Organ Transplantation</synonym>
+   <synonym>Organ Grafting</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Grafting</token>
+    <token>Organ</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Organ</token>
+   </variation>
+   <variation>
+    <token>Graftings</token>
+    <token>Organ</token>
+   </variation>
+   <variation>
+    <token>Organ Graftings</token>
+   </variation>
+   <variation>
+    <token>Organ Transplantations</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Organ</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D036102" parent-id="D018380">
+  <canonic>Peripheral Blood Stem Cell Transplantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Transplantation of stem cells collected from the peripheral blood. It is a less invasive alternative to direct marrow harvesting of hematopoietic stem cells. Enrichment of stem cells in peripheral blood can be achieved by inducing mobilization of stem cells from the BONE MARROW.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Peripheral Blood Stem Cell Transplantation</synonym>
+   <synonym>PBSCT</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>PSCT</token>
+   </variation>
+   <variation>
+    <token>Peripheral Stem Cell Transplantation</token>
+   </variation>
+   <variation>
+    <token>Stem Cell Transplantation</token>
+    <token>Peripheral</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Peripheral Stem Cell</token>
+   </variation>
+   <variation>
+    <token>SCT</token>
+    <token>Peripheral</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Peripheral Stem Cell</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>PBSC</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>PBSCs</token>
+   </variation>
+   <variation>
+    <token>PBSC Transplantation</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016035" parent-id="D016377">
+  <canonic>Pancreas Transplantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The transference of a pancreas from one human or animal to another.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Pancreas Transplantation</synonym>
+   <synonym>Pancreas Grafting</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Grafting</token>
+    <token>Pancreas</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Pancreas</token>
+   </variation>
+   <variation>
+    <token>Graftings</token>
+    <token>Pancreas</token>
+   </variation>
+   <variation>
+    <token>Pancreas Graftings</token>
+   </variation>
+   <variation>
+    <token>Pancreas Transplantations</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Pancreas</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016378" parent-id="D014180">
+  <canonic>Tissue Transplantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Transference of tissue within an individual, between individuals of the same species, or between individuals of different species.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Tissue Transplantation</synonym>
+   <synonym>Tissue Grafting</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Grafting</token>
+    <token>Tissue</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Tissue</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D036101" parent-id="D018380">
+  <canonic>Cord Blood Stem Cell Transplantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Transplantation of STEM CELLS collected from the fetal blood remaining in the UMBILICAL CORD and the PLACENTA after delivery. Included are the HEMATOPOIETIC STEM CELLS.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cord Blood Stem Cell Transplantation</synonym>
+   <synonym>CBSCT</synonym>
+   <synonym>Umbilical CBSCT</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Umbilical Cord Blood Stem Cell Transplantation</token>
+   </variation>
+   <variation>
+    <token>Placental Blood Stem Cell Transplantation</token>
+   </variation>
+   <variation>
+    <token>Placental BSCT</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Cord Blood Stem Cell</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>CBSC</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D016041" parent-id="D016027">
+  <canonic>Heart-Lung Transplantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The simultaneous, or near simultaneous, transference of heart and lungs from one human or animal to another.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Heart-Lung Transplantation</synonym>
+   <synonym>Heart-Lung Grafting</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Grafting</token>
+    <token>Heart-Lung</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Heart-Lung</token>
+   </variation>
+   <variation>
+    <token>Grafting</token>
+    <token>Heart Lung</token>
+   </variation>
+   <variation>
+    <token>Graftings</token>
+    <token>Heart-Lung</token>
+   </variation>
+   <variation>
+    <token>Heart Lung Transplantation</token>
+   </variation>
+   <variation>
+    <token>Heart-Lung Graftings</token>
+   </variation>
+   <variation>
+    <token>Heart-Lung Transplantations</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Heart Lung</token>
+   </variation>
+   <variation>
+    <token>Transplantations</token>
+    <token>Heart-Lung</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D045164" parent-id="D033581">
+  <canonic>Mesenchymal Stem Cell Transplantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Transfer of MESENCHYMAL STEM CELLS between individuals within the same species ( TRANSPLANTATION, HOMOLOGOUS) or transfer within the same individual ( TRANSPLANTATION, AUTOLOGOUS).</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Mesenchymal Stem Cell Transplantation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Stem Cell Transplantation</token>
+    <token>Mesenchymal</token>
+   </variation>
+   <variation>
+    <token>Transplantation</token>
+    <token>Mesenchymal Stem Cell</token>
+   </variation>
+   <variation>
+    <token>Transplantation, Mesenchymal</token>
+    <token>Stem Cell</token>
+   </variation>
+   <variation>
+    <token>Transplantation, Mesenchymal</token>
+    <token>Stem Cells</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D012092" parent-id="D014180">
+  <canonic>Replantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Restoration of an organ or other structure to its original site.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Reimplantation</synonym>
+   <synonym>Surgical Replantation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Replantation</token>
+   </variation>
+   <variation>
+    <token>Replantation</token>
+    <token>Surgical</token>
+   </variation>
+   <variation>
+    <token>Reimplantations</token>
+   </variation>
+   <variation>
+    <token>Replantations</token>
+   </variation>
+   <variation>
+    <token>Replantations</token>
+    <token>Surgical</token>
+   </variation>
+   <variation>
+    <token>Surgical Replantations</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D017391" parent-id="D016039">
+  <canonic>Epikeratophakia</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>PRINT ENTRY = Epikeratophakia</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Epikeratoplasty</token>
+   </variation>
+   <variation>
+    <token>Epikeratophakias</token>
+   </variation>
+   <variation>
+    <token>Epikeratoplasties</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D014090" parent-id="D012092">
+  <canonic>Tooth Replantation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A procedure that modifies REFRACTIVE ERRORS by the transplantation of a donor CORNEA to the anterior surface of the patient's cornea.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Tooth Replantation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Reimplantation</token>
+    <token>Tooth</token>
+   </variation>
+   <variation>
+    <token>Replantation</token>
+    <token>Tooth</token>
+   </variation>
+   <variation>
+    <token>Tooth Reimplantation</token>
+   </variation>
+   <variation>
+    <token>Reimplantations</token>
+    <token>Tooth</token>
+   </variation>
+   <variation>
+    <token>Replantations</token>
+    <token>Tooth</token>
+   </variation>
+   <variation>
+    <token>Tooth Reimplantations</token>
+   </variation>
+   <variation>
+    <token>Tooth Replantations</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D052096" parent-id="D014180">
+  <canonic>Warm Ischemia</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A tissue or organ remaining at physiological temperature during decreased BLOOD perfusion or in the absence of blood supply. During ORGAN TRANSPLANTATION it begins when the organ reaches physiological temperature before the completion of SURGICAL ANASTOMOSIS and ends with reestablishment of the BLOOD CIRCULATION through the tissue.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Warm Ischemia</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Warm Ischemia Time</token>
+   </variation>
+   <variation>
+    <token>Warm Ischemic Time</token>
+   </variation>
+   <variation>
+    <token>Ischemia Time</token>
+    <token>Warm</token>
+   </variation>
+   <variation>
+    <token>Ischemia Times</token>
+    <token>Warm</token>
+   </variation>
+   <variation>
+    <token>Ischemia</token>
+    <token>Warm</token>
+   </variation>
+   <variation>
+    <token>Ischemias</token>
+    <token>Warm</token>
+   </variation>
+   <variation>
+    <token>Ischemic Time</token>
+    <token>Warm</token>
+   </variation>
+   <variation>
+    <token>Ischemic Times</token>
+    <token>Warm</token>
+   </variation>
+   <variation>
+    <token>Time</token>
+    <token>Warm Ischemia</token>
+   </variation>
+   <variation>
+    <token>Time</token>
+    <token>Warm Ischemic</token>
+   </variation>
+   <variation>
+    <token>Times</token>
+    <token>Warm Ischemia</token>
+   </variation>
+   <variation>
+    <token>Times</token>
+    <token>Warm Ischemic</token>
+   </variation>
+   <variation>
+    <token>Warm Ischemia Times</token>
+   </variation>
+   <variation>
+    <token>Warm Ischemias</token>
+   </variation>
+   <variation>
+    <token>Warm Ischemic Times</token>
+   </variation>
+   <variation>
+    <token>Warm Ischaemia</token>
+   </variation>
+   <variation>
+    <token>Warm Ischaemia Time</token>
+   </variation>
+   <variation>
+    <token>Warm Ischaemic Time</token>
+   </variation>
+   <variation>
+    <token>Ischaemia Time</token>
+    <token>Warm</token>
+   </variation>
+   <variation>
+    <token>Ischaemia Times</token>
+    <token>Warm</token>
+   </variation>
+   <variation>
+    <token>Ischaemia</token>
+    <token>Warm</token>
+   </variation>
+   <variation>
+    <token>Ischaemias</token>
+    <token>Warm</token>
+   </variation>
+   <variation>
+    <token>Ischaemic Time</token>
+    <token>Warm</token>
+   </variation>
+   <variation>
+    <token>Ischaemic Times</token>
+    <token>Warm</token>
+   </variation>
+   <variation>
+    <token>Time</token>
+    <token>Warm Ischaemia</token>
+   </variation>
+   <variation>
+    <token>Time</token>
+    <token>Warm Ischaemic</token>
+   </variation>
+   <variation>
+    <token>Times</token>
+    <token>Warm Ischaemia</token>
+   </variation>
+   <variation>
+    <token>Times</token>
+    <token>Warm Ischaemic</token>
+   </variation>
+   <variation>
+    <token>Warm Ischaemia Times</token>
+   </variation>
+   <variation>
+    <token>Warm Ischaemias</token>
+   </variation>
+   <variation>
+    <token>Warm Ischaemic Times</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D050377" parent-id="D014180">
+  <canonic>Cold Ischemia</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The chilling of a tissue or organ during decreased BLOOD perfusion or in the absence of blood supply. Cold ischemia time during ORGAN TRANSPLANTATION begins when the organ is cooled with a cold perfusion solution after ORGAN PROCUREMENT surgery, and ends after the tissue reaches physiological temperature during implantation procedures. WARM ISCHEMIA TIME starts then and ends with completion of SURGICAL ANASTOMOSIS.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Cold Ischemia</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Cold Ischemia Time</token>
+   </variation>
+   <variation>
+    <token>Cold Ischemic Time</token>
+   </variation>
+   <variation>
+    <token>Cold Ischemia Times</token>
+   </variation>
+   <variation>
+    <token>Cold Ischemias</token>
+   </variation>
+   <variation>
+    <token>Cold Ischemic Times</token>
+   </variation>
+   <variation>
+    <token>Ischemia Time</token>
+    <token>Cold</token>
+   </variation>
+   <variation>
+    <token>Ischemia Times</token>
+    <token>Cold</token>
+   </variation>
+   <variation>
+    <token>Ischemia</token>
+    <token>Cold</token>
+   </variation>
+   <variation>
+    <token>Ischemias</token>
+    <token>Cold</token>
+   </variation>
+   <variation>
+    <token>Ischemic Time</token>
+    <token>Cold</token>
+   </variation>
+   <variation>
+    <token>Ischemic Times</token>
+    <token>Cold</token>
+   </variation>
+   <variation>
+    <token>Time</token>
+    <token>Cold Ischemia</token>
+   </variation>
+   <variation>
+    <token>Time</token>
+    <token>Cold Ischemic</token>
+   </variation>
+   <variation>
+    <token>Times</token>
+    <token>Cold Ischemia</token>
+   </variation>
+   <variation>
+    <token>Times</token>
+    <token>Cold Ischemic</token>
+   </variation>
+   <variation>
+    <token>Cold Ischaemia</token>
+   </variation>
+   <variation>
+    <token>Cold Ischaemia Time</token>
+   </variation>
+   <variation>
+    <token>Cold Ischaemic Time</token>
+   </variation>
+   <variation>
+    <token>Cold Ischaemia Times</token>
+   </variation>
+   <variation>
+    <token>Cold Ischaemias</token>
+   </variation>
+   <variation>
+    <token>Cold Ischaemic Times</token>
+   </variation>
+   <variation>
+    <token>Ischaemia Time</token>
+    <token>Cold</token>
+   </variation>
+   <variation>
+    <token>Ischaemia Times</token>
+    <token>Cold</token>
+   </variation>
+   <variation>
+    <token>Ischaemia</token>
+    <token>Cold</token>
+   </variation>
+   <variation>
+    <token>Ischaemias</token>
+    <token>Cold</token>
+   </variation>
+   <variation>
+    <token>Ischaemic Time</token>
+    <token>Cold</token>
+   </variation>
+   <variation>
+    <token>Ischaemic Times</token>
+    <token>Cold</token>
+   </variation>
+   <variation>
+    <token>Time</token>
+    <token>Cold Ischaemia</token>
+   </variation>
+   <variation>
+    <token>Time</token>
+    <token>Cold Ischaemic</token>
+   </variation>
+   <variation>
+    <token>Times</token>
+    <token>Cold Ischaemia</token>
+   </variation>
+   <variation>
+    <token>Times</token>
+    <token>Cold Ischaemic</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D050376" parent-id="D016025">
+  <canonic>Bone-Patellar Tendon-Bone Graft</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Fixation of the ANTERIOR CRUCIATE LIGAMENT, during surgical reconstruction, by the use of a bone- patellar tendon autograft.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Bone-Patellar Tendon-Bone Graft</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Bone Patellar Tendon Bone Graft</token>
+   </variation>
+   <variation>
+    <token>Bone-Patellar Tendon-Bone Grafts</token>
+   </variation>
+   <variation>
+    <token>Graft</token>
+    <token>Bone-Patellar Tendon-Bone</token>
+   </variation>
+   <variation>
+    <token>Grafts</token>
+    <token>Bone-Patellar Tendon-Bone</token>
+   </variation>
+   <variation>
+    <token>Graft, Bone-Patellar</token>
+    <token>Tendon-Bone</token>
+   </variation>
+   <variation>
+    <token>Grafts, Bone-Patellar</token>
+    <token>Tendon-Bone</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D014181" parent-id="D014180">
+  <canonic>Transplantation Immunology</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>PRINT ENTRY = Transplantation Immunology</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Immunology, Transplantation</synonym>
+  </synonyms>
+  <variations>
+  </variations>
+ </term>
+
+ <term id="D006648" parent-id="D014181">
+  <canonic>Histocompatibility</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A general term for the complex phenomena involved in allo- and xenograft rejection by a host and graft vs host reaction. Although the reactions involved in transplantation immunology are primarily thymus-dependent phenomena of cellular immunity, humoral factors also play a part in late rejection.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Histocompatibility</synonym>
+   <synonym>Immunocompatibility</synonym>
+   <synonym>Tissue Compatibility</synonym>
+   <synonym>Histo compatibility</synonym>
+   <synonym>Immuno compatibility</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Compatibilities</token>
+    <token>Tissue</token>
+   </variation>
+   <variation>
+    <token>Compatibility</token>
+    <token>Tissue</token>
+   </variation>
+   <variation>
+    <token>Histocompatibilities</token>
+   </variation>
+   <variation>
+    <token>Immunocompatibilities</token>
+   </variation>
+   <variation>
+    <token>Tissue Compatibilities</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D006087" parent-id="D014181">
+  <canonic>Graft vs Host Reaction</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>PRINT ENTRY = Graft vs Host Reaction</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Graft versus Host Reaction</token>
+   </variation>
+   <variation>
+    <token>Reaction</token>
+    <token>Graft versus Host</token>
+   </variation>
+   <variation>
+    <token>GvH Reaction</token>
+   </variation>
+   <variation>
+    <token>Reaction</token>
+    <token>GvH</token>
+   </variation>
+   <variation>
+    <token>GvH</token>
+    <token>Graft</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D006789" parent-id="D014181">
+  <canonic>Host vs Graft Reaction</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>An immunological attack mounted by a graft against the host because of tissue incompatibility when immunologically competent cells are transplanted to an immunologically incompetent host; the resulting clinical picture is that of GRAFT VS HOST DISEASE.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Host vs Graft Reaction</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Host versus Graft Reaction</token>
+   </variation>
+   <variation>
+    <token>HvG</token>
+    <token>Reaction</token>
+   </variation>
+   <variation>
+    <token>HvG</token>
+    <token>Reactivity</token>
+   </variation>
+   <variation>
+    <token>Host vs Graft</token>
+    <token>Reaction</token>
+   </variation>
+   <variation>
+    <token>Host vs Graft</token>
+    <token>Reactivity</token>
+   </variation>
+   <variation>
+    <token>Host versus Graft</token>
+    <token>Reaction</token>
+   </variation>
+   <variation>
+    <token>Host versus Graft</token>
+    <token>Reactivity</token>
+   </variation>
+   <variation>
+    <token>HvG</token>
+   </variation>
+   <variation>
+    <token>Host versus Graft</token>
+   </variation>
+   <variation>
+    <token>Host vs Graft</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D006084" parent-id="D006789">
+  <canonic>Graft Rejection</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>An immune response with both cellular and humoral components, directed against an allogeneic transplant, whose tissue antigens are not compatible with those of the recipient.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Graft Rejection</synonym>
+   <synonym>Transplant Rejection</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Rejection</token>
+    <token>Transplant</token>
+   </variation>
+   <variation>
+    <token>Transplantation Rejection</token>
+   </variation>
+   <variation>
+    <token>Graft Rejections</token>
+   </variation>
+   <variation>
+    <token>Rejection</token>
+    <token>Graft</token>
+   </variation>
+   <variation>
+    <token>Rejection</token>
+    <token>Transplantation</token>
+   </variation>
+   <variation>
+    <token>Rejections</token>
+    <token>Graft</token>
+   </variation>
+   <variation>
+    <token>Rejections</token>
+    <token>Transplant</token>
+   </variation>
+   <variation>
+    <token>Rejections</token>
+    <token>Transplantation</token>
+   </variation>
+   <variation>
+    <token>Transplant Rejections</token>
+   </variation>
+   <variation>
+    <token>Transplantation Rejections</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D006085" parent-id="D006789">
+  <canonic>Graft Survival</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The survival of a graft in a host, the factors responsible for the survival and the changes occurring within the graft during growth in the host.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Graft Survival</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Graft Survivals</token>
+   </variation>
+   <variation>
+    <token>Survival</token>
+    <token>Graft</token>
+   </variation>
+   <variation>
+    <token>Survivals</token>
+    <token>Graft</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D020350" parent-id="D006087">
+  <canonic>Graft vs Tumor Effect</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Immunological rejection of tumor tissue/cells following bone marrow transplantation.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Graft vs Tumor Effect</synonym>
+   <synonym>Graft vs Neoplasm Effect</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Graft vs Neoplasm Response</token>
+   </variation>
+   <variation>
+    <token>Graft vs Tumor Response</token>
+   </variation>
+   <variation>
+    <token>Effect</token>
+    <token>Graft vs Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Effect</token>
+    <token>Graft vs Tumor</token>
+   </variation>
+   <variation>
+    <token>Effects</token>
+    <token>Graft vs Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Effects</token>
+    <token>Graft vs Tumor</token>
+   </variation>
+   <variation>
+    <token>Graft vs Neoplasm Effects</token>
+   </variation>
+   <variation>
+    <token>Graft vs Neoplasm Responses</token>
+   </variation>
+   <variation>
+    <token>Graft vs Tumor Effects</token>
+   </variation>
+   <variation>
+    <token>Graft vs Tumor Responses</token>
+   </variation>
+   <variation>
+    <token>Response</token>
+    <token>Graft vs Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Response</token>
+    <token>Graft vs Tumor</token>
+   </variation>
+   <variation>
+    <token>Responses</token>
+    <token>Graft vs Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Responses</token>
+    <token>Graft vs Tumor</token>
+   </variation>
+   <variation>
+    <token>Reaction</token>
+    <token>Graft vs Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Reactions</token>
+    <token>Graft vs Tumor</token>
+   </variation>
+   <variation>
+    <token>Activity</token>
+    <token>Graft vs Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Activities</token>
+    <token>Graft vs Tumor</token>
+   </variation>
+   <variation>
+    <token>Graft versus Tumor Effect</token>
+   </variation>
+   <variation>
+    <token>Graft versus Neoplasm Effect</token>
+   </variation>
+   <variation>
+    <token>Graft versus Neoplasm Response</token>
+   </variation>
+   <variation>
+    <token>Graft versus Tumor Response</token>
+   </variation>
+   <variation>
+    <token>Effect</token>
+    <token>Graft versus Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Effect</token>
+    <token>Graft versus Tumor</token>
+   </variation>
+   <variation>
+    <token>Effects</token>
+    <token>Graft versus Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Effects</token>
+    <token>Graft versus Tumor</token>
+   </variation>
+   <variation>
+    <token>Graft versus Neoplasm Effects</token>
+   </variation>
+   <variation>
+    <token>Graft versus Neoplasm Responses</token>
+   </variation>
+   <variation>
+    <token>Graft versus Tumor Effects</token>
+   </variation>
+   <variation>
+    <token>Graft versus Tumor Responses</token>
+   </variation>
+   <variation>
+    <token>Response</token>
+    <token>Graft versus Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Response</token>
+    <token>Graft versus Tumor</token>
+   </variation>
+   <variation>
+    <token>Responses</token>
+    <token>Graft versus Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Responses</token>
+    <token>Graft versus Tumor</token>
+   </variation>
+   <variation>
+    <token>Reaction</token>
+    <token>Graft versus Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Reactions</token>
+    <token>Graft versus Tumor</token>
+   </variation>
+   <variation>
+    <token>Activity</token>
+    <token>Graft versus Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Activities</token>
+    <token>Graft versus Tumor</token>
+   </variation>
+   <variation>
+    <token>Graft vs Tumor</token>
+   </variation>
+   <variation>
+    <token>Graft versus Tumor</token>
+   </variation>
+   <variation>
+    <token>Graft vs Neoplasm</token>
+   </variation>
+   <variation>
+    <token>Graft versus Neoplasm</token>
+   </variation>
+   <variation>
+    <token>GvT</token>
+    <token>Graft vs Tumor</token>
+   </variation>
+   <variation>
+    <token>GvT</token>
+    <token>Graft versus Tumor</token>
+   </variation>
+   <variation>
+    <token>GvT</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D020544" parent-id="D020350">
+  <canonic>Graft vs Leukemia Effect</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Immunological rejection of leukemia cells following bone marrow transplantation.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>GvL, Graft vs Leukemia Effect</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Graft vs Leukemia Effect</token>
+   </variation>
+   <variation>
+    <token>Graft vs Leukemia Response</token>
+   </variation>
+   <variation>
+    <token>Graft vs Leukemia Effect</token>
+   </variation>
+   <variation>
+    <token>Effect</token>
+    <token>Graft vs Leukemia</token>
+   </variation>
+   <variation>
+    <token>Effects</token>
+    <token>Graft vs Leukemia</token>
+   </variation>
+   <variation>
+    <token>Graft vs Leukemia Effects</token>
+   </variation>
+   <variation>
+    <token>Graft vs Leukemia Responses</token>
+   </variation>
+   <variation>
+    <token>Response</token>
+    <token>Graft vs Leukemia</token>
+   </variation>
+   <variation>
+    <token>Responses</token>
+    <token>Graft vs Leukemia</token>
+   </variation>
+   <variation>
+    <token>Graft vs leukaemia</token>
+   </variation>
+   <variation>
+    <token>GvL</token>
+    <token>Graft</token>
+   </variation>
+   <variation>
+    <token>Effect</token>
+    <token>GvL</token>
+   </variation>
+   <variation>
+    <token>Reaction</token>
+    <token>GvL</token>
+   </variation>
+   <variation>
+    <token>Reponse</token>
+    <token>GvL</token>
+   </variation>
+   <variation>
+    <token>Effects</token>
+    <token>GvL</token>
+   </variation>
+   <variation>
+    <token>Reactions</token>
+    <token>GvL</token>
+   </variation>
+   <variation>
+    <token>Reponses</token>
+    <token>GvL</token>
+   </variation>
+   <variation>
+    <token>GvL</token>
+   </variation>
+   <variation>
+    <token>Graft versus Leukemia Response</token>
+   </variation>
+   <variation>
+    <token>Graft versus Leukemia Effect</token>
+   </variation>
+   <variation>
+    <token>Effect</token>
+    <token>Graft versus Leukemia</token>
+   </variation>
+   <variation>
+    <token>Effects</token>
+    <token>Graft versus Leukemia</token>
+   </variation>
+   <variation>
+    <token>Graft versus Leukemia Effects</token>
+   </variation>
+   <variation>
+    <token>Graft versus Leukemia Responses</token>
+   </variation>
+   <variation>
+    <token>Response</token>
+    <token>Graft versus Leukemia</token>
+   </variation>
+   <variation>
+    <token>Responses</token>
+    <token>Graft versus Leukemia</token>
+   </variation>
+   <variation>
+    <token>Graft versus Leukemia</token>
+   </variation>
+   <variation>
+    <token>Graft versus leukaemia</token>
+   </variation>
+  </variations>
+ </term>
+
+</terms>

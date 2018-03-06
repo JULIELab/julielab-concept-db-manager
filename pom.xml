@@ -16,7 +16,7 @@
 		<module>julielab-concept-db-manager-core</module>
 		
 		<module>julielab-concept-db-application</module>
-		<module>julielab-concept-creation-provider-mesh</module>
+		<module>julielab-concept-creation-mesh</module>
 		<module>julielab-concept-creation-bioportal</module>
 		<module>julielab-concept-creation-ncbi-gene</module>
 	</modules>

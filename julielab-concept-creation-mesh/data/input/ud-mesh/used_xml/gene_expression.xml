@@ -1,0 +1,1797 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<terms facet="Gene Expression">
+ <term id="D014158" parent-id="D015870">
+  <canonic>Transcription, Genetic</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The biosynthesis of RNA carried out on a template of DNA. The biosynthesis of DNA from an RNA template is called REVERSE TRANSCRIPTION.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Early Gene Transcription</synonym>
+   <synonym>Genetic Transcription</synonym>
+   <synonym>Late Gene Transcription</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Transcription</token>
+    <token>Genetic</token>
+   </variation>
+   <variation>
+    <token>Gene Transcription</token>
+    <token>Early</token>
+   </variation>
+   <variation>
+    <token>Gene Transcription</token>
+    <token>Late</token>
+   </variation>
+   <variation>
+    <token>Transcription</token>
+    <token>Early Gene</token>
+   </variation>
+   <variation>
+    <token>Transcription</token>
+    <token>Late Gene</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015870">
+  <canonic>Gene Expression</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The phenotypic manifestation of a gene or genes by the processes of GENETIC TRANSCRIPTION and GENETIC TRANSLATION.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Gene Expression</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Expression</token>
+    <token>Gene</token>
+   </variation>
+   <variation>
+    <token>Expressions</token>
+    <token>Gene</token>
+   </variation>
+   <variation>
+    <token>Gene Expressions</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D005786">
+  <canonic>Gene Expression Regulation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Any of the processes by which nuclear, cytoplasmic, or intercellular factors influence the differential control of gene action at the level of transcription or translation. These processes include gene activation and genetic induction.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Gene Expression Regulation</synonym>
+   <synonym>Gene Activation</synonym>
+   <synonym>Genetic Induction</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Gene Action Regulation</token>
+   </variation>
+   <variation>
+    <token>Regulation</token>
+    <token>Gene Expression</token>
+   </variation>
+   <variation>
+    <token>Expression Regulation</token>
+    <token>Gene</token>
+   </variation>
+   <variation>
+    <token>Induction</token>
+    <token>Genetic</token>
+   </variation>
+   <variation>
+    <token>Regulation</token>
+    <token>Gene Action</token>
+   </variation>
+   <variation>
+    <token>Regulation</token>
+    <token>Gene Expression</token>
+   </variation>
+   <variation>
+    <token>Activation</token>
+    <token>Gene</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015972" parent-id="D005786">
+  <canonic>Gene Expression Regulation, Neoplastic</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Any of the processes by which nuclear, cytoplasmic, or intercellular factors influence the differential control of gene action in neoplastic tissue.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Neoplastic Gene Expression Regulation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Gene Expression Regulation</token>
+    <token>Neoplastic</token>
+   </variation>
+   <variation>
+    <token>Regulation, Gene Expression</token>
+    <token>Neoplastic</token>
+   </variation>
+   <variation>
+    <token>Regulation, Gene Expression</token>
+    <token>Neoplastic</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015854" parent-id="D005786">
+  <canonic>Up-Regulation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A positive regulatory effect on physiological processes at the molecular, cellular, or systemic level. At the molecular level, the major regulatory sites include membrane receptors, genes ( GENE EXPRESSION REGULATION), mRNAs ( RNA, MESSENGER), and proteins.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Up-Regulation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Receptor Up-Regulation</token>
+   </variation>
+   <variation>
+    <token>Upregulation</token>
+   </variation>
+   <variation>
+    <token>Up Regulation</token>
+   </variation>
+   <variation>
+    <token>up-regulate</token>
+   </variation>
+   <variation>
+    <token>upregulate</token>
+   </variation>
+   <variation>
+    <token>up-regulates</token>
+   </variation>
+   <variation>
+    <token>upregulates</token>
+   </variation>
+   <variation>
+    <token>up-regulated</token>
+   </variation>
+   <variation>
+    <token>upregulated</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D018507" parent-id="D005786">
+  <canonic>Gene Expression Regulation, Developmental</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Any of the processes by which nuclear, cytoplasmic, or intercellular factors influence the differential control of gene action during the developmental stages of an organism.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Developmental Gene Expression Regulation</synonym>
+   <synonym>Embryologic Gene Expression Regulation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Gene Expression Regulation</token>
+    <token>Developmental</token>
+   </variation>
+   <variation>
+    <token>Gene Expression Regulation</token>
+    <token>Embryologic</token>
+   </variation>
+   <variation>
+    <token>Regulation, Gene Expression</token>
+    <token>Developmental</token>
+   </variation>
+   <variation>
+    <token>Regulation, Gene Expression</token>
+    <token>Embryologic</token>
+   </variation>
+   <variation>
+    <token>Regulation, Gene Expression</token>
+    <token>Developmental</token>
+   </variation>
+   <variation>
+    <token>Regulation, Gene Expression</token>
+    <token>Embryologic</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015536" parent-id="D005786">
+  <canonic>Down-Regulation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A negative regulatory effect on physiological processes at the molecular, cellular, or systemic level. At the molecular level, the major regulatory sites include membrane receptors, genes ( GENE EXPRESSION REGULATION), mRNAs ( RNA, MESSENGER), and proteins.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Down-Regulation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Receptor Down-Regulation</token>
+   </variation>
+   <variation>
+    <token>Downregulation</token>
+   </variation>
+   <variation>
+    <token>Down Regulation</token>
+   </variation>
+   <variation>
+    <token>Down-Regulation</token>
+    <token>Receptor</token>
+   </variation>
+   <variation>
+    <token>down-regulate</token>
+   </variation>
+   <variation>
+    <token>downregulate</token>
+   </variation>
+   <variation>
+    <token>down-regulates</token>
+   </variation>
+   <variation>
+    <token>downregulates</token>
+   </variation>
+   <variation>
+    <token>down-regulated</token>
+   </variation>
+   <variation>
+    <token>downregulated</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D014176" parent-id="D015870">
+  <canonic>Protein Biosynthesis</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The biosynthesis of PEPTIDES and PROTEINS on RIBOSOMES, directed by MESSENGER RNA, via TRANSFER RNA that is charged with standard proteinogenic AMINO ACIDS.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Protein Biosynthesis</synonym>
+   <synonym>Genetic Translation</synonym>
+   <synonym>Translation, Genetic</synonym>
+   <synonym>Ribosomal Peptide Biosynthesis</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Peptide Biosynthesis</token>
+    <token>Ribosomal</token>
+   </variation>
+   <variation>
+    <token>Protein Biosynthesis</token>
+    <token>Ribosomal</token>
+   </variation>
+   <variation>
+    <token>Protein Synthesis</token>
+    <token>Ribosomal</token>
+   </variation>
+   <variation>
+    <token>mRNA Translation</token>
+   </variation>
+   <variation>
+    <token>Biosynthesis</token>
+    <token>Protein</token>
+   </variation>
+   <variation>
+    <token>Biosynthesis</token>
+    <token>Ribosomal Peptide</token>
+   </variation>
+   <variation>
+    <token>Biosynthesis</token>
+    <token>Ribosomal Protein</token>
+   </variation>
+   <variation>
+    <token>Genetic Translations</token>
+   </variation>
+   <variation>
+    <token>Ribosomal Protein Biosynthesis</token>
+   </variation>
+   <variation>
+    <token>Ribosomal Protein Synthesis</token>
+   </variation>
+   <variation>
+    <token>Synthesis</token>
+    <token>Ribosomal Protein</token>
+   </variation>
+   <variation>
+    <token>Translation</token>
+    <token>mRNA</token>
+   </variation>
+   <variation>
+    <token>mRNA Translations</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015971" parent-id="D005786">
+  <canonic>Gene Expression Regulation, Enzymologic</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Any of the processes by which nuclear, cytoplasmic, or intercellular factors influence the differential control of gene action in enzyme synthesis.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Gene Expression Regulation, Enzymologic</synonym>
+   <synonym>Enzymologic Gene Expression Regulation</synonym>
+   <synonym>Regulation, Gene Expression, Enzymologic</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Regulation, Gene Expression</token>
+    <token>Enzymologic</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015533" parent-id="D005786">
+  <canonic>Trans-Activation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Increased rate of gene expression directed by either viral or cellular proteins. These regulatory factors (diffusible gene products) act in trans -- that is, act on homologous or heterologous molecules of DNA. (Cis-acting factors act only on homologous molecules.)</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Trans-Activation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Transactivation</token>
+   </variation>
+   <variation>
+    <token>transactivate</token>
+   </variation>
+   <variation>
+    <token>trans-activate</token>
+   </variation>
+   <variation>
+    <token>transactivates</token>
+   </variation>
+   <variation>
+    <token>trans-activates</token>
+   </variation>
+   <variation>
+    <token>transactivated</token>
+   </variation>
+   <variation>
+    <token>trans-activated</token>
+   </variation>
+   <variation>
+    <token>Transcriptional Activation</token>
+   </variation>
+   <variation>
+    <token>Transcription Activation</token>
+   </variation>
+   <variation>
+    <token>Activation</token>
+    <token>Transcription</token>
+   </variation>
+   <variation>
+    <token>Activation</token>
+    <token>Transcriptional</token>
+   </variation>
+   <variation>
+    <token>Activations</token>
+    <token>Transcription</token>
+   </variation>
+   <variation>
+    <token>Activations</token>
+    <token>Transcriptional</token>
+   </variation>
+   <variation>
+    <token>Trans Activation</token>
+   </variation>
+   <variation>
+    <token>Trans-Activations</token>
+   </variation>
+   <variation>
+    <token>Transactivations</token>
+   </variation>
+   <variation>
+    <token>Transcription Activations</token>
+   </variation>
+   <variation>
+    <token>Transcriptional Activations</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015964" parent-id="D005786">
+  <canonic>Gene Expression Regulation, Bacterial</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Any of the processes by which cytoplasmic or intercellular factors influence the differential control of gene action in bacteria.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Bacterial Gene Expression Regulation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Gene Expression Regulation</token>
+    <token>Bacterial</token>
+   </variation>
+   <variation>
+    <token>Regulation, Gene Expression</token>
+    <token>Bacterial</token>
+   </variation>
+   <variation>
+    <token>Regulation, Gene Expression</token>
+    <token>Bacterial</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D011499" parent-id="D046188">
+  <canonic>Protein Processing, Post-Translational</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Any of various enzymatically catalyzed post-translational modifications of PEPTIDES or PROTEINS in the cell of origin. These modifications include carboxylation; HYDROXYLATION; ACETYLATION; PHOSPHORYLATION; METHYLATION; GLYCOSYLATION; ubiquitination; oxidation; proteolysis; and crosslinking and result in changes in molecular weight and electrophoretic motility.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Post-Translational Protein Modification</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Protein Processing</token>
+    <token>Post-Translational</token>
+   </variation>
+   <variation>
+    <token>Amino Acid Modification</token>
+    <token>Post-Translational</token>
+   </variation>
+   <variation>
+    <token>Protein Modification</token>
+    <token>Post-Translational</token>
+   </variation>
+   <variation>
+    <token>Amino Acid Modification</token>
+    <token>Posttranslational</token>
+   </variation>
+   <variation>
+    <token>Post-Translational Amino Acid Modification</token>
+   </variation>
+   <variation>
+    <token>Post-Translational Modifications</token>
+   </variation>
+   <variation>
+    <token>Post-Translational Protein Processing</token>
+   </variation>
+   <variation>
+    <token>Posttranslational Amino Acid Modification</token>
+   </variation>
+   <variation>
+    <token>Posttranslational Modifications</token>
+   </variation>
+   <variation>
+    <token>Posttranslational Protein Processing</token>
+   </variation>
+   <variation>
+    <token>Protein Processing</token>
+    <token>Post Translational</token>
+   </variation>
+   <variation>
+    <token>Protein Processing</token>
+    <token>Posttranslational</token>
+   </variation>
+   <variation>
+    <token>Amino Acid Modification</token>
+    <token>Post Translational</token>
+   </variation>
+   <variation>
+    <token>Modification</token>
+    <token>Post-Translational</token>
+   </variation>
+   <variation>
+    <token>Modification</token>
+    <token>Post-Translational Protein</token>
+   </variation>
+   <variation>
+    <token>Modification</token>
+    <token>Posttranslational</token>
+   </variation>
+   <variation>
+    <token>Modifications</token>
+    <token>Post-Translational</token>
+   </variation>
+   <variation>
+    <token>Modifications</token>
+    <token>Post-Translational Protein</token>
+   </variation>
+   <variation>
+    <token>Modifications</token>
+    <token>Posttranslational</token>
+   </variation>
+   <variation>
+    <token>Post Translational Amino Acid Modification</token>
+   </variation>
+   <variation>
+    <token>Post Translational Modifications</token>
+   </variation>
+   <variation>
+    <token>Post Translational Protein Modification</token>
+   </variation>
+   <variation>
+    <token>Post Translational Protein Processing</token>
+   </variation>
+   <variation>
+    <token>Post-Translational Modification</token>
+   </variation>
+   <variation>
+    <token>Post-Translational Protein Modifications</token>
+   </variation>
+   <variation>
+    <token>Posttranslational Modification</token>
+   </variation>
+   <variation>
+    <token>Processing</token>
+    <token>Post-Translational Protein</token>
+   </variation>
+   <variation>
+    <token>Processing</token>
+    <token>Posttranslational Protein</token>
+   </variation>
+   <variation>
+    <token>Protein Modification</token>
+    <token>Post Translational</token>
+   </variation>
+   <variation>
+    <token>Protein Modifications</token>
+    <token>Post-Translational</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D017398" parent-id="D012326">
+  <canonic>Alternative Splicing</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A process whereby multiple RNA transcripts are generated from a single gene. Alternative splicing involves the splicing together of other possible sets of EXONS during the processing of some, but not all, transcripts of the gene. Thus a particular exon may be connected to any one of several alternative exons to form a mature RNA. The alternative forms of mature MESSENGER RNA produce PROTEIN ISOFORMS in which one part of the isoforms is common while the other parts are different.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Alternative Splicing</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>RNA Splicing</token>
+    <token>Alternative</token>
+   </variation>
+   <variation>
+    <token>mRNA Splicing</token>
+    <token>Alternative</token>
+   </variation>
+   <variation>
+    <token>Splicing</token>
+    <token>Alternative</token>
+   </variation>
+   <variation>
+    <token>Alternate Splicing</token>
+   </variation>
+   <variation>
+    <token>Nested Transcripts</token>
+   </variation>
+   <variation>
+    <token>Alternate Splicings</token>
+   </variation>
+   <variation>
+    <token>Alternative RNA Splicing</token>
+   </variation>
+   <variation>
+    <token>Alternative RNA Splicings</token>
+   </variation>
+   <variation>
+    <token>Alternative mRNA Splicing</token>
+   </variation>
+   <variation>
+    <token>Alternative mRNA Splicings</token>
+   </variation>
+   <variation>
+    <token>Alternative Splicings</token>
+   </variation>
+   <variation>
+    <token>Nested Transcript</token>
+   </variation>
+   <variation>
+    <token>RNA Splicings</token>
+    <token>Alternative</token>
+   </variation>
+   <variation>
+    <token>mRNA Splicings</token>
+    <token>Alternative</token>
+   </variation>
+   <variation>
+    <token>RNA Splicing</token>
+    <token>Alternative</token>
+   </variation>
+   <variation>
+    <token>mRNA Splicing</token>
+    <token>Alternative</token>
+   </variation>
+   <variation>
+    <token>Splicing</token>
+    <token>Alternate</token>
+   </variation>
+   <variation>
+    <token>Splicing</token>
+    <token>Alternative RNA</token>
+   </variation>
+   <variation>
+    <token>Splicing</token>
+    <token>Alternative mRNA</token>
+   </variation>
+   <variation>
+    <token>Splicings</token>
+    <token>Alternate</token>
+   </variation>
+   <variation>
+    <token>Splicings</token>
+    <token>Alternative</token>
+   </variation>
+   <variation>
+    <token>Splicings</token>
+    <token>Alternative RNA</token>
+   </variation>
+   <variation>
+    <token>Splicings</token>
+    <token>Alternative mRNA</token>
+   </variation>
+   <variation>
+    <token>Transcript</token>
+    <token>Nested</token>
+   </variation>
+   <variation>
+    <token>Transcripts</token>
+    <token>Nested</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D018506" parent-id="D005786">
+  <canonic>Gene Expression Regulation, Plant</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Any of the processes by which nuclear, cytoplasmic, or intercellular factors influence the differential control of gene action in plants.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Plant Gene Expression Regulation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Gene Expression Regulation</token>
+    <token>Plant</token>
+   </variation>
+   <variation>
+    <token>Regulation, Gene Expression</token>
+    <token>Plant</token>
+   </variation>
+   <variation>
+    <token>Regulation, Gene Expression</token>
+    <token>Plant</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D004790" parent-id="D015971">
+  <canonic>Enzyme Induction</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>An increase in the rate of synthesis of an enzyme due to the presence of an inducer which acts to derepress the gene responsible for enzyme synthesis.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Enzyme Induction</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Induction</token>
+    <token>Enzyme</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D012326" parent-id="D012323">
+  <canonic>RNA Splicing</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The ultimate exclusion of nonsense sequences or intervening sequences (introns) before the final RNA transcript is sent to the cytoplasm.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>RNA Splicing</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>RNA, Messenger</token>
+    <token>Splicing</token>
+   </variation>
+   <variation>
+    <token>Splicing</token>
+    <token>RNA</token>
+   </variation>
+   <variation>
+    <token>mRNA, Messenger</token>
+    <token>Splicing</token>
+   </variation>
+   <variation>
+    <token>Splicing</token>
+    <token>mRNA</token>
+   </variation>
+   <variation>
+    <token>RNA Splicings</token>
+   </variation>
+   <variation>
+    <token>Splicings</token>
+    <token>RNA</token>
+   </variation>
+   <variation>
+    <token>mRNA Splicings</token>
+   </variation>
+   <variation>
+    <token>Splicings</token>
+    <token>mRNA</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015967" parent-id="D005786">
+  <canonic>Gene Expression Regulation, Viral</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Any of the processes by which cytoplasmic factors influence the differential control of gene action in viruses.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Viral Gene Expression Regulation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Gene Expression Regulation</token>
+    <token>Viral</token>
+   </variation>
+   <variation>
+    <token>Regulation, Gene Expression</token>
+    <token>Viral</token>
+   </variation>
+   <variation>
+    <token>Regulation, Gene Expression</token>
+    <token>Viral</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D005784" parent-id="D005786">
+  <canonic>Gene Amplification</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A selective increase in the number of copies of a gene coding for a specific protein without a proportional increase in other genes. It occurs naturally via the excision of a copy of the repeating sequence from the chromosome and its extrachromosomal replication in a plasmid, or via the production of an RNA transcript of the entire repeating sequence of ribosomal RNA followed by the reverse transcription of the molecule to produce an additional copy of the original DNA sequence. Laboratory techniques have been introduced for inducing disproportional replication by unequal crossing over, uptake of DNA from lysed cells, or generation of extrachromosomal sequences from rolling circle replication.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Gene Amplification</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Amplification</token>
+    <token>Gene</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015966" parent-id="D005786">
+  <canonic>Gene Expression Regulation, Fungal</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Any of the processes by which nuclear, cytoplasmic, or intercellular factors influence the differential control of gene action in fungi.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Fungal Gene Expression Regulation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Gene Expression Regulation</token>
+    <token>Fungal</token>
+   </variation>
+   <variation>
+    <token>Regulation, Gene Expression</token>
+    <token>Fungal</token>
+   </variation>
+   <variation>
+    <token>Regulation, Gene Expression</token>
+    <token>Fungal</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D020868" parent-id="D044127">
+  <canonic>Gene Silencing</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Interruption or suppression of the expression of a gene at transcriptional or translational levels.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Gene Silencing</synonym>
+   <synonym>Gene Inactivation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Inactivation</token>
+    <token>Gene</token>
+   </variation>
+   <variation>
+    <token>Silencing</token>
+    <token>Gene</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D034622" parent-id="D020868">
+  <canonic>RNA Interference</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A gene silencing phenomenon whereby specific dsRNAs ( RNA, DOUBLE-STRANDED) trigger the degradation of homologous mRNA ( RNA, MESSENGER). The specific dsRNAs are processed into SMALL INTERFERING RNA (siRNA) which serves as a guide for cleavage of the homologous mRNA in the RNA-INDUCED SILENCING COMPLEX. DNA METHYLATION may also be triggered during this process.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>RNA Interference</synonym>
+   <synonym>Post-Transcriptional Gene Silencing</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>mRNA Interference</token>
+   </variation>
+   <variation>
+    <token>Gene Silencing</token>
+    <token>Post-Transcriptional</token>
+   </variation>
+   <variation>
+    <token>Co-Suppression</token>
+   </variation>
+   <variation>
+    <token>Cosuppression</token>
+   </variation>
+   <variation>
+    <token>Posttranscriptional Gene Silencing</token>
+   </variation>
+   <variation>
+    <token>RNA Silencing</token>
+   </variation>
+   <variation>
+    <token>mRNA Silencing</token>
+   </variation>
+   <variation>
+    <token>Co Suppression</token>
+   </variation>
+   <variation>
+    <token>Gene Silencing</token>
+    <token>Post-Transcriptional</token>
+   </variation>
+   <variation>
+    <token>Gene Silencing</token>
+    <token>Post Transcriptional</token>
+   </variation>
+   <variation>
+    <token>Gene Silencing</token>
+    <token>Posttranscriptional</token>
+   </variation>
+   <variation>
+    <token>Gene Silencings</token>
+    <token>Posttranscriptional</token>
+   </variation>
+   <variation>
+    <token>Interference</token>
+    <token>RNA</token>
+   </variation>
+   <variation>
+    <token>Interference</token>
+    <token>mRNA</token>
+   </variation>
+   <variation>
+    <token>Post Transcriptional Gene Silencing</token>
+   </variation>
+   <variation>
+    <token>Post-Transcriptional Gene Silencings</token>
+   </variation>
+   <variation>
+    <token>Silencing</token>
+    <token>Post-Transcriptional Gene</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D012323" parent-id="D005786">
+  <canonic>RNA Processing, Post-Transcriptional</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Post-transcriptional biological modification of messenger, transfer, or ribosomal RNAs or their precursors. It includes cleavage, methylation, thiolation, isopentenylation, pseudouridine formation, conformational changes, and association with ribosomal protein.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Post Transcriptional RNA Processing</synonym>
+   <synonym>Post Transcriptional mRNA Processing</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>RNA Processing</token>
+    <token>Post-Transcriptional</token>
+   </variation>
+   <variation>
+    <token>mRNA Processing</token>
+    <token>Post-Transcriptional</token>
+   </variation>
+   <variation>
+    <token>Post-Transcriptional RNA Modification</token>
+   </variation>
+   <variation>
+    <token>Post-Transcriptional RNA Processing</token>
+   </variation>
+   <variation>
+    <token>Posttranscriptional RNA Processing</token>
+   </variation>
+   <variation>
+    <token>Post-Transcriptional mRNA Modification</token>
+   </variation>
+   <variation>
+    <token>Post-Transcriptional mRNA Processing</token>
+   </variation>
+   <variation>
+    <token>Posttranscriptional mRNA Processing</token>
+   </variation>
+   <variation>
+    <token>RNA Processing</token>
+    <token>Post Transcriptional</token>
+   </variation>
+   <variation>
+    <token>RNA Processing</token>
+    <token>Posttranscriptional</token>
+   </variation>
+   <variation>
+    <token>Modification</token>
+    <token>Post-Transcriptional RNA</token>
+   </variation>
+   <variation>
+    <token>Modifications</token>
+    <token>Post-Transcriptional RNA</token>
+   </variation>
+   <variation>
+    <token>Post Transcriptional RNA Modification</token>
+   </variation>
+   <variation>
+    <token>Post-Transcriptional RNA Modifications</token>
+   </variation>
+   <variation>
+    <token>Processing</token>
+    <token>Posttranscriptional RNA</token>
+   </variation>
+   <variation>
+    <token>RNA Modification</token>
+    <token>Post-Transcriptional</token>
+   </variation>
+   <variation>
+    <token>RNA Modifications</token>
+    <token>Post-Transcriptional</token>
+   </variation>
+   <variation>
+    <token>Modification</token>
+    <token>Post-Transcriptional mRNA</token>
+   </variation>
+   <variation>
+    <token>Modifications</token>
+    <token>Post-Transcriptional mRNA</token>
+   </variation>
+   <variation>
+    <token>Post Transcriptional mRNA Modification</token>
+   </variation>
+   <variation>
+    <token>Post-Transcriptional mRNA Modifications</token>
+   </variation>
+   <variation>
+    <token>Processing</token>
+    <token>Posttranscriptional mRNA</token>
+   </variation>
+   <variation>
+    <token>mRNA Modification</token>
+    <token>Post-Transcriptional</token>
+   </variation>
+   <variation>
+    <token>mRNA Modifications</token>
+    <token>Post-Transcriptional</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D018392" parent-id="D044127">
+  <canonic>Genomic Imprinting</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The variable phenotypic expression of a GENE depending on whether it is of paternal or maternal origin, which is a function of the DNA METHYLATION pattern. Imprinted regions are observed to be more methylated and less transcriptionally active. (Segen, Dictionary of Modern Medicine, 1992)</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Genomic Imprinting</synonym>
+   <synonym>Parental Imprinting</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Genetic Imprinting</token>
+   </variation>
+   <variation>
+    <token>Imprinting</token>
+    <token>Genetic</token>
+   </variation>
+   <variation>
+    <token>Imprinting</token>
+    <token>Genomic</token>
+   </variation>
+   <variation>
+    <token>Imprinting</token>
+    <token>Parental</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D015973" parent-id="D015972">
+  <canonic>Gene Expression Regulation, Leukemic</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Any of the processes by which nuclear, cytoplasmic, or intercellular factors influence the differential control of gene action in leukemia.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Leukemic Gene Expression Regulation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Gene Expression Regulation</token>
+    <token>Leukemic</token>
+   </variation>
+   <variation>
+    <token>Regulation, Gene Expression</token>
+    <token>Leukemic</token>
+   </variation>
+   <variation>
+    <token>Regulation, Gene Expression</token>
+    <token>Leukemic</token>
+   </variation>
+   <variation>
+    <token>Gene Expression Regulation</token>
+    <token>Leukemia</token>
+   </variation>
+   <variation>
+    <token>Regulation, Gene Expression</token>
+    <token>Leukemia</token>
+   </variation>
+   <variation>
+    <token>Regulation, Gene Expression</token>
+    <token>Leukemia</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D004303" parent-id="D044127">
+  <canonic>Dosage Compensation, Genetic</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Genetic mechanisms that allow GENES to be expressed at a similar level irrespective of their GENE DOSAGE. This term is usually used in discussing genes that lie on the SEX CHROMOSOMES. Because the sex chromosomes are only partially homologous, there is a different copy number, i.e., dosage, of these genes in males vs. females. In DROSOPHILA, dosage compensation is accomplished by hypertranscription of genes located on the X CHROMOSOME. In mammals, dosage compensation of X chromosome genes is accomplished by random X CHROMOSOME INACTIVATION of one of the two X chromosomes in the female.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Genetic Dosage Compensation</synonym>
+   <synonym>X Chromosome Hypertranscription</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Dosage Compensation</token>
+    <token>Genetic</token>
+   </variation>
+   <variation>
+    <token>Gene Dosage Compensation</token>
+   </variation>
+   <variation>
+    <token>Hypertranscription</token>
+    <token>X-Chromosome</token>
+   </variation>
+   <variation>
+    <token>X-Chromosome Hypertranscription</token>
+   </variation>
+   <variation>
+    <token>Compensation</token>
+    <token>Gene Dosage</token>
+   </variation>
+   <variation>
+    <token>Compensation</token>
+    <token>Genetic Dosage</token>
+   </variation>
+   <variation>
+    <token>Dosage Compensation</token>
+    <token>Gene</token>
+   </variation>
+   <variation>
+    <token>Gene Dosage Compensations</token>
+   </variation>
+   <variation>
+    <token>Genetic Dosage Compensations</token>
+   </variation>
+   <variation>
+    <token>Hypertranscription</token>
+    <token>X Chromosome</token>
+   </variation>
+   <variation>
+    <token>Hypertranscription</token>
+    <token>X</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D004843" parent-id="D005786">
+  <canonic>Epistasis, Genetic</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A gene interaction whereby the expression of one gene interfers with or masks the expression of a different gene or genes. Genes whose expression interfers with or masks the effects of other genes are said to be epistatic to the effected genes. Genes whose expression is effected (blocked or masked) are hypostatic to the interfering genes.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Genetic Hypostasis</synonym>
+   <synonym>Genetic Epistasis</synonym>
+   <synonym>Interaction Deviation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Epistasis</token>
+    <token>Genetic</token>
+   </variation>
+   <variation>
+    <token>Deviation</token>
+    <token>Epistatic</token>
+   </variation>
+   <variation>
+    <token>Epistatic Deviation</token>
+   </variation>
+   <variation>
+    <token>Genes</token>
+    <token>Epistatic</token>
+   </variation>
+   <variation>
+    <token>Genes</token>
+    <token>Hypostatic</token>
+   </variation>
+   <variation>
+    <token>Hypostasis</token>
+    <token>Genetic</token>
+   </variation>
+   <variation>
+    <token>Epistases</token>
+    <token>Genetic</token>
+   </variation>
+   <variation>
+    <token>Genetic Epistases</token>
+   </variation>
+   <variation>
+    <token>Genetic Hypostases</token>
+   </variation>
+   <variation>
+    <token>Hypostases</token>
+    <token>Genetic</token>
+   </variation>
+   <variation>
+    <token>Deviation</token>
+    <token>Interaction</token>
+   </variation>
+   <variation>
+    <token>Deviations</token>
+    <token>Epistatic</token>
+   </variation>
+   <variation>
+    <token>Deviations</token>
+    <token>Interaction</token>
+   </variation>
+   <variation>
+    <token>Epistatic Deviations</token>
+   </variation>
+   <variation>
+    <token>Epistatic Gene</token>
+   </variation>
+   <variation>
+    <token>Epistatic Genes</token>
+   </variation>
+   <variation>
+    <token>Gene</token>
+    <token>Epistatic</token>
+   </variation>
+   <variation>
+    <token>Gene</token>
+    <token>Hypostatic</token>
+   </variation>
+   <variation>
+    <token>Hypostatic Gene</token>
+   </variation>
+   <variation>
+    <token>Hypostatic Genes</token>
+   </variation>
+   <variation>
+    <token>Interaction Deviations</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D017393" parent-id="D012323">
+  <canonic>RNA Editing</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A process that changes the nucleotide sequence of mRNA from that of the DNA template encoding it. Some major classes of RNA editing are as follows: 1, the conversion of cytosine to uracil in mRNA; 2, the addition of variable number of guanines at pre-determined sites; and 3, the addition and deletion of uracils, templated by guide-RNAs ( RNA, GUIDE).</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>RNA Editing</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>RNA, Messenger</token>
+    <token>Editing</token>
+   </variation>
+   <variation>
+    <token>Editing</token>
+    <token>RNA</token>
+   </variation>
+   <variation>
+    <token>Editings</token>
+    <token>RNA</token>
+   </variation>
+   <variation>
+    <token>RNA Editings</token>
+   </variation>
+   <variation>
+    <token>mRNA Editing</token>
+   </variation>
+   <variation>
+    <token>mRNA, Messenger</token>
+    <token>Editing</token>
+   </variation>
+   <variation>
+    <token>Editing</token>
+    <token>mRNA</token>
+   </variation>
+   <variation>
+    <token>Editings</token>
+    <token>mRNA</token>
+   </variation>
+   <variation>
+    <token>mRNA Editings</token>
+   </variation>
+   <variation>
+    <token>C-U editing</token>
+   </variation>
+   <variation>
+    <token>A-I editing</token>
+   </variation>
+   <variation>
+    <token>deamination</token>
+    <token>editing</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D044127" parent-id="D005786">
+  <canonic>Epigenesis, Genetic</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A genetic process by which the adult organism is realized via mechanisms that lead to the restriction in the possible fates of cells, eventually leading to their differentiated state. Mechanisms involved cause heritable changes to cells without changes to DNA sequence such as DNA METHYLATION; HISTONE modification; DNA REPLICATION TIMING; NUCLEOSOME positioning; and heterochromatization which result in selective gene expression or repression.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Epigenesis, Genetic</synonym>
+   <synonym>Epigenetic Processes</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Epigenetic Process</token>
+   </variation>
+   <variation>
+    <token>Epigenetics Processes</token>
+   </variation>
+   <variation>
+    <token>Genetic Epigenesis</token>
+   </variation>
+   <variation>
+    <token>Process</token>
+    <token>Epigenetic</token>
+   </variation>
+   <variation>
+    <token>Processes</token>
+    <token>Epigenetic</token>
+   </variation>
+   <variation>
+    <token>Processes</token>
+    <token>Epigenetics</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D004794" parent-id="D015971">
+  <canonic>Enzyme Repression</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The interference in synthesis of an enzyme due to the elevated level of an effector substance, usually a metabolite, whose presence would cause depression of the gene responsible for enzyme synthesis.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Enzyme Repression</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Repression</token>
+    <token>Enzyme</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D042002" parent-id="D005786">
+  <canonic>Chromatin Assembly and Disassembly</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The mechanisms effecting establishment, maintenance, and modification of that specific physical conformation of CHROMATIN determining the transcriptional accessibility or inaccessibility of the DNA.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Chromatin Assembly and Disassembly</synonym>
+   <synonym>Chromatin Remodeling</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Chromatin Assembly</token>
+   </variation>
+   <variation>
+    <token>Chromatin Disassembly</token>
+   </variation>
+   <variation>
+    <token>Chromatin Modeling</token>
+   </variation>
+   <variation>
+    <token>Chromatin Disassemblies</token>
+   </variation>
+   <variation>
+    <token>Disassembly</token>
+    <token>Chromatin</token>
+   </variation>
+   <variation>
+    <token>Assembly</token>
+    <token>Chromatin</token>
+   </variation>
+   <variation>
+    <token>Remodeling</token>
+    <token>Chromatin</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D026723" parent-id="D026721">
+  <canonic>Polyadenylation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The addition of a tail of polyadenylic acid ( POLY A) to the 3' end of mRNA ( RNA, MESSENGER). Polyadenylation involves recognizing the processing site signal, (AAUAAA), and cleaving of the mRNA to create a 3' OH terminal end to which poly A polymerase (POLYNUCLEOTIDE ADENYLYTRANSFERASE) adds 60-200 adenylate residues. The 3' end processing of some messenger RNAs, such as histone mRNA, is carried out by a different process that does not include the addition of poly A as described here.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Polyadenylation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Polyadenylations</token>
+   </variation>
+   <variation>
+    <token>Poly-adenylation</token>
+   </variation>
+   <variation>
+    <token>poly(A)</token>
+    <token>mRNA</token>
+   </variation>
+   <variation>
+    <token>poly-A</token>
+    <token>mRNA</token>
+   </variation>
+   <variation>
+    <token>poly(A)</token>
+    <token>tail</token>
+   </variation>
+   <variation>
+    <token>poly-A</token>
+    <token>tail</token>
+   </variation>
+   <variation>
+    <token>poly(A)-tail</token>
+   </variation>
+   <variation>
+    <token>poly-A-tail</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D018965" parent-id="D005786">
+  <canonic>Frameshifting, Ribosomal</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>ENTRY = Frameshifting, Ribosomal</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Ribosomal Frameshifting</synonym>
+   <synonym>Translational Frameshifting</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>A directed change in translational READING FRAMES that allows the production of a single protein from two or more OVERLAPPING GENES. The process is programmed by the nucleotide sequence of the MRNA and is sometimes also affected by the secondary or tertiary mRNA structure. It has been described mainly in VIRUSES (especially RETROVIRUSES); RETROTRANSPOSONS; and bacterial insertion elements but also in some cellular genes.</token>
+   </variation>
+   <variation>
+    <token>Ribosomal Frame Shift</token>
+   </variation>
+   <variation>
+    <token>Ribosomal Frame Shifting</token>
+   </variation>
+   <variation>
+    <token>Ribosomal Frameshift</token>
+   </variation>
+   <variation>
+    <token>Frame Shift</token>
+    <token>Ribosomal</token>
+   </variation>
+   <variation>
+    <token>Frame Shifting</token>
+    <token>Ribosomal</token>
+   </variation>
+   <variation>
+    <token>Frame Shifts</token>
+    <token>Ribosomal</token>
+   </variation>
+   <variation>
+    <token>Frameshift</token>
+    <token>Ribosomal</token>
+   </variation>
+   <variation>
+    <token>Frameshifts</token>
+    <token>Ribosomal</token>
+   </variation>
+   <variation>
+    <token>Ribosomal Frame Shifts</token>
+   </variation>
+   <variation>
+    <token>Ribosomal Frameshifts</token>
+   </variation>
+   <variation>
+    <token>Frameshifting</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D019154" parent-id="D011499">
+  <canonic>Protein Splicing</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The excision of in-frame internal protein sequences ( INTEINS) of a precursor protein, coupled with ligation of the flanking sequences ( EXTEINS). Protein splicing is an autocatalytic reaction and results in the production of two proteins from a single primary translation product: the intein and the mature protein.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Protein Splicing</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Protein Splicings</token>
+   </variation>
+   <variation>
+    <token>Splicing</token>
+    <token>Protein</token>
+   </variation>
+   <variation>
+    <token>Splicings</token>
+    <token>Protein</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D019848" parent-id="D005786">
+  <canonic>Gene Expression Regulation, Archaeal</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Any of the processes by which cytoplasmic or intercellular factors influence the differential control of gene action in archaea.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Archaeal Gene Expression Regulation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Gene Expression Regulation</token>
+    <token>Archaeal</token>
+   </variation>
+   <variation>
+    <token>Regulation, Gene Expression</token>
+    <token>Archaeal</token>
+   </variation>
+   <variation>
+    <token>Regulation, Gene Expression</token>
+    <token>Archaeal</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D020040" parent-id="D012326">
+  <canonic>Trans-Splicing</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The joining of RNA from two different genes. One type of trans-splicing is the "spliced leader" type (primarily found in protozoans such as trypanosomes and in lower invertebrates such as nematodes) which results in the addition of a capped, noncoding, spliced leader sequence to the 5' end of mRNAs. Another type of trans-splicing is the "discontinuous group II introns" type (found in plant/algal chloroplasts and plant mitochondria) which results in the joining of two independently transcribed coding sequences. Both are mechanistically similar to conventional nuclear pre-mRNA cis-splicing. Mammalian cells are also capable of trans-splicing.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Trans-Splicing</synonym>
+   <synonym>RNA Trans-Splicing</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Trans RNA Splicing</token>
+   </variation>
+   <variation>
+    <token>Trans Splicing</token>
+   </variation>
+   <variation>
+    <token>RNA Splicing</token>
+    <token>Trans</token>
+   </variation>
+   <variation>
+    <token>RNA Trans Splicing</token>
+   </variation>
+   <variation>
+    <token>Splicing</token>
+    <token>Trans</token>
+   </variation>
+   <variation>
+    <token>Trans-Splicings</token>
+    <token>RNA</token>
+   </variation>
+   <variation>
+    <token>mRNA Trans-Splicing</token>
+   </variation>
+   <variation>
+    <token>Trans mRNA Splicing</token>
+   </variation>
+   <variation>
+    <token>mRNA Splicing</token>
+    <token>Trans</token>
+   </variation>
+   <variation>
+    <token>mRNA Trans Splicing</token>
+   </variation>
+   <variation>
+    <token>Trans-Splicings</token>
+    <token>mRNA</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D049951" parent-id="D004303">
+  <canonic>X Chromosome Inactivation</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>A dosage compensation process occurring at an early embryonic stage in mammalian development whereby, at random, one X CHROMOSOME of the pair is repressed in the somatic cells of females.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>X Chromosome Inactivation</synonym>
+   <synonym>X-Inactivation</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>X Inactivation</token>
+   </variation>
+   <variation>
+    <token>Lyon Hypothesis</token>
+   </variation>
+   <variation>
+    <token>Lyonization</token>
+   </variation>
+   <variation>
+    <token>Lyonisation</token>
+   </variation>
+   <variation>
+    <token>X Inactivation</token>
+   </variation>
+   <variation>
+    <token>Chromosome Inactivation</token>
+    <token>X</token>
+   </variation>
+   <variation>
+    <token>Hypothesis</token>
+    <token>Lyon</token>
+   </variation>
+   <variation>
+    <token>Inactivation</token>
+    <token>X</token>
+   </variation>
+   <variation>
+    <token>Inactivation</token>
+    <token>X Chromosome</token>
+   </variation>
+   <variation>
+    <token>X Inactivations</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D048348" parent-id="D014158">
+  <canonic>Reverse Transcription</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The biosynthesis of DNA carried out on a template of RNA</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Reverse Transcription</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Transcription</token>
+    <token>Reverse</token>
+   </variation>
+   <variation>
+    <token>RNA-dependent DNA polymerase</token>
+   </variation>
+   <variation>
+    <token>DNA polymerase</token>
+    <token>RNA-dependent</token>
+   </variation>
+   <variation>
+    <token>DNA polymerase</token>
+    <token>mRNA-dependent</token>
+   </variation>
+   <variation>
+    <token>DNA polymerase, RNA</token>
+    <token>dependent</token>
+   </variation>
+   <variation>
+    <token>DNA polymerase, mRNA</token>
+    <token>dependent</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D046188" parent-id="D005786">
+  <canonic>Protein Modification, Translational</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>Any of the enzymatically catalyzed modifications of the individual AMINO ACIDS of PROTEINS, and enzymatic cleavage or crosslinking of peptide chains that occur pre-translationally (on the amino acid component of AMINO ACYL TRNA), co-translationally (during the process of GENETIC TRANSLATION), or after translation is completed ( POST-TRANSLATIONAL PROTEIN PROCESSING).</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>Translational Protein Modification</synonym>
+   <synonym>Translational Protein Processing</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>Protein Modification</token>
+    <token>Translational</token>
+   </variation>
+   <variation>
+    <token>Amino Acid Modification</token>
+    <token>Co-Translational</token>
+   </variation>
+   <variation>
+    <token>Protein Modification</token>
+    <token>Co-Translational</token>
+   </variation>
+   <variation>
+    <token>Protein Processing</token>
+    <token>Co-Translational</token>
+   </variation>
+   <variation>
+    <token>Protein Processing</token>
+    <token>Translational</token>
+   </variation>
+   <variation>
+    <token>Amino Acid Modification</token>
+    <token>Pre-Translational</token>
+   </variation>
+   <variation>
+    <token>Amino Acid Modification</token>
+    <token>Pretranslational</token>
+   </variation>
+   <variation>
+    <token>Amino Acid Modification</token>
+    <token>Translational</token>
+   </variation>
+   <variation>
+    <token>Co-Translational Amino Acid Modification</token>
+   </variation>
+   <variation>
+    <token>Co-Translational Protein Modification</token>
+   </variation>
+   <variation>
+    <token>Co-Translational Protein Processing</token>
+   </variation>
+   <variation>
+    <token>Cotranslational Protein Modification</token>
+   </variation>
+   <variation>
+    <token>Cotranslational Protein Processing</token>
+   </variation>
+   <variation>
+    <token>Pre-Translational Amino Acid Modification</token>
+   </variation>
+   <variation>
+    <token>Pretranslational Amino Acid Modification</token>
+   </variation>
+   <variation>
+    <token>Translational Amino Acid Modification</token>
+   </variation>
+   <variation>
+    <token>Amino Acid Modification</token>
+    <token>Co Translational</token>
+   </variation>
+   <variation>
+    <token>Amino Acid Modification</token>
+    <token>Pre Translational</token>
+   </variation>
+   <variation>
+    <token>Co Translational Amino Acid Modification</token>
+   </variation>
+   <variation>
+    <token>Co Translational Protein Processing</token>
+   </variation>
+   <variation>
+    <token>Co-Translational Protein Modifications</token>
+   </variation>
+   <variation>
+    <token>Cotranslational Protein Modifications</token>
+   </variation>
+   <variation>
+    <token>Modification</token>
+    <token>Co-Translational Protein</token>
+   </variation>
+   <variation>
+    <token>Modifications</token>
+    <token>Co-Translational Protein</token>
+   </variation>
+   <variation>
+    <token>Pre Translational Amino Acid Modification</token>
+   </variation>
+   <variation>
+    <token>Processing</token>
+    <token>Co-Translational Protein</token>
+   </variation>
+   <variation>
+    <token>Protein Modification</token>
+    <token>Co Translational</token>
+   </variation>
+   <variation>
+    <token>Protein Modification</token>
+    <token>Cotranslational</token>
+   </variation>
+   <variation>
+    <token>Protein Modifications</token>
+    <token>Co-Translational</token>
+   </variation>
+   <variation>
+    <token>Protein Modifications</token>
+    <token>Cotranslational</token>
+   </variation>
+   <variation>
+    <token>Protein Modifications</token>
+    <token>Translational</token>
+   </variation>
+   <variation>
+    <token>Protein Processing</token>
+    <token>Co Translational</token>
+   </variation>
+   <variation>
+    <token>Protein Processing</token>
+    <token>Cotranslational</token>
+   </variation>
+   <variation>
+    <token>Translational Protein Modifications</token>
+   </variation>
+  </variations>
+ </term>
+
+ <term id="D026721" parent-id="D012323">
+  <canonic>RNA 3' End Processing</canonic>
+  <organism></organism>
+  <shortDescription></shortDescription>
+  <description>The steps that generate the 3' ends of mature RNA molecules. For most mRNAs ( RNA, MESSENGER), 3' end processing referred to as POLYADENYLATION includes the addition of POLY A.</description>
+  <type>de.julielab.jules.types.MeshHeading</type>
+  <synonyms>
+   <synonym>RNA 3' End Processing</synonym>
+  </synonyms>
+  <variations>
+   <variation>
+    <token>mRNA 3' End Processing</token>
+   </variation>
+   <variation>
+    <token>3' End Processing</token>
+    <token>RNA</token>
+   </variation>
+   <variation>
+    <token>3' End Processing</token>
+    <token>mRNA</token>
+   </variation>
+  </variations>
+ </term>
+
+</terms>
