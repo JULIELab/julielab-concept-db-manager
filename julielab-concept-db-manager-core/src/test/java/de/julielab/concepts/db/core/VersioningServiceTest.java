@@ -1,5 +1,7 @@
 package de.julielab.concepts.db.core;
 
+import static de.julielab.concepts.db.core.ConfigurationConstants.CONNECTION;
+import static de.julielab.concepts.db.core.ConfigurationConstants.VERSIONING;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
@@ -26,14 +28,15 @@ public class VersioningServiceTest {
 	}
 	
 	private static final Logger log = LoggerFactory.getLogger(VersioningServiceTest.class);
+
 	@Test
 	public void testFile() throws Exception {
 		log.debug("Running File test");
 		XMLConfiguration configuration = ConfigurationHelper
 				.loadXmlConfiguration(new File("src/test/resources/fileversioningconfig.xml"));
 		HierarchicalConfiguration<ImmutableNode> connectionConfiguration = configuration
-				.configurationAt(RootConfigurationConstants.CONFKEY_CONNECTION);
-		HierarchicalConfiguration<ImmutableNode> versioningConfig = configuration.configurationAt(RootConfigurationConstants.VERSIONING);
+				.configurationAt(CONNECTION);
+		HierarchicalConfiguration<ImmutableNode> versioningConfig = configuration.configurationAt(VERSIONING);
 		VersioningService instance = VersioningService.getInstance(connectionConfiguration);
 		instance.setVersion(versioningConfig);
 		

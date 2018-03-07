@@ -43,12 +43,12 @@ public class BoltConnectionService {
 
 		checkForBoltScheme(boltUri);
 		
-		if (password == null)
+		if (user != null && password == null)
 			password = aquirePasswordInteractively(user);
 		NetworkConnectionCredentials key = new NetworkConnectionCredentials(boltUri, user, password);
 		try {
 			return drivers.computeIfAbsent(key,
-					k -> GraphDatabase.driver(k.getUri(), AuthTokens.basic(k.getUser(), k.getPassword())));
+					k -> GraphDatabase.driver(k.getUri(), k.isEmpty()? AuthTokens.none() : AuthTokens.basic(k.getUser(), k.getPassword())));
 		} catch (Exception e) {
 			throw new ConceptDatabaseConnectionException(
 					"Failed to connect to Neo4j database via bolt with the configuration "

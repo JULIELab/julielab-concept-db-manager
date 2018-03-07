@@ -9,7 +9,7 @@
 	</connection>
 	<exports>
 		<export>
-			<exporter>JavaClassexporter</exporter>
+			<exporter>JavaClassExporter</exporter>
 			<configuration>
 				<outputfile>
 					dict.txt

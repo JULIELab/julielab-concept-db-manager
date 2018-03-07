@@ -8,7 +8,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.julielab.concepts.util.ConfigurationHelper;
+import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -61,7 +64,10 @@ public class ServerPluginConceptInserter implements ConceptInserter {
 			String response = HttpConnectionService.getInstance().sendRequest(httpPost);
 			log.debug("Server plugin response to concept insertion: {}", response);
 		} catch (ConceptDatabaseConnectionException | JsonProcessingException | UnsupportedEncodingException
-				| ConceptCreationException e) {
+				e) {
+			throw new ConceptInsertionException(e);
+		} catch (ConfigurationException e) {
+			log.error("Configuration error occured with configuration {} {}", ConfigurationHelper.LS, ConfigurationUtils.toString(importConfig));
 			throw new ConceptInsertionException(e);
 		}
 	}

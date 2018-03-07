@@ -62,7 +62,7 @@ public class ConceptInsertionService {
 				inserter.insertConcepts(importConfiguration, concepts);
 				inserterFound = true;
 			} catch (ConceptDatabaseConnectionException e) {
-				log.debug("Concept inserter " + inserter.getClass().getCanonicalName() + " could not serve the connection configuration " + ConfigurationUtils.toString(connectionConfiguration));
+				log.debug("Concept inserter " + inserter.getClass().getCanonicalName() + " could not serve the connection configuration " + ConfigurationUtils.toString(connectionConfiguration) + ": " + e.getMessage());
 			}
 		}
 		if (!inserterFound)

@@ -12,6 +12,7 @@ import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.apache.commons.configuration2.tree.xpath.XPathExpressionEngine;
 
 /**
  * A few small methods to help with configuration handling.
@@ -21,18 +22,18 @@ import org.apache.commons.configuration2.tree.ImmutableNode;
 public class ConfigurationHelper {
 	public static final String LS = System.getProperty("line.separator");
 	
-	public static void checkParameters(HierarchicalConfiguration<ImmutableNode> importConfig, String... parameters) throws ConceptCreationException {
+	public static void checkParameters(HierarchicalConfiguration<ImmutableNode> importConfig, String... parameters) throws ConfigurationException {
 		List<String> parameterNotFound = new ArrayList<>();
 		for (String parameter : parameters) {
 			if (importConfig.getProperty(parameter) == null)
 				parameterNotFound.add(parameter);
 		}
 		if (!parameterNotFound.isEmpty())
-			throw new ConceptCreationException("The following required parameters are not set in the configuration:"+LS
+			throw new ConfigurationException("The following required parameters are not set in the configuration:"+LS
 					+ parameterNotFound.stream().collect(joining(LS)));
 	}
 	
-	public static void checkFilesExist(HierarchicalConfiguration<ImmutableNode> importConfig, String... parameters) throws ConceptCreationException {
+	public static void checkFilesExist(HierarchicalConfiguration<ImmutableNode> importConfig, String... parameters) throws ConfigurationException {
 		checkParameters(importConfig, parameters);
 		List<String> parameterNotFound = new ArrayList<>();
 		for (String parameter : parameters) {
@@ -40,7 +41,7 @@ public class ConfigurationHelper {
 				parameterNotFound.add(parameter);
 		}
 		if (!parameterNotFound.isEmpty())
-			throw new ConceptCreationException("The following required files given by the configuration do not exist: "+LS
+			throw new ConfigurationException("The following required files given by the configuration do not exist: "+LS
 					+ parameterNotFound.stream().collect(joining(LS)));
 	}
 	
@@ -48,7 +49,10 @@ public class ConfigurationHelper {
 
 	public static XMLConfiguration loadXmlConfiguration(File configurationFile) throws ConfigurationException {
 		Parameters params = new Parameters();
-		FileBasedConfigurationBuilder<XMLConfiguration> configBuilder = new FileBasedConfigurationBuilder<>(XMLConfiguration.class).configure(params.xml().setFile(configurationFile));
+		FileBasedConfigurationBuilder<XMLConfiguration> configBuilder =
+				new FileBasedConfigurationBuilder<>(XMLConfiguration.class).configure(params
+						.xml()
+						.setFile(configurationFile));
 		return configBuilder.getConfiguration();
 	}
 }

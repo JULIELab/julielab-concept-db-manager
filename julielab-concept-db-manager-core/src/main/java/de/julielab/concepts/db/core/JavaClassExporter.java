@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import de.julielab.concepts.util.MethodCallException;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.neo4j.graphdb.GraphDatabaseService;
@@ -18,51 +19,24 @@ import de.julielab.concepts.util.VersionRetrievalException;
 
 public class JavaClassExporter extends DataExporterBase {
 
-	private static final String CONFKEY_CLASS_NAME = "configuration.class";
-	private static final String CONFKEY_METHOD_NAME = "configuration.method";
+    public final static String CONFKEY_CONFIGURATION = "configuration";
+
 	private GraphDatabaseService graphDb;
 	private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
 
 	@Override
 	public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig)
 			throws ConceptDatabaseConnectionException, DataExportException {
-		String className = exportConfig.getString(CONFKEY_CLASS_NAME);
-		String methodName = exportConfig.getString(CONFKEY_METHOD_NAME);
 		String outputFile = exportConfig.getString(CONFKEY_OUTPUT_FILE);
-		Map<String, Parameter> parsedParameters = parseParameters(exportConfig.configurationAt(CONFKEY_PARAMETERS));
 		try {
-			Object exporterInstance = Class.forName(className).newInstance();
-			Class<?>[] parameterTypes = parsedParameters.values().stream().map(Parameter::getType)
-					.toArray(i -> new Class<?>[i]);
-			checkTypesForNull(parameterTypes, parsedParameters);
-			Method exporterMethod = exporterInstance.getClass().getDeclaredMethod(methodName, parameterTypes);
-			if (exporterMethod.getReturnType() != String.class)
-				throw new DataExportException("The method " + methodName + " does return an object of type "
-						+ exporterMethod.getReturnType() + " but " + String.class.getCanonicalName() + " is requried.");
-			Stream<Object> paramValueStream = parsedParameters.values().stream().map(Parameter::getValue);
-			// The database instance must be the first argument.
-			paramValueStream = Stream.concat(Stream.of(graphDb), paramValueStream);
-			Object[] values = paramValueStream.toArray(i -> new Object[i]);
-			String result = (String) exporterMethod.invoke(exporterInstance, values);
+			String result = callInstanceMethod(exportConfig.configurationAt(CONFKEY_CONFIGURATION), graphDb);
 			result = getResourceHeader(connectionConfiguration) + result;
 			writeBase64GzipToFile(outputFile, result);
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoSuchMethodException
-				| SecurityException | IllegalArgumentException | InvocationTargetException | VersionRetrievalException | IOException e) {
+		} catch (MethodCallException | VersionRetrievalException | IOException e) {
 			throw new DataExportException(e);
 		}
-	}
+    }
 
-	private void checkTypesForNull(Class<?>[] parameterTypes, Map<String, Parameter> parsedParameters) throws DataExportException {
-		Iterator<Parameter> parametersIt = parsedParameters.values().iterator();
-		for (int i = 0; i < parameterTypes.length; i++) {
-			Parameter parameter = parametersIt.next();
-			Class<?> parameterClass = parameterTypes[i];
-			if (parameterClass == null)
-				throw new DataExportException(
-						"A multi-valued parameter did not specify its element type. The parameter is: "
-								+ parameter);
-		}
-	}
 
 	@Override
 	public boolean hasName(String providerName) {

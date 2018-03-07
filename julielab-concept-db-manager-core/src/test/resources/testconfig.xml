@@ -1,17 +1,21 @@
-<export>
-		<exporter>BoltServerPluginExporter</exporter>
-		<configuration>
-			<pluginendpoint>
-				/db/data/ext/Export/graphdb/hypernyms
-			</pluginendpoint>
-			<parameters>
-				<conceptlabel parametername="label" parametertype="java.lang.String">
-					ID_MAP_NCBI_GENES
-				</conceptlabel>
-				<facetlabels parametername="labels" tojson="true" elementtype="java.lang.String">
-					<facetlabel>FACET</facetlabel>
-					<facetlabel>BIO_PORTAL</facetlabel>
-				</facetlabels>
-			</parameters>
-		</configuration>
-	</export>
+<db>
+    <exports>
+        <export>
+            <exporter>BoltServerPluginExporter</exporter>
+            <configuration>
+                <pluginendpoint>
+                    /db/data/ext/Export/graphdb/hypernyms
+                </pluginendpoint>
+                <parameters>
+                    <conceptlabel parametername="label" parametertype="java.lang.String">
+                        ID_MAP_NCBI_GENES
+                    </conceptlabel>
+                    <facetlabels parametername="labels" tojson="true" elementtype="java.lang.String">
+                        <facetlabel>FACET</facetlabel>
+                        <facetlabel>BIO_PORTAL</facetlabel>
+                    </facetlabels>
+                </parameters>
+            </configuration>
+        </export>
+    </exports>
+</db>

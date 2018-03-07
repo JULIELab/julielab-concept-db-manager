@@ -34,6 +34,10 @@ public class NetworkConnectionCredentials {
 		this.password = password;
 	}
 
+	public boolean isEmpty() {
+		return user == null && password == null;
+	}
+
 	public NetworkConnectionCredentials(String boltUri, String user, String password) {
 		this.uri = boltUri;
 		this.user = user;

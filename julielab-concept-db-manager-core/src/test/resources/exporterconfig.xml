@@ -18,7 +18,7 @@
 					lingpipe_dictionary
 				</pluginendpoint>
 				<outputfile>
-					dict.txt
+					src/test/resources/output/dict.txt
 				</outputfile>
 				<decoding>
 					<json2bytearray>false</json2bytearray>

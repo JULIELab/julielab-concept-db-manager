@@ -40,6 +40,16 @@ public interface DataExporter extends ExtensionPoint, DatabaseConnected {
 	void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig)
 			throws ConceptDatabaseConnectionException, DataExportException;
 
+	/**
+	 * Creates a small header to be applied to exported resource files. The header contains the database
+	 * and Concept Manager application versions. Thus should help to avoid confusion about versioning of resources.
+	 * The lines are prepended with the '#' character. Thus, reading applications should accept this character
+	 * as a comment indicator.
+	 * @param connectionConfiguration Connection configuration to retrieve the database version.
+	 * @return A string representing the header.
+	 * @throws VersionRetrievalException If the database version cannot be retrieved.
+	 * @throws IOException If the application version cannot be read (it is stored in a auto-generated file).
+	 */
 	default String getResourceHeader(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
 			throws VersionRetrievalException, IOException {
 		String version = VersioningService.getInstance(connectionConfiguration).getVersion();
