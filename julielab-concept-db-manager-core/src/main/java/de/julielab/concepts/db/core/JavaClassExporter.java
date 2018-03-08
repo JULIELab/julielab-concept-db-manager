@@ -1,30 +1,34 @@
 package de.julielab.concepts.db.core;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.stream.Stream;
-
+import de.julielab.concepts.db.core.services.FileConnectionService;
+import de.julielab.concepts.db.core.spi.DataExporter;
+import de.julielab.concepts.util.ConceptDatabaseConnectionException;
+import de.julielab.concepts.util.DataExportException;
 import de.julielab.concepts.util.MethodCallException;
+import de.julielab.concepts.util.VersionRetrievalException;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.neo4j.graphdb.GraphDatabaseService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import de.julielab.concepts.db.core.services.FileConnectionService;
-import de.julielab.concepts.util.ConceptDatabaseConnectionException;
-import de.julielab.concepts.util.DataExportException;
-import de.julielab.concepts.util.VersionRetrievalException;
+import java.io.IOException;
 
-public class JavaClassExporter extends DataExporterBase {
+public class JavaClassExporter extends JavaMethodCallBase implements DataExporter {
 
-    public final static String CONFKEY_CONFIGURATION = "configuration";
+    private final static Logger log = LoggerFactory.getLogger(JavaClassExporter.class);
+
+    public static final String CONFKEY_CONFIGURATION = "configuration";
+    public static final String CONFKEY_OUTPUT_FILE = "configuration.outputfile";
 
 	private GraphDatabaseService graphDb;
 	private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
 
-	@Override
+    public JavaClassExporter() {
+        super(log);
+    }
+
+    @Override
 	public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig)
 			throws ConceptDatabaseConnectionException, DataExportException {
 		String outputFile = exportConfig.getString(CONFKEY_OUTPUT_FILE);

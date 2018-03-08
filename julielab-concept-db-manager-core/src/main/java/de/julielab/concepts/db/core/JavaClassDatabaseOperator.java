@@ -8,17 +8,24 @@ import de.julielab.concepts.util.MethodCallException;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.neo4j.graphdb.GraphDatabaseService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class JavaClassDatabaseOperator extends FunctionCallBase implements DatabaseOperator {
+import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 
-    public final static String CONFKEY_CONFIGURATION = "configuration";
+public class JavaClassDatabaseOperator extends JavaMethodCallBase implements DatabaseOperator {
+    private final static Logger log = LoggerFactory.getLogger(JavaClassDatabaseOperator.class);
     private GraphDatabaseService graphDb;
+
+    public JavaClassDatabaseOperator() {
+        super(log);
+    }
 
 
     @Override
     public void operate(HierarchicalConfiguration<ImmutableNode> operationConfiguration) throws DatabaseOperationException {
         try {
-            callInstanceMethod(operationConfiguration.configurationAt(CONFKEY_CONFIGURATION), graphDb);
+            callInstanceMethod(operationConfiguration.configurationAt(CONFIGURATION), graphDb);
         } catch (MethodCallException e) {
             throw new DatabaseOperationException(e);
         }
