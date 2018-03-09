@@ -1,2 +1,4 @@
 /target/
 src/test/resources/output
+src/test/resources/graph.db/
+test-output

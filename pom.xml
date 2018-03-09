@@ -1,42 +1,67 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>de.julielab</groupId>
-		<artifactId>julielab-parent</artifactId>
-		<version>2.0.1</version>
-	</parent>
-	<artifactId>julielab-concept-db-manager</artifactId>
-	<version>0.0.1</version>
-	<name>JULIE Lab Concept Database Manager</name>
-	<description>This project is a collection of tools with the goal to import ontological concepts into a graph database. The graph database then allows to traverse the imported data with a graph-specific query language. In case of a Neo4j database, which is the one employed by this tool, uses the Cypher query language.</description>
-	
-	<packaging>pom</packaging>
-	<modules>
-		<module>julielab-concept-db-manager-core</module>
-		
-		<module>julielab-concept-db-application</module>
-		<module>julielab-concept-creation-mesh</module>
-		<module>julielab-concept-creation-bioportal</module>
-		<module>julielab-concept-creation-ncbi-gene</module>
-	</modules>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>de.julielab</groupId>
-				<artifactId>
-					julielab-neo4j-plugins-concepts-representation
-				</artifactId>
-				<version>${julielab-neo4j-plugins-version}</version>
-			</dependency>
-			<dependency>
-				<groupId>de.julielab</groupId>
-				<artifactId>julielab-neo4j-plugins-concepts</artifactId>
-				<version>${julielab-neo4j-plugins-version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-	<properties>
-		<julielab-neo4j-plugins-version>1.8.0-SNAPSHOT</julielab-neo4j-plugins-version>
-	</properties>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <dependencies>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>5.14.10</version>
+        </dependency>
+    </dependencies>
+    <parent>
+        <groupId>de.julielab</groupId>
+        <artifactId>julielab-parent</artifactId>
+        <version>2.0.1</version>
+    </parent>
+    <artifactId>julielab-concept-db-manager</artifactId>
+    <version>0.0.1</version>
+    <name>JULIE Lab Concept Database Manager</name>
+    <description>This project is a collection of tools with the goal to import ontological concepts into a graph
+        database. The graph database then allows to traverse the imported data with a graph-specific query language. In
+        case of a Neo4j database, which is the one employed by this tool, uses the Cypher query language.
+    </description>
+
+    <packaging>pom</packaging>
+    <modules>
+        <module>julielab-concept-db-manager-core</module>
+
+        <module>julielab-concept-db-application</module>
+        <module>julielab-concept-creation-mesh</module>
+        <module>julielab-concept-creation-bioportal</module>
+        <module>julielab-concept-creation-ncbi-gene</module>
+    </modules>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>de.julielab</groupId>
+                <artifactId>
+                    julielab-neo4j-plugins-concepts-representation
+                </artifactId>
+                <version>${julielab-neo4j-plugins-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.julielab</groupId>
+                <artifactId>julielab-neo4j-plugins-concepts</artifactId>
+                <version>${julielab-neo4j-plugins-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-configuration2</artifactId>
+                <version>2.2</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>1.9.3</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <properties>
+        <julielab-neo4j-plugins-version>1.8.0-SNAPSHOT</julielab-neo4j-plugins-version>
+    </properties>
 </project>

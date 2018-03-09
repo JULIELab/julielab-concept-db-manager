@@ -3,3 +3,6 @@ target/
 .project
 .settings
 /conceptdbapplication.log
+.idea
+*.iml
+.DS_Store
