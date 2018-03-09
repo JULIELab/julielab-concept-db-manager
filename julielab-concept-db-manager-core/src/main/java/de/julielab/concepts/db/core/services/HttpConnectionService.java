@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import com.google.gson.Gson;
+import de.julielab.concepts.util.InternalNeo4jException;
+import de.julielab.concepts.util.Neo4jServerErrorResponse;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
@@ -97,12 +100,12 @@ public class HttpConnectionService {
 			// error. To get specific return codes, see HttpStatus
 			// constants.
 			if (response.getStatusLine().getStatusCode() < 300) {
-				return EntityUtils.toString(entity);
+				return entity != null ? EntityUtils.toString(entity) : "<no response from Neo4j>";
 			}
 			String responseString = EntityUtils.toString(entity);
-			throw new ConceptDatabaseConnectionException("Error when posting a request to the server: "
-					+ (null != entity && !StringUtils.isBlank(responseString) ? responseString
-							: response.getStatusLine()));
+			ObjectMapper om = new ObjectMapper();
+			Neo4jServerErrorResponse errorResponse = om.readValue(responseString, Neo4jServerErrorResponse.class);
+			throw new InternalNeo4jException(errorResponse);
 		} catch (ParseException | IOException e) {
 			throw new ConceptDatabaseConnectionException(e);
 		}
@@ -126,5 +129,4 @@ public class HttpConnectionService {
 		String responseString = httpService.sendRequest(httpPost);
 		return jsonMapper.readValue(responseString, Response.class);
 	}
-
 }

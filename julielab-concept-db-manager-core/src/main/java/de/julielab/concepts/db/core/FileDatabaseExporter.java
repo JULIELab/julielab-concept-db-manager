@@ -14,9 +14,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-public class JavaClassExporter extends JavaMethodCallBase implements DataExporter {
+public class FileDatabaseExporter extends JavaMethodCallBase implements DataExporter {
 
-    private final static Logger log = LoggerFactory.getLogger(JavaClassExporter.class);
+    private final static Logger log = LoggerFactory.getLogger(FileDatabaseExporter.class);
 
     public static final String CONFKEY_CONFIGURATION = "configuration";
     public static final String CONFKEY_OUTPUT_FILE = "configuration.outputfile";
@@ -24,7 +24,7 @@ public class JavaClassExporter extends JavaMethodCallBase implements DataExporte
 	private GraphDatabaseService graphDb;
 	private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
 
-    public JavaClassExporter() {
+    public FileDatabaseExporter() {
         super(log);
     }
 

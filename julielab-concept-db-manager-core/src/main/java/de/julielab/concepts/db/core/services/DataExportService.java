@@ -12,8 +12,9 @@ import de.julielab.concepts.db.core.spi.DataExporter;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DataExportException;
 
+import static de.julielab.concepts.db.core.ConfigurationConstants.EXPORTER;
+
 public class DataExportService {
-	public static final String CONFKEY_EXPORTER = "exporter";
 
 	private ServiceLoader<DataExporter> loader;
 	private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
@@ -41,11 +42,11 @@ public class DataExportService {
 	public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig)
 			throws DataExportException, ConceptDatabaseConnectionException {
 		Iterator<DataExporter> exporterIt = loader.iterator();
-		String exporterName = exportConfig.getString(CONFKEY_EXPORTER);
+		String exporterName = exportConfig.getString(EXPORTER);
 		if (exporterName == null)
 			throw new ConceptDatabaseConnectionException(
 					"The name of the exporter was not given. It must be given by the configuration name "
-							+ CONFKEY_EXPORTER);
+							+ EXPORTER);
 		boolean exporterFound = false;
 		while (exporterIt.hasNext()) {
 			DataExporter exporter = exporterIt.next();

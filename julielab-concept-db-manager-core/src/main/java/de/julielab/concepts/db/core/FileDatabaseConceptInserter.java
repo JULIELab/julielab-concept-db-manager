@@ -26,9 +26,9 @@ import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 import de.julielab.neo4j.plugins.datarepresentation.ImportFacet;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
 
-public class FileConceptInserter implements ConceptInserter {
+public class FileDatabaseConceptInserter implements ConceptInserter {
 
-	private static final Logger log = LoggerFactory.getLogger(FileConceptInserter.class);
+	private static final Logger log = LoggerFactory.getLogger(FileDatabaseConceptInserter.class);
 	private GraphDatabaseService graphDb;
 	private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
 
@@ -40,7 +40,7 @@ public class FileConceptInserter implements ConceptInserter {
 	public void insertConcepts(HierarchicalConfiguration<ImmutableNode> importConfiguration, ImportConcepts concepts) throws ConceptInsertionException {
 		if (graphDb == null)
 			throw new ConceptInsertionException(
-					"No access to a file-based graph database. The FileConceptInserter has not been initialized properly. Call setConfiguration() and check its return value before calling this method.");
+					"No access to a file-based graph database. The FileDatabaseConceptInserter has not been initialized properly. Call setConfiguration() and check its return value before calling this method.");
 		ConceptManager cm = new ConceptManager();
 		log.info("Inserting concepts into embedded Neo4j database at {}.", connectionConfiguration.getString("uri"));
 		ImportFacet facet = concepts.getFacet();

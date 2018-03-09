@@ -15,6 +15,10 @@ public class ConfigurationConstants {
     public static final String IMPORT = "import";
     public final static String EXPORTS = "exports";
     public final static String EXPORT = "export";
+    public static final String EXPORTER = "exporter";
+    public static final String OPERATIONS = "operations";
+    public static final String OPERATION = "operation";
+    public static final String OPERATOR = "operator";
     public static final String CONFIGURATION = "configuration";
     public static final String PARAMETERS = "parameters";
     public static final String PLUGIN_NAME = "pluginname";

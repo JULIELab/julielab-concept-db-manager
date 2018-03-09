@@ -40,7 +40,7 @@ public abstract class FunctionCallBase {
     public static final String CONFKEY_PARAMETERS = dot(CONFIGURATION, PARAMETERS);
     public static final String CONFKEY_CLASS_NAME = dot(CONFIGURATION, ConfigurationConstants.CLASS);
     public static final String CONFKEY_METHOD_NAME = dot(CONFIGURATION, METHOD);
-    private Logger log;
+    protected Logger log;
 
     public FunctionCallBase(Logger log) {
         this.log = log;
@@ -192,76 +192,4 @@ public abstract class FunctionCallBase {
         }
         return parameterMap;
     }
-
-//    /**
-//     * Retrieves the class and method names via the configuration keys CONFKEY_CLASS_NAME and
-//     * CONFKEY_METHOD_NAME from the configuration, respectively.
-//     *
-//     * @param <T>                    The return value of the called method.
-//     * @param parameterConfiguration The subconfiguration immediately containing the parameters.
-//     * @param graphDb                The graph database to apply the method call on. The graph database must be the first argument of the method.
-//     * @return The return value of the called method.
-//     * @throws MethodCallException If any part of the processing of calling the method fails.
-//     */
-//    protected <T> T callInstanceMethod(HierarchicalConfiguration<ImmutableNode> parameterConfiguration, GraphDatabaseService graphDb) throws MethodCallException {
-//        String className = parameterConfiguration.getString(CONFKEY_CLASS_NAME);
-//        String methodName = parameterConfiguration.getString(CONFKEY_METHOD_NAME);
-//        try {
-//            Map<String, Parameter> parsedParameters = parseParameters(parameterConfiguration.configurationAt(CONFKEY_PARAMETERS));
-//            Object exporterInstance = Class.forName(className).newInstance();
-//            Class<?>[] parameterTypes = parsedParameters.values().stream().map(Parameter::getType)
-//                    .toArray(i -> new Class<?>[i]);
-//            checkTypesForNull(parameterTypes, parsedParameters);
-//            Method exporterMethod = exporterInstance.getClass().getDeclaredMethod(methodName, parameterTypes);
-//            if (exporterMethod.getReturnType() != String.class)
-//                throw new MethodCallException("The method " + methodName + " does return an object of type "
-//                        + exporterMethod.getReturnType() + " but " + String.class.getCanonicalName() + " is requried.");
-//            Stream<Object> paramValueStream = parsedParameters.values().stream().map(Parameter::getValue);
-//            // The database instance must be the first argument.
-//            paramValueStream = Stream.concat(Stream.of(graphDb), paramValueStream);
-//            Object[] values = paramValueStream.toArray(i -> new Object[i]);
-//            return (T) exporterMethod.invoke(exporterInstance, values);
-//        } catch (InstantiationException | IllegalAccessException |
-//                ClassNotFoundException | NoSuchMethodException | InvocationTargetException e) {
-//            throw new MethodCallException(e);
-//        }
-//    }
-
-
-
-//    public String callNeo4jServerPlugin(HierarchicalConfiguration<ImmutableNode> connectionConfig, HierarchicalConfiguration<ImmutableNode> methodCallConfig)
-//            throws ConceptDatabaseConnectionException, DataExportException {
-//        String baseUri = connectionConfig.getString(NetworkConnectionCredentials.CONFKEY_URI);
-//        String pluginName = methodCallConfig.getString(CONFKEY_PLUGIN_NAME);
-//        String pluginEndpoint = methodCallConfig.getString(CONFKEY_PLUGIN_ENDPOINT);
-//        Map<String, Object> parameters;
-//        try {
-//            HierarchicalConfiguration<ImmutableNode> parameterConfiguration = methodCallConfig
-//                    .configurationAt(dot(CONFIGURATION, PARAMETERS));
-//            Map<String, FunctionCallBase.Parameter> parameterMap = null;
-//            parameterMap = parseParameters(parameterConfiguration);
-//            parameters = parameterMap.values().stream()
-//                    .collect(Collectors.toMap(FunctionCallBase.Parameter::getName, FunctionCallBase.Parameter::getRequestValue));
-//        } catch (MethodCallException e) {
-//            throw new DataExportException(e);
-//        }
-//
-//        HttpConnectionService httpService = HttpConnectionService.getInstance();
-//        String completePluginEndpointUri = baseUri + String.format(SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint);
-//        HttpPost request = httpService.getHttpPostRequest(connectionConfig, completePluginEndpointUri);
-//        Gson gson = new Gson();
-//        String response = null;
-//        try {
-//            String parameterJson = gson.toJson(parameters);
-//            request.setEntity(new StringEntity(parameterJson));
-//            log.info("Sending request {} to {}", parameterJson, completePluginEndpointUri);
-//            return httpService.sendRequest(request);
-//        } catch (UnsupportedEncodingException e) {
-//            throw new ConceptDatabaseConnectionException(e);
-//        } catch (ConceptDatabaseConnectionException e) {
-//            log.error("Connection error when posting parameters {} to plugin {}, endpoint {}", parameters, pluginName,
-//                    pluginEndpoint);
-//            throw e;
-//        }
-//    }
 }

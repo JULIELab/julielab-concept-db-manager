@@ -8,8 +8,7 @@
         </encoder>
     </appender>
 
-    <logger name="de.julielab.concepts.db.core.services.ConceptInsertionService" level="DEBUG" />
-    <logger name="org.apache.commons.configuration2.AbstractConfiguration.setProperty" level="DEBUG" />
+    <logger name="de.julielab.concepts.db.core" level="DEBUG" />
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>

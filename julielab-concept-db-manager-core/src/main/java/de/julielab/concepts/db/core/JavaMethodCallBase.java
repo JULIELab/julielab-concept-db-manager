@@ -13,7 +13,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.Stream;
 
-public class JavaMethodCallBase extends FunctionCallBase {
+public abstract class JavaMethodCallBase extends FunctionCallBase {
 
     public JavaMethodCallBase(Logger log) {
         super(log);

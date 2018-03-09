@@ -55,4 +55,5 @@ public class ConfigurationHelper {
 						.setFile(configurationFile));
 		return configBuilder.getConfiguration();
 	}
+
 }

@@ -1,0 +1,24 @@
+<db>
+    <connection><uri>to be set in test</uri></connection>
+    <imports>
+        <import>
+            <configuration>
+                <pluginname>ConceptManager</pluginname>
+                <pluginendpoint>insert_concepts</pluginendpoint>
+            </configuration>
+        </import>
+    </imports>
+    <operations>
+        <operation>
+            <operator>ServerPluginDatabaseOperator</operator>
+            <configuration>
+                <pluginname>ConceptManager</pluginname>
+                <pluginendpoint>build_aggregates_by_mappings</pluginendpoint>
+                <parameters>
+                    <allowedMappingTypes tojson="true"><type>EQUAL</type></allowedMappingTypes>
+                    <aggregatedLabel>MAPPING_AGGREGATE</aggregatedLabel>
+                </parameters>
+            </configuration>
+        </operation>
+    </operations>
+</db>
