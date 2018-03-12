@@ -1,14 +1,16 @@
 package de.julielab.concepts.db.core;
 
-import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.CONFKEY_PLUGIN_ENDPOINT;
-import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.CONFKEY_PLUGIN_NAME;
-import static de.julielab.concepts.util.ConfigurationHelper.checkParameters;
-
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
-
-import de.julielab.concepts.util.ConfigurationHelper;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import de.julielab.concepts.db.core.services.HttpConnectionService;
+import de.julielab.concepts.db.core.spi.ConceptInserter;
+import de.julielab.concepts.util.ConceptDatabaseConnectionException;
+import de.julielab.concepts.util.ConceptInsertionException;
+import de.julielab.jssf.commons.Configurations;
+import de.julielab.neo4j.plugins.ConceptManager;
+import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
@@ -18,19 +20,14 @@ import org.apache.http.entity.StringEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
-import de.julielab.concepts.db.core.services.HttpConnectionService;
-import de.julielab.concepts.db.core.services.NetworkConnectionCredentials;
-import de.julielab.concepts.db.core.spi.ConceptInserter;
-import de.julielab.concepts.util.ConceptCreationException;
-import de.julielab.concepts.util.ConceptDatabaseConnectionException;
-import de.julielab.concepts.util.ConceptInsertionException;
-import de.julielab.neo4j.plugins.ConceptManager;
-import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
+import static de.julielab.concepts.db.core.ConfigurationConstants.*;
+import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.CONFKEY_PLUGIN_ENDPOINT;
+import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.CONFKEY_PLUGIN_NAME;
+import static de.julielab.jssf.commons.Configurations.checkParameters;
 
 public class ServerPluginConceptInserter implements ConceptInserter {
 
@@ -47,9 +44,9 @@ public class ServerPluginConceptInserter implements ConceptInserter {
 			jsonMapper.setSerializationInclusion(Include.NON_NULL);
 			jsonMapper.setSerializationInclusion(Include.NON_EMPTY);
 
-			String serverUri = connectionConfiguration.getString(NetworkConnectionCredentials.CONFKEY_URI);
-			String pluginName = importConfig.getString(CONFKEY_PLUGIN_NAME);
-			String pluginEndpoint = importConfig.getString(CONFKEY_PLUGIN_ENDPOINT);
+			String serverUri = connectionConfiguration.getString(URI);
+			String pluginName = importConfig.getString(PLUGIN_NAME);
+			String pluginEndpoint = importConfig.getString(PLUGIN_ENDPOINT);
 			HttpConnectionService httpService = HttpConnectionService.getInstance();
 			HttpPost httpPost = httpService.getHttpPostRequest(connectionConfiguration, serverUri + String
 					.format(ServerPluginConnectionConstants.SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint));
@@ -67,7 +64,7 @@ public class ServerPluginConceptInserter implements ConceptInserter {
 				e) {
 			throw new ConceptInsertionException(e);
 		} catch (ConfigurationException e) {
-			log.error("Configuration error occured with configuration {} {}", ConfigurationHelper.LS, ConfigurationUtils.toString(importConfig));
+			log.error("Configuration error occured with configuration {} {}", Configurations.LS, ConfigurationUtils.toString(importConfig));
 			throw new ConceptInsertionException(e);
 		}
 	}

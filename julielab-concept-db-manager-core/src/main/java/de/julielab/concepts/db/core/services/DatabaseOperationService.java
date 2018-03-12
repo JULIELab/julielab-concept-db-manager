@@ -7,6 +7,7 @@ import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DatabaseOperationException;
 import de.julielab.concepts.util.MappingInsertionException;
 import de.julielab.jssf.commons.Configurations;
+import de.julielab.jssf.commons.spi.ParameterExposing;
 import de.julielab.jssf.commons.util.ConfigurationException;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
@@ -17,8 +18,9 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
+import static de.julielab.jssf.commons.Configurations.last;
 
-public class DatabaseOperationService {
+public class DatabaseOperationService implements ParameterExposing{
 
     private final static Logger log = LoggerFactory.getLogger(DatabaseOperationService.class);
 
@@ -74,4 +76,12 @@ public class DatabaseOperationService {
                             + DatabaseOperator.class.getCanonicalName() + " file.");
     }
 
+    @Override
+    public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
+        for (Iterator<DatabaseOperator> operatorIterator = loader.iterator(); operatorIterator.hasNext(); ) {
+            DatabaseOperator operator = operatorIterator.next();
+            template.addProperty(basePath, "");
+            operator.exposeParameters(last(basePath), template);
+        }
+    }
 }

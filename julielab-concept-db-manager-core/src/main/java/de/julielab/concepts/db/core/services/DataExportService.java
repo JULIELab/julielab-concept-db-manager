@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.ServiceLoader;
 
+import de.julielab.concepts.db.core.spi.DatabaseOperator;
+import de.julielab.jssf.commons.spi.ParameterExposing;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 
@@ -13,8 +15,9 @@ import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DataExportException;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.EXPORTER;
+import static de.julielab.jssf.commons.Configurations.last;
 
-public class DataExportService {
+public class DataExportService implements ParameterExposing{
 
 	private ServiceLoader<DataExporter> loader;
 	private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
@@ -59,6 +62,15 @@ public class DataExportService {
 		if (!exporterFound)
 			throw new DataExportException("No data exporter with name " + exporterName
 					+ " was found. Make sure that the desired data exporter is on the classpath and registered via the META-INF/services/de.julielab.concepts.db.core.spi.DataExporter file.");
+	}
+
+	@Override
+	public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
+		for (Iterator<DataExporter> operatorIterator = loader.iterator(); operatorIterator.hasNext(); ) {
+            DataExporter exporter = operatorIterator.next();
+			template.addProperty(basePath, "");
+			exporter.exposeParameters(last(basePath), template);
+		}
 	}
 
 }

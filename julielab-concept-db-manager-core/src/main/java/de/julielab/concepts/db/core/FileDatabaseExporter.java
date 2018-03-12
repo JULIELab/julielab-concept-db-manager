@@ -14,6 +14,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
+import static de.julielab.concepts.db.core.ConfigurationConstants.*;
+import static de.julielab.jssf.commons.Configurations.slash;
+
 public class FileDatabaseExporter extends JavaMethodCallBase implements DataExporter {
 
     private final static Logger log = LoggerFactory.getLogger(FileDatabaseExporter.class);
@@ -43,15 +46,23 @@ public class FileDatabaseExporter extends JavaMethodCallBase implements DataExpo
 
 
 	@Override
-	public boolean hasName(String providerName) {
-		return providerName.equalsIgnoreCase("javaclassexporter") || providerName.equals(getClass().getCanonicalName());
-	}
-
-	@Override
 	public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
 			throws ConceptDatabaseConnectionException {
 		this.connectionConfiguration = connectionConfiguration;
 		graphDb = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
 	}
 
+	@Override
+	public String getName() {
+		return "JavaClassExporter";
+	}
+
+	@Override
+	public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
+		super.exposeParameters(basePath, template);
+		template.addProperty(slash(basePath, CONFIGURATION, DECODING, JSON2BYTEARRAY), "false");
+		template.addProperty(slash(basePath, CONFIGURATION, DECODING, BASE64), "true");
+		template.addProperty(slash(basePath, CONFIGURATION, DECODING, GZIP), "true");
+        template.addProperty(slash(basePath, CONFIGURATION, OUTPUT_FILE), "");
+	}
 }

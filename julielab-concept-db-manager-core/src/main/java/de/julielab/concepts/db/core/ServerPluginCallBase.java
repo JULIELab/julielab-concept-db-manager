@@ -7,6 +7,7 @@ import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.InternalNeo4jException;
 import de.julielab.concepts.util.MethodCallException;
 import de.julielab.concepts.util.Neo4jServerErrorResponse;
+import de.julielab.jssf.commons.Configurations;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
@@ -15,11 +16,13 @@ import org.apache.http.entity.StringEntity;
 import org.slf4j.Logger;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.*;
+import static de.julielab.jssf.commons.Configurations.*;
 
 public abstract class ServerPluginCallBase extends FunctionCallBase {
 
@@ -66,5 +69,15 @@ public abstract class ServerPluginCallBase extends FunctionCallBase {
                     pluginEndpoint);
            throw e;
         }
+    }
+
+    @Override
+    public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
+        template.addProperty(slash(basePath, CONFIGURATION, PLUGIN_NAME), "");
+        template.addProperty(slash(basePath, CONFIGURATION, PLUGIN_ENDPOINT), "");
+        template.addProperty(slash(basePath, CONFIGURATION, PARAMETERS, "parametername"), "value");
+        template.addProperty(ws(slash(basePath, CONFIGURATION, PARAMETERS, "parametername"), "@parametername"), "optional: parameter name");
+        template.addProperty(slash(basePath, CONFIGURATION, PARAMETERS, "arrayparameter", "arrayitem"), Arrays.asList("value1", "value2"));
+        template.addProperty(ws(slash(basePath, CONFIGURATION, PARAMETERS, "arrayparameter"), "@tojson"), "optional: should the parameter be extra JSON encoded and sent as a simple string");
     }
 }

@@ -37,7 +37,8 @@ public class FileDatabaseOperator extends JavaMethodCallBase implements Database
     }
 
     @Override
-    public boolean hasName(String providername) {
-        return providername.equalsIgnoreCase("javaclassdatabaseoperator") || providername.equals(getClass().getCanonicalName());
+    public String getName() {
+        return "JavaClassDatabaseOperator";
     }
+
 }

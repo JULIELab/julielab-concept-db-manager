@@ -1,28 +1,27 @@
 package de.julielab.concepts.db.core;
 
+import de.julielab.concepts.db.core.services.VersioningService;
+import de.julielab.jssf.commons.Configurations;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.XMLConfiguration;
+import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.neo4j.io.fs.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import java.io.File;
+
 import static de.julielab.concepts.db.core.ConfigurationConstants.CONNECTION;
 import static de.julielab.concepts.db.core.ConfigurationConstants.VERSIONING;
 import static org.junit.Assert.assertEquals;
 
-import java.io.File;
-
-import org.apache.commons.configuration2.HierarchicalConfiguration;
-import org.apache.commons.configuration2.XMLConfiguration;
-import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.neo4j.io.fs.FileUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import de.julielab.concepts.db.core.services.VersioningService;
-import de.julielab.concepts.util.ConfigurationHelper;
-
 public class VersioningServiceTest {
 	
-	@Before
-	@After
+	@BeforeClass
+	@AfterClass
 	public void setupTest() throws Exception {
 		FileUtils.deleteRecursively(new File("src/test/resources/graph.db"));
 	}
@@ -32,7 +31,7 @@ public class VersioningServiceTest {
 	@Test
 	public void testFile() throws Exception {
 		log.debug("Running File test");
-		XMLConfiguration configuration = ConfigurationHelper
+		XMLConfiguration configuration = Configurations
 				.loadXmlConfiguration(new File("src/test/resources/fileversioningconfig.xml"));
 		HierarchicalConfiguration<ImmutableNode> connectionConfiguration = configuration
 				.configurationAt(CONNECTION);

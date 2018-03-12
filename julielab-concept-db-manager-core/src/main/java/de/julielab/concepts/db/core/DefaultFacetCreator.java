@@ -40,9 +40,8 @@ public class DefaultFacetCreator implements FacetCreator {
 	}
 
 	@Override
-	public boolean hasName(String providername) {
-		// The default facet creator is able to create the "default" facet when no creator is given.
-		return StringUtils.isBlank(providername) || providername.equals(getClass().getCanonicalName()) || providername.equals(PROVIDER_NAME);
+	public String getName() {
+		return PROVIDER_NAME;
 	}
 
 }

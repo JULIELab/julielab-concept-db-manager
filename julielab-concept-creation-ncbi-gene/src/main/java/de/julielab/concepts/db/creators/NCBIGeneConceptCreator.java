@@ -1,25 +1,20 @@
 package de.julielab.concepts.db.creators;
 
-import static de.julielab.concepts.util.ConfigurationHelper.checkParameters;
-import static java.util.stream.Collectors.joining;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import de.julielab.concepts.db.core.ConfigurationConstants;
+import de.julielab.concepts.db.core.DefaultFacetCreator;
+import de.julielab.concepts.db.core.services.FacetCreationService;
+import de.julielab.concepts.db.core.spi.ConceptCreator;
+import de.julielab.concepts.util.ConceptCreationException;
+import de.julielab.concepts.util.FacetCreationException;
+import de.julielab.java.utilities.FileUtilities;
+import de.julielab.neo4j.plugins.datarepresentation.*;
+import de.julielab.neo4j.plugins.datarepresentation.constants.ConceptConstants;
+import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
+import de.julielab.semedico.resources.ResourceTermLabels;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -27,22 +22,21 @@ import org.apache.commons.io.LineIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import de.julielab.concepts.db.core.services.FacetCreationService;
-import de.julielab.concepts.db.core.spi.ConceptCreator;
-import de.julielab.concepts.util.ConceptCreationException;
-import de.julielab.concepts.util.FacetCreationException;
-import de.julielab.java.utilities.FileUtilities;
-import de.julielab.neo4j.plugins.datarepresentation.ConceptCoordinates;
-import de.julielab.neo4j.plugins.datarepresentation.ImportConcept;
-import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
-import de.julielab.neo4j.plugins.datarepresentation.ImportFacet;
-import de.julielab.neo4j.plugins.datarepresentation.ImportOptions;
-import de.julielab.neo4j.plugins.datarepresentation.TermCoordinates;
-import de.julielab.neo4j.plugins.datarepresentation.constants.ConceptConstants;
-import de.julielab.semedico.resources.ResourceTermLabels;
+import static de.julielab.concepts.db.core.ConfigurationConstants.*;
+import static de.julielab.concepts.db.core.ConfigurationConstants.CONCEPTS;
+import static de.julielab.concepts.db.core.ConfigurationConstants.CONFIGURATION;
+import static de.julielab.concepts.db.core.ConfigurationConstants.CREATOR;
+import static de.julielab.jssf.commons.Configurations.checkParameters;
+import static de.julielab.jssf.commons.Configurations.slash;
+import static java.util.stream.Collectors.joining;
 
 public class NCBIGeneConceptCreator implements ConceptCreator {
 
@@ -475,6 +469,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 
 	}
 
+	
+
 	private class TaxonomyRecord {
 		public TaxonomyRecord(String taxId) {
 			this.taxId = taxId;
@@ -517,35 +513,53 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 		String groupId;
 	}
 
-	public static final String CONFKEY_BASE_PATH = "configuration.basepath";
-	public static final String CONFKEY_GENE_INFO = "configuration.gene_info";
-	public static final String CONFKEY_GENE_DESCRIPTIONS = "configuration.genedescriptions";
-	public static final String CONFKEY_ORGANISMS = "configuration.organismlist";
-	public static final String CONFKEY_ORGANISMS_NAMES = "configuration.organismnames";
-	public static final String CONFKEY_HOMOLOGENE = "configuration.homologene";
-	public static final String CONFKEY_GENE_GROUP = "configuration.gene_group";
+	public static final String CONFKEY_BASE_PATH =  "basepath";
+	public static final String CONFKEY_GENE_INFO = "gene_info";
+	public static final String CONFKEY_GENE_DESCRIPTIONS = "genedescriptions";
+	public static final String CONFKEY_ORGANISMS = "organismlist";
+	public static final String CONFKEY_ORGANISMS_NAMES = "organismnames";
+	public static final String CONFKEY_HOMOLOGENE = "homologene";
+	public static final String CONFKEY_GENE_GROUP = "gene_group";
 
+	@Override
+	public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
+        String base = slash(basePath, CONCEPTS, CREATOR, CONFIGURATION);
+        template.addProperty(slash(basePath, CONCEPTS, CREATOR, NAME), getName());
+		template.addProperty(slash(base, CONFKEY_BASE_PATH), "");
+        template.addProperty(slash(base, CONFKEY_GENE_INFO), "");
+        template.addProperty(slash(base, CONFKEY_GENE_DESCRIPTIONS), "");
+        template.addProperty(slash(base, CONFKEY_ORGANISMS), "");
+        template.addProperty(slash(base, CONFKEY_ORGANISMS_NAMES), "");
+        template.addProperty(slash(base, CONFKEY_HOMOLOGENE), "");
+        template.addProperty(slash(base, CONFKEY_GENE_GROUP), "");
+        FacetCreationService.getInstance().exposeParameters(basePath, template);
+        template.setProperty(slash(basePath, FACET, CREATOR, CONFIGURATION, FACET_GROUP, NAME), "Biology");
+        template.setProperty(slash(basePath, FACET, CREATOR, CONFIGURATION, NAME), "Genes");
+        template.setProperty(slash(basePath, FACET, CREATOR, CONFIGURATION, DefaultFacetCreator.SOURCE_TYPE), FacetConstants.SRC_TYPE_HIERARCHICAL);
+	}
+	
 	/**
-	 * 
-	 * @param geneInfo
+	 * <ul>
+	 * <li>geneInfo
 	 *            Original gene_info file download from the NCBI. Should reside on
 	 *            our servers at
 	 *            <tt>/data/data_resources/biology/entrez/gene/gene_info</tt> (or
 	 *            similar, path could change over time).
-	 * @param organisms
+	 *            </li>
+	 * <li>organisms
 	 *            A list of NCBI Taxonomy IDs specifying the organisms for which
 	 *            genes should be included. The whole of the gene database contains
 	 *            around 16M entries, as of August 2014, most of which do not stand
 	 *            in the focus of research. The list given here should be the same
 	 *            list used for GeNo resource generation (organisms.taxid) to create
 	 *            a match between terms in the term database and actually mapped
-	 *            genes in the documents.
-	 * @param ncbiTaxNames
+	 *            genes in the documents.</li>
+	 * <li>ncbiTaxNames
 	 *            The <tt>names.dmp</tt> file included in the original NCBI Taxonomy
 	 *            download. Should reside on our servers at
 	 *            <tt>/data/data_resources/biology/ncbi_tax/names.dmp</tt> (or
-	 *            similar, path could change over time).
-	 * @param geneSummary
+	 *            similar, path could change over time).</li>
+	 * <li>geneSummary
 	 *            This file - unfortunately - cannot be downloaded directly.
 	 *            However, it should already exist, somewhere, since it is part of
 	 *            GeNo resource generation. You can either ask someone who is
@@ -553,16 +567,21 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 	 *            yourself with the script that is included in the
 	 *            jules-gene-mapper-ae project. Please note that summary download
 	 *            takes a while (a few hours) and thus is filtered to only download
-	 *            summaries for the genes that are included in GeNo.
-	 * @param homologene
+	 *            summaries for the genes that are included in GeNo.</li>
+	 * <li>homologene</li>
+	 * </ul>
 	 * @throws FacetCreationException
 	 * @throws IOException
 	 */
 	@Override
 	public Stream<ImportConcepts> createConcepts(HierarchicalConfiguration<ImmutableNode> importConfig)
 			throws ConceptCreationException, FacetCreationException {
-		checkParameters(importConfig, CONFKEY_GENE_INFO, CONFKEY_GENE_DESCRIPTIONS, CONFKEY_ORGANISMS,
-				CONFKEY_ORGANISMS_NAMES, CONFKEY_HOMOLOGENE, CONFKEY_GENE_GROUP);
+		try {
+			checkParameters(importConfig, CONFKEY_GENE_INFO, CONFKEY_GENE_DESCRIPTIONS, CONFKEY_ORGANISMS,
+                    CONFKEY_ORGANISMS_NAMES, CONFKEY_HOMOLOGENE, CONFKEY_GENE_GROUP);
+		} catch (ConfigurationException e) {
+			throw new ConceptCreationException(e);
+		}
 
 		String basepath = importConfig.getString(CONFKEY_BASE_PATH, "");
 		File geneInfo = new File(basepath + importConfig.getString(CONFKEY_GENE_INFO));
@@ -610,9 +629,10 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 
 	}
 
+	
 	@Override
-	public boolean hasName(String providername) {
-		return getClass().getCanonicalName().equals(providername) || "julielabgenes".equals(providername);
+	public String getName() {
+		return "JulieLabGenes";
 	}
 
 }

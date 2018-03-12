@@ -1,26 +1,14 @@
 package de.julielab.concepts.db;
 
-import static de.julielab.concepts.db.core.RootConfigurationConstants.CONFKEY_CONNECTION;
-import static de.julielab.concepts.db.core.RootConfigurationConstants.CONFKEY_IMPORT;
-import static de.julielab.neo4j.plugins.ConceptManager.ConceptLabel.AGGREGATE;
-import static de.julielab.neo4j.plugins.datarepresentation.constants.ConceptConstants.PROP_ORG_ID;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Stream;
-
+import de.julielab.concepts.db.core.services.ConceptCreationService;
+import de.julielab.concepts.db.core.services.ConceptInsertionService;
+import de.julielab.concepts.db.core.services.FileConnectionService;
+import de.julielab.concepts.db.creators.NCBIGeneConceptCreator;
+import de.julielab.jssf.commons.Configurations;
+import de.julielab.neo4j.plugins.ConceptManager.EdgeTypes;
+import de.julielab.neo4j.plugins.datarepresentation.ImportConcept;
+import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
+import de.julielab.neo4j.plugins.datarepresentation.TermCoordinates;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
@@ -28,26 +16,21 @@ import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.neo4j.graphdb.Direction;
-import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
-import org.neo4j.graphdb.Transaction;
+import org.neo4j.graphdb.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.julielab.concepts.db.core.RootConfigurationConstants;
-import de.julielab.concepts.db.core.services.ConceptCreationService;
-import de.julielab.concepts.db.core.services.ConceptInsertionService;
-import de.julielab.concepts.db.core.services.DataExportService;
-import de.julielab.concepts.db.core.services.FileConnectionService;
-import de.julielab.concepts.db.creators.NCBIGeneConceptCreator;
-import de.julielab.concepts.util.ConfigurationHelper;
-import de.julielab.neo4j.plugins.ConceptManager.ConceptLabel;
-import de.julielab.neo4j.plugins.ConceptManager.EdgeTypes;
-import de.julielab.neo4j.plugins.datarepresentation.ImportConcept;
-import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
-import de.julielab.neo4j.plugins.datarepresentation.TermCoordinates;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.stream.Stream;
+
+import static de.julielab.concepts.db.core.ConfigurationConstants.*;
+import static de.julielab.jssf.commons.Configurations.dot;
+import static de.julielab.neo4j.plugins.ConceptManager.ConceptLabel.AGGREGATE;
+import static de.julielab.neo4j.plugins.datarepresentation.constants.ConceptConstants.PROP_ORG_ID;
+import static org.junit.Assert.*;
 
 public class NCBIGeneConceptCreatorTest {
 
@@ -142,14 +125,14 @@ public class NCBIGeneConceptCreatorTest {
 		// rather
 		// small set.
 
-		XMLConfiguration configuration = ConfigurationHelper
+		XMLConfiguration configuration = Configurations
 				.loadXmlConfiguration(new File("src/test/resources/geneconcepts/geneimport.xml"));
 		ConceptCreationService conceptCreationService = ConceptCreationService.getInstance();
 		HierarchicalConfiguration<ImmutableNode> connectionConfiguration = configuration
-				.configurationAt(CONFKEY_CONNECTION);
+				.configurationAt(CONNECTION);
 		ConceptInsertionService insertionService = ConceptInsertionService.getInstance(connectionConfiguration);
 
-		HierarchicalConfiguration<ImmutableNode> importConfiguration = configuration.configurationAt(CONFKEY_IMPORT);
+		HierarchicalConfiguration<ImmutableNode> importConfiguration = configuration.configurationAt(dot(IMPORTS, IMPORT));
 		Stream<ImportConcepts> concepts = conceptCreationService.createConcepts(importConfiguration);
 		insertionService.insertConcepts(importConfiguration, concepts);
 

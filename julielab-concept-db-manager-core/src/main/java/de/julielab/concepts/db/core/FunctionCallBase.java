@@ -1,45 +1,33 @@
 package de.julielab.concepts.db.core;
 
 import com.google.gson.Gson;
-import de.julielab.concepts.db.core.services.HttpConnectionService;
-import de.julielab.concepts.db.core.services.NetworkConnectionCredentials;
-import de.julielab.concepts.util.ConceptDatabaseConnectionException;
-import de.julielab.concepts.util.DataExportException;
 import de.julielab.concepts.util.MethodCallException;
+import de.julielab.jssf.commons.spi.ParameterExposing;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.neo4j.graphdb.GraphDatabaseService;
 import org.slf4j.Logger;
 
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Iterator;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.CONFKEY_PLUGIN_ENDPOINT;
-import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.CONFKEY_PLUGIN_NAME;
-import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.SERVER_PLUGIN_PATH_FMT;
+import static de.julielab.jssf.commons.Configurations.slash;
+import static de.julielab.jssf.commons.Configurations.ws;
 
 /**
  * This class contains the {@link Parameter} type and methods to parse parameters from the configuration
  * file. It should be extended by all classes reading function or method parameters from the
  * configuration to then call the function or method.
  */
-public abstract class FunctionCallBase {
+public abstract class FunctionCallBase implements ParameterExposing {
 
-    public static final String CONFKEY_PARAMETERS = dot(CONFIGURATION, PARAMETERS);
-    public static final String CONFKEY_CLASS_NAME = dot(CONFIGURATION, ConfigurationConstants.CLASS);
-    public static final String CONFKEY_METHOD_NAME = dot(CONFIGURATION, METHOD);
+    public static final String CONFKEY_PARAMETERS = slash(CONFIGURATION, PARAMETERS);
+    public static final String CONFKEY_CLASS_NAME = slash(CONFIGURATION, CLASS);
+    public static final String CONFKEY_METHOD_NAME = slash(CONFIGURATION, METHOD);
     protected Logger log;
 
     public FunctionCallBase(Logger log) {

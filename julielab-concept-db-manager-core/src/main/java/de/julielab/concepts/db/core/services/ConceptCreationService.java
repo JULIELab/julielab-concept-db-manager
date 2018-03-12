@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.ServiceLoader;
 import java.util.stream.Stream;
 
+import de.julielab.jssf.commons.spi.ParameterExposing;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.slf4j.Logger;
@@ -14,11 +15,15 @@ import de.julielab.concepts.util.ConceptCreationException;
 import de.julielab.concepts.util.FacetCreationException;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 
-public class ConceptCreationService {
+import static de.julielab.concepts.db.core.ConfigurationConstants.*;
+import static de.julielab.concepts.db.core.services.ConceptInsertionService.CONFKEY_PROVIDERNAME;
+import static de.julielab.jssf.commons.Configurations.dot;
+import static de.julielab.jssf.commons.Configurations.last;
+import static de.julielab.jssf.commons.Configurations.slash;
+
+public class ConceptCreationService implements ParameterExposing{
 
 	private static final Logger log = LoggerFactory.getLogger(ConceptCreationService.class);
-
-	public static final String CONFKEY_PROVIDERNAME = "conceptcreator";
 
 	private ServiceLoader<ConceptCreator> loader;
 	private static ConceptCreationService service;
@@ -46,7 +51,7 @@ public class ConceptCreationService {
 	 */
 	public Stream<ImportConcepts> createConcepts(HierarchicalConfiguration<ImmutableNode> importConfig)
 			throws ConceptCreationException, FacetCreationException {
-		String providername = importConfig.getString(CONFKEY_PROVIDERNAME);
+		String providername = importConfig.getString(slash(CONCEPTS, CREATOR));
 		Iterator<ConceptCreator> providerIt = loader.iterator();
 		while (providerIt.hasNext()) {
 			ConceptCreator conceptCreator = providerIt.next();
@@ -61,5 +66,15 @@ public class ConceptCreationService {
 		throw new ConceptCreationException("No concept creator was found for the name " + providername
 				+ ". Make sure that the desired concept creation provider is present in the META-INF/services/"
 				+ ConceptCreator.class.getCanonicalName() + " file.");
+	}
+
+	@Override
+	public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
+		Iterator<ConceptCreator> providerIt = loader.iterator();
+		while (providerIt.hasNext()) {
+            template.addProperty(basePath, "");
+			ConceptCreator conceptCreator = providerIt.next();
+			conceptCreator.exposeParameters(last(basePath), template);
+		}
 	}
 }

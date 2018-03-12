@@ -1,6 +1,7 @@
 package de.julielab.concepts.db.core;
 
 import de.julielab.concepts.util.MethodCallException;
+import de.julielab.jssf.commons.spi.ParameterExposing;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.neo4j.graphdb.GraphDatabaseService;
@@ -9,9 +10,16 @@ import scala.Function;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.Stream;
+
+import static de.julielab.concepts.db.core.ConfigurationConstants.*;
+import static de.julielab.concepts.db.core.ConfigurationConstants.CONFIGURATION;
+import static de.julielab.concepts.db.core.ConfigurationConstants.PARAMETERS;
+import static de.julielab.jssf.commons.Configurations.slash;
+import static de.julielab.jssf.commons.Configurations.ws;
 
 public abstract class JavaMethodCallBase extends FunctionCallBase {
 
@@ -63,5 +71,16 @@ public abstract class JavaMethodCallBase extends FunctionCallBase {
                         "A multi-valued parameter did not specify its element type. The parameter is: "
                                 + parameter);
         }
+    }
+
+    @Override
+    public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
+        template.addProperty(slash(basePath, CONFIGURATION, CLASS), "");
+        template.addProperty(slash(basePath, CONFIGURATION, METHOD), "");
+        template.addProperty(slash(basePath, CONFIGURATION, PARAMETERS, "parametername"), "value");
+        template.addProperty(ws(slash(basePath, CONFIGURATION, PARAMETERS, "parametername"), "@parametername"), "optional: parameter name");
+        template.addProperty(ws(slash(basePath, CONFIGURATION, PARAMETERS, "parametername"), "@paramertype"), "mandatory: parameter type");
+        template.addProperty(slash(basePath, CONFIGURATION, PARAMETERS, "arrayparameter", "arrayitem"), Arrays.asList("value1", "value2"));
+        template.addProperty(ws(slash(basePath, CONFIGURATION, PARAMETERS, "arrayparameter"), "@elementtype"), "mandatory: array element type");
     }
 }

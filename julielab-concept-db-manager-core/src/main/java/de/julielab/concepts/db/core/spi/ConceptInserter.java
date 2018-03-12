@@ -1,5 +1,6 @@
 package de.julielab.concepts.db.core.spi;
 
+import de.julielab.jssf.commons.spi.ParameterExposing;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 

@@ -3,6 +3,10 @@ package de.julielab.concepts.db.core.services;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 
+import de.julielab.concepts.db.core.ConfigurationConstants;
+import de.julielab.concepts.db.core.DefaultFacetCreator;
+import de.julielab.jssf.commons.spi.ParameterExposing;
+import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
@@ -14,7 +18,10 @@ import de.julielab.concepts.db.core.spi.FacetCreator;
 import de.julielab.concepts.util.FacetCreationException;
 import de.julielab.neo4j.plugins.datarepresentation.ImportFacet;
 
-public class FacetCreationService {
+import static de.julielab.concepts.db.core.ConfigurationConstants.*;
+import static de.julielab.jssf.commons.Configurations.slash;
+
+public class FacetCreationService implements ParameterExposing {
 
 	private static final Logger log = LoggerFactory.getLogger(FacetCreationService.class);
 	public static final String CONFKEY_FACET = "configuration.facet";
@@ -67,5 +74,24 @@ public class FacetCreationService {
 	public ImportFacet createFacet(HierarchicalConfiguration<ImmutableNode> importConfiguration)
 			throws FacetCreationException {
 		return createFacet(importConfiguration, null);
+	}
+
+    /**
+     * Exposes the parameter of the default facet creator.
+     *
+     * @param basePath The path to the import element for which the facet template should be added.
+     * @param template The configuration template.
+     */
+	@Override
+	public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
+	    template.addProperty(slash(basePath, FACET, CREATOR, NAME), DefaultFacetCreator.PROVIDER_NAME);
+        String configPath = slash(basePath, FACET, CREATOR, CONFIGURATION);
+        template.addProperty(slash(configPath, FACET_GROUP, NAME), "");
+        template.addProperty(slash(configPath, NAME), "");
+        template.addProperty(slash(configPath, DefaultFacetCreator.SOURCE_TYPE), "");
+        template.addProperty(slash(configPath, DefaultFacetCreator.SHORT_NAME), "");
+		template.addProperty(slash(configPath, DefaultFacetCreator.CUSTOM_ID), "");
+		template.addProperty(slash(configPath, DefaultFacetCreator.LABELS), "");
+        template.addProperty(slash(configPath, DefaultFacetCreator.NO_FACET), "");
 	}
 }

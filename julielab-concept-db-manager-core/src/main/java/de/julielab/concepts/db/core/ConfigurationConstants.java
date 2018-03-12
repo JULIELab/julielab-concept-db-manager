@@ -19,34 +19,25 @@ public class ConfigurationConstants {
     public static final String OPERATIONS = "operations";
     public static final String OPERATION = "operation";
     public static final String OPERATOR = "operator";
+    public static final String CONCEPTS = "concepts";
+    public static final String FACET = "facet";
+    public static final String FACET_GROUP = "facet_group";
+    public static final String CREATOR = "creator";
+    public static final String NAME = "name";
     public static final String CONFIGURATION = "configuration";
     public static final String PARAMETERS = "parameters";
-    public static final String PLUGIN_NAME = "pluginname";
-    public static final String PLUGIN_ENDPOINT = "pluginendpoint";
+    public static final String PLUGIN_NAME = "plugin_name";
+    public static final String PLUGIN_ENDPOINT = "plugin_endpoint";
     public static final String PLUGIN = "plugin";
     public static final String CLASS = "class";
     public static final String METHOD = "method";
+    public static final String PATH = "path";
+    public static final String DECODING = "decoding";
+    public static final String OUTPUT_FILE = "output_file";
+    public static final String JSON2BYTEARRAY = "json2bytearray";
+    public static final String BASE64 = "base64";
+    public static final String GZIP = "gzip";
     public static final String VERSIONING = "versioning";
-
-    /**
-     * Convenience method for quick concatenation of hierarchical configuration keys.
-     *
-     * @param keys Configuration keys to concatenate into a single hierarchical key.
-     * @return The input keys joined with dots.
-     */
-    public static String dot(String... keys) {
-        return Stream.of(keys).collect(Collectors.joining("."));
-    }
-
-    /**
-     * Convenience method for quick concatenation of hierarchical configuration keys into an XPath expression.
-     *
-     * @param keys Configuration keys to concatenate into a single hierarchical key.
-     * @return The input keys joined with slashes for xpath expressions.
-     */
-    public static String slash(String... keys) {
-        return Stream.of(keys).collect(Collectors.joining("/"));
-    }
 
     private ConfigurationConstants() {
     }

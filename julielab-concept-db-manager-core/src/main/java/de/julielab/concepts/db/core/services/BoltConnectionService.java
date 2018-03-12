@@ -1,8 +1,10 @@
 package de.julielab.concepts.db.core.services;
 
+import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.concepts.db.core.services.NetworkConnectionCredentials.CONFKEY_PASSW;
 import static de.julielab.concepts.db.core.services.NetworkConnectionCredentials.CONFKEY_URI;
 import static de.julielab.concepts.db.core.services.NetworkConnectionCredentials.CONFKEY_USER;
+import static de.julielab.jssf.commons.Configurations.*;
 
 import java.io.IOException;
 import java.net.URI;
@@ -10,6 +12,9 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.julielab.concepts.db.core.ConfigurationConstants;
+import de.julielab.jssf.commons.Configurations;
+import de.julielab.jssf.commons.spi.ParameterExposing;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
@@ -20,7 +25,7 @@ import org.neo4j.driver.v1.GraphDatabase;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.java.utilities.CLIInteractionUtilities;
 
-public class BoltConnectionService {
+public class BoltConnectionService implements ParameterExposing {
 
 	private Map<NetworkConnectionCredentials, Driver> drivers;
 	private static BoltConnectionService service;
@@ -37,9 +42,9 @@ public class BoltConnectionService {
 
 	public synchronized Driver getBoltDriver(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
 			throws IOException, ConceptDatabaseConnectionException {
-		String boltUri = connectionConfiguration.getString(CONFKEY_URI);
-		String user = connectionConfiguration.getString(CONFKEY_USER);
-		String password = connectionConfiguration.getString(CONFKEY_PASSW);
+		String boltUri = connectionConfiguration.getString(URI);
+		String user = connectionConfiguration.getString(USER);
+		String password = connectionConfiguration.getString(PASSWORD);
 
 		checkForBoltScheme(boltUri);
 		
@@ -72,4 +77,10 @@ public class BoltConnectionService {
 				"Please specify the Neo4j database password for the user \"" + user + "\": ");
 	}
 
+	@Override
+	public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
+		template.setProperty(slash(basePath, URI), "");
+		template.setProperty(slash(basePath, USER), "");
+		template.setProperty(slash(basePath, PASSWORD), "");
+	}
 }

@@ -41,7 +41,7 @@ private final static Logger log = LoggerFactory.getLogger(ServerPluginDatabaseOp
     }
 
     @Override
-    public boolean hasName(String providername) {
-        return providername.equalsIgnoreCase("serverplugindatabaseoperator") || providername.equals(getClass().getCanonicalName());
+    public String getName() {
+        return "serverplugindatabaseoperator";
     }
 }

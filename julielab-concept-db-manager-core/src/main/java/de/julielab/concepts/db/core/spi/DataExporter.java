@@ -6,6 +6,8 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipException;
 
 import de.julielab.java.utilities.FileUtilities;
+import de.julielab.jssf.commons.spi.ExtensionPoint;
+import de.julielab.jssf.commons.spi.ParameterExposing;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 
@@ -34,7 +36,7 @@ import javax.xml.bind.DatatypeConverter;
  * @author faessler
  *
  */
-public interface DataExporter extends ExtensionPoint, DatabaseConnected {
+public interface DataExporter extends ExtensionPoint, DatabaseConnected, ParameterExposing {
 	/**
 	 * Export data from the database to an external location.
 	 * 

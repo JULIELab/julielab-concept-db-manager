@@ -1,5 +1,7 @@
 package de.julielab.concepts.db.core;
 
+import static de.julielab.concepts.db.core.ConfigurationConstants.*;
+import static de.julielab.jssf.commons.Configurations.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -10,14 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import de.julielab.jssf.commons.Configurations;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
-import org.junit.Test;
 import org.neo4j.shell.util.json.JSONArray;
 
 import de.julielab.concepts.db.core.FunctionCallBase.Parameter;
+import org.testng.annotations.Test;
 
 public class DataExporterBaseTest {
     @SuppressWarnings("unchecked")
@@ -32,12 +35,11 @@ public class DataExporterBaseTest {
 
         Method method = FunctionCallBase.class.getDeclaredMethod("parseParameters", HierarchicalConfiguration.class);
         method.setAccessible(true);
-        Map<String, Parameter> parsedParameters = (Map<String, Parameter>) method.invoke(new ServerPluginExporter(), config.configurationAt("configuration.parameters"));
+        Map<String, Parameter> parsedParameters = (Map<String, Parameter>) method.invoke(new ServerPluginExporter(), config.configurationAt(dot(EXPORTS, EXPORT, CONFIGURATION, PARAMETERS)));
         assertEquals(2, parsedParameters.size());
         List<Parameter> parametersList = new ArrayList<>(parsedParameters.values());
         assertNotNull(parametersList.get(0).getName());
         assertNotNull(parametersList.get(1).getName());
-
         Parameter conceptLabelParameter = parsedParameters.get("conceptlabel");
         assertNotNull(conceptLabelParameter);
         assertEquals("label", conceptLabelParameter.getName());

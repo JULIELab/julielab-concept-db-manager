@@ -20,7 +20,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.*;
+import static de.julielab.jssf.commons.Configurations.slash;
 
 public class ServerPluginExporter extends ServerPluginCallBase implements DataExporter {
 
@@ -72,11 +74,6 @@ public class ServerPluginExporter extends ServerPluginCallBase implements DataEx
         }
     }
 
-    @Override
-    public boolean hasName(String providerName) {
-        return providerName.equalsIgnoreCase("serverpluginexporter")
-                || providerName.equals(getClass().getCanonicalName());
-    }
 
     @Override
     public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
@@ -89,6 +86,20 @@ public class ServerPluginExporter extends ServerPluginCallBase implements DataEx
         } catch (ConceptDatabaseConnectionException e) {
             throw new ConceptDatabaseConnectionException(e);
         }
+    }
+
+    @Override
+    public String getName() {
+        return "ServerPluginExporter";
+    }
+
+    @Override
+    public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
+        super.exposeParameters(basePath, template);
+        template.addProperty(slash(basePath, CONFIGURATION, DECODING, JSON2BYTEARRAY), "false");
+        template.addProperty(slash(basePath, CONFIGURATION, DECODING, BASE64), "true");
+        template.addProperty(slash(basePath, CONFIGURATION, DECODING, GZIP), "true");
+        template.addProperty(slash(basePath, CONFIGURATION, OUTPUT_FILE), "");
     }
 
 }
