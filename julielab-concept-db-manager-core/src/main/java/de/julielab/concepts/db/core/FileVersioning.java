@@ -1,10 +1,10 @@
 package de.julielab.concepts.db.core;
 
-import static de.julielab.concepts.db.core.VersioningConstants.PROP_VERSION;
-
-import java.util.Collections;
-import java.util.Map;
-
+import de.julielab.concepts.db.core.services.FileConnectionService;
+import de.julielab.concepts.db.core.spi.Versioning;
+import de.julielab.concepts.util.ConceptDatabaseConnectionException;
+import de.julielab.concepts.util.VersionRetrievalException;
+import de.julielab.concepts.util.VersioningException;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
@@ -14,11 +14,10 @@ import org.neo4j.graphdb.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.julielab.concepts.db.core.services.FileConnectionService;
-import de.julielab.concepts.db.core.spi.Versioning;
-import de.julielab.concepts.util.ConceptDatabaseConnectionException;
-import de.julielab.concepts.util.VersionRetrievalException;
-import de.julielab.concepts.util.VersioningException;
+import java.util.Collections;
+import java.util.Map;
+
+import static de.julielab.concepts.db.core.ConfigurationConstants.VERSION;
 
 public class FileVersioning implements Versioning {
 
@@ -27,13 +26,13 @@ public class FileVersioning implements Versioning {
 
 	@Override
 	public void setVersion(HierarchicalConfiguration<ImmutableNode> versioningConfig) throws VersioningException {
-		String version = versioningConfig.getString(VersioningConstants.CONFKEY_VERSION);
+		String version = versioningConfig.getString(VERSION);
 		String existingVersion = getVersion();
 		if (null != existingVersion)
 			throw new VersioningException("The database already has a version: " + existingVersion);
 		try (Transaction tx = graphDb.beginTx()) {
 			graphDb.execute(VersioningConstants.CREATE_VERSION,
-					Collections.singletonMap(VersioningConstants.PROP_VERSION, version));
+					Collections.singletonMap(VERSION, version));
 			log.info("Created database version node for version {}", version);
 			tx.success();
 		}
@@ -51,7 +50,7 @@ public class FileVersioning implements Versioning {
 			Result result = graphDb.execute(VersioningConstants.GET_VERSION);
 			if (result.hasNext()) {
 				Map<String, Object> record = result.next();
-				return (String) record.get(PROP_VERSION);
+				return (String) record.get(VERSION);
 			}
 		}
 		return null;

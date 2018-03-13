@@ -21,6 +21,7 @@ public class ConfigurationConstants {
     public static final String OPERATOR = "operator";
     public static final String CONCEPTS = "concepts";
     public static final String FACET = "facet";
+    public static final String MAPPINGS = "mappings";
     public static final String FACET_GROUP = "facet_group";
     public static final String CREATOR = "creator";
     public static final String NAME = "name";
@@ -38,6 +39,7 @@ public class ConfigurationConstants {
     public static final String BASE64 = "base64";
     public static final String GZIP = "gzip";
     public static final String VERSIONING = "versioning";
+    public static final String VERSION = "version";
 
     private ConfigurationConstants() {
     }

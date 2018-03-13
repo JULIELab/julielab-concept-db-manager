@@ -1,18 +1,7 @@
 package de.julielab.concepts.db.core;
 
-import static de.julielab.concepts.db.core.VersioningConstants.CREATE_VERSION;
-import static de.julielab.concepts.db.core.VersioningConstants.PROP_VERSION;
-
-import java.io.IOException;
-
-import org.apache.commons.configuration2.HierarchicalConfiguration;
-import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import de.julielab.concepts.db.core.http.Response;
 import de.julielab.concepts.db.core.http.Result;
 import de.julielab.concepts.db.core.http.Statement;
@@ -23,6 +12,16 @@ import de.julielab.concepts.db.core.spi.Versioning;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.VersionRetrievalException;
 import de.julielab.concepts.util.VersioningException;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+
+import static de.julielab.concepts.db.core.ConfigurationConstants.VERSION;
+import static de.julielab.concepts.db.core.VersioningConstants.CREATE_VERSION;
+import static de.julielab.jssf.commons.Configurations.slash;
 
 public class HttpVersioning implements Versioning {
 
@@ -33,12 +32,12 @@ public class HttpVersioning implements Versioning {
 
 	@Override
 	public void setVersion(HierarchicalConfiguration<ImmutableNode> versioningConfig) throws VersioningException {
-		String version = versioningConfig.getString(VersioningConstants.CONFKEY_VERSION);
+		String version = versioningConfig.getString(VERSION);
 		String existingVersion = getVersion();
 		if (null != existingVersion)
 			throw new VersioningException("The database already has a version: " + existingVersion);
 		Statements statements = new Statements(
-				new Statement(CREATE_VERSION, PROP_VERSION, version));
+				new Statement(CREATE_VERSION, VERSION, version));
 		String baseUri = connectionConfiguration.getString(NetworkConnectionCredentials.CONFKEY_URI);
 		String transactionalUri = baseUri + TRANSACTION_ENDPOINT;
 		try {

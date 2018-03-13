@@ -1,6 +1,8 @@
 package de.julielab.concepts.util;
 
-public class ConceptDBManagerException extends Exception {
+import de.julielab.jssf.commons.util.JSSFException;
+
+public class ConceptDBManagerException extends JSSFException {
 
 	/**
 	 * 

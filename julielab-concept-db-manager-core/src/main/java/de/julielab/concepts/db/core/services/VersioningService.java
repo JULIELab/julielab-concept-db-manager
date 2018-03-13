@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.ServiceLoader;
 
+import de.julielab.jssf.commons.spi.ParameterExposing;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
@@ -17,7 +18,7 @@ import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.VersionRetrievalException;
 import de.julielab.concepts.util.VersioningException;
 
-public class VersioningService {
+public class VersioningService implements ParameterExposing {
 	
 	
 	private static final Logger log = LoggerFactory.getLogger(VersioningService.class);
@@ -64,5 +65,14 @@ public class VersioningService {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
+		Iterator<Versioning> iterator = loader.iterator();
+		while (iterator.hasNext()) {
+			Versioning versioning = iterator.next();
+			versioning.exposeParameters(basePath, template);
+		}
 	}
 }

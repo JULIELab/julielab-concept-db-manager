@@ -1,10 +1,9 @@
 package de.julielab.concepts.db.core.services;
 
-import de.julielab.concepts.db.core.spi.ConceptInserter;
 import de.julielab.concepts.db.core.spi.MappingInserter;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
-import de.julielab.concepts.util.ConceptInsertionException;
 import de.julielab.concepts.util.MappingInsertionException;
+import de.julielab.jssf.commons.spi.ParameterExposing;
 import de.julielab.neo4j.plugins.datarepresentation.ImportMapping;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
@@ -33,7 +32,7 @@ public class MappingInsertionService {
     }
 
     /**
-     * Returns the data export service singleton specifically created for this
+     * Returns the mapping insertion service singleton specifically created for this
      * passed configuration.
      *
      * @param connectionConfiguration

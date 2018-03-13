@@ -1,27 +1,21 @@
 package de.julielab.concepts.db.core;
 
-import static de.julielab.concepts.db.core.VersioningConstants.GET_VERSION;
-import static de.julielab.concepts.db.core.VersioningConstants.PROP_VERSION;
-
-import java.io.IOException;
-import java.util.Collections;
-
-import org.apache.commons.configuration2.HierarchicalConfiguration;
-import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.neo4j.driver.v1.Driver;
-import org.neo4j.driver.v1.Record;
-import org.neo4j.driver.v1.Session;
-import org.neo4j.driver.v1.Statement;
-import org.neo4j.driver.v1.StatementResult;
-import org.neo4j.driver.v1.Transaction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.julielab.concepts.db.core.services.BoltConnectionService;
 import de.julielab.concepts.db.core.spi.Versioning;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.VersionRetrievalException;
 import de.julielab.concepts.util.VersioningException;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.neo4j.driver.v1.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.Collections;
+
+import static de.julielab.concepts.db.core.ConfigurationConstants.VERSION;
+import static de.julielab.concepts.db.core.VersioningConstants.GET_VERSION;
 
 public class BoltVersioning implements Versioning {
 
@@ -30,14 +24,14 @@ public class BoltVersioning implements Versioning {
 
 	@Override
 	public void setVersion(HierarchicalConfiguration<ImmutableNode> versioningConfig) throws VersioningException {
-		String version = versioningConfig.getString(VersioningConstants.CONFKEY_VERSION);
+		String version = versioningConfig.getString(VERSION);
 		String existingVersion = getVersion();
 		if (null != existingVersion)
 			throw new VersioningException("The database already has a version: " + existingVersion);
 		try (Session session = driver.session()) {
 			try (Transaction tx = session.beginTransaction()) {
 				tx.run(new Statement(VersioningConstants.CREATE_VERSION,
-						Collections.singletonMap(VersioningConstants.PROP_VERSION, version)));
+						Collections.singletonMap(VERSION, version)));
 				log.info("Created database version node for version {}", version);
 				tx.success();
 			}
@@ -56,7 +50,7 @@ public class BoltVersioning implements Versioning {
 			StatementResult result = tx.run(new Statement(GET_VERSION));
 			if (result.hasNext()) {
 				Record record = result.single();
-				return record.get(PROP_VERSION).asString();
+				return record.get(VERSION).asString();
 			}
 			return null;
 		}

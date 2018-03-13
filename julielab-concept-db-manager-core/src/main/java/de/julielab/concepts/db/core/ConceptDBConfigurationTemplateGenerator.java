@@ -1,13 +1,9 @@
 package de.julielab.concepts.db.core;
 
-import de.julielab.concepts.db.core.services.BoltConnectionService;
-import de.julielab.concepts.db.core.services.ConceptCreationService;
-import de.julielab.concepts.db.core.services.DataExportService;
-import de.julielab.concepts.db.core.services.DatabaseOperationService;
+import de.julielab.concepts.db.core.services.*;
 import de.julielab.jssf.commons.spi.ConfigurationTemplateGenerator;
 import de.julielab.jssf.commons.spi.ParameterExposing;
 import de.julielab.jssf.commons.util.ConfigurationException;
-import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
@@ -20,35 +16,31 @@ import org.apache.commons.configuration2.tree.xpath.XPathExpressionEngine;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.jssf.commons.Configurations.slash;
 
-public class ConceptDBServiceRegistry implements ConfigurationTemplateGenerator {
+public class ConceptDBConfigurationTemplateGenerator implements ConfigurationTemplateGenerator {
 
-    private static ConceptDBServiceRegistry registry;
+    private static ConceptDBConfigurationTemplateGenerator registry;
     private Map<ParameterExposing, String> serviceRegistry;
 
-    public static ConceptDBServiceRegistry getInstance() {
+    public static ConceptDBConfigurationTemplateGenerator getInstance() {
         if (registry == null)
-            registry = new ConceptDBServiceRegistry();
+            registry = new ConceptDBConfigurationTemplateGenerator();
         return registry;
     }
 
-    private ConceptDBServiceRegistry() {
+    private ConceptDBConfigurationTemplateGenerator() {
         serviceRegistry = new LinkedHashMap<>();
-//        serviceRegistry.put(VersioningService.class, VERSIONING);
+        serviceRegistry.put(VersioningService.getInstance(null), VERSIONING);
         serviceRegistry.put(BoltConnectionService.getInstance(), CONNECTION);
         serviceRegistry.put(ConceptCreationService.getInstance(), slash(IMPORTS, IMPORT));
+        serviceRegistry.put(MappingCreationService.getInstance(null), slash(IMPORTS, IMPORT));
         serviceRegistry.put(DatabaseOperationService.getInstance(null), slash(OPERATIONS, OPERATION));
         serviceRegistry.put(DataExportService.getInstance(null), slash(EXPORTS, EXPORT));
-//        serviceRegistry.put(FacetCreationService.class, slash(IMPORTS, IMPORT, FACET, CREATOR));
-//        serviceRegistry.put(FileConnectionService.class, CONNECTION);
-//        serviceRegistry.put(HttpConnectionService.class, CONNECTION);
-//        serviceRegistry.put(MappingInsertionService.class, slash(IMPORTS, IMPORT));
     }
 
     @Override
@@ -94,9 +86,19 @@ public class ConceptDBServiceRegistry implements ConfigurationTemplateGenerator 
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
         for (ParameterExposing service : serviceRegistry.keySet()) {
             String path = serviceRegistry.get(service);
-            service.exposeParameters(path, template);
+            service.exposeParameters(slash(basePath, path), template);
         }
     }
 
+    /**
+     * Creates the configuration template. Note that only those components will be reflected in the configuration
+     * that have been added to the classpath.
+     * @param args
+     * @throws ConfigurationException
+     */
+    public static void main(String args[]) throws ConfigurationException {
+        ConceptDBConfigurationTemplateGenerator r = ConceptDBConfigurationTemplateGenerator.getInstance();
+        r.writeConfigurationTemplate(new File("concept-db-configuration-template.xml"));
+    }
 }
 

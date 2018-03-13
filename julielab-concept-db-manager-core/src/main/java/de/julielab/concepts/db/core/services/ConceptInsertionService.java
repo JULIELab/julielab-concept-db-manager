@@ -16,7 +16,7 @@ import de.julielab.concepts.db.core.spi.ConceptInserter;
 import de.julielab.concepts.util.ConceptDBManagerException;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.ConceptInsertionException;
-import de.julielab.concepts.util.UncheckedConceptDBManagerException;
+import de.julielab.concepts.util.ConceptDBManagerRuntimeException;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 
 public class ConceptInsertionService {
@@ -24,7 +24,6 @@ public class ConceptInsertionService {
 	private static final Logger log = LoggerFactory.getLogger(ConceptInsertionService.class);
 	
 	public static final String CONFKEY_PROVIDERNAME = "providername";
-	public static final String CONFKEY_CONFIGURATION = "configuration";
 
 	private ServiceLoader<ConceptInserter> loader;
 
@@ -80,7 +79,7 @@ public class ConceptInsertionService {
 			try {
 				insertConcepts(importConfiguration, t);
 			} catch (ConceptDBManagerException e) {
-				throw new UncheckedConceptDBManagerException(e);
+				throw new ConceptDBManagerRuntimeException(e);
 			}
 		});
 
