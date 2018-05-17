@@ -123,7 +123,6 @@ public class JulielabBioPortalToolsConceptCreator implements ConceptCreator {
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
         template.addProperty(slash(basePath, CONCEPTS, CREATOR, NAME), getName());
         template.addProperty(slash(basePath, CONCEPTS, CREATOR, CONFIGURATION, PATH), "");
-        FacetCreationService.getInstance().exposeParameters(basePath, template);
         template.setProperty(slash(basePath, FACET, CREATOR, CONFIGURATION, FACET_GROUP, NAME), "Ontologies");
         template.setProperty(slash(basePath, FACET, CREATOR, CONFIGURATION, DefaultFacetCreator.SOURCE_TYPE), FacetConstants.SRC_TYPE_HIERARCHICAL);
     }
