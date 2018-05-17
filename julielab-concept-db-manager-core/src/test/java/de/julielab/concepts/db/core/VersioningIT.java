@@ -3,10 +3,10 @@ package de.julielab.concepts.db.core;
 import de.julielab.concepts.db.core.services.BoltConnectionService;
 import de.julielab.concepts.db.core.services.VersioningService;
 import de.julielab.concepts.util.VersioningException;
-import de.julielab.jssf.commons.Configurations;
-import de.julielab.jssf.commons.util.ConfigurationException;
+import de.julielab.java.utilities.ConfigurationUtilities;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.neo4j.driver.v1.Driver;
 import org.neo4j.driver.v1.Session;
@@ -20,7 +20,7 @@ import org.testng.annotations.Test;
 import java.io.File;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.jssf.commons.Configurations.dot;
+import static de.julielab.java.utilities.ConfigurationUtilities.dot;
 import static org.junit.Assert.assertEquals;
 
 public class VersioningIT {
@@ -31,7 +31,7 @@ public class VersioningIT {
 	@BeforeMethod(groups = "integration-tests")
 //	@AfterTest(groups = "integration-tests")
 	public void setupTest() throws Exception {
-		XMLConfiguration configuration = Configurations
+		XMLConfiguration configuration = ConfigurationUtilities
 				.loadXmlConfiguration(new File("src/test/resources/boltversioningconfig.xml"));
 		configuration.setProperty(dot(CONNECTION, URI),"bolt://localhost:" + TestSuite.neo4j.getMappedPort(7687) );
 		HierarchicalConfiguration<ImmutableNode> connectionConfiguration = configuration
@@ -47,7 +47,7 @@ public class VersioningIT {
 	@Test(groups = "integration-tests")
 	public void testHttp() throws ConfigurationException, VersioningException {
 		log.debug("Running HTTP test");
-		XMLConfiguration configuration = Configurations
+		XMLConfiguration configuration = ConfigurationUtilities
 				.loadXmlConfiguration(new File("src/test/resources/httpversioningconfig.xml"));
 		configuration.setProperty(dot(CONNECTION, URI),"http://localhost:" + TestSuite.neo4j.getMappedPort(7474) );
 		HierarchicalConfiguration<ImmutableNode> connectionConfiguration = configuration
@@ -62,7 +62,7 @@ public class VersioningIT {
 	@Test(groups = "integration-tests")
 	public void testBolt() throws ConfigurationException, VersioningException {
 		log.debug("Running BOLT test");
-		XMLConfiguration configuration = Configurations
+		XMLConfiguration configuration = ConfigurationUtilities
 				.loadXmlConfiguration(new File("src/test/resources/boltversioningconfig.xml"));
 		configuration.setProperty(dot(CONNECTION, URI),"bolt://localhost:" + TestSuite.neo4j.getMappedPort(7687) );
 		HierarchicalConfiguration<ImmutableNode> connectionConfiguration = configuration

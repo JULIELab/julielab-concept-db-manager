@@ -4,7 +4,7 @@ import de.julielab.concepts.db.core.services.ConceptCreationService;
 import de.julielab.concepts.db.core.services.ConceptInsertionService;
 import de.julielab.concepts.db.core.services.FileConnectionService;
 import de.julielab.concepts.db.creators.NCBIGeneConceptCreator;
-import de.julielab.jssf.commons.Configurations;
+import de.julielab.java.utilities.ConfigurationUtilities;
 import de.julielab.neo4j.plugins.ConceptManager.EdgeTypes;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcept;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
@@ -27,7 +27,7 @@ import java.util.*;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.jssf.commons.Configurations.dot;
+import static de.julielab.java.utilities.ConfigurationUtilities.dot;
 import static de.julielab.neo4j.plugins.ConceptManager.ConceptLabel.AGGREGATE;
 import static de.julielab.neo4j.plugins.datarepresentation.constants.ConceptConstants.PROP_ORG_ID;
 import static org.junit.Assert.*;
@@ -125,7 +125,7 @@ public class NCBIGeneConceptCreatorTest {
 		// rather
 		// small set.
 
-		XMLConfiguration configuration = Configurations
+		XMLConfiguration configuration = ConfigurationUtilities
 				.loadXmlConfiguration(new File("src/test/resources/geneconcepts/geneimport.xml"));
 		ConceptCreationService conceptCreationService = ConceptCreationService.getInstance();
 		HierarchicalConfiguration<ImmutableNode> connectionConfiguration = configuration

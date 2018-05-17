@@ -4,13 +4,11 @@ import de.julielab.concepts.db.core.services.BoltConnectionService;
 import de.julielab.concepts.db.core.services.ConceptInsertionService;
 import de.julielab.concepts.db.core.services.DatabaseOperationService;
 import de.julielab.concepts.db.core.services.MappingInsertionService;
-import de.julielab.concepts.util.*;
-import de.julielab.jssf.commons.Configurations;
+import de.julielab.java.utilities.ConfigurationUtilities;
 import de.julielab.neo4j.plugins.datarepresentation.*;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
-import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.neo4j.driver.v1.Driver;
 import org.neo4j.driver.v1.Session;
@@ -30,7 +28,7 @@ import java.util.Collections;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.jssf.commons.Configurations.dot;
+import static de.julielab.java.utilities.ConfigurationUtilities.dot;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class DatabaseOperationTest {
@@ -61,7 +59,7 @@ public class DatabaseOperationTest {
         // In this test, we will insert two concepts and a mapping between the two. We then
         // let the ConceptManager plugin create the aggregate for the two concepts.
 
-        XMLConfiguration config = Configurations.
+        XMLConfiguration config = ConfigurationUtilities.
                 loadXmlConfiguration(new File("src/test/resources/dboperationconfig.xml"));
         config.setProperty(dot(CONNECTION, URI), "http://localhost:" + neo4j.getMappedPort(7474));
         HierarchicalConfiguration<ImmutableNode> connectionConfig =

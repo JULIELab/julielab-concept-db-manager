@@ -21,7 +21,6 @@ import java.io.IOException;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.VERSION;
 import static de.julielab.concepts.db.core.VersioningConstants.CREATE_VERSION;
-import static de.julielab.jssf.commons.Configurations.slash;
 
 public class HttpVersioning implements Versioning {
 

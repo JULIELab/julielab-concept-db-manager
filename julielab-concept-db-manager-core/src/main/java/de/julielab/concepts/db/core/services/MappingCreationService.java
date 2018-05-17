@@ -4,7 +4,6 @@ import de.julielab.concepts.db.core.spi.MappingCreator;
 import de.julielab.concepts.db.core.spi.MappingInserter;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.MappingCreationException;
-import de.julielab.concepts.util.MappingInsertionException;
 import de.julielab.jssf.commons.spi.ParameterExposing;
 import de.julielab.neo4j.plugins.datarepresentation.ImportMapping;
 import org.apache.commons.configuration2.ConfigurationUtils;
@@ -19,10 +18,7 @@ import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.stream.Stream;
 
-import static de.julielab.concepts.db.core.ConfigurationConstants.IMPORT;
-import static de.julielab.concepts.db.core.ConfigurationConstants.IMPORTS;
-import static de.julielab.jssf.commons.Configurations.last;
-import static de.julielab.jssf.commons.Configurations.slash;
+import static de.julielab.java.utilities.ConfigurationUtilities.last;
 
 public class MappingCreationService implements ParameterExposing {
     private final static Logger log = LoggerFactory.getLogger(MappingCreationService.class);

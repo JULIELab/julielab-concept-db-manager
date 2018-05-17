@@ -8,6 +8,7 @@ import java.util.Set;
 
 import de.julielab.concepts.db.creators.mesh.components.Descriptor;
 import de.julielab.concepts.db.creators.mesh.components.TreeVertex;
+import de.julielab.concepts.util.FacetCreationException;
 import de.julielab.neo4j.plugins.datarepresentation.ImportFacet;
 import de.julielab.neo4j.plugins.datarepresentation.ImportFacetGroup;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
@@ -255,10 +256,9 @@ public class FacetsProvider {
 //		return false;
 //	}
 
-	public static ImportFacet createMeshImportFacet(String facetname) {
+	public static ImportFacet createMeshImportFacet(String facetname, String facetGroupName) throws FacetCreationException {
 		// To avoid naming collisions, facets may have the naming prefix "Facet"
 		String cssId =  "mesh_" + facetname;
-		String facetGroupName = "MeSH";
 		Integer position = null;
 		String sourceType = FacetConstants.SRC_TYPE_HIERARCHICAL;
 		List<String> facetGroupGeneralLabels = new ArrayList<>();
@@ -335,7 +335,7 @@ public class FacetsProvider {
 			position = 15;
 			break;
 		default:
-			throw new IllegalArgumentException("Facet with name \"" + facetName + "\" is unknown.");
+			throw new FacetCreationException("Facet with name \"" + facetName + "\" is unknown.");
 		}
 
 

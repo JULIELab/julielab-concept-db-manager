@@ -21,8 +21,9 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.*;
-import static de.julielab.jssf.commons.Configurations.slash;
+import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.CONFKEY_PLUGIN_ENDPOINT;
+import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.CONFKEY_PLUGIN_NAME;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 public class ServerPluginExporter extends ServerPluginCallBase implements DataExporter {
 

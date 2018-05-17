@@ -4,23 +4,15 @@ import de.julielab.concepts.db.core.services.*;
 import de.julielab.jssf.commons.spi.ConfigurationTemplateGenerator;
 import de.julielab.jssf.commons.spi.ParameterExposing;
 import de.julielab.jssf.commons.util.ConfigurationException;
-import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
-import org.apache.commons.configuration2.XMLConfiguration;
-import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
-import org.apache.commons.configuration2.builder.fluent.Parameters;
-import org.apache.commons.configuration2.io.FileBased;
-import org.apache.commons.configuration2.io.FileHandler;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.apache.commons.configuration2.tree.xpath.XPathExpressionEngine;
 
 import java.io.File;
-import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.jssf.commons.Configurations.slash;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 public class ConceptDBConfigurationTemplateGenerator implements ConfigurationTemplateGenerator {
 
@@ -41,45 +33,6 @@ public class ConceptDBConfigurationTemplateGenerator implements ConfigurationTem
         serviceRegistry.put(MappingCreationService.getInstance(null), slash(IMPORTS, IMPORT));
         serviceRegistry.put(DatabaseOperationService.getInstance(null), slash(OPERATIONS, OPERATION));
         serviceRegistry.put(DataExportService.getInstance(null), slash(EXPORTS, EXPORT));
-    }
-
-    @Override
-    public HierarchicalConfiguration<ImmutableNode> createConfigurationTemplate() throws ConfigurationException {
-        Parameters params = new Parameters();
-        FileBasedConfigurationBuilder<XMLConfiguration> builder =
-                new FileBasedConfigurationBuilder<XMLConfiguration>(XMLConfiguration.class)
-                        .configure(params.xml()
-                                .setExpressionEngine(new XPathExpressionEngine())
-                                .setEncoding(StandardCharsets.UTF_8.name())
-                        );
-        XMLConfiguration c;
-        try {
-            c = builder.getConfiguration();
-            exposeParameters("", c);
-        } catch (org.apache.commons.configuration2.ex.ConfigurationException e) {
-            throw new ConfigurationException();
-        }
-        return c;
-    }
-
-    @Override
-    public void writeConfigurationTemplate(File destination) throws ConfigurationException {
-        try {
-            HierarchicalConfiguration<ImmutableNode> template = createConfigurationTemplate();
-            if (!(template instanceof FileBased))
-                throw new ConfigurationException("The created configuration cannot be stored to file " +
-                        "because the chosen configuration implementation " + template.getClass().getCanonicalName() + " " +
-                        "does not implement the " + FileBased.class.getCanonicalName() + " interface");
-            FileHandler fh = new FileHandler((FileBased) template);
-            System.out.println( ConfigurationUtils.toString(template));
-
-
-
-
-            fh.save(destination);
-        } catch (org.apache.commons.configuration2.ex.ConfigurationException e) {
-            throw new ConfigurationException();
-        }
     }
 
     @Override

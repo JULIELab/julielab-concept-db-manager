@@ -15,8 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.jssf.commons.Configurations.slash;
-import static de.julielab.jssf.commons.Configurations.ws;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 /**
  * This class contains the {@link Parameter} type and methods to parse parameters from the configuration

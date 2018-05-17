@@ -1,7 +1,6 @@
 package de.julielab.concepts.db.core;
 
 import de.julielab.concepts.db.core.services.DataExportService;
-import de.julielab.jssf.commons.Configurations;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
@@ -10,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.jssf.commons.Configurations.*;
+import static de.julielab.java.utilities.ConfigurationUtilities.dot;
 
 public class ExporterIT {
 private final static Logger log = LoggerFactory.getLogger(ExporterIT.class);

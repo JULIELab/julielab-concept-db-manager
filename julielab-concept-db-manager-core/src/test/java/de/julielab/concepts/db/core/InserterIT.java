@@ -2,7 +2,6 @@ package de.julielab.concepts.db.core;
 
 import de.julielab.concepts.db.core.services.BoltConnectionService;
 import de.julielab.concepts.db.core.services.ConceptInsertionService;
-import de.julielab.jssf.commons.Configurations;
 import de.julielab.neo4j.plugins.datarepresentation.*;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
 import org.apache.commons.configuration2.XMLConfiguration;
@@ -19,7 +18,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.jssf.commons.Configurations.*;
+import static de.julielab.java.utilities.ConfigurationUtilities.dot;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class InserterIT {

@@ -31,5 +31,10 @@
 			<version>1.7.25</version>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>de.julielab</groupId>
+            <artifactId>julielab-concept-db-manager-core</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

@@ -7,13 +7,14 @@ import de.julielab.concepts.db.core.services.FacetCreationService;
 import de.julielab.concepts.db.core.spi.ConceptCreator;
 import de.julielab.concepts.util.ConceptCreationException;
 import de.julielab.concepts.util.FacetCreationException;
+import de.julielab.java.utilities.ConfigurationUtilities;
 import de.julielab.java.utilities.FileUtilities;
-import de.julielab.jssf.commons.util.ConfigurationException;
 import de.julielab.neo4j.plugins.datarepresentation.*;
 import de.julielab.neo4j.plugins.datarepresentation.constants.ConceptConstants;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
 import de.julielab.semedico.resources.ResourceTermLabels;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -30,11 +31,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.concepts.db.core.ConfigurationConstants.CONCEPTS;
-import static de.julielab.concepts.db.core.ConfigurationConstants.CONFIGURATION;
-import static de.julielab.concepts.db.core.ConfigurationConstants.CREATOR;
-import static de.julielab.jssf.commons.Configurations.checkParameters;
-import static de.julielab.jssf.commons.Configurations.slash;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static java.util.stream.Collectors.joining;
 
 public class NCBIGeneConceptCreator implements ConceptCreator {
@@ -576,7 +573,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 	public Stream<ImportConcepts> createConcepts(HierarchicalConfiguration<ImmutableNode> importConfig)
 			throws ConceptCreationException, FacetCreationException {
 		try {
-			checkParameters(importConfig, CONFKEY_GENE_INFO, CONFKEY_GENE_DESCRIPTIONS, CONFKEY_ORGANISMS,
+			ConfigurationUtilities.checkParameters(importConfig, CONFKEY_GENE_INFO, CONFKEY_GENE_DESCRIPTIONS, CONFKEY_ORGANISMS,
                     CONFKEY_ORGANISMS_NAMES, CONFKEY_HOMOLOGENE, CONFKEY_GENE_GROUP);
 		} catch (ConfigurationException e) {
 			throw new ConceptCreationException(e);

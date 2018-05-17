@@ -1,26 +1,21 @@
 package de.julielab.concepts.db.core;
 
-import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.jssf.commons.Configurations.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import de.julielab.concepts.db.core.FunctionCallBase.Parameter;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.XMLConfiguration;
+import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
+import org.apache.commons.configuration2.builder.fluent.Parameters;
+import org.neo4j.shell.util.json.JSONArray;
+import org.testng.annotations.Test;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import de.julielab.jssf.commons.Configurations;
-import org.apache.commons.configuration2.HierarchicalConfiguration;
-import org.apache.commons.configuration2.XMLConfiguration;
-import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
-import org.apache.commons.configuration2.builder.fluent.Parameters;
-import org.neo4j.shell.util.json.JSONArray;
-
-import de.julielab.concepts.db.core.FunctionCallBase.Parameter;
-import org.testng.annotations.Test;
+import static de.julielab.concepts.db.core.ConfigurationConstants.*;
+import static de.julielab.java.utilities.ConfigurationUtilities.dot;
+import static org.junit.Assert.*;
 
 public class DataExporterBaseTest {
     @SuppressWarnings("unchecked")

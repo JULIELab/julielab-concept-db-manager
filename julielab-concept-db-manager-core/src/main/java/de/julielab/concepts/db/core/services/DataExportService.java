@@ -1,21 +1,19 @@
 package de.julielab.concepts.db.core.services;
 
+import de.julielab.concepts.db.core.spi.DataExporter;
+import de.julielab.concepts.util.ConceptDatabaseConnectionException;
+import de.julielab.concepts.util.DataExportException;
+import de.julielab.jssf.commons.spi.ParameterExposing;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.tree.ImmutableNode;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.ServiceLoader;
 
-import de.julielab.concepts.db.core.spi.DatabaseOperator;
-import de.julielab.jssf.commons.spi.ParameterExposing;
-import org.apache.commons.configuration2.HierarchicalConfiguration;
-import org.apache.commons.configuration2.tree.ImmutableNode;
-
-import de.julielab.concepts.db.core.spi.DataExporter;
-import de.julielab.concepts.util.ConceptDatabaseConnectionException;
-import de.julielab.concepts.util.DataExportException;
-
 import static de.julielab.concepts.db.core.ConfigurationConstants.EXPORTER;
-import static de.julielab.jssf.commons.Configurations.last;
+import static de.julielab.java.utilities.ConfigurationUtilities.last;
 
 public class DataExportService implements ParameterExposing{
 

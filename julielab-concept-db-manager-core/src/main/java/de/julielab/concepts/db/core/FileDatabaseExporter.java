@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.jssf.commons.Configurations.slash;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 public class FileDatabaseExporter extends JavaMethodCallBase implements DataExporter {
 

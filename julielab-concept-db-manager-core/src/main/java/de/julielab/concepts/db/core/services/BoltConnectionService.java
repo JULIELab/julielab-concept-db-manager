@@ -1,19 +1,7 @@
 package de.julielab.concepts.db.core.services;
 
-import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.concepts.db.core.services.NetworkConnectionCredentials.CONFKEY_PASSW;
-import static de.julielab.concepts.db.core.services.NetworkConnectionCredentials.CONFKEY_URI;
-import static de.julielab.concepts.db.core.services.NetworkConnectionCredentials.CONFKEY_USER;
-import static de.julielab.jssf.commons.Configurations.*;
-
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.Map;
-
-import de.julielab.concepts.db.core.ConfigurationConstants;
-import de.julielab.jssf.commons.Configurations;
+import de.julielab.concepts.util.ConceptDatabaseConnectionException;
+import de.julielab.java.utilities.CLIInteractionUtilities;
 import de.julielab.jssf.commons.spi.ParameterExposing;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
@@ -22,8 +10,14 @@ import org.neo4j.driver.v1.AuthTokens;
 import org.neo4j.driver.v1.Driver;
 import org.neo4j.driver.v1.GraphDatabase;
 
-import de.julielab.concepts.util.ConceptDatabaseConnectionException;
-import de.julielab.java.utilities.CLIInteractionUtilities;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
+
+import static de.julielab.concepts.db.core.ConfigurationConstants.*;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 public class BoltConnectionService implements ParameterExposing {
 

@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.jssf.commons.Configurations.dot;
+import static de.julielab.java.utilities.ConfigurationUtilities.dot;
 
 
 public class ConceptDatabaseApplication {

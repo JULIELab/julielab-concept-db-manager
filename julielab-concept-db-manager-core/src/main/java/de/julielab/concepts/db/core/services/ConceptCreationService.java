@@ -1,25 +1,23 @@
 package de.julielab.concepts.db.core.services;
 
-import java.util.Iterator;
-import java.util.ServiceLoader;
-import java.util.stream.Stream;
-
+import de.julielab.concepts.db.core.spi.ConceptCreator;
+import de.julielab.concepts.util.ConceptCreationException;
+import de.julielab.concepts.util.FacetCreationException;
 import de.julielab.jssf.commons.spi.ParameterExposing;
+import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.julielab.concepts.db.core.spi.ConceptCreator;
-import de.julielab.concepts.util.ConceptCreationException;
-import de.julielab.concepts.util.FacetCreationException;
-import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
+import java.util.Iterator;
+import java.util.ServiceLoader;
+import java.util.stream.Stream;
 
-import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.concepts.db.core.services.ConceptInsertionService.CONFKEY_PROVIDERNAME;
-import static de.julielab.jssf.commons.Configurations.dot;
-import static de.julielab.jssf.commons.Configurations.last;
-import static de.julielab.jssf.commons.Configurations.slash;
+import static de.julielab.concepts.db.core.ConfigurationConstants.CONCEPTS;
+import static de.julielab.concepts.db.core.ConfigurationConstants.CREATOR;
+import static de.julielab.java.utilities.ConfigurationUtilities.last;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 public class ConceptCreationService implements ParameterExposing{
 

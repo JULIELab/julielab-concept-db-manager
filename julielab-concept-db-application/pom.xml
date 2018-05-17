@@ -76,6 +76,10 @@
 			<version>2.5</version>
 		</dependency>
 		<dependency>
+			<groupId>de.julielab</groupId>
+			<artifactId>julielab-java-utilities</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 		</dependency>

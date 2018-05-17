@@ -1,12 +1,10 @@
 package de.julielab.concepts.db.core.services;
 
-import java.util.Iterator;
-import java.util.ServiceLoader;
-
-import de.julielab.concepts.db.core.ConfigurationConstants;
 import de.julielab.concepts.db.core.DefaultFacetCreator;
+import de.julielab.concepts.db.core.spi.FacetCreator;
+import de.julielab.concepts.util.FacetCreationException;
 import de.julielab.jssf.commons.spi.ParameterExposing;
-import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
+import de.julielab.neo4j.plugins.datarepresentation.ImportFacet;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
@@ -14,12 +12,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.julielab.concepts.db.core.spi.FacetCreator;
-import de.julielab.concepts.util.FacetCreationException;
-import de.julielab.neo4j.plugins.datarepresentation.ImportFacet;
+import java.util.Iterator;
+import java.util.ServiceLoader;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.jssf.commons.Configurations.slash;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 public class FacetCreationService implements ParameterExposing {
 

@@ -18,8 +18,8 @@ import java.util.stream.Stream;
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.concepts.db.core.ConfigurationConstants.CONFIGURATION;
 import static de.julielab.concepts.db.core.ConfigurationConstants.PARAMETERS;
-import static de.julielab.jssf.commons.Configurations.slash;
-import static de.julielab.jssf.commons.Configurations.ws;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
+import static de.julielab.java.utilities.ConfigurationUtilities.ws;
 
 public abstract class JavaMethodCallBase extends FunctionCallBase {
 

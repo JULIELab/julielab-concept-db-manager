@@ -8,12 +8,12 @@ import de.julielab.concepts.db.core.services.HttpConnectionService;
 import de.julielab.concepts.db.core.spi.ConceptInserter;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.ConceptInsertionException;
-import de.julielab.jssf.commons.Configurations;
-import de.julielab.jssf.commons.util.ConfigurationException;
+import de.julielab.java.utilities.ConfigurationUtilities;
 import de.julielab.neo4j.plugins.ConceptManager;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -27,7 +27,7 @@ import java.util.Map;
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.CONFKEY_PLUGIN_ENDPOINT;
 import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.CONFKEY_PLUGIN_NAME;
-import static de.julielab.jssf.commons.Configurations.checkParameters;
+import static de.julielab.java.utilities.ConfigurationUtilities.checkParameters;
 
 public class ServerPluginConceptInserter implements ConceptInserter {
 
@@ -64,7 +64,7 @@ public class ServerPluginConceptInserter implements ConceptInserter {
 				e) {
 			throw new ConceptInsertionException(e);
 		} catch (ConfigurationException e) {
-			log.error("Configuration error occured with configuration {} {}", Configurations.LS, ConfigurationUtils.toString(importConfig));
+			log.error("Configuration error occured with configuration {} {}", ConfigurationUtilities.LS, ConfigurationUtils.toString(importConfig));
 			throw new ConceptInsertionException(e);
 		}
 	}

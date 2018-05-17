@@ -1,7 +1,7 @@
 package de.julielab.concepts.db.core;
 
 import de.julielab.concepts.db.core.services.VersioningService;
-import de.julielab.jssf.commons.Configurations;
+import de.julielab.java.utilities.ConfigurationUtilities;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
@@ -31,7 +31,7 @@ public class VersioningServiceTest {
 	@Test
 	public void testFile() throws Exception {
 		log.debug("Running File test");
-		XMLConfiguration configuration = Configurations
+		XMLConfiguration configuration = ConfigurationUtilities
 				.loadXmlConfiguration(new File("src/test/resources/fileversioningconfig.xml"));
 		HierarchicalConfiguration<ImmutableNode> connectionConfiguration = configuration
 				.configurationAt(CONNECTION);

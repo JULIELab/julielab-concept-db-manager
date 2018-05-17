@@ -1,24 +1,24 @@
 package de.julielab.concepts.db.core.services;
 
-import de.julielab.concepts.db.core.ConfigurationConstants;
-import de.julielab.concepts.db.core.spi.ConceptInserter;
 import de.julielab.concepts.db.core.spi.DatabaseOperator;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DatabaseOperationException;
-import de.julielab.concepts.util.MappingInsertionException;
-import de.julielab.jssf.commons.Configurations;
+import de.julielab.java.utilities.ConfigurationUtilities;
 import de.julielab.jssf.commons.spi.ParameterExposing;
-import de.julielab.jssf.commons.util.ConfigurationException;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.ServiceLoader;
 
-import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.jssf.commons.Configurations.last;
+import static de.julielab.concepts.db.core.ConfigurationConstants.OPERATOR;
+import static de.julielab.java.utilities.ConfigurationUtilities.last;
 
 public class DatabaseOperationService implements ParameterExposing{
 
@@ -52,7 +52,7 @@ public class DatabaseOperationService implements ParameterExposing{
             throws DatabaseOperationException {
         boolean operatorFound = false;
         try {
-            String operatorName = Configurations.requirePresent(OPERATOR, operationConfigration::getString);
+            String operatorName = ConfigurationUtilities.requirePresent(OPERATOR, operationConfigration::getString);
             for (Iterator<DatabaseOperator> operatorIterator = loader.iterator(); operatorIterator.hasNext(); ) {
                 DatabaseOperator operator = operatorIterator.next();
                 try {

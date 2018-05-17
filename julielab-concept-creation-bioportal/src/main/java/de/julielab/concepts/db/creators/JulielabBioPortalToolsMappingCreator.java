@@ -9,16 +9,19 @@ import de.julielab.concepts.db.core.spi.MappingCreator;
 import de.julielab.concepts.util.ConceptDBManagerRuntimeException;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.MappingCreationException;
+import de.julielab.java.utilities.ConfigurationUtilities;
 import de.julielab.java.utilities.FileUtilities;
-import de.julielab.jssf.commons.Configurations;
-import de.julielab.jssf.commons.util.ConfigurationException;
 import de.julielab.neo4j.plugins.datarepresentation.ImportMapping;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -27,9 +30,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.concepts.db.core.ConfigurationConstants.CONFIGURATION;
-import static de.julielab.concepts.db.core.ConfigurationConstants.PATH;
-import static de.julielab.jssf.commons.Configurations.slash;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 public class JulielabBioPortalToolsMappingCreator implements MappingCreator {
 
@@ -47,8 +48,8 @@ public class JulielabBioPortalToolsMappingCreator implements MappingCreator {
     public Stream<ImportMapping> createMappings(HierarchicalConfiguration<ImmutableNode> importConfig) throws MappingCreationException {
 
         try {
-            Configurations.checkParameters(importConfig, slash(MAPPINGS, CREATOR, CONFIGURATION, PATH), slash(MAPPINGS, CREATOR, CONFIGURATION, ALLOWED_ACRONYMS));
-            Configurations.checkFilesExist(importConfig, slash(MAPPINGS, CREATOR, CONFIGURATION, PATH));
+            ConfigurationUtilities.checkParameters(importConfig, slash(MAPPINGS, CREATOR, CONFIGURATION, PATH), slash(MAPPINGS, CREATOR, CONFIGURATION, ALLOWED_ACRONYMS));
+            ConfigurationUtilities.checkFilesExist(importConfig, slash(MAPPINGS, CREATOR, CONFIGURATION, PATH));
             String pathToMappings = importConfig.getString(slash(MAPPINGS, CREATOR, CONFIGURATION, PATH));
             final Set<Object> allowedAcronyms = new HashSet<>(importConfig.getList(slash(MAPPINGS, CREATOR, CONFIGURATION, ALLOWED_ACRONYMS)));
             log.info("Importing mappings from {}{}", pathToMappings, allowedAcronyms != null && !allowedAcronyms.isEmpty() ? " for acronyms " + allowedAcronyms : "");

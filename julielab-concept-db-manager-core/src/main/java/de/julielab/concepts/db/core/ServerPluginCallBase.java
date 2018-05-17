@@ -7,7 +7,6 @@ import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.InternalNeo4jException;
 import de.julielab.concepts.util.MethodCallException;
 import de.julielab.concepts.util.Neo4jServerErrorResponse;
-import de.julielab.jssf.commons.Configurations;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
@@ -22,7 +21,9 @@ import java.util.stream.Collectors;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.*;
-import static de.julielab.jssf.commons.Configurations.*;
+import static de.julielab.java.utilities.ConfigurationUtilities.dot;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
+import static de.julielab.java.utilities.ConfigurationUtilities.ws;
 
 public abstract class ServerPluginCallBase extends FunctionCallBase {
 
