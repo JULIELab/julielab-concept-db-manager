@@ -9,11 +9,13 @@ import de.julielab.concepts.db.core.spi.ConceptCreator;
 import de.julielab.concepts.util.ConceptCreationException;
 import de.julielab.concepts.util.ConceptDBManagerRuntimeException;
 import de.julielab.java.utilities.FileUtilities;
-import de.julielab.jssf.commons.util.ConfigurationException;
+
 import de.julielab.neo4j.plugins.datarepresentation.*;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.apache.commons.configuration2.ex.ConfigurationException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
