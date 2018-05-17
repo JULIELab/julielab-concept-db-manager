@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import de.julielab.bioportal.ontologies.data.OntologyClass;
 import de.julielab.bioportal.util.BioPortalToolUtils;
 import de.julielab.concepts.db.core.DefaultFacetCreator;
-import de.julielab.concepts.db.core.services.FacetCreationService;
 import de.julielab.concepts.db.core.spi.ConceptCreator;
 import de.julielab.concepts.util.ConceptCreationException;
 import de.julielab.concepts.util.ConceptDBManagerRuntimeException;
