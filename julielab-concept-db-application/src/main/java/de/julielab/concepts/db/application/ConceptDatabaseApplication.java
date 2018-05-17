@@ -35,7 +35,7 @@ public class ConceptDatabaseApplication {
 		if (args.length != 2) {
 			log.error("Usage: {} <task> <XML configuration file>", ConceptDatabaseApplication.class.getSimpleName());
 			log.error(
-					"The task is either import, export, set_version or all. The last case first performs the import and then the export.");
+					"The task is either import, export, set_version or all. The last case first performs the import, versioning and then the export.");
 			System.exit(1);
 		}
 
