@@ -130,6 +130,6 @@ public class JulielabBioPortalToolsConceptCreator implements ConceptCreator {
 
     @Override
     public String getName() {
-        return "JulieLabOntologies";
+        return "JulielabBioPortalToolsConceptCreator";
     }
 }
