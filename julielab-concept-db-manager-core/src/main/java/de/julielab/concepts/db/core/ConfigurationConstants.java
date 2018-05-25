@@ -1,8 +1,5 @@
 package de.julielab.concepts.db.core;
 
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 /**
  * Atomic configuration key elements used to comprise the hierarchical keys used for the configuration.
  */
