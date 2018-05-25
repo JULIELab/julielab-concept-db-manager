@@ -27,8 +27,8 @@ public class ConfigurationConstants {
     public static final String NAME = "name";
     public static final String CONFIGURATION = "configuration";
     public static final String PARAMETERS = "parameters";
-    public static final String PLUGIN_NAME = "plugin_name";
-    public static final String PLUGIN_ENDPOINT = "plugin_endpoint";
+    public static final String PLUGIN_NAME = "pluginname";
+    public static final String PLUGIN_ENDPOINT = "pluginendpoint";
     public static final String PLUGIN = "plugin";
     public static final String CLASS = "class";
     public static final String METHOD = "method";
