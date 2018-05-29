@@ -23,7 +23,8 @@ import java.io.IOException;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.dot;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.*;
+import static org.testng.AssertJUnit.assertEquals;
 
 public class VersioningIT {
 

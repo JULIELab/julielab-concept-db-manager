@@ -16,7 +16,7 @@ import java.io.File;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.CONNECTION;
 import static de.julielab.concepts.db.core.ConfigurationConstants.VERSIONING;
-import static org.junit.Assert.assertEquals;
+import static org.testng.AssertJUnit.assertEquals;
 
 public class VersioningServiceTest {
 	

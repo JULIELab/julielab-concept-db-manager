@@ -21,8 +21,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.CONFKEY_PLUGIN_ENDPOINT;
-import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.CONFKEY_PLUGIN_NAME;
+import static de.julielab.java.utilities.ConfigurationUtilities.dot;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 public class ServerPluginExporter extends ServerPluginCallBase implements DataExporter {
@@ -42,8 +41,8 @@ public class ServerPluginExporter extends ServerPluginCallBase implements DataEx
     public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig)
             throws ConceptDatabaseConnectionException, DataExportException {
         String baseUri = connectionConfiguration.getString(NetworkConnectionCredentials.CONFKEY_URI);
-        String pluginName = exportConfig.getString(CONFKEY_PLUGIN_NAME);
-        String pluginEndpoint = exportConfig.getString(CONFKEY_PLUGIN_ENDPOINT);
+        String pluginName = exportConfig.getString(dot(CONFIGURATION, PLUGIN_NAME));
+        String pluginEndpoint = exportConfig.getString(dot(CONFIGURATION, PLUGIN_ENDPOINT));
         File outputFile = new File(exportConfig.getString(CONFKEY_OUTPUT_FILE));
         String response = null;
         try {

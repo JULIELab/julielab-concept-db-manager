@@ -15,7 +15,10 @@ import java.util.Map;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.dot;
-import static org.junit.Assert.*;
+import static org.testng.Assert.assertTrue;
+import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertFalse;
+import static org.testng.AssertJUnit.assertNotNull;
 
 public class DataExporterBaseTest {
     @SuppressWarnings("unchecked")

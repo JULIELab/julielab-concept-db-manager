@@ -4,10 +4,7 @@ import com.google.gson.Gson;
 import de.julielab.concepts.db.core.services.HttpConnectionService;
 import de.julielab.concepts.db.core.services.NetworkConnectionCredentials;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
-import de.julielab.concepts.util.InternalNeo4jException;
 import de.julielab.concepts.util.MethodCallException;
-import de.julielab.concepts.util.Neo4jServerErrorResponse;
-import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.apache.http.client.methods.HttpPost;
@@ -20,10 +17,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.*;
-import static de.julielab.java.utilities.ConfigurationUtilities.dot;
-import static de.julielab.java.utilities.ConfigurationUtilities.slash;
-import static de.julielab.java.utilities.ConfigurationUtilities.ws;
+import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.SERVER_PLUGIN_PATH_FMT;
+import static de.julielab.java.utilities.ConfigurationUtilities.*;
 
 public abstract class ServerPluginCallBase extends FunctionCallBase {
 
@@ -35,8 +30,8 @@ public abstract class ServerPluginCallBase extends FunctionCallBase {
     public String callNeo4jServerPlugin(HierarchicalConfiguration<ImmutableNode> connectionConfig, HierarchicalConfiguration<ImmutableNode> methodCallConfig)
             throws ConceptDatabaseConnectionException, MethodCallException {
         String baseUri = connectionConfig.getString(NetworkConnectionCredentials.CONFKEY_URI);
-        String pluginName = methodCallConfig.getString(CONFKEY_PLUGIN_NAME);
-        String pluginEndpoint = methodCallConfig.getString(CONFKEY_PLUGIN_ENDPOINT);
+        String pluginName = methodCallConfig.getString(dot(CONFIGURATION, PLUGIN_NAME));
+        String pluginEndpoint = methodCallConfig.getString(dot(CONFIGURATION, PLUGIN_ENDPOINT));
         Map<String, Object> parameters = null;
         if (methodCallConfig.getKeys(dot(CONFIGURATION, PARAMETERS)).hasNext()) {
             try {
@@ -54,7 +49,6 @@ public abstract class ServerPluginCallBase extends FunctionCallBase {
         String completePluginEndpointUri = baseUri + String.format(SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint);
         HttpPost request = httpService.getHttpPostRequest(connectionConfig, completePluginEndpointUri);
         Gson gson = new Gson();
-        String response = null;
         try {
             String parameterJson = null;
             if (parameters != null) {

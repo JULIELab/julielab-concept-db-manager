@@ -25,9 +25,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.CONFKEY_PLUGIN_ENDPOINT;
-import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.CONFKEY_PLUGIN_NAME;
 import static de.julielab.java.utilities.ConfigurationUtilities.checkParameters;
+import static de.julielab.java.utilities.ConfigurationUtilities.dot;
 
 public class ServerPluginConceptInserter implements ConceptInserter {
 
@@ -38,15 +37,15 @@ public class ServerPluginConceptInserter implements ConceptInserter {
 	public void insertConcepts(HierarchicalConfiguration<ImmutableNode> importConfig, ImportConcepts concepts)
 			throws ConceptInsertionException {
 		try {
-			checkParameters(importConfig, CONFKEY_PLUGIN_NAME, CONFKEY_PLUGIN_ENDPOINT);
+			checkParameters(importConfig, dot(CONFIGURATION, PLUGIN_NAME), dot(CONFIGURATION, PLUGIN_ENDPOINT));
 
 			ObjectMapper jsonMapper = new ObjectMapper().registerModule(new Jdk8Module());
 			jsonMapper.setSerializationInclusion(Include.NON_NULL);
 			jsonMapper.setSerializationInclusion(Include.NON_EMPTY);
 
 			String serverUri = connectionConfiguration.getString(URI);
-			String pluginName = importConfig.getString(PLUGIN_NAME);
-			String pluginEndpoint = importConfig.getString(PLUGIN_ENDPOINT);
+			String pluginName = importConfig.getString(dot(CONFIGURATION, PLUGIN_NAME));
+			String pluginEndpoint = importConfig.getString(dot(CONFIGURATION, PLUGIN_ENDPOINT));
 			HttpConnectionService httpService = HttpConnectionService.getInstance();
 			HttpPost httpPost = httpService.getHttpPostRequest(connectionConfiguration, serverUri + String
 					.format(ServerPluginConnectionConstants.SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint));
