@@ -1,14 +1,15 @@
 package de.julielab.concepts.db.creators.mesh;
 
-import static org.junit.Assert.assertEquals;
 
 import java.util.TreeMap;
 
-import org.junit.Test;
 
 import com.google.common.collect.Ordering;
 
 import de.julielab.concepts.db.creators.mesh.tools.ValueComparableMap;
+import org.testng.annotations.Test;
+
+import static org.testng.AssertJUnit.assertEquals;
 
 /**
  * Class for testing <code>ValueComparableMap</code.

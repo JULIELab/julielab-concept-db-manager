@@ -14,7 +14,7 @@ import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
 
 public class DefaultFacetCreator implements FacetCreator {
 
-	public static final String PROVIDER_NAME = "default";
+	public static final String PROVIDER_NAME = "DefaultFacetCreator";
 
 	public static final String FACET_GROUP_NAME = "facetgroup.name";
 	public static final String NAME = "name";

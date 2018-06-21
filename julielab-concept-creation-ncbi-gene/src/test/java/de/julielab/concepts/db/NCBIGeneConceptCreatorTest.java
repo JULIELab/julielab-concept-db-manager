@@ -13,12 +13,12 @@ import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.apache.commons.io.FileUtils;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 import org.neo4j.graphdb.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,15 +30,16 @@ import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.dot;
 import static de.julielab.neo4j.plugins.ConceptManager.ConceptLabel.AGGREGATE;
 import static de.julielab.neo4j.plugins.datarepresentation.constants.ConceptConstants.PROP_ORG_ID;
-import static org.junit.Assert.*;
+import static org.testng.AssertJUnit.*;
+import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
 
 public class NCBIGeneConceptCreatorTest {
 
 	private static Logger log = LoggerFactory.getLogger(NCBIGeneConceptCreatorTest.class);
 	private static final File TEST_DB = new File("src/test/resources/graph.db");
 
-	@After
-	@Before
+	@AfterTest
+	@BeforeTest
 	public void afterTest() throws IOException {
 		FileUtils.deleteDirectory(TEST_DB);
 	}

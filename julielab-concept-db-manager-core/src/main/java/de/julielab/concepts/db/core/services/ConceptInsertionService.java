@@ -51,7 +51,7 @@ public class ConceptInsertionService {
 	}
 
 	public void insertConcepts(HierarchicalConfiguration<ImmutableNode> importConfiguration, ImportConcepts concepts)
-			throws ConceptInsertionException, ConceptDatabaseConnectionException {
+			throws ConceptInsertionException {
 		Iterator<ConceptInserter> inserterIt = loader.iterator();
 		boolean inserterFound = false;
 		while (inserterIt.hasNext()) {

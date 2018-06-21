@@ -1,15 +1,15 @@
 package de.julielab.concepts.db.creators.mesh;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
 import org.slf4j.Logger;
 
 import de.julielab.concepts.db.creators.mesh.components.Descriptor;
 import de.julielab.concepts.db.creators.mesh.components.TreeVertex;
 import de.julielab.concepts.db.creators.mesh.exchange.DataImporter;
+import org.testng.annotations.Test;
+
+import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertNull;
+import static org.testng.AssertJUnit.assertTrue;
 
 /**
  * Class for testing <code>FacetsProvider</code>.

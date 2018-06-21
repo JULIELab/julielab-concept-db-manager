@@ -50,8 +50,8 @@ public class JulielabBioPortalToolsConceptCreator implements ConceptCreator {
     @Override
     public Stream<ImportConcepts> createConcepts(HierarchicalConfiguration<ImmutableNode> config)
             throws ConceptCreationException {
-        String facetGroupNameKey = slash(FACET, CREATOR, FACET_GROUP, NAME);
-        String ontologiesPathKey = slash(CONCEPTS, CREATOR, CONFIGURATION, PATH);
+        String facetGroupNameKey = dot(FACET, CREATOR, CONFIGURATION, FACET_GROUP, NAME);
+        String ontologiesPathKey = dot(CONCEPTS, CREATOR, CONFIGURATION, PATH);
         try {
             checkParameters(config, facetGroupNameKey,
                     ontologiesPathKey);

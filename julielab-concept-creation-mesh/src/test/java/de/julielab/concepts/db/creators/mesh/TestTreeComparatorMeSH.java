@@ -1,9 +1,5 @@
 package de.julielab.concepts.db.creators.mesh;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
 
 import de.julielab.concepts.db.creators.mesh.exchange.DataExporter;
 import de.julielab.concepts.db.creators.mesh.exchange.DataImporter;
@@ -13,6 +9,10 @@ import de.julielab.concepts.db.creators.mesh.modifications.DescRenamings;
 import de.julielab.concepts.db.creators.mesh.modifications.VertexAdditions;
 import de.julielab.concepts.db.creators.mesh.modifications.VertexDeletions;
 import de.julielab.concepts.db.creators.mesh.modifications.VertexMovings;
+import org.testng.annotations.Test;
+
+import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertTrue;
 
 /**
  * Class for testing <code>TreeComparatorMeSH</code.
@@ -287,7 +287,7 @@ extends TestBase {
 		VertexDeletions vertexDeletions = comparator.getVertexDeletions();
 		assertEquals( 1, vertexDeletions.size());			
 		assertTrue(vertexDeletions.containsKey(v2));
-		assertEquals(true, vertexDeletions.get(v2));
+		assertEquals(true, (boolean)vertexDeletions.get(v2));
 	}
 	
 	/**
@@ -326,10 +326,10 @@ extends TestBase {
 		assertEquals(2, deletions.size());
 		
 		assertTrue(deletions.containsKey(v2));
-		assertEquals(true, deletions.get(v2));
+		assertEquals(true, (boolean)deletions.get(v2));
 		
 		assertTrue(deletions.containsKey(v2));
-		assertEquals(true, deletions.get(v6));
+		assertEquals(true, (boolean)deletions.get(v6));
 	}
 	
 	/**

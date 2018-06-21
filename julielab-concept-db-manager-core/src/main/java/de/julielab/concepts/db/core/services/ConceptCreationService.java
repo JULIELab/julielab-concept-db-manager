@@ -5,6 +5,7 @@ import de.julielab.concepts.util.ConceptCreationException;
 import de.julielab.concepts.util.FacetCreationException;
 import de.julielab.jssf.commons.spi.ParameterExposing;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
+import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.slf4j.Logger;
@@ -14,10 +15,9 @@ import java.util.Iterator;
 import java.util.ServiceLoader;
 import java.util.stream.Stream;
 
-import static de.julielab.concepts.db.core.ConfigurationConstants.CONCEPTS;
-import static de.julielab.concepts.db.core.ConfigurationConstants.CREATOR;
+import static de.julielab.concepts.db.core.ConfigurationConstants.*;
+import static de.julielab.java.utilities.ConfigurationUtilities.dot;
 import static de.julielab.java.utilities.ConfigurationUtilities.last;
-import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 public class ConceptCreationService implements ParameterExposing{
 
@@ -49,7 +49,7 @@ public class ConceptCreationService implements ParameterExposing{
 	 */
 	public Stream<ImportConcepts> createConcepts(HierarchicalConfiguration<ImmutableNode> importConfig)
 			throws ConceptCreationException, FacetCreationException {
-		String providername = importConfig.getString(slash(CONCEPTS, CREATOR));
+		String providername = importConfig.getString(dot(CONCEPTS, CREATOR, NAME));
 		Iterator<ConceptCreator> providerIt = loader.iterator();
 		while (providerIt.hasNext()) {
 			ConceptCreator conceptCreator = providerIt.next();

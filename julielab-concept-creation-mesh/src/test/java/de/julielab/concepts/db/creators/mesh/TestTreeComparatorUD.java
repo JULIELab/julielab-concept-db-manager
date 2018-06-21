@@ -1,11 +1,11 @@
 package de.julielab.concepts.db.creators.mesh;
 
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Ignore;
-import org.junit.Test;
 
 import de.julielab.concepts.db.creators.mesh.exchange.DataImporter;
+import org.testng.annotations.Ignore;
+import org.testng.annotations.Test;
+
+import static org.testng.AssertJUnit.assertTrue;
 
 /**
  * Class for testing <code>TreeComparatorUD</code>.

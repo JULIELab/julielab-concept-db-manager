@@ -16,13 +16,13 @@ import java.util.Iterator;
 import java.util.ServiceLoader;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
+import static de.julielab.java.utilities.ConfigurationUtilities.dot;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 public class FacetCreationService implements ParameterExposing {
 
 	private static final Logger log = LoggerFactory.getLogger(FacetCreationService.class);
 	public static final String CONFKEY_FACET = "configuration.facet";
-	public static final String CONFKEY_FACET_CREATOR = "facetcreator";
 
 	private ServiceLoader<FacetCreator> serviceLoader;
 	private static FacetCreationService service;
@@ -39,7 +39,7 @@ public class FacetCreationService implements ParameterExposing {
 
 	public ImportFacet createFacet(HierarchicalConfiguration<ImmutableNode> importConfiguration, Object facetData)
 			throws FacetCreationException {
-		String facetCreatorName = importConfiguration.getString(CONFKEY_FACET_CREATOR);
+		String facetCreatorName = importConfiguration.getString(dot(FACET, CREATOR, NAME));
 		if (StringUtils.isBlank(facetCreatorName))
 			log.debug("Facet creator name is not given, will fall back to the default facet.");
 		Iterator<FacetCreator> creatorIt = serviceLoader.iterator();

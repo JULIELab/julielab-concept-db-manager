@@ -7,7 +7,7 @@
         <import>
             <concepts>
                 <creator>
-                    <name>julielabontologies</name>
+                    <name>JulielabBioPortalToolsConceptCreator</name>
                     <configuration>
                         <path>src/test/resources/PO.cls.jsonlst.gz</path>
                     </configuration>
