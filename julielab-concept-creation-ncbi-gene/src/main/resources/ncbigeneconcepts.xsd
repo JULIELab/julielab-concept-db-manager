@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://www.julielab.de/conceptdb/concepts/ncbigene"
+           targetNamespace="http://www.julielab.de/conceptdb/concepts/ncbigene"
+           elementFormDefault="qualified">
+
+    <!-- The name of the NCBI Gene Concept Creator provider. One names determining the respective class are allowed. -->
+    <xs:element name="name">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="NCBIGeneConceptCreator"/>
+                <xs:enumeration value="de.julielab.concepts.db.creators.NCBIGeneConceptCreator"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <!-- Configuration elements -->
+    <xs:element name="basepath" type="xs:string">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                If given, this file path will be prepended to the relative file paths given to the other configuration
+                elements.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="gene_info" type="xs:string"/>
+    <xs:annotation>
+        <xs:documentation xml:lang="en">
+            Path to the NCBI gene database in the common <em>gene_info</em> format.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:element name="genedescriptions" type="xs:string">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                A file delivering descriptions to genes from the gene_info file. The format is &lt;geneId&gt;&lt;tab&gt;&lt;description
+                text&gt;&lt;linebreak&gt;, thus, one description per line.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="organismlist" type="xs:string">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                A list one NCBI Taxonomy IDs for which the gene_info file is filtered. Thus, this is a filter on
+                organisms. An empty file means no filter.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="organismnames" type="xs:string">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                The file <em>names.dmp</em> from the NCBI Taxonomy. It contains common and scientific names for
+                organisms. These are used in NCBI Gene to display the species name a gene belongs to. The names.dmp file
+                must contain an entry for each organism in the organismlist (or for all organisms for which there are
+                genes in the used gene_info file, if the organismlist is empty). Up to date versions of gene_info and
+                names.dmp will always match.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="homologene" type="xs:string">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                The <em>homologene</em> database as downloaded from the NCBI. It is used to build homology clusters
+                while from gene_group, orthology clusters are built. These clusters are represented via nodes with the
+                label <em>AGGREGATE_HOMOLOGENE</em> in the database. In the case that a homologene cluster and a
+                gene_group cluster overlap in their associated genes, a top homology cluster is created in the form of
+                an extra node with label <em>TOP_HOMOLOGY</em>.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="gene_group" type="xs:string">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                The <em>gene_group</em> database mostly containing gene orthology information from the NCBI. It is used
+                to build orthology clusters while from homologene, homology clusters are built. These clusters are
+                represented via nodes with the label <em>AGGREGATE_GENEGROUP</em> in the database. In the case that a
+                homologene cluster and a gene_group cluster overlap in their associated genes, a top homology cluster is
+                created in the form of an extra node with label <em>TOP_HOMOLOGY</em>.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <!-- The provider configuration -->
+    <xs:element name="configuration">
+        <xs:complexType>
+            <xs:all>
+                <xs:element ref="basepath"/>
+                <xs:element ref="gene_info"/>
+                <xs:element ref="genedescriptions"/>
+                <xs:element ref="organismlist"/>
+                <xs:element ref="organismnames"/>
+                <xs:element ref="homologene"/>
+                <xs:element ref="gene_group"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- The root concept creator element -->
+    <xs:element name="creator">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="name"/>
+                <xs:element ref="configuration"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

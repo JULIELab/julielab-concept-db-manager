@@ -52,7 +52,7 @@ public class FacetCreationService implements ParameterExposing {
 					facet = facetCreator.createFacet(importConfiguration.configurationAt(CONFKEY_FACET), facetData);
 				else
 					// There is no facet configuration, just pass the import configuration to avoid
-					// NPEs in the default facet creator which will be used.
+					// NPEs if the default facet creator which will be used.
 					facet = facetCreator.createFacet(importConfiguration, facetData);
 				providerFound = true;
 				break;

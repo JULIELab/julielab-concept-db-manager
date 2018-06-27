@@ -54,7 +54,7 @@ public class FileDatabaseExporter extends JavaMethodCallBase implements DataExpo
 
 	@Override
 	public String getName() {
-		return "JavaClassExporter";
+		return "FileDatabaseExporter";
 	}
 
 	@Override

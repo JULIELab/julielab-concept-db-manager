@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
-<conceptdatabase xmlns="http://www.julielab.de/conceptdatabase"
-                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xsi:schemaLocation="http://www.julielab.de/conceptdatabase conceptdatabase.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+
+<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:noNamespaceSchemaLocation="conceptdb.xsd">
     <versioning>
         <version>1.0-test</version>
     </versioning>
@@ -32,77 +32,80 @@
     </imports>
     <exports>
         <export>
-            <exporter>ServerPluginExporter</exporter>
-            <configuration>
-                <pluginname>
-                    Export
-                </pluginname>
-                <pluginendpoint>
-                    term_id_mapping
-                </pluginendpoint>
-                <outputfile>
-                    genes.idmap
-                </outputfile>
-                <decoding>
-                    <json2bytearray>true</json2bytearray>
-                    <base64>false</base64>
-                    <gzip>true</gzip>
-                </decoding>
-                <parameters>
-                    <id_property>
-                        originalId
-                    </id_property>
-                    <labels tojson="true">
-                        <label>ID_MAP_NCBI_GENES</label>
-                    </labels>
-                </parameters>
-            </configuration>
+            <serverpluginexporter>
+                <configuration>
+                    <decoding>
+                        <json2bytearray>true</json2bytearray>
+                        <base64>false</base64>
+                        <gzip>true</gzip>
+                    </decoding>
+                    <pluginname>
+                        Export
+                    </pluginname>
+                    <pluginendpoint>
+                        term_id_mapping
+                    </pluginendpoint>
+                    <outputfile>
+                        genes.idmap
+                    </outputfile>
+                    <parameters>
+                        <id_property>
+                            originalId
+                        </id_property>
+                        <labels tojson="true">
+                            <label>ID_MAP_NCBI_GENES</label>
+                        </labels>
+                    </parameters>
+                </configuration>
+            </serverpluginexporter>
         </export>
         <export>
-            <exporter>ServerPluginExporter</exporter>
-            <configuration>
-                <pluginname>
-                    Export
-                </pluginname>
-                <pluginendpoint>
-                    element_aggregate_id_mapping
-                </pluginendpoint>
-                <outputfile>
-                    elements.2aggid
-                </outputfile>
-                <decoding>
-                    <json2bytearray>false</json2bytearray>
-                    <base64>true</base64>
-                    <gzip>true</gzip>
-                </decoding>
-                <parameters>
-                    <labels tojson="true">
-                        <label>AGGREGATE_TOP_HOMOLOGY</label>
-                        <label>AGGREGATE_HOMOLOGENE</label>
-                        <label>AGGREGATE_GENEGROUP</label>
-                    </labels>
-                </parameters>
-            </configuration>
+            <serverpluginexporter>
+                <configuration>
+                    <decoding>
+                        <json2bytearray>false</json2bytearray>
+                        <base64>true</base64>
+                        <gzip>true</gzip>
+                    </decoding>
+                    <pluginname>
+                        Export
+                    </pluginname>
+                    <pluginendpoint>
+                        element_aggregate_id_mapping
+                    </pluginendpoint>
+                    <outputfile>
+                        elements.2aggid
+                    </outputfile>
+                    <parameters>
+                        <labels tojson="true">
+                            <label>AGGREGATE_TOP_HOMOLOGY</label>
+                            <label>AGGREGATE_HOMOLOGENE</label>
+                            <label>AGGREGATE_GENEGROUP</label>
+                        </labels>
+                    </parameters>
+                </configuration>
+            </serverpluginexporter>
         </export>
         <export>
-            <exporter>ServerPluginExporter</exporter>
-            <configuration>
-                <pluginname>
-                    Export
-                </pluginname>
-                <pluginendpoint>
-                    hypernyms
-                </pluginendpoint>
-                <outputfile>
-                    hypernyms.tid
-                </outputfile>
-                <decoding>
-                    <json2bytearray>true</json2bytearray>
-                    <base64>false</base64>
-                    <gzip>true</gzip>
-                </decoding>
-                <parameters/>
-            </configuration>
+            <serverpluginexporter>
+                <configuration>
+                    <decoding>
+                        <json2bytearray>true</json2bytearray>
+                        <base64>false</base64>
+                        <gzip>true</gzip>
+                    </decoding>
+                    <pluginname>
+                        Export
+                    </pluginname>
+                    <pluginendpoint>
+                        hypernyms
+                    </pluginendpoint>
+                    <outputfile>
+                        hypernyms.tid
+                    </outputfile>
+                    <parameters/>
+                </configuration>
+            </serverpluginexporter>
         </export>
     </exports>
 </conceptdatabase>

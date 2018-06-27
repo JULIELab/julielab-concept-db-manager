@@ -390,7 +390,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
                 ImportConcept term = createGeneTerm(record, gene2Summary);
                 String[] split = record.split("\t", 2);
                 String taxId = split[0];
-                if (organismSet.contains(taxId)) {
+                if (organismSet.contains(taxId) || organismSet.isEmpty()) {
                     geneId2Tax.put(term.coordinates.originalId, taxId);
                     termsByGeneId.put(new TermCoordinates(term.coordinates.originalId, term.coordinates.originalSource),
                             term);
@@ -583,7 +583,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 
     @Override
     public String getName() {
-        return "JulieLabGenes";
+        return "NCBIGeneConceptCreator";
     }
 
     private class TaxonomyRecord {

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.julielab.de/conceptdb"
+           xmlns="http://www.julielab.de/conceptdb"
+           elementFormDefault="qualified">
+
+    <xs:element name="version" type="xs:string"/>
+    <xs:element name="uri" type="xs:string"/>
+    <xs:element name="user" type="xs:string"/>
+    <xs:element name="password" type="xs:string"/>
+    <xs:element name="pluginname" type="xs:string"/>
+    <xs:element name="pluginendpoint" type="xs:string"/>
+
+    <xs:element name="versioning">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="version"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Concept import -->
+    <xs:element name="concepts">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                This is an extension point for concept creation providers. Those define their own XML Schema. For each provider, its configuration schema must be included in the configuration XML document. The provider root element - most commonly <em>creator</em> - then needs to have set the namespace to the respective XML Schema, e.g. &lt;creator xmlns="http://www.mydomain.de/myschema"&lt;.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:any/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="facet">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                This is an extension point for facet creation providers. Those define their own XML Schema. For each provider, its configuration schema must be included in the configuration XML document. The provider root element - most commonly <em>creator</em> - then needs to have set the namespace to the respective XML Schema, e.g. &lt;creator xmlns="http://www.mydomain.de/myschema"&lt;.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:any/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="mappings">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                This is an extension point for mapping creation providers. Those define their own XML Schema. For each provider, its configuration schema must be included in the configuration XML document. The provider root element - most commonly <em>creator</em> - then needs to have set the namespace to the respective XML Schema, e.g. &lt;creator xmlns="http://www.mydomain.de/myschema"&lt;. A commonly used mapping provider is contained in the <em>julielab-concept-creation-bioportal</em> project.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:any/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="import">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="serverpluginimporter"/>
+                <xs:element ref="concepts" minOccurs="0"/>
+                <xs:element ref="facet" minOccurs="0"/>
+                <xs:element ref="mappings" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="imports">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="import" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="serverpluginimporter">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="pluginname"/>
+                <xs:element ref="pluginendpoint"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <!-- End concept imports -->
+
+    <xs:element name="configuration"/>
+
+
+    <xs:element name="connection">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="uri"/>
+                <xs:element ref="user"/>
+                <xs:element ref="password"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="conceptdatabase">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="versioning"/>
+                <xs:element ref="connection"/>
+                <xs:element ref="imports"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.julielab.de/conceptdb/facets/default"
+        xmlns="http://www.julielab.de/conceptdb/facets/default"
+        elementFormDefault="qualified">
+
+    <xs:element name="name">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="DefaultFacetCreator"/>
+                <xs:enumeration value="de.julielab.concepts.db.core.DefaultFacetCreator"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="shortname" type="xs:string"/>
+    <xs:element name="customid" type="xs:string">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Each facet is assigned an internal, unique database ID upon creation. Since it may be cumbersome to first retrieve this ID in a given application in order to find the facet quickly, a custom ID can also be given. It has to be unique among facets.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="sourcetype">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="hierarchical">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">
+                            Indicates that the conceptual contents of this facet are arranged hierarchically. That means that concepts may have parent and child concepts.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="flat">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">
+                            Indicates that the concepts of this facet are not arranged in any specific internal order. I.e. the concepts of this facet do not have parents or children.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="strings">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">
+                            Indicates that the contents of this facet are directly derived from string field contents of some external source. Thus, facets with this source type do not have concept nodes in the database. The concepts would have to be built during run time of an application which then assigns the respective dynamically created concepts to the facet, still without adding them phyically to the database.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="facetaggregation">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">
+                            Indicates that this facet is actually an aggregation of multiple other facets. Similarly to the <em>strings</em> source type, this is meant to be handled by the application at runtime.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="labels">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                A set of labels that will be added as Neo4j node labels in the database.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="label" type="xs:string" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="nofacet" type="xs:boolean" default="false">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Indicates that the facet node should not be placed under the <em>facets</em> top node but under the <em>nofacets</em> top node in the database. "No-facet" facets are still meant to contribute concepts to an application but should be handled as second-class citizens and not be displayed on the application frontend, for example.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    
+    <xs:element name="facetgroup">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                All facets are assembled in facet groups. Facet groups are just nodes in the database that collect multiple facets, creating an additional hierarchical layer. They are uniquely identified via their name.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="configuration">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element ref="shortname" minOccurs="0"/>
+                <xs:element ref="customid" minOccurs="0"/>
+                <xs:element ref="sourcetype"/>
+                <xs:element ref="labels" minOccurs="0"/>
+                <xs:element ref="nofacet" minOccurs="0"/>
+                <xs:element ref="facetgroup"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+<xs:element name="creator">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element ref="name"/>
+            <xs:element ref="configuration"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:element>
+
+</xs:schema>
