@@ -50,7 +50,7 @@ public class FileDatabaseConceptInserter implements ConceptInserter {
 		ObjectMapper jsonMapper = new ObjectMapper().registerModule(new Jdk8Module());
 		jsonMapper.setSerializationInclusion(Include.NON_NULL);
 		jsonMapper.setSerializationInclusion(Include.NON_EMPTY);
-		boolean alreadyExists = false;
+		boolean alreadyExists;
 		try (Transaction tx = graphDb.beginTx()) {
 			Node facetNode = graphDb.findNode(FacetLabel.FACET, FacetConstants.PROP_CUSTOM_ID, customId);
 			alreadyExists = facetNode != null;
