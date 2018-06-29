@@ -26,7 +26,7 @@ import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.dot;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Test(suiteName = "integration-tests")
+@Test(suiteName = "integration-tests", dependsOnGroups = "fruit-concepts")
 public class ExporterIT {
     private final static Logger log = LoggerFactory.getLogger(ExporterIT.class);
 

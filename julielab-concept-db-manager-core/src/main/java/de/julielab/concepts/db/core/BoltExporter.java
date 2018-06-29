@@ -10,6 +10,7 @@ import de.julielab.java.utilities.FileUtilities;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.neo4j.driver.internal.types.InternalTypeSystem;
 import org.neo4j.driver.v1.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,7 @@ import static de.julielab.concepts.db.core.ConfigurationConstants.CYPHER_QUERY;
 import static de.julielab.concepts.db.core.ConfigurationConstants.OUTPUT_FILE;
 import static de.julielab.java.utilities.ConfigurationUtilities.dot;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
+import static org.neo4j.driver.internal.types.InternalTypeSystem.TYPE_SYSTEM;
 
 /**
  * Sends a given Cypher query and writes the retrieved results into the given output file. One record per line,
@@ -47,15 +49,27 @@ public class BoltExporter implements DataExporter {
             try (Session session = driver.session(); BufferedWriter bw = FileUtilities.getWriterToFile(outputFile)) {
                 bw.write(getResourceHeader(connectionConfiguration));
                 StatementResult result = session.readTransaction(tx -> tx.run(query));
-                List<Value> fieldValues = new ArrayList<>();
+                List<String> fieldValues = new ArrayList<>();
                 while (result.hasNext()) {
                     Record record = result.next();
                     fieldValues.clear();
                     for (int i = 0; i < record.size(); i++) {
                         Value value = record.get(i);
-                        fieldValues.add(value);
+                        String valueAsString;
+                        if (value.hasType(TYPE_SYSTEM.NUMBER()))
+                            valueAsString = value.asNumber().toString();
+                        else if (value.hasType(TYPE_SYSTEM.NULL()))
+                            valueAsString = "";
+                        else if (value.hasType(TYPE_SYSTEM.STRING()))
+                            valueAsString = value.asString();
+                        else if (value.hasType(TYPE_SYSTEM.NODE()))
+                            valueAsString = value.asNode().asMap().entrySet().stream().map(e -> e.getKey() + ": " + e.getValue().toString()).collect(Collectors.joining(", "));
+                        else
+                            throw new DataExportException("The query \"" + query + "\" returned a value of type " + value.type().name() + " which is currently not supported for output.");
+                        fieldValues.add(valueAsString);
                     }
-                    bw.write(fieldValues.stream().map(Value::asString).collect(Collectors.joining("\t")));
+
+                    bw.write(fieldValues.stream().collect(Collectors.joining("\t")));
                     bw.newLine();
                 }
             } catch (IOException e) {

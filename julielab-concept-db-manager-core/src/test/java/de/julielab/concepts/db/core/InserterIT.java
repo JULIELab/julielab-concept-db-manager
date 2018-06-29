@@ -6,10 +6,12 @@ import de.julielab.neo4j.plugins.datarepresentation.*;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.neo4j.driver.v1.Driver;
+import org.neo4j.driver.v1.GraphDatabase;
 import org.neo4j.driver.v1.Session;
 import org.neo4j.driver.v1.StatementResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
@@ -21,7 +23,7 @@ import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.dot;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Test(suiteName = "integration-tests")
+@Test(suiteName = "integration-tests", groups = "fruit-concepts")
 public class InserterIT {
 
     private final static Logger log = LoggerFactory.getLogger(InserterIT.class);
