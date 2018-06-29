@@ -51,7 +51,6 @@ public class ConceptDBConfigurationTemplateGenerator implements ConfigurationTem
      */
     public static void main(String args[]) throws ConfigurationException {
         ConceptDBConfigurationTemplateGenerator r = ConceptDBConfigurationTemplateGenerator.getInstance();
-        // TODO https://stackoverflow.com/questions/15971497/apache-commons-configuration-setting-an-xml-namespace-for-the-root-element
         r.writeConfigurationTemplate(new File("concept-db-configuration-template.xml"));
     }
 }

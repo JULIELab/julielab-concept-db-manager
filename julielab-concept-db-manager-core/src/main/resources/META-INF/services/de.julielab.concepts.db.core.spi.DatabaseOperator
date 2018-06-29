@@ -1,2 +1,3 @@
+de.julielab.concepts.db.core.BoltOperator
 de.julielab.concepts.db.core.ServerPluginDatabaseOperator
 de.julielab.concepts.db.core.FileDatabaseOperator

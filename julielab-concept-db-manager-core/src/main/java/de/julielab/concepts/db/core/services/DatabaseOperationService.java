@@ -18,13 +18,13 @@ import java.util.Map;
 import java.util.ServiceLoader;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.OPERATOR;
+import static de.julielab.concepts.db.core.ConfigurationConstants.URI;
 import static de.julielab.java.utilities.ConfigurationUtilities.last;
 
 public class DatabaseOperationService implements ParameterExposing{
 
     private final static Logger log = LoggerFactory.getLogger(DatabaseOperationService.class);
 
-    private static DatabaseOperationService service;
     private ServiceLoader<DatabaseOperator> loader;
     private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
     private static Map<HierarchicalConfiguration<ImmutableNode>, DatabaseOperationService> serviceMap;
@@ -48,17 +48,20 @@ public class DatabaseOperationService implements ParameterExposing{
         return serviceMap.computeIfAbsent(connectionConfiguration, DatabaseOperationService::new);
     }
 
-    public void operate(HierarchicalConfiguration<ImmutableNode> operationConfigration)
+    public void operate(HierarchicalConfiguration<ImmutableNode> operationConfiguration)
             throws DatabaseOperationException {
         boolean operatorFound = false;
+        log.trace("Operation Service called.");
         try {
-            String operatorName = ConfigurationUtilities.requirePresent(OPERATOR, operationConfigration::getString);
+            String operatorName = ConfigurationUtilities.requirePresent(OPERATOR, operationConfiguration::getString);
+            log.trace("Operator {} was demanded", operatorName);
             for (Iterator<DatabaseOperator> operatorIterator = loader.iterator(); operatorIterator.hasNext(); ) {
                 DatabaseOperator operator = operatorIterator.next();
+                log.trace("Checking if operator with name {} matches the demanded operator name", operator.getName());
                 try {
                     if (operator.hasName(operatorName)) {
                         operator.setConnection(connectionConfiguration);
-                        operator.operate(operationConfigration);
+                        operator.operate(operationConfiguration);
                         operatorFound = true;
                     }
                 } catch (ConceptDatabaseConnectionException e) {
@@ -71,7 +74,7 @@ public class DatabaseOperationService implements ParameterExposing{
         if (!operatorFound)
             throw new DatabaseOperationException(
                     "Database operation failed because no operator for the connection configuration "
-                            + ConfigurationUtils.toString(connectionConfiguration)
+                            + connectionConfiguration.getString(URI)
                             + " was found. Make sure that an appropriate operator provider is given in the META-INF/services/"
                             + DatabaseOperator.class.getCanonicalName() + " file.");
     }

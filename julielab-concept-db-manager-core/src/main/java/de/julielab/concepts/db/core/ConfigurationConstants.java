@@ -35,6 +35,7 @@ public class ConfigurationConstants {
     public static final String JSON2BYTEARRAY = "json2bytearray";
     public static final String BASE64 = "base64";
     public static final String GZIP = "gzip";
+    public static final String CYPHER_QUERY = "cypherquery";
     public static final String VERSIONING = "versioning";
     public static final String VERSION = "version";
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns="http://www.julielab.de/conceptdb"
+                 xsi:schemaLocation="http://www.julielab.de/conceptdb http://www.julielab.de/conceptdb/conceptdb-1.0.0.xsd
+					http://www.julielab.de/conceptdb/exporters/boltexporter http://www.julielab.de/conceptdb/exporters/boltexporter-1.0.0.xsd">
+    <versioning>
+        <version>1.0-test</version>
+    </versioning>
+    <connection>
+        <uri>to be filled by the test</uri>
+        <user></user>
+        <password></password>
+    </connection>
+    <exports>
+        <export xmlns="http://www.julielab.de/conceptdb/exporters/boltexporter">
+            <exporter>de.julielab.concepts.db.core.BoltExporter</exporter>
+            <configuration>
+                <cypherquery>MATCH (c:CONCEPT) return c.id,c.preferredName</cypherquery>
+                <outputfile>src/test/resources/output/boltexport.txt</outputfile>
+            </configuration>
+        </export>
+    </exports>
+</conceptdatabase>

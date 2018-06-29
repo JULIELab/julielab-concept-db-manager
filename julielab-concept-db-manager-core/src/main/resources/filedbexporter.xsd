@@ -1,0 +1,24 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://www.julielab.de/conceptdb/exporters/filedb"
+           targetNamespace="http://www.julielab.de/conceptdb/exporters/filedb"
+           elementFormDefault="qualified">
+    <xs:include schemaLocation="http://www.julielab.de/conceptdb/exporters/exporterbase-1.0.0.xsd"/>
+
+    <xs:complexType name="filedbexportertype">
+        <xs:complexContent>
+            <xs:extension base="exportertype">
+                <xs:sequence>
+                    <xs:element name="exporter">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="de.julielab.concepts.db.core.FileDatabaseExporter"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:element name="export" type="filedbexportertype"/>
+</xs:schema>

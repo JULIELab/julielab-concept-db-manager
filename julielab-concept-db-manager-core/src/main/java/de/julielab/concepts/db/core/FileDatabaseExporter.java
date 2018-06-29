@@ -33,7 +33,7 @@ public class FileDatabaseExporter extends JavaMethodCallBase implements DataExpo
 
     @Override
 	public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig)
-			throws ConceptDatabaseConnectionException, DataExportException {
+			throws DataExportException {
 		String outputFile = exportConfig.getString(CONFKEY_OUTPUT_FILE);
 		try {
 			String result = callInstanceMethod(exportConfig.configurationAt(CONFKEY_CONFIGURATION), graphDb);

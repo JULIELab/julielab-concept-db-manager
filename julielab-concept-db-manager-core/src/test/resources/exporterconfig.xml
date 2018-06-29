@@ -1,14 +1,17 @@
-<db>
-	<storeconfiguration>true</storeconfiguration>
+<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				 xmlns="http://www.julielab.de/conceptdb"
+				 xsi:schemaLocation="http://www.julielab.de/conceptdb http://www.julielab.de/conceptdb/conceptdb-1.0.0.xsd
+					http://www.julielab.de/conceptdb/exporters/serverpluginexporter http://www.julielab.de/conceptdb/exporters/serverpluginexporter-1.0.0.xsd">
+	<versioning>
+		<version>1.0-test</version>
+	</versioning>
 	<connection>
 		<uri>http://localhost:7474</uri>
-		<!-- <user>...</user> -->
-		<!-- should be optional! If not given, ask interactively and allow a java 
-			property to deliver it -->
-		<!-- <password>...</password> -->
+		<user></user>
+		<password></password>
 	</connection>
 	<exports>
-		<export>
+		<export xmlns="http://www.julielab.de/conceptdb/exporters/serverpluginexporter">
 			<exporter>ServerPluginExporter</exporter>
 			<configuration>
 				<pluginname>
@@ -26,9 +29,7 @@
 					<gzip>true</gzip>
 				</decoding>
 				<parameters>
-					<conceptlabel parametername="label">
-						TERM
-					</conceptlabel>
+					<conceptlabel parametername="label">CONCEPT</conceptlabel>
 					<id_property>
 						<property>sourceIds</property>
 					</id_property>
@@ -36,4 +37,4 @@
 			</configuration>
 		</export>
 	</exports>
-</db>
+</conceptdatabase>

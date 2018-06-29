@@ -1,2 +1,3 @@
+de.julielab.concepts.db.core.BoltExporter
 de.julielab.concepts.db.core.ServerPluginExporter
 de.julielab.concepts.db.core.FileDatabaseExporter

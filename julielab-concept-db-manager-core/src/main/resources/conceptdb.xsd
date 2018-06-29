@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           version="1.0.0"
+           xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
            targetNamespace="http://www.julielab.de/conceptdb"
            xmlns="http://www.julielab.de/conceptdb"
-           elementFormDefault="qualified">
+           elementFormDefault="qualified"
+           vc:minVersion="1.1">
+
+    <xs:element name="pluginname" type="xs:string"/>
+    <xs:element name="pluginendpoint" type="xs:string"/>
 
     <xs:element name="version" type="xs:string"/>
     <xs:element name="uri" type="xs:string"/>
     <xs:element name="user" type="xs:string"/>
     <xs:element name="password" type="xs:string"/>
-    <xs:element name="pluginname" type="xs:string"/>
-    <xs:element name="pluginendpoint" type="xs:string"/>
 
     <xs:element name="versioning">
         <xs:complexType>
@@ -23,7 +27,10 @@
     <xs:element name="concepts">
         <xs:annotation>
             <xs:documentation xml:lang="en">
-                This is an extension point for concept creation providers. Those define their own XML Schema. For each provider, its configuration schema must be included in the configuration XML document. The provider root element - most commonly <em>creator</em> - then needs to have set the namespace to the respective XML Schema, e.g. &lt;creator xmlns="http://www.mydomain.de/myschema"&lt;.
+                This is an extension point for concept creation providers. Those define their own XML Schema. For each
+                provider, its configuration schema must be included in the configuration XML document. The provider root
+                element - most commonly <em>creator</em> - then needs to have set the namespace to the respective XML
+                Schema, e.g. &lt;creator xmlns="http://www.mydomain.de/myschema"&lt;.
             </xs:documentation>
         </xs:annotation>
         <xs:complexType>
@@ -36,7 +43,10 @@
     <xs:element name="facet">
         <xs:annotation>
             <xs:documentation xml:lang="en">
-                This is an extension point for facet creation providers. Those define their own XML Schema. For each provider, its configuration schema must be included in the configuration XML document. The provider root element - most commonly <em>creator</em> - then needs to have set the namespace to the respective XML Schema, e.g. &lt;creator xmlns="http://www.mydomain.de/myschema"&lt;.
+                This is an extension point for facet creation providers. Those define their own XML Schema. For each
+                provider, its configuration schema must be included in the configuration XML document. The provider root
+                element - most commonly <em>creator</em> - then needs to have set the namespace to the respective XML
+                Schema, e.g. &lt;creator xmlns="http://www.mydomain.de/myschema"&lt;.
             </xs:documentation>
         </xs:annotation>
         <xs:complexType>
@@ -49,7 +59,11 @@
     <xs:element name="mappings">
         <xs:annotation>
             <xs:documentation xml:lang="en">
-                This is an extension point for mapping creation providers. Those define their own XML Schema. For each provider, its configuration schema must be included in the configuration XML document. The provider root element - most commonly <em>creator</em> - then needs to have set the namespace to the respective XML Schema, e.g. &lt;creator xmlns="http://www.mydomain.de/myschema"&lt;. A commonly used mapping provider is contained in the <em>julielab-concept-creation-bioportal</em> project.
+                This is an extension point for mapping creation providers. Those define their own XML Schema. For each
+                provider, its configuration schema must be included in the configuration XML document. The provider root
+                element - most commonly <em>creator</em> - then needs to have set the namespace to the respective XML
+                Schema, e.g. &lt;creator xmlns="http://www.mydomain.de/myschema"&lt;. A commonly used mapping provider
+                is contained in the <em>julielab-concept-creation-bioportal</em> project.
             </xs:documentation>
         </xs:annotation>
         <xs:complexType>
@@ -88,144 +102,29 @@
     </xs:element>
     <!-- End imports -->
 
+
+    <!-- In-database operations -->
+
+    <xs:element name="operations">
+        <xs:complexType>
+            <xs:sequence>
+                <!-- Extension point for individual exporters -->
+                <xs:any maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- End database operations -->
+
+
     <!-- Data export -->
 
-    <!-- Decoding possibilities -->
-    <xs:element name="json2bytearray" type="xs:boolean">
-        <xs:annotation>
-            <xs:documentation xml:lang="en">
-                Since it is not possible to transfer a byte stream directly from a Neo4j server plugin, one possibility is to encode the byte stream as a JSON array. Each byte is then a number in the resulting JSON array. Setting this element to true will lead to interpret the data sent by the server plugin as JSON-encoded byte array. Refer to the plugin documentation to learn which encoding methodology is employed. This method is very inefficient and shouldn't be used by server plugins. Use the base64 encoding instead.
-            </xs:documentation>
-        </xs:annotation>
-    </xs:element>
-    <xs:element name="base64" type="xs:boolean">
-        <xs:annotation>
-            <xs:documentation xml:lang="en">
-                Since it is not possible to transfer a byte stream directly from a Neo4j server plugin, one possibility is to encode the byte stream in a base64 string and send this. Setting this element to true will result have the data receiving code attempting to decode a base64 string into a byte stream.  Refer to the plugin documentation to learn which encoding methodology is employed.
-            </xs:documentation>
-        </xs:annotation>
-    </xs:element>
-    <xs:element name="gzip" type="xs:boolean">
-        <xs:annotation>
-            <xs:documentation xml:lang="en">
-                If the data sent by the server plugin is in GZIP format, set this element to true for uncompressing the data before writing it into the output file.
-            </xs:documentation>
-        </xs:annotation>
-    </xs:element>
-
-    <xs:element name="decoding">
-        <xs:annotation>
-            <xs:documentation xml:lang="en">
-                When exporting data from the database, complex data is typically encoded into a string. This element allows to specify how to retrieve the original data. What to use depends on the server plugin or file database method that is employed.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-            <xs:choice>
-                <xs:element ref="json2bytearray"/>
-                <xs:element ref="base64"/>
-            </xs:choice>
-            <xs:sequence>
-                <xs:element ref="gzip"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="outputfile" type="xs:string"/>
-
-    <xs:element name="parameter">
-        <xs:annotation>
-            <xs:documentation xml:lang="en">
-                A parameter to determine how exactly the database operation or data export should be performed.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-            <xs:attribute name="parametername" type="xs:string">
-                <xs:annotation>
-                    <xs:documentation xml:lang="en">
-                        Optional. Only required for server plugins. Specifies the name of the parameter the parameter value is associated to.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="parametertype" type="xs:string">
-                <xs:annotation>
-                    <xs:documentation xml:lang="en">
-                        Optional. Only required for classes directly working directly with the file database. Must denote the fully qualified Java type name that the specified method requires. This is required to be able to call the method via reflection.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="tojson" type="xs:boolean">
-            <xs:annotation>
-                <xs:documentation xml:lang="en">
-                    Optional. Specifies if the parameter value should be JSON-encoded. This is often used for arrays. Neo4j server plugins do not accept such complex objects. Thus, complex values are first converted into a JSON array representation and then sent as a string to the plugin. Since we use the plugin code also when using the file database directly, this technique also applies here.
-                </xs:documentation>
-            </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="elementtype" type="xs:string">
-                <xs:documentation xml:lang="en">
-                    Optional. Required when working directly with the file database and when the parameter is multi-valued. For calling the desired method correctly, we need to know of what type the arrays must be to represent the given values.
-                </xs:documentation>
-            </xs:attribute>
-            <xs:any/>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="parameters">
-        <xs:annotation>
-            <xs:documentation xml:lang="en">
-                <p>Data export from or operation in the Neo4j database is either done from a running Neo4j server or directly from the Neo4j data directory which is used as a file-based database.</p>
-                <p>For server plugin exporters, the parameters are named and will be sent as a JSON object to plugin endpoint. The plugin will then retrieve the parameters by name and return the adequate data. Thus, the order of the parameters does not matter.</p>
-                <p>For file database exporters, internally a Java method is called via reflection. Thus, parameters are not determined by name but exclusively by their order. It must thus be known which method is called and which parameters it expects in which order.</p>
-            </xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="parameter" maxOccurs="unbounded"/>
-            </xs:sequence>
-            <xs:any/>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="configuration">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="decoding"/>
-                <xs:element ref="outputfile"/>
-                <xs:element ref="parameters"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="serverpluginexporter">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="pluginname"/>
-                <xs:element ref="pluginendpoint"/>
-                <xs:element ref="configuration"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="filedbexporter">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="configuration"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="export">
-        <xs:complexType>
-            <xs:choice>
-                <xs:element ref="serverpluginexporter"/>
-                <xs:element ref="filedbexporter"/>
-            </xs:choice>
-        </xs:complexType>
-    </xs:element>
 
     <xs:element name="exports">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="export" maxOccurs="unbounded"/>
+                <!-- Extension point for individual exporters -->
+                <xs:any maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -247,8 +146,9 @@
             <xs:sequence>
                 <xs:element ref="versioning"/>
                 <xs:element ref="connection"/>
-                <xs:element ref="imports"/>
-                <xs:element ref="exports"/>
+                <xs:element ref="imports" minOccurs="0"/>
+                <xs:element ref="operations" minOccurs="0"/>
+                <xs:element ref="exports" minOccurs="0"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

@@ -3,8 +3,11 @@ package de.julielab.concepts.db.core.services;
 import de.julielab.concepts.db.core.spi.DataExporter;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DataExportException;
+import de.julielab.java.utilities.ConfigurationUtilities;
 import de.julielab.jssf.commons.spi.ParameterExposing;
+import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 
 import java.util.HashMap;
@@ -14,6 +17,7 @@ import java.util.ServiceLoader;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.EXPORTER;
 import static de.julielab.java.utilities.ConfigurationUtilities.last;
+import static de.julielab.java.utilities.ConfigurationUtilities.requirePresent;
 
 public class DataExportService implements ParameterExposing{
 
@@ -43,7 +47,12 @@ public class DataExportService implements ParameterExposing{
 	public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig)
 			throws DataExportException, ConceptDatabaseConnectionException {
 		Iterator<DataExporter> exporterIt = loader.iterator();
-		String exporterName = exportConfig.getString(EXPORTER);
+		String exporterName;
+		try {
+			exporterName = requirePresent(EXPORTER, key -> exportConfig.getString(key));
+		} catch (ConfigurationException e) {
+			throw new DataExportException(e);
+		}
 		if (exporterName == null)
 			throw new ConceptDatabaseConnectionException(
 					"The name of the exporter was not given. It must be given by the configuration name "
