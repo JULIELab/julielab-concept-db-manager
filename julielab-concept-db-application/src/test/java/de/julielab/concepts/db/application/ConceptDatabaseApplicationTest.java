@@ -13,6 +13,7 @@ import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.io.FileUtils;
+import org.kohsuke.args4j.CmdLineException;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Transaction;
@@ -55,7 +56,7 @@ public class ConceptDatabaseApplicationTest {
 	}
 
 	@Test
-	public void testConceptImport() throws URISyntaxException, ConceptDatabaseConnectionException, DataExportException, VersioningException {
+	public void testConceptImport() throws URISyntaxException, ConceptDatabaseConnectionException, DataExportException, VersioningException, CmdLineException {
 		ConceptDatabaseApplication.main(new String[] { "import", TESTCONFIG });
 
 		// Check if the Plant Ontology has been imported as expected.
