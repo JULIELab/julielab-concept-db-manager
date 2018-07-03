@@ -1,5 +1,6 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns="http://www.julielab.de/conceptdb/exporters/exporterbase"
+           version="1.0.0"
            targetNamespace="http://www.julielab.de/conceptdb/exporters/exporterbase"
            elementFormDefault="qualified">
 
@@ -85,6 +86,16 @@
         <xs:sequence>
             <xs:element name="configuration" type="exportconfigurationtype"/>
         </xs:sequence>
+        <xs:attribute name="name" type="xs:string">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The optional name element can be given to all concept creators, operators and exporters.
+                    When calling the Concept DB Application, the application mode parameters can be given
+                    an optional list of names. Only the inserters, operators or exporters on the list will be
+                    executed.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
         <xs:attribute name="type" type="xs:string"/>
     </xs:complexType>
 

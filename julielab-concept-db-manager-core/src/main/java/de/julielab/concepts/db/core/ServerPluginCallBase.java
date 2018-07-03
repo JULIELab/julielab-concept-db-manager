@@ -39,7 +39,7 @@ public abstract class ServerPluginCallBase extends FunctionCallBase {
             if (methodCallConfig.getKeys(dot(CONFIGURATION, PARAMETERS)).hasNext()) {
                 try {
                     HierarchicalConfiguration<ImmutableNode> parameterConfiguration = methodCallConfig.configurationAt(dot(CONFIGURATION, PARAMETERS));
-                    Map<String, Parameter> parameterMap = null;
+                    Map<String, Parameter> parameterMap;
                     parameterMap = parseParameters(parameterConfiguration);
                     parameters = parameterMap.values().stream()
                             .collect(Collectors.toMap(Parameter::getName, Parameter::getRequestValue));

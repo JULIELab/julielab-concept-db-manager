@@ -1,5 +1,6 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns="http://www.julielab.de/conceptdb/methodcall"
+           version="1.0.0"
            targetNamespace="http://www.julielab.de/conceptdb/methodcall"
            elementFormDefault="qualified">
 

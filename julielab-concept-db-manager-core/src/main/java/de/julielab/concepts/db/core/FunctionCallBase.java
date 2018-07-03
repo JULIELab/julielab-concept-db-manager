@@ -8,15 +8,12 @@ import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.dot;
-import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 /**
  * This class contains the {@link Parameter} type and methods to parse parameters from the configuration
@@ -32,6 +29,50 @@ public abstract class FunctionCallBase implements ParameterExposing {
 
     public FunctionCallBase(Logger log) {
         this.log = log;
+    }
+
+    protected Map<String, Parameter> parseParameters(HierarchicalConfiguration<ImmutableNode> parameterConfiguration)
+            throws MethodCallException {
+
+        Map<String, Parameter> parameterMap = new LinkedHashMap<>();
+        ImmutableNode configTree = parameterConfiguration.getNodeModel().getInMemoryRepresentation();
+        try {
+            for (ImmutableNode parameterNode : configTree.getChildren()) {
+                Map<String, Object> attributes = parameterNode.getAttributes();
+                String name = (String) attributes.get("parametername");
+                if (name == null)
+                    name = parameterNode.getNodeName();
+                String type = (String) attributes.get("parametertype");
+                Boolean tojson = Boolean.parseBoolean(Optional.ofNullable((String) attributes.get("tojson")).orElse("false"));
+                String elementtype = (String) attributes.get("elementtype");
+                boolean islist = !parameterNode.getChildren().isEmpty();
+                // Will be null for array-valued parameters
+                Object value = parameterNode.getValue();
+
+                Parameter parameter = new Parameter();
+                parameter.setName(name);
+                if (type != null)
+                    parameter.setType(Class.forName(type));
+                parameter.setConvertToJson(tojson);
+                if (elementtype != null)
+                    parameter.setElementType(Class.forName(elementtype));
+                parameter.setIsList(islist);
+                parameter.setValue(value);
+
+                List<Object> arrayitems = new ArrayList<>();
+                for (ImmutableNode listitem : parameterNode.getChildren()) {
+                    arrayitems.add(listitem.getValue());
+                }
+                if (!arrayitems.isEmpty())
+                    parameter.setValue(arrayitems);
+
+                parameterMap.put(name, parameter);
+
+            }
+        } catch (ClassNotFoundException e) {
+            throw new MethodCallException(e);
+        }
+        return parameterMap;
     }
 
     protected class Parameter {
@@ -68,12 +109,12 @@ public abstract class FunctionCallBase implements ParameterExposing {
             return value;
         }
 
-        public Object getRequestValue() {
-            return convertToJson ? gson.toJson(getValue()) : getValue();
-        }
-
         public void setValue(Object value) {
             this.value = value;
+        }
+
+        public Object getRequestValue() {
+            return convertToJson ? gson.toJson(getValue()) : getValue();
         }
 
         @Override
@@ -97,87 +138,12 @@ public abstract class FunctionCallBase implements ParameterExposing {
             return convertToJson;
         }
 
-        public void setElementType(Class<?> elementype) {
-            this.elementType = elementype;
-        }
-
         public Class<?> getElementType() {
             return this.elementType;
         }
-    }
 
-    protected Map<String, Parameter> parseParameters(HierarchicalConfiguration<ImmutableNode> parameterConfiguration)
-            throws MethodCallException {
-
-        Map<String, Parameter> parameterMap = new LinkedHashMap<>();
-
-        // First pass through the configuration: Identify parameters, their correct
-        // names and if they are multi-valued.
-        try {
-            for (String key : (Iterable<String>) parameterConfiguration::getKeys) {
-                if (!StringUtils.isBlank(key)) {
-                    if (!key.contains(".") && !key.contains("@parametername") && !key.contains("[")) {
-                        // e.g. conceptlabel
-                        Parameter parameter = parameterMap.computeIfAbsent(key, name -> new Parameter());
-                        parameter.setNameIfAbsent(key);
-                        parameterMap.put(key, parameter);
-                    } else if (!key.contains(".") && (key.contains("@"))) {
-                        String parameterElementName = key.substring(0, key.indexOf('['));
-                        // e.g. conceptlabel[@parametername]
-                        Parameter parameter = parameterMap.computeIfAbsent(parameterElementName,
-                                name -> new Parameter());
-                        if (key.contains("@parametername"))
-                            parameter.setName(parameterConfiguration.getString(key));
-                        if (key.contains("@elementtype"))
-                            parameter.setElementType(Class.forName(parameterConfiguration.getString(key)));
-                        parameterMap.put(parameterElementName, parameter);
-                    } else if (key.contains(".")) {
-                        // e.g. facetlabels.facetlabel
-                        String parameterElementName = key.substring(0, key.indexOf('.'));
-                        Parameter parameter = parameterMap.computeIfAbsent(parameterElementName,
-                                name -> new Parameter());
-                        parameter.setNameIfAbsent(parameterElementName);
-                        parameter.setIsList(true);
-                    }
-                }
-            }
-
-            Matcher elementNameMatcher = Pattern.compile("([^.\\[]+).*").matcher("");
-            // Second pass: Fill the values and properties into the parameters
-            for (String key : (Iterable<String>) parameterConfiguration::getKeys) {
-                if (!StringUtils.isBlank(key)) {
-                    if (elementNameMatcher.reset(key).matches()) {
-                        String parameterElementName = elementNameMatcher.group(1);
-                        Parameter parameter = parameterMap.get(parameterElementName);
-                        if (parameter == null)
-                            throw new IllegalStateException(
-                                    "The regular expression for the identification of the XML configuration element is faulty: It extracted the element name \""
-                                            + parameterElementName + "\" for the parameter key \"" + key + "\".");
-                        if ((parameter.isList() && key.contains("."))) {
-                            Class<?> elementType = parameter.getElementType();
-                            if (elementType != null)
-                                parameter.setValue(parameterConfiguration.getList(elementType, key));
-                            else
-                                parameter.setValue(parameterConfiguration.getList(key));
-                        }
-                        if (!parameter.isList() && !key.contains(".") && !key.contains("@"))
-                            parameter.setValue(parameterConfiguration.getString(key));
-                        if (!key.contains(".") && key.contains("@")) {
-                            if (key.contains("@parametertype"))
-                                parameter.setType(Class.forName(parameterConfiguration.getString(key)));
-                            if (key.contains("@tojson"))
-                                parameter.setConvertToJson(parameterConfiguration.getBoolean(key));
-                        }
-
-                    } else
-                        throw new IllegalStateException(
-                                "The regular expression for the identification of the XML configuration element is faulty: It did not find any match on the configuration key \""
-                                        + key + "\"");
-                }
-            }
-        } catch (ClassNotFoundException e) {
-            throw new MethodCallException(e);
+        public void setElementType(Class<?> elementype) {
+            this.elementType = elementype;
         }
-        return parameterMap;
     }
 }

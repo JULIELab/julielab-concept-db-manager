@@ -13,11 +13,11 @@ import org.slf4j.LoggerFactory;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 
-public class FileDatabaseOperator extends JavaMethodCallBase implements DatabaseOperator {
-    private final static Logger log = LoggerFactory.getLogger(FileDatabaseOperator.class);
+public class JavaClassFileDBOperator extends JavaMethodCallBase implements DatabaseOperator {
+    private final static Logger log = LoggerFactory.getLogger(JavaClassFileDBOperator.class);
     private GraphDatabaseService graphDb;
 
-    public FileDatabaseOperator() {
+    public JavaClassFileDBOperator() {
         super(log);
     }
 
@@ -38,7 +38,7 @@ public class FileDatabaseOperator extends JavaMethodCallBase implements Database
 
     @Override
     public String getName() {
-        return "JavaClassDatabaseOperator";
+        return "JavaClassFileDBOperator";
     }
 
 }

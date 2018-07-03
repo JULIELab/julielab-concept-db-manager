@@ -17,9 +17,9 @@ import java.io.IOException;
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
-public class FileDatabaseExporter extends JavaMethodCallBase implements DataExporter {
+public class JavaClassFileDBExporter extends JavaMethodCallBase implements DataExporter {
 
-    private final static Logger log = LoggerFactory.getLogger(FileDatabaseExporter.class);
+    private final static Logger log = LoggerFactory.getLogger(JavaClassFileDBExporter.class);
 
     public static final String CONFKEY_CONFIGURATION = "configuration";
     public static final String CONFKEY_OUTPUT_FILE = "configuration.outputfile";
@@ -27,7 +27,7 @@ public class FileDatabaseExporter extends JavaMethodCallBase implements DataExpo
 	private GraphDatabaseService graphDb;
 	private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
 
-    public FileDatabaseExporter() {
+    public JavaClassFileDBExporter() {
         super(log);
     }
 
@@ -54,7 +54,7 @@ public class FileDatabaseExporter extends JavaMethodCallBase implements DataExpo
 
 	@Override
 	public String getName() {
-		return "FileDatabaseExporter";
+		return "JavaClassFileDBExporter";
 	}
 
 	@Override

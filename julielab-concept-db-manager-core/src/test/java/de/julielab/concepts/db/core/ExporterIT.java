@@ -36,7 +36,7 @@ public class ExporterIT {
         // dictionary.
         Parameters params = new Parameters();
         FileBasedConfigurationBuilder<XMLConfiguration> confbuilder = new FileBasedConfigurationBuilder<>
-                (XMLConfiguration.class).configure(params.xml().setFileName("src/test/resources/exporterconfig.xml"));
+                (XMLConfiguration.class).configure(params.xml().setFileName("src/test/resources/serverpluginexportconfig.xml"));
         XMLConfiguration conf = confbuilder.getConfiguration();
         conf.setProperty(dot(CONNECTION, URI), "http://localhost:" + ITTestsSetup.neo4j.getMappedPort(7474));
         DataExportService exportService = DataExportService.getInstance(conf.configurationAt("connection"));

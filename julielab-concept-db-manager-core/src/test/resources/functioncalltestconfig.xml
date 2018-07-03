@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns="http://www.julielab.de/conceptdb"
+                 xsi:schemaLocation="http://www.julielab.de/conceptdb http://www.julielab.de/conceptdb/conceptdb-1.0.0.xsd
+					http://www.julielab.de/conceptdb/exporters/serverplugin http://www.julielab.de/conceptdb/exporters/serverpluginexporter-1.0.0.xsd">
+    <versioning>
+        <version>1.0-test</version>
+    </versioning>
+    <connection>
+        <uri>http://sonstwas.muh</uri>
+    </connection>
+    <exports>
+        <export xmlns="http://www.julielab.de/conceptdb/exporters/serverplugin">
+            <exporter>ServerPluginExporter</exporter>
+            <configuration>
+                <pluginendpoint>
+                    /db/data/ext/Export/graphdb/hypernyms
+                </pluginendpoint>
+                <parameters>
+                    <!-- While this throws XML Schema validation errors, it is still understood by the application.
+                         I just didn't figure out how to allow arbitrary parameter element names while still
+                         having the canonical version with <parameter parametername="conceptlabel"> -->
+                    <conceptlabel parametername="label" parametertype="java.lang.String">
+                        ID_MAP_NCBI_GENES
+                    </conceptlabel>
+                    <facetlabels parametername="labels" tojson="true" elementtype="java.lang.String">
+                        <facetlabel>FACET</facetlabel>
+                        <facetlabel>BIO_PORTAL</facetlabel>
+                    </facetlabels>
+                </parameters>
+            </configuration>
+        </export>
+    </exports>
+</conceptdatabase>
