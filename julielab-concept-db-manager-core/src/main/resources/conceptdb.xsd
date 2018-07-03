@@ -91,6 +91,16 @@
                 <xs:element ref="facet" minOccurs="0"/>
                 <xs:element ref="mappings" minOccurs="0"/>
             </xs:sequence>
+            <xs:attribute name="name" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        The optional name element can be given to all concept imports, operators and exporters.
+                        When calling the Concept DB Application, the application mode parameters can be given
+                        an optional list of names. Only the inserters, operators or exporters on the list will be
+                        executed.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
         </xs:complexType>
     </xs:element>
 

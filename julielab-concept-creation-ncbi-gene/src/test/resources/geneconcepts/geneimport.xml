@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
-<conceptdatabase xmlns="http://www.julielab.de/conceptdatabase"
+<conceptdatabase xmlns="http://www.julielab.de/conceptdb"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xsi:schemaLocation="http://www.julielab.de/conceptdatabase conceptdatabase.xsd">
+                 xsi:schemaLocation="http://www.julielab.de/conceptdb http://www.julielab.de/conceptdb-1.0.0.xsd
+                 http://www.julielab.de/conceptdb/concepts/ncbigene http://www.julielab.de/conceptdb/concepts/ncbigeneconceptcreator-1.0.0.xsd
+                 http://www.julielab.de/conceptdb/facets/default http://www.julielab.de/conceptdb/facets/defaultfacetcreator-1.0.0.xsd">
     <versioning>
         <version>1.0-test-gene-db</version>
     </versioning>
@@ -11,7 +13,7 @@
     <imports>
         <import>
             <concepts>
-                <creator>
+                <creator xmlns="http://www.julielab.de/conceptdb/concepts/ncbigene">
                     <name>de.julielab.concepts.db.creators.NCBIGeneConceptCreator</name>
                     <configuration>
                         <basepath>src/test/resources/geneconcepts/</basepath>
@@ -25,13 +27,14 @@
                 </creator>
             </concepts>
             <facet>
-                <creator>
+                <creator xmlns="http://www.julielab.de/conceptdb/facets/default">
                     <name>DefaultFacetCreator</name>
                     <configuration>
+                        <name>Genes</name>
+                        <sourcetype>hierarchical</sourcetype>
                         <facetgroup>
                             <name>GeneGroup</name>
                         </facetgroup>
-                        <name>Genes</name>
                     </configuration>
                 </creator>
             </facet>

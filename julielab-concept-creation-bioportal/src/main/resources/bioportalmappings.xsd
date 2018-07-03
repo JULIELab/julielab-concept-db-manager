@@ -1,6 +1,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns="http://www.julielab.de/conceptdb/mappings/bioportal"
            targetNamespace="http://www.julielab.de/conceptdb/mappings/bioportal"
+           version="1.0.0"
            elementFormDefault="qualified">
 
     <xs:element name="name">

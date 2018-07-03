@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.java.utilities.ConfigurationUtilities.dot;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Test(suiteName = "integration-tests", dependsOnGroups = "fruit-concepts")
@@ -38,7 +38,7 @@ public class DatabaseOperationIT {
 
         XMLConfiguration config = ConfigurationUtilities.
                 loadXmlConfiguration(new File("src/test/resources/dboperationconfig.xml"));
-        config.setProperty(dot(CONNECTION, URI), "http://localhost:" + ITTestsSetup.neo4j.getMappedPort(7474));
+        config.setProperty(slash(CONNECTION, URI), "http://localhost:" + ITTestsSetup.neo4j.getMappedPort(7474));
         HierarchicalConfiguration<ImmutableNode> connectionConfig =
                 config.configurationAt(CONNECTION);
 
@@ -49,9 +49,9 @@ public class DatabaseOperationIT {
         DatabaseOperationService dbOperation = DatabaseOperationService.getInstance(connectionConfig);
 
         mappingInsertion.insertMappings(Stream.of(importMapping));
-        dbOperation.operate(config.configurationAt(dot(OPERATIONS, OPERATION)));
+        dbOperation.operate(config.configurationAt(slash(OPERATIONS, OPERATION)));
 
-        config.setProperty(dot(CONNECTION, URI), "bolt://localhost:" + ITTestsSetup.neo4j.getMappedPort(7687));
+        config.setProperty(slash(CONNECTION, URI), "bolt://localhost:" + ITTestsSetup.neo4j.getMappedPort(7687));
         Driver driver = BoltConnectionService.getInstance().getBoltDriver(config.configurationAt(CONNECTION));
         try (Session session = driver.session()) {
             StatementResult result = session.readTransaction(tx -> tx.run("MATCH (a:MAPPING_AGGREGATE) RETURN COUNT(a) AS count"));
@@ -62,7 +62,7 @@ public class DatabaseOperationIT {
     @Test(dependsOnMethods = "testAggregation")
     public void testCypherOperator() throws ConfigurationException, DatabaseOperationException, IOException, ConceptDatabaseConnectionException {
         XMLConfiguration config = ConfigurationUtilities.loadXmlConfiguration(new File("src/test/resources/boltoperationconfig.xml"));
-        config.setProperty(dot(CONNECTION, URI), "bolt://localhost:" + ITTestsSetup.neo4j.getMappedPort(7687));
+        config.setProperty(slash(CONNECTION, URI), "bolt://localhost:" + ITTestsSetup.neo4j.getMappedPort(7687));
 
         // Before the usage of the operator, we do not expect a value for the testprop property
         Driver driver = BoltConnectionService.getInstance().getBoltDriver(config.configurationAt(CONNECTION));
@@ -72,7 +72,7 @@ public class DatabaseOperationIT {
 
         // Apply the operation configuration
         DatabaseOperationService operationService = DatabaseOperationService.getInstance(config.configurationAt(CONNECTION));
-        operationService.operate(config.configurationAt(dot(OPERATIONS, OPERATION)));
+        operationService.operate(config.configurationAt(slash(OPERATIONS, OPERATION)));
 
         // And now there should be a number
         result = driver.session().readTransaction(tx -> tx.run(propQuery));

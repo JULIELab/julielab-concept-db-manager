@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.java.utilities.ConfigurationUtilities.dot;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 /**
  * This class contains the {@link Parameter} type and methods to parse parameters from the configuration
@@ -22,9 +22,9 @@ import static de.julielab.java.utilities.ConfigurationUtilities.dot;
  */
 public abstract class FunctionCallBase implements ParameterExposing {
 
-    public static final String CONFKEY_PARAMETERS = dot(CONFIGURATION, PARAMETERS);
-    public static final String CONFKEY_CLASS_NAME = dot(CONFIGURATION, CLASS);
-    public static final String CONFKEY_METHOD_NAME = dot(CONFIGURATION, METHOD);
+    public static final String CONFKEY_PARAMETERS = slash(CONFIGURATION, PARAMETERS);
+    public static final String CONFKEY_CLASS_NAME = slash(CONFIGURATION, CLASS);
+    public static final String CONFKEY_METHOD_NAME = slash(CONFIGURATION, METHOD);
     protected Logger log;
 
     public FunctionCallBase(Logger log) {

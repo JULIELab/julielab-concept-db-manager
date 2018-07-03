@@ -2,6 +2,7 @@ package de.julielab.concepts.db.application;
 
 import de.julielab.concepts.db.core.services.*;
 import de.julielab.concepts.util.*;
+import de.julielab.java.utilities.ConfigurationUtilities;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.java.utilities.ConfigurationUtilities.dot;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 
 public class ConceptDatabaseApplication {
@@ -53,10 +54,7 @@ public class ConceptDatabaseApplication {
         File configFile = options.configurationFile;
         log.debug("Reading configuration from {}", configFile);
         try {
-            Parameters params = new Parameters();
-            FileBasedConfigurationBuilder<XMLConfiguration> builder = new FileBasedConfigurationBuilder<XMLConfiguration>(
-                    XMLConfiguration.class).configure(params.xml().setFile(configFile));
-            XMLConfiguration configuration = builder.getConfiguration();
+            XMLConfiguration configuration = ConfigurationUtilities.loadXmlConfiguration(configFile);
             run(options, configuration);
         } catch (ConfigurationException e) {
             throw new IllegalArgumentException(
@@ -80,12 +78,15 @@ public class ConceptDatabaseApplication {
         if (parameters.doImport != null || parameters.doAll != null) {
             ConceptCreationService conceptCreationService = ConceptCreationService.getInstance();
             ConceptInsertionService insertionService = ConceptInsertionService.getInstance(connectionConfiguration);
+
+            if (!emptyNames(parameters.doImport)) {
+                for (String importerName : parameters.doImport) {
+//                    configuration.configurationAt(slash(IMPORTS, IMPORT+"@y"))
+                }
+            }
             List<HierarchicalConfiguration<ImmutableNode>> importConfigs = configuration
-                    .configurationsAt(dot(IMPORTS, IMPORT));
+                    .configurationsAt(slash(IMPORTS, IMPORT));
             for (HierarchicalConfiguration<ImmutableNode> importConfig : importConfigs) {
-                if (!stepNameMatches(configuration, dot(CREATOR + "@name"), parameters.doImport) &&
-                        !stepNameMatches(configuration, dot(CREATOR + "@name"), parameters.doAll))
-                    continue;
                 Stream<ImportConcepts> concepts = conceptCreationService.createConcepts(importConfig);
                 insertionService.insertConcepts(importConfig, concepts);
             }
@@ -93,11 +94,8 @@ public class ConceptDatabaseApplication {
         if (parameters.doOperation != null || parameters.doAll != null) {
             DatabaseOperationService operationService = DatabaseOperationService.getInstance(connectionConfiguration);
             List<HierarchicalConfiguration<ImmutableNode>> operationConfigs = configuration
-                    .configurationsAt(dot(OPERATIONS, OPERATION));
+                    .configurationsAt(slash(OPERATIONS, OPERATION));
             for (HierarchicalConfiguration<ImmutableNode> operationConfig : operationConfigs) {
-                if (!stepNameMatches(configuration, dot(OPERATOR + "@name"), parameters.doOperation) &&
-                        !stepNameMatches(configuration, dot(OPERATOR + "@name"), parameters.doOperation))
-                    continue;
                 operationService.operate(operationConfig);
             }
         }
@@ -108,14 +106,17 @@ public class ConceptDatabaseApplication {
         if (parameters.doExport != null || parameters.doAll != null) {
             DataExportService dataExportService = DataExportService.getInstance(connectionConfiguration);
             List<HierarchicalConfiguration<ImmutableNode>> exportConfigs = configuration
-                    .configurationsAt(dot(EXPORTS, EXPORT));
+                    .configurationsAt(slash(EXPORTS, EXPORT));
             for (HierarchicalConfiguration<ImmutableNode> exportConfig : exportConfigs) {
-                if (!stepNameMatches(configuration, dot(EXPORT + "@name"), parameters.doExport) &&
-                        !stepNameMatches(configuration, dot(EXPORT + "@name"), parameters.doExport))
-                    continue;
                 dataExportService.exportData(exportConfig);
             }
         }
+    }
+
+    private static boolean emptyNames(List<String> selectedStepNames) {
+        if (selectedStepNames == null)
+            return true;
+        return StringUtils.isEmpty(selectedStepNames.get(0));
     }
 
     /**

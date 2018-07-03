@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 import static de.julielab.concepts.db.core.ConfigurationConstants.CONFIGURATION;
 import static de.julielab.concepts.db.core.ConfigurationConstants.CYPHER_QUERY;
 import static de.julielab.concepts.db.core.ConfigurationConstants.OUTPUT_FILE;
-import static de.julielab.java.utilities.ConfigurationUtilities.dot;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static org.neo4j.driver.internal.types.InternalTypeSystem.TYPE_SYSTEM;
 
@@ -42,8 +42,8 @@ public class BoltExporter implements DataExporter {
     @Override
     public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws ConceptDatabaseConnectionException, DataExportException {
         try {
-            String query = ConfigurationUtilities.requirePresent(dot(CONFIGURATION, CYPHER_QUERY), exportConfig::getString);
-            File outputFile = new File(ConfigurationUtilities.<String>requirePresent(dot(CONFIGURATION, OUTPUT_FILE), exportConfig::getString));
+            String query = ConfigurationUtilities.requirePresent(slash(CONFIGURATION, CYPHER_QUERY), exportConfig::getString);
+            File outputFile = new File(ConfigurationUtilities.<String>requirePresent(slash(CONFIGURATION, OUTPUT_FILE), exportConfig::getString));
 
             log.info("Sending Cypher query {} to Neo4j and writing the results to {}", query, outputFile);
             try (Session session = driver.session(); BufferedWriter bw = FileUtilities.getWriterToFile(outputFile)) {

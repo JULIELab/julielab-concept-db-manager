@@ -4,7 +4,7 @@
            targetNamespace="http://www.julielab.de/conceptdb/concepts/ncbigene"
            elementFormDefault="qualified">
 
-    <!-- The name of the NCBI Gene Concept Creator provider. One names determining the respective class are allowed. -->
+    <!-- The name of the NCBI Gene Concept Creator provider. Only names determining the respective class are allowed. -->
     <xs:element name="name">
         <xs:simpleType>
             <xs:restriction base="xs:string">
@@ -101,6 +101,16 @@
                 <xs:element ref="name"/>
                 <xs:element ref="configuration"/>
             </xs:sequence>
+            <xs:attribute name="name" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        The optional name element can be given to all concept creators, operators and exporters.
+                        When calling the Concept DB Application, the application mode parameters can be given
+                        an optional list of names. Only the inserters, operators or exporters on the list will be
+                        executed.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
         </xs:complexType>
     </xs:element>
 

@@ -5,6 +5,7 @@ import de.julielab.concepts.db.core.services.ConceptInsertionService;
 import de.julielab.neo4j.plugins.datarepresentation.*;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
 import org.apache.commons.configuration2.XMLConfiguration;
+import org.apache.commons.configuration2.tree.xpath.XPathExpressionEngine;
 import org.neo4j.driver.v1.Driver;
 import org.neo4j.driver.v1.GraphDatabase;
 import org.neo4j.driver.v1.Session;
@@ -20,7 +21,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.java.utilities.ConfigurationUtilities.dot;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Test(suiteName = "integration-tests", groups = "fruit-concepts")
@@ -31,10 +32,11 @@ public class InserterIT {
     public void testInsertion() throws Exception {
         // This test inserts a single concept
         XMLConfiguration config = new XMLConfiguration();
+        config.setExpressionEngine(new XPathExpressionEngine());
         // First, setup the configuration
-        config.setProperty(dot(CONNECTION, URI), "http://localhost:" + ITTestsSetup.neo4j.getMappedPort(7474));
-        config.setProperty(dot(IMPORT, CONFIGURATION, PLUGIN_NAME), "ConceptManager");
-        config.setProperty(dot(IMPORT, CONFIGURATION, PLUGIN_ENDPOINT), "insert_concepts");
+        config.setProperty(slash(CONNECTION, URI), "http://localhost:" + ITTestsSetup.neo4j.getMappedPort(7474));
+        config.setProperty(slash(IMPORT, CONFIGURATION, PLUGIN_NAME), "ConceptManager");
+        config.setProperty(slash(IMPORT, CONFIGURATION, PLUGIN_ENDPOINT), "insert_concepts");
 
         // Import the concepts
         ConceptInsertionService service = ConceptInsertionService.getInstance(config.configurationAt(CONNECTION));
@@ -46,7 +48,7 @@ public class InserterIT {
         service.insertConcepts(config.configurationAt(IMPORT), concepts);
 
         // Check that the concept has actually been created
-        config.setProperty(dot(CONNECTION, URI), "bolt://localhost:" + ITTestsSetup.neo4j.getMappedPort(7687));
+        config.setProperty(slash(CONNECTION, URI), "bolt://localhost:" + ITTestsSetup.neo4j.getMappedPort(7687));
         Driver driver = BoltConnectionService.getInstance().getBoltDriver(config.configurationAt(CONNECTION));
         try (Session s = driver.session()) {
             Map<String, Object> resultMap = s.readTransaction(tx -> {

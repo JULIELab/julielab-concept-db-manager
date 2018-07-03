@@ -28,6 +28,7 @@ import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.dot;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static de.julielab.neo4j.plugins.ConceptManager.ConceptLabel.AGGREGATE;
 import static de.julielab.neo4j.plugins.datarepresentation.constants.ConceptConstants.PROP_ORG_ID;
 import static org.testng.AssertJUnit.*;
@@ -133,7 +134,8 @@ public class NCBIGeneConceptCreatorTest {
 				.configurationAt(CONNECTION);
 		ConceptInsertionService insertionService = ConceptInsertionService.getInstance(connectionConfiguration);
 
-		HierarchicalConfiguration<ImmutableNode> importConfiguration = configuration.configurationAt(dot(IMPORTS, IMPORT));
+
+		HierarchicalConfiguration<ImmutableNode> importConfiguration = configuration.configurationAt(slash(IMPORTS, IMPORT));
 		Stream<ImportConcepts> concepts = conceptCreationService.createConcepts(importConfiguration);
 		insertionService.insertConcepts(importConfiguration, concepts);
 

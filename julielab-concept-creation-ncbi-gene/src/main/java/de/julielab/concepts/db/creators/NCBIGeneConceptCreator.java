@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.java.utilities.ConfigurationUtilities.dot;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static java.util.stream.Collectors.joining;
 
@@ -527,21 +527,21 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
     @Override
     public Stream<ImportConcepts> createConcepts(HierarchicalConfiguration<ImmutableNode> importConfig)
             throws ConceptCreationException, FacetCreationException {
-        String confPath = dot(CONCEPTS, CREATOR, CONFIGURATION);
+        String confPath = slash(CONCEPTS, CREATOR, CONFIGURATION);
         try {
-            ConfigurationUtilities.checkParameters(importConfig, dot(confPath, GENE_INFO), dot(confPath, GENEDESCRIPTIONS), dot(confPath, ORGANISMLIST),
-                    dot(confPath, ORGANISMNAMES), dot(confPath, HOMOLOGENE), dot(confPath, GENE_GROUP));
+            ConfigurationUtilities.checkParameters(importConfig, slash(confPath, GENE_INFO), slash(confPath, GENEDESCRIPTIONS), slash(confPath, ORGANISMLIST),
+                    slash(confPath, ORGANISMNAMES), slash(confPath, HOMOLOGENE), slash(confPath, GENE_GROUP));
         } catch (ConfigurationException e) {
             throw new ConceptCreationException(e);
         }
 
-        String basepath = importConfig.getString(dot(confPath, BASEPATH), "");
-        File geneInfo = new File(basepath + importConfig.getString(dot(confPath, GENE_INFO)));
-        File geneDescriptions = new File(basepath + importConfig.getString(dot(confPath, GENEDESCRIPTIONS)));
-        File organisms = new File(basepath + importConfig.getString(dot(confPath, ORGANISMLIST)));
-        File ncbiTaxNames = new File(basepath + importConfig.getString(dot(confPath, ORGANISMNAMES)));
-        File homologene = new File(basepath + importConfig.getString(dot(confPath, HOMOLOGENE)));
-        File geneGroup = new File(basepath + importConfig.getString(dot(confPath, GENE_GROUP)));
+        String basepath = importConfig.getString(slash(confPath, BASEPATH), "");
+        File geneInfo = new File(basepath + importConfig.getString(slash(confPath, GENE_INFO)));
+        File geneDescriptions = new File(basepath + importConfig.getString(slash(confPath, GENEDESCRIPTIONS)));
+        File organisms = new File(basepath + importConfig.getString(slash(confPath, ORGANISMLIST)));
+        File ncbiTaxNames = new File(basepath + importConfig.getString(slash(confPath, ORGANISMNAMES)));
+        File homologene = new File(basepath + importConfig.getString(slash(confPath, HOMOLOGENE)));
+        File geneGroup = new File(basepath + importConfig.getString(slash(confPath, GENE_GROUP)));
         List<File> notFound = new ArrayList<>();
         for (File f : Arrays.asList(geneInfo, geneDescriptions, organisms, ncbiTaxNames, homologene, geneGroup)) {
             if (!f.exists())

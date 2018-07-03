@@ -21,7 +21,7 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.java.utilities.ConfigurationUtilities.dot;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static org.neo4j.driver.internal.types.InternalTypeSystem.TYPE_SYSTEM;
 
@@ -38,7 +38,7 @@ public class BoltOperator implements DatabaseOperator {
     @Override
     public void operate(HierarchicalConfiguration<ImmutableNode> exportConfig) throws DatabaseOperationException {
         try {
-            String query = ConfigurationUtilities.requirePresent(dot(CONFIGURATION, CYPHER_QUERY), exportConfig::getString);
+            String query = ConfigurationUtilities.requirePresent(slash(CONFIGURATION, CYPHER_QUERY), exportConfig::getString);
 
             log.info("Sending Cypher statement {} to Neo4j", query);
             try (Session session = driver.session()) {

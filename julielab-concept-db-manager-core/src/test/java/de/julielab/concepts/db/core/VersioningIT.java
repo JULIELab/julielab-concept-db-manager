@@ -22,7 +22,7 @@ import java.io.File;
 import java.io.IOException;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.java.utilities.ConfigurationUtilities.dot;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static org.testng.AssertJUnit.assertEquals;
 
 @Test(suiteName = "integration-tests")
@@ -35,7 +35,7 @@ public class VersioningIT {
     public void setupTest() throws IOException, ConfigurationException, ConceptDatabaseConnectionException {
         XMLConfiguration configuration = ConfigurationUtilities
                 .loadXmlConfiguration(new File("src/test/resources/boltversioningconfig.xml"));
-        configuration.setProperty(dot(CONNECTION, URI), "bolt://localhost:" + ITTestsSetup.neo4j.getMappedPort(7687));
+        configuration.setProperty(slash(CONNECTION, URI), "bolt://localhost:" + ITTestsSetup.neo4j.getMappedPort(7687));
         HierarchicalConfiguration<ImmutableNode> connectionConfiguration = configuration
                 .configurationAt(CONNECTION);
         Driver driver = BoltConnectionService.getInstance().getBoltDriver(connectionConfiguration);
@@ -50,7 +50,7 @@ public class VersioningIT {
         log.debug("Running HTTP test");
         XMLConfiguration configuration = ConfigurationUtilities
                 .loadXmlConfiguration(new File("src/test/resources/httpversioningconfig.xml"));
-        configuration.setProperty(dot(CONNECTION, URI), "http://localhost:" + ITTestsSetup.neo4j.getMappedPort(7474));
+        configuration.setProperty(slash(CONNECTION, URI), "http://localhost:" + ITTestsSetup.neo4j.getMappedPort(7474));
         HierarchicalConfiguration<ImmutableNode> connectionConfiguration = configuration
                 .configurationAt(CONNECTION);
         HierarchicalConfiguration<ImmutableNode> versioningConfig = configuration.configurationAt(VERSIONING);
@@ -64,7 +64,7 @@ public class VersioningIT {
         log.debug("Running BOLT test");
         XMLConfiguration configuration = ConfigurationUtilities
                 .loadXmlConfiguration(new File("src/test/resources/boltversioningconfig.xml"));
-        configuration.setProperty(dot(CONNECTION, URI), "bolt://localhost:" + ITTestsSetup.neo4j.getMappedPort(7687));
+        configuration.setProperty(slash(CONNECTION, URI), "bolt://localhost:" + ITTestsSetup.neo4j.getMappedPort(7687));
         HierarchicalConfiguration<ImmutableNode> connectionConfiguration = configuration
                 .configurationAt(CONNECTION);
         HierarchicalConfiguration<ImmutableNode> versioningConfig = configuration.configurationAt(VERSIONING);

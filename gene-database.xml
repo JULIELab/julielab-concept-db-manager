@@ -4,14 +4,14 @@
                  xmlns="http://www.julielab.de/conceptdb"
                  xsi:schemaLocation="http://www.julielab.de/conceptdb julielab-concept-db-manager-core/src/main/resources/conceptdb.xsd
                  http://www.julielab.de/conceptdb/concepts/ncbigene http://www.julielab.de/conceptdb/concepts/ncbigeneconcepts-1.0.0.xsd
-                 http://www.julielab.de/conceptdb/facets/default http://www.julielab.de/conceptdb/facets/defaultfacet-1.0.0.xsd">
+                 http://www.julielab.de/conceptdb/facets/default http://www.julielab.de/conceptdb/facets/defaultfacet-1.0.0.xsd
+                http://www.julielab.de/conceptdb/exporters/serverplugin http://www.julielab.de/conceptdb/exporters/serverpluginexporter-1.0.0.xsd">
     <versioning>
         <version>1.0-test</version>
     </versioning>
     <connection>
         <uri>http://localhost:7474</uri>
         <user>neo4j</user>
-        <password>erik</password>
     </connection>
     <imports>
         <import>
@@ -54,11 +54,7 @@
         </import>
     </imports>
     <exports>
-        <export>
-            <serverpluginexporter>
-                <pluginname>
-                    Export
-                </pluginname>
+        <export xmlns="http://www.julielab.de/conceptdb/exporters/serverplugin">
                 <pluginendpoint>
                     term_id_mapping
                 </pluginendpoint>
@@ -72,63 +68,17 @@
                         genes.idmap
                     </outputfile>
                     <parameters>
-                        <id_property>
-                            originalId
-                        </id_property>
-                        <labels tojson="true">
-                            <label>ID_MAP_NCBI_GENES</label>
-                        </labels>
                     </parameters>
                 </configuration>
-            </serverpluginexporter>
         </export>
-        <export>
-            <serverpluginexporter>
+        <export xmlns="http://www.julielab.de/conceptdb/exporters/serverplugin">
+        </export>
+        <export  xmlns="http://www.julielab.de/conceptdb/exporters/serverplugin">
                 <pluginname>
                     Export
                 </pluginname>
                 <pluginendpoint>
-                    element_aggregate_id_mapping
                 </pluginendpoint>
-                <configuration>
-                    <decoding>
-                        <json2bytearray>false</json2bytearray>
-                        <base64>true</base64>
-                        <gzip>true</gzip>
-                    </decoding>
-                    <outputfile>
-                        elements.2aggid
-                    </outputfile>
-                    <parameters>
-                        <labels tojson="true">
-                            <label>AGGREGATE_TOP_HOMOLOGY</label>
-                            <label>AGGREGATE_HOMOLOGENE</label>
-                            <label>AGGREGATE_GENEGROUP</label>
-                        </labels>
-                    </parameters>
-                </configuration>
-            </serverpluginexporter>
-        </export>
-        <export>
-            <serverpluginexporter>
-                <pluginname>
-                    Export
-                </pluginname>
-                <pluginendpoint>
-                    hypernyms
-                </pluginendpoint>
-                <configuration>
-                    <decoding>
-                        <json2bytearray>true</json2bytearray>
-                        <base64>false</base64>
-                        <gzip>true</gzip>
-                    </decoding>
-                    <outputfile>
-                        hypernyms.tid
-                    </outputfile>
-                    <parameters/>
-                </configuration>
-            </serverpluginexporter>
         </export>
     </exports>
 </conceptdatabase>

@@ -33,12 +33,12 @@ public abstract class ServerPluginCallBase extends FunctionCallBase {
             throws ConceptDatabaseConnectionException, MethodCallException {
         try {
             String baseUri = requirePresent(NetworkConnectionCredentials.CONFKEY_URI, key -> connectionConfig.getString(key));
-            String pluginName = requirePresent(dot(CONFIGURATION, PLUGIN_NAME), key -> methodCallConfig.getString(key));
-            String pluginEndpoint = requirePresent(dot(CONFIGURATION, PLUGIN_ENDPOINT), key -> methodCallConfig.getString(key));
+            String pluginName = requirePresent(slash(CONFIGURATION, PLUGIN_NAME), key -> methodCallConfig.getString(key));
+            String pluginEndpoint = requirePresent(slash(CONFIGURATION, PLUGIN_ENDPOINT), key -> methodCallConfig.getString(key));
             Map<String, Object> parameters = null;
-            if (methodCallConfig.getKeys(dot(CONFIGURATION, PARAMETERS)).hasNext()) {
+            if (methodCallConfig.getKeys(slash(CONFIGURATION, PARAMETERS)).hasNext()) {
                 try {
-                    HierarchicalConfiguration<ImmutableNode> parameterConfiguration = methodCallConfig.configurationAt(dot(CONFIGURATION, PARAMETERS));
+                    HierarchicalConfiguration<ImmutableNode> parameterConfiguration = methodCallConfig.configurationAt(slash(CONFIGURATION, PARAMETERS));
                     Map<String, Parameter> parameterMap;
                     parameterMap = parseParameters(parameterConfiguration);
                     parameters = parameterMap.values().stream()

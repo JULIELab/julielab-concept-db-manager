@@ -4,7 +4,6 @@ import de.julielab.concepts.db.core.services.FileConnectionService;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DataExportException;
 import de.julielab.concepts.util.VersioningException;
-import de.julielab.java.utilities.ConfigurationUtilities;
 import de.julielab.neo4j.plugins.ConceptManager;
 import de.julielab.neo4j.plugins.FacetManager;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
@@ -32,7 +31,7 @@ import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
 
 public class ConceptDatabaseApplicationTest {
-	private static final String TESTCONFIG = "src/test/resources/testconfig.xml";
+	private static final String SIMPLECONFIG = "src/test/resources/simpleimport.xml";
 	private static XMLConfiguration configuration;
 
 	@BeforeClass
@@ -41,7 +40,7 @@ public class ConceptDatabaseApplicationTest {
 		// the path to the test database and delete it.
 		Parameters params = new Parameters();
 		FileBasedConfigurationBuilder<XMLConfiguration> configBuilder = new FileBasedConfigurationBuilder<>(
-				XMLConfiguration.class).configure(params.xml().setFileName(TESTCONFIG));
+				XMLConfiguration.class).configure(params.xml().setFileName(SIMPLECONFIG));
 		configuration = configBuilder.getConfiguration();
 	}
 
@@ -57,7 +56,7 @@ public class ConceptDatabaseApplicationTest {
 
 	@Test
 	public void testConceptImport() throws URISyntaxException, ConceptDatabaseConnectionException, DataExportException, VersioningException, CmdLineException {
-		ConceptDatabaseApplication.main(new String[] { "--import", "-c", TESTCONFIG });
+		ConceptDatabaseApplication.main(new String[] { "--import", "-c", SIMPLECONFIG});
 
 		// Check if the Plant Ontology has been imported as expected.
 		FileConnectionService databaseService = FileConnectionService.getInstance();
@@ -71,5 +70,10 @@ public class ConceptDatabaseApplicationTest {
 			long numConcepts = graphdb.findNodes(ConceptManager.ConceptLabel.CONCEPT).stream().count();
 			assertTrue(numConcepts > 0);
 		}
+	}
+
+	@Test
+	public void testNamedOperations(){
+
 	}
 }

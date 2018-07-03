@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           version="1.0.0"
         targetNamespace="http://www.julielab.de/conceptdb/facets/bioportal"
+        version="1.0.0"
         xmlns="http://www.julielab.de/conceptdb/facets/bioportal"
         elementFormDefault="qualified">
 
@@ -25,7 +25,7 @@
             </xs:documentation>
         </xs:annotation>
     </xs:element>
-    
+
     <xs:element name="facetgroup">
         <xs:annotation>
             <xs:documentation xml:lang="en">

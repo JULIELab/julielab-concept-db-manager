@@ -1,7 +1,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns="http://www.julielab.de/conceptdb/operators/bolt"
+           xmlns="http://www.julielab.de/conceptdb/operators/cypher"
            version="1.0.0"
-           targetNamespace="http://www.julielab.de/conceptdb/operators/bolt"
+           targetNamespace="http://www.julielab.de/conceptdb/operators/cypher"
            elementFormDefault="qualified">
 
     <xs:include schemaLocation="http://www.julielab.de/conceptdb/methodcallbase-1.0.0.xsd"/>
@@ -12,8 +12,7 @@
                 <xs:element name="operator">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
-                            <xs:enumeration value="de.julielab.concepts.db.core.BoltOperator"/>
-                            <xs:enumeration value="de.julielab.concepts.db.core.CypherFileDBOperator"/>
+                            <xs:enumeration value="de.julielab.concepts.db.core.CypherOperator"/>
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>

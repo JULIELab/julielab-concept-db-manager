@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 import static de.julielab.concepts.db.core.ConfigurationConstants.CONFIGURATION;
 import static de.julielab.concepts.db.core.ConfigurationConstants.CYPHER_QUERY;
 import static de.julielab.concepts.db.core.ConfigurationConstants.OPERATOR;
-import static de.julielab.java.utilities.ConfigurationUtilities.dot;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 public class CypherFileDBOperator implements DatabaseOperator {
@@ -32,7 +32,7 @@ public class CypherFileDBOperator implements DatabaseOperator {
     @Override
     public void operate(HierarchicalConfiguration<ImmutableNode> operationConfigration) throws DatabaseOperationException {
         try {
-            String cypherQuery = ConfigurationUtilities.requirePresent(dot(OPERATOR, CONFIGURATION, CYPHER_QUERY), operationConfigration::getString);
+            String cypherQuery = ConfigurationUtilities.requirePresent(slash(OPERATOR, CONFIGURATION, CYPHER_QUERY), operationConfigration::getString);
             log.info("Sending Cypher query {} to Neo4j embedded database", cypherQuery);
             try (Transaction tx = graphDb.beginTx()) {
                 Result result = graphDb.execute(cypherQuery);
