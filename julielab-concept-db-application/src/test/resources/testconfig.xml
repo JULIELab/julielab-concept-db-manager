@@ -1,12 +1,19 @@
-<db>
-    <version>1.0</version>
+<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns="http://www.julielab.de/conceptdb"
+                 xsi:schemaLocation="http://www.julielab.de/conceptdb http://www.julielab.de/conceptdb-1.0.0.xsd
+                 http://www.julielab.de/conceptdb/concepts/bioportal http://www.julielab.de/conceptdb/concepts/bioportalconcepts-1.0.0.xsd
+                 http://www.julielab.de/conceptdb/facets/bioportal http://www.julielab.de/conceptdb/facets/bioportalfacets-1.0.0.xsd
+                 http://www.julielab.de/conceptdb/exporters/serverplugin http://www.julielab.de/conceptdb/exporters/serverpluginexporter-1.0.0.xsd">
+    <versioning>
+        <version>1.0</version>
+    </versioning>
     <connection>
         <uri>src/test/resources/graphdb</uri>
     </connection>
     <imports>
         <import>
             <concepts>
-                <creator>
+                <creator xmlns="http://www.julielab.de/conceptdb/concepts/bioportal">
                     <name>JulielabBioPortalToolsConceptCreator</name>
                     <configuration>
                         <path>src/test/resources/PO.cls.jsonlst.gz</path>
@@ -14,8 +21,7 @@
                 </creator>
             </concepts>
             <facet>
-                <creator>
-                    <name>default</name>
+                <creator xmlns="http://www.julielab.de/conceptdb/facets/bioportal">
                     <configuration>
                         <facetgroup>
                             <name>BioPortal</name>
@@ -25,4 +31,4 @@
             </facet>
         </import>
     </imports>
-</db>
+</conceptdatabase>

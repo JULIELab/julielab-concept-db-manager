@@ -57,7 +57,7 @@ public class ConceptDatabaseApplicationTest {
 
 	@Test
 	public void testConceptImport() throws URISyntaxException, ConceptDatabaseConnectionException, DataExportException, VersioningException, CmdLineException {
-		ConceptDatabaseApplication.main(new String[] { "import", TESTCONFIG });
+		ConceptDatabaseApplication.main(new String[] { "--import", "-c", TESTCONFIG });
 
 		// Check if the Plant Ontology has been imported as expected.
 		FileConnectionService databaseService = FileConnectionService.getInstance();
