@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -110,6 +111,11 @@ public class JulielabBioPortalToolsConceptCreator implements ConceptCreator {
                 // won't.
                 ImportFacet facet = new ImportFacet(fg, acronym, acronym, acronym,
                         FacetConstants.SRC_TYPE_HIERARCHICAL);
+                boolean noFacet = config.getBoolean(dot(FACET, CREATOR, CONFIGURATION, DefaultFacetCreator.NO_FACET), false);
+                facet.setNoFacet(noFacet);
+                String[] labels = config.getStringArray(dot(FACET, CREATOR, CONFIGURATION, DefaultFacetCreator.LABELS));
+                if (labels != null && labels.length > 0)
+                    facet.setLabels(Arrays.asList(labels));
                 return new ImportConcepts(conceptStream, facet);
             } catch (IOException e) {
                 throw new ConceptDBManagerRuntimeException(new ConceptCreationException(e));
@@ -123,7 +129,7 @@ public class JulielabBioPortalToolsConceptCreator implements ConceptCreator {
         template.addProperty(slash(basePath, CONCEPTS, CREATOR, NAME), getName());
         template.addProperty(slash(basePath, CONCEPTS, CREATOR, CONFIGURATION, PATH), "");
         template.setProperty(slash(basePath, FACET, CREATOR, CONFIGURATION, FACET_GROUP, NAME), "Ontologies");
-        template.setProperty(slash(basePath, FACET, CREATOR, CONFIGURATION, DefaultFacetCreator.SOURCE_TYPE), FacetConstants.SRC_TYPE_HIERARCHICAL);
+        template.setProperty(slash(basePath, FACET, CREATOR, CONFIGURATION, DefaultFacetCreator.LABELS), "");
     }
 
     @Override

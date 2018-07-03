@@ -36,7 +36,7 @@ import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 public class
 JulielabBioPortalToolsMappingCreator implements MappingCreator {
 
-    public static final String ALLOWED_ACRONYMS = "allowed_acronyms";
+    public static final String ALLOWED_ACRONYMS = "allowedacronyms";
     private final static Logger log = LoggerFactory.getLogger(JulielabBioPortalToolsMappingCreator.class);
 
     @Override

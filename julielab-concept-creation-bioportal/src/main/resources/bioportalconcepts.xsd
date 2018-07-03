@@ -1,0 +1,56 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://www.julielab.de/conceptdb/concepts/bioportal"
+           targetNamespace="http://www.julielab.de/conceptdb/concepts/bioportal"
+           elementFormDefault="qualified">
+
+    <!-- The name of the BioPortal Concept Creator provider. Only names determining the respective class are allowed. -->
+    <xs:element name="name">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="JulielabBioPortalToolsConceptCreator"/>
+                <xs:enumeration value="de.julielab.concepts.db.creators.JulielabBioPortalToolsConceptCreator"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="path" type="xs:string">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                The path to a single JSON ontology names file or a directory of such files. The files may be compressed
+                using GZIP. The JSON format is the one used by the
+                <a href="https://github.com/JULIELab/julielab-bioportal-ontology-tools">JULIE Lab BioPortal Tools</a>
+                which can also be used to download ontologies and extract ontology classes, their names and their
+                hierarchy for concept database import.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <!-- The provider configuration -->
+    <xs:element name="configuration">
+        <xs:complexType>
+            <xs:all>
+                <xs:element ref="path"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- The root concept creator element -->
+    <xs:element name="creator">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="name"/>
+                <xs:element ref="configuration"/>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        The optional name element can be given to all concept creators, operators and exporters.
+                        When calling the Concept DB Application, the application mode parameters can be given
+                        an optional list of names. Only the inserters, operators or exporters on the list will be
+                        executed.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
