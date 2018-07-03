@@ -10,13 +10,13 @@
     </connection>
     <operations>
         <operation name="antherwall" xmlns="http://www.julielab.de/conceptdb/operators/cypher">
-            <operator>de.julielab.concepts.db.core.CypherOperator</operator>
+            <operator>de.julielab.concepts.db.core.CypherFileDBOperator</operator>
             <configuration>
-                <cypherquery>MATCH (c:CONCEPT) WHERE "http://purl.obolibrary.org/obo/PO_0000002" IN c.sourceIds SET c.myprop="NEWVAL"</cypherquery>
+                <cypherquery>MATCH (c:CONCEPT) WHERE "http://purl.obolibrary.org/obo/PO_0000002" IN c.sourceIds SET c.myprop="NEWVAL" RETURN c.myprop</cypherquery>
             </configuration>
         </operation>
         <operation  name="NOT_CALLED" xmlns="http://www.julielab.de/conceptdb/operators/cypher">
-            <operator>de.julielab.concepts.db.core.CypherOperator</operator>
+            <operator>de.julielab.concepts.db.core.CypherFileDBOperator</operator>
             <configuration>
                 <cypherquery>totally invalid query which doesn't matter because this isn't called anyway</cypherquery>
             </configuration>

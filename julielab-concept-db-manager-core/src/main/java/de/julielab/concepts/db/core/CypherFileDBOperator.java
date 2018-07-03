@@ -5,6 +5,7 @@ import de.julielab.concepts.db.core.spi.DatabaseOperator;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DatabaseOperationException;
 import de.julielab.java.utilities.ConfigurationUtilities;
+import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
@@ -32,16 +33,12 @@ public class CypherFileDBOperator implements DatabaseOperator {
     @Override
     public void operate(HierarchicalConfiguration<ImmutableNode> operationConfigration) throws DatabaseOperationException {
         try {
-            String cypherQuery = ConfigurationUtilities.requirePresent(slash(OPERATOR, CONFIGURATION, CYPHER_QUERY), operationConfigration::getString);
+            String cypherQuery = ConfigurationUtilities.requirePresent(slash(CONFIGURATION, CYPHER_QUERY), operationConfigration::getString);
             log.info("Sending Cypher query {} to Neo4j embedded database", cypherQuery);
             try (Transaction tx = graphDb.beginTx()) {
                 Result result = graphDb.execute(cypherQuery);
-                List<String> responseLines = new ArrayList<>();
-                while (result.hasNext()) {
-                    Map<String, Object> record = result.next();
-                    responseLines.add(record.entrySet().stream().map(e -> e.getKey() + ": " + e.getValue()).collect(Collectors.joining("\t")));
-                }
-                log.info("Neo4j response: " + responseLines.stream().collect(Collectors.joining("\t")));
+                log.info("Neo4j response: "+ System.getProperty("line.separator") + result.resultAsString());
+                tx.success();
             }
             log.info("Done.");
         }

@@ -6,9 +6,8 @@ import de.julielab.java.utilities.ConfigurationUtilities;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
-import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
-import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.commons.configuration2.ex.ConfigurationRuntimeException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.args4j.CmdLineException;
@@ -19,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -76,67 +75,124 @@ public class ConceptDatabaseApplication {
                 .configurationAt(CONNECTION);
 
         if (parameters.doImport != null || parameters.doAll != null) {
-            ConceptCreationService conceptCreationService = ConceptCreationService.getInstance();
-            ConceptInsertionService insertionService = ConceptInsertionService.getInstance(connectionConfiguration);
-
-            if (!emptyNames(parameters.doImport)) {
-                for (String importerName : parameters.doImport) {
-//                    configuration.configurationAt(slash(IMPORTS, IMPORT+"@y"))
-                }
-            }
-            List<HierarchicalConfiguration<ImmutableNode>> importConfigs = configuration
-                    .configurationsAt(slash(IMPORTS, IMPORT));
-            for (HierarchicalConfiguration<ImmutableNode> importConfig : importConfigs) {
-                Stream<ImportConcepts> concepts = conceptCreationService.createConcepts(importConfig);
-                insertionService.insertConcepts(importConfig, concepts);
-            }
+            doImports(parameters, configuration, connectionConfiguration);
         }
         if (parameters.doOperation != null || parameters.doAll != null) {
-            DatabaseOperationService operationService = DatabaseOperationService.getInstance(connectionConfiguration);
-            List<HierarchicalConfiguration<ImmutableNode>> operationConfigs = configuration
-                    .configurationsAt(slash(OPERATIONS, OPERATION));
-            for (HierarchicalConfiguration<ImmutableNode> operationConfig : operationConfigs) {
-                operationService.operate(operationConfig);
-            }
+            doOperations(parameters, configuration, connectionConfiguration);
         }
-        if (parameters.doVersioning || parameters.doAll != null) {
+        if (!parameters.noVersioning && (parameters.doVersioning || parameters.doAll != null)) {
             HierarchicalConfiguration<ImmutableNode> versioningConfig = configuration.configurationAt(VERSIONING);
             VersioningService.getInstance(connectionConfiguration).setVersion(versioningConfig);
         }
         if (parameters.doExport != null || parameters.doAll != null) {
-            DataExportService dataExportService = DataExportService.getInstance(connectionConfiguration);
-            List<HierarchicalConfiguration<ImmutableNode>> exportConfigs = configuration
-                    .configurationsAt(slash(EXPORTS, EXPORT));
-            for (HierarchicalConfiguration<ImmutableNode> exportConfig : exportConfigs) {
-                dataExportService.exportData(exportConfig);
-            }
+            doExports(parameters, configuration, connectionConfiguration);
         }
     }
 
-    private static boolean emptyNames(List<String> selectedStepNames) {
-        if (selectedStepNames == null)
-            return true;
-        return StringUtils.isEmpty(selectedStepNames.get(0));
+    private static void doExports(CLIParameters parameters, XMLConfiguration configuration, HierarchicalConfiguration<ImmutableNode> connectionConfiguration) throws DataExportException, ConceptDatabaseConnectionException {
+        DataExportService dataExportService = DataExportService.getInstance(connectionConfiguration);
+        List<HierarchicalConfiguration<ImmutableNode>> applicableExports = new ArrayList<>();
+
+        List<String> selectedSteps = !isUnspecified(parameters.doExport) ? parameters.doExport : parameters.doAll;
+
+        if (!isUnspecified(selectedSteps)) {
+            for (String exportName : selectedSteps) {
+                try {
+                    HierarchicalConfiguration<ImmutableNode> exportConfig = configuration.configurationAt(slash(EXPORTS, EXPORT + "[@name='" + exportName + "']"));
+                    applicableExports.add(exportConfig);
+                } catch (ConfigurationRuntimeException e) {
+                    // When doAll is active, we do not print the warning because it would activate all the time
+                    // without use
+                    if (!isUnspecified(parameters.doExport)) {
+                        log.warn("There is no export with name {} in the configuration file.", exportName);
+                        log.trace("Exception was: ", e);
+                    }
+                }
+            }
+        } else {
+            applicableExports = configuration
+                    .configurationsAt(slash(EXPORTS, EXPORT));
+        }
+        for (HierarchicalConfiguration<ImmutableNode> exportConfig : applicableExports) {
+            dataExportService.exportData(exportConfig);
+        }
+    }
+
+    private static void doOperations(CLIParameters parameters, XMLConfiguration configuration, HierarchicalConfiguration<ImmutableNode> connectionConfiguration) throws DatabaseOperationException {
+        DatabaseOperationService operationService = DatabaseOperationService.getInstance(connectionConfiguration);
+        List<HierarchicalConfiguration<ImmutableNode>> applicableOperations = new ArrayList<>();
+
+        List<String> selectedSteps = !isUnspecified(parameters.doOperation) ? parameters.doOperation : parameters.doAll;
+
+        if (!isUnspecified(selectedSteps)) {
+            for (String importerName : selectedSteps) {
+                try {
+                    HierarchicalConfiguration<ImmutableNode> operationConfig = configuration.configurationAt(slash(OPERATIONS, OPERATION + "[@name='" + importerName + "']"));
+                    applicableOperations.add(operationConfig);
+                } catch (ConfigurationRuntimeException e) {
+                    // When doAll is active, we do not print the warning because it would activate all the time
+                    // without use
+                    if (!isUnspecified(parameters.doOperation)) {
+                        log.warn("There is no operation with name {} in the configuration file.", importerName);
+                        log.trace("Exception was: ", e);
+                    }
+                }
+            }
+        } else {
+            applicableOperations = configuration
+                    .configurationsAt(slash(OPERATIONS, OPERATION));
+        }
+        for (HierarchicalConfiguration<ImmutableNode> operationConfig : applicableOperations) {
+            operationService.operate(operationConfig);
+        }
+    }
+
+    private static void doImports(CLIParameters parameters, XMLConfiguration configuration, HierarchicalConfiguration<ImmutableNode> connectionConfiguration) throws ConceptCreationException, FacetCreationException, ConceptInsertionException {
+        ConceptCreationService conceptCreationService = ConceptCreationService.getInstance();
+        ConceptInsertionService insertionService = ConceptInsertionService.getInstance(connectionConfiguration);
+        List<HierarchicalConfiguration<ImmutableNode>> applicableImports = new ArrayList<>();
+
+        List<String> selectedSteps = !isUnspecified(parameters.doImport) ? parameters.doImport : parameters.doAll;
+
+        if (!isUnspecified(selectedSteps)) {
+            for (String importerName : selectedSteps) {
+                try {
+                    HierarchicalConfiguration<ImmutableNode> importConfig = configuration.configurationAt(slash(IMPORTS, IMPORT + "[@name='" + importerName + "']"));
+                    applicableImports.add(importConfig);
+                } catch (ConfigurationRuntimeException e) {
+                    // When doAll is active, we do not print the warning because it would activate all the time
+                    // without use
+                    if (!isUnspecified(parameters.doImport)) {
+                        log.warn("There is no import with name {} in the configuration file.", importerName);
+                        log.trace("Exception was: ", e);
+                    }
+                }
+            }
+        } else {
+            applicableImports = configuration
+                    .configurationsAt(slash(IMPORTS, IMPORT));
+        }
+        for (HierarchicalConfiguration<ImmutableNode> importConfig : applicableImports) {
+            Stream<ImportConcepts> concepts = conceptCreationService.createConcepts(importConfig);
+            insertionService.insertConcepts(importConfig, concepts);
+        }
     }
 
     /**
-     * Convenience method to check if a specific step - i.e. a concept creator, an operation or an exporter - should
-     * be performed. Note that <tt>selectedStepNames</tt> is not allowed to be empty. It may be null though, which results
-     * into <tt>false</tt> as a return value. To indicate that there are no values,
+     * Checks if there are names of imports, operations or exports specified. If so, only those steps will be
+     * performed. Note that <tt>selectedStepNames</tt> is not allowed to be empty. It may be null though, which results
+     * into <tt>true</tt> as a return value. To indicate that there are no values,
      * the first element of the list must be the empty string. This is due to the fact that args4j is seemingly not
      * capable of distinguishing between an option given without arguments or an option not given at all. This is why
      * we use the custom option handler {@link OptionalStringArrayOptionHandler} which performs a workaround by placing
      * the empty string into the value list in case that the option is specified but no arguments are given.
      *
-     * @param configuration     The XML configuration.
-     * @param stepNameKey       The key to get the step name from the configuration.
-     * @param selectedStepNames The given step names. If no step names are given, a list is expected whose first element is the empty string.
-     * @return If the configured step name should be performed.
+     * @param selectedStepNames
+     * @return
      */
-    private static boolean stepNameMatches(XMLConfiguration configuration, String stepNameKey, List<String> selectedStepNames) {
+    private static boolean isUnspecified(List<String> selectedStepNames) {
         if (selectedStepNames == null)
-            return false;
-        return StringUtils.isEmpty(selectedStepNames.get(0)) || selectedStepNames.contains(configuration.getString(stepNameKey));
+            return true;
+        return StringUtils.isEmpty(selectedStepNames.get(0));
     }
-
 }

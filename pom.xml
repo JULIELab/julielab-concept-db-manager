@@ -34,7 +34,6 @@
         <module>julielab-concept-creation-mesh</module>
         <module>julielab-concept-creation-bioportal</module>
         <module>julielab-concept-creation-ncbi-gene</module>
-        <module>test</module>
     </modules>
     <dependencyManagement>
         <dependencies>
