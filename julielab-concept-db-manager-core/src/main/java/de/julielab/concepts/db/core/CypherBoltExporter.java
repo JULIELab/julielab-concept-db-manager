@@ -44,8 +44,7 @@ public class CypherBoltExporter implements DataExporter {
             File outputFile = new File(ConfigurationUtilities.<String>requirePresent(slash(CONFIGURATION, OUTPUT_FILE), exportConfig::getString));
 
             log.info("Sending Cypher query {} to Neo4j and writing the results to {}", query, outputFile);
-            try (Session session = driver.session(); BufferedWriter bw = FileUtilities.getWriterToFile(outputFile)) {
-                bw.write(getResourceHeader(connectionConfiguration));
+            try (Session session = driver.session()) {
                 StatementResult result = session.readTransaction(tx -> tx.run(query));
                 List<String> fieldValues = new ArrayList<>();
                 while (result.hasNext()) {
@@ -66,10 +65,10 @@ public class CypherBoltExporter implements DataExporter {
                             throw new DataExportException("The query \"" + query + "\" returned a value of type " + value.type().name() + " which is currently not supported for output.");
                         fieldValues.add(valueAsString);
                     }
-
-                    bw.write(fieldValues.stream().collect(Collectors.joining("\t")));
-                    bw.newLine();
                 }
+                writeData(outputFile,
+                        getResourceHeader(connectionConfiguration),
+                        fieldValues.stream().collect(Collectors.joining(System.getProperty("line.separator"))));
             } catch (IOException e) {
                 throw new DataExportException(e);
             } catch (VersionRetrievalException e) {

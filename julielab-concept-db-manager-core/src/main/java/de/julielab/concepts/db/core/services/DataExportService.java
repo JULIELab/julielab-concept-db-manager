@@ -62,28 +62,33 @@ public class DataExportService implements ParameterExposing {
                     "The name of the exporter was not given. It must be given by the configuration name "
                             + EXPORTER);
         boolean exporterFound = false;
-        try {
-            while (exporterIt.hasNext()) {
-                DataExporter exporter = exporterIt.next();
+        boolean exporterExecuted = false;
+        while (exporterIt.hasNext()) {
+            DataExporter exporter = exporterIt.next();
+            try {
                 if (exporter.hasName(exporterName)) {
+                    exporterFound = true;
                     exporter.setConnection(connectionConfiguration);
                     exporter.exportData(exportConfig);
-                    exporterFound = true;
+                    exporterExecuted = true;
                 }
+            } catch (ConceptDatabaseConnectionException e) {
+                log.debug("The exporter {} does not support the given connection. Continue search for a compatible exporter.", exporter.getClass().getCanonicalName());
+                throw e;
             }
-        } catch (ConceptDatabaseConnectionException e) {
-            log.error("The chosen exporter does not support the given connection. The exporter configuration was {}", ConfigurationUtils.toString(exportConfig));
-            throw e;
         }
         if (!exporterFound)
             throw new DataExportException("No data exporter with name " + exporterName
                     + " was found. Make sure that the desired data exporter is on the classpath and registered via the META-INF/services/de.julielab.concepts.db.core.spi.DataExporter file.");
+        if (!exporterExecuted)
+            throw new DataExportException("No available data exporter was compatible with export configuration " + ConfigurationUtils.toString(exportConfig) + " and connection configuration " + ConfigurationUtils.toString(connectionConfiguration));
     }
 
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
         for (Iterator<DataExporter> operatorIterator = loader.iterator(); operatorIterator.hasNext(); ) {
             DataExporter exporter = operatorIterator.next();
+            // this creates a new exports/export path
             template.addProperty(basePath, "");
             exporter.exposeParameters(last(basePath), template);
         }

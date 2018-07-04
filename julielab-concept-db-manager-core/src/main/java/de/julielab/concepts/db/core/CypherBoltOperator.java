@@ -78,7 +78,7 @@ public class CypherBoltOperator implements DatabaseOperator {
 
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
+        template.addProperty(slash(basePath, OPERATOR), getName());
         template.addProperty(slash(basePath, CONFIGURATION, CYPHER_QUERY), "");
-        template.addProperty(slash(basePath, CONFIGURATION, OUTPUT_FILE), "");
     }
 }

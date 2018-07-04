@@ -45,8 +45,9 @@ public class CypherFileDBExporter implements DataExporter {
 
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
-        template.addProperty(slash(basePath, OPERATOR, OPERATOR), "de.julielab.concepts.db.core.CypherFileDBOperator");
-        template.addProperty(slash(basePath, OPERATOR, CONFIGURATION, CYPHER_QUERY), "");
+        template.addProperty(slash(basePath, EXPORTER), getName());
+        template.addProperty(slash(basePath, CONFIGURATION, CYPHER_QUERY), "");
+        template.addProperty(slash(basePath, CONFIGURATION, OUTPUT_FILE), "");
     }
 
     @Override
