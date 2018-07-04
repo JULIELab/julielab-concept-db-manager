@@ -14,7 +14,7 @@
     </connection>
     <exports>
         <export xmlns="http://www.julielab.de/conceptdb/exporters/bolt">
-            <exporter>de.julielab.concepts.db.core.BoltExporter</exporter>
+            <exporter>de.julielab.concepts.db.core.CypherBoltExporter</exporter>
             <configuration>
                 <cypherquery>MATCH (c:CONCEPT) return c.id,c.preferredName</cypherquery>
                 <outputfile>src/test/resources/output/boltexport.txt</outputfile>

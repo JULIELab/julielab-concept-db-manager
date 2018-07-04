@@ -9,9 +9,11 @@ import de.julielab.concepts.util.VersionRetrievalException;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.shell.util.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
@@ -21,8 +23,6 @@ public class JavaClassFileDBExporter extends JavaMethodCallBase implements DataE
 
     private final static Logger log = LoggerFactory.getLogger(JavaClassFileDBExporter.class);
 
-    public static final String CONFKEY_CONFIGURATION = "configuration";
-    public static final String CONFKEY_OUTPUT_FILE = "configuration.outputfile";
 
 	private GraphDatabaseService graphDb;
 	private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
@@ -34,15 +34,18 @@ public class JavaClassFileDBExporter extends JavaMethodCallBase implements DataE
     @Override
 	public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig)
 			throws DataExportException {
-		String outputFile = exportConfig.getString(CONFKEY_OUTPUT_FILE);
+		String outputFile = exportConfig.getString(slash(CONFIGURATION, OUTPUT_FILE));
 		try {
-			String result = callInstanceMethod(exportConfig.configurationAt(CONFKEY_CONFIGURATION), graphDb);
-			result = getResourceHeader(connectionConfiguration) + result;
-			writeBase64GzipToFile(outputFile, result);
+			String result = callInstanceMethod(exportConfig.configurationAt(CONFIGURATION), graphDb);
+			String decodedResponse = decode(result, exportConfig.configurationAt(slash(CONFIGURATION, DECODING)));
+			String resourceHeader = getResourceHeader(connectionConfiguration) + result;
+			writeData(new File(outputFile), resourceHeader, decodedResponse);
 		} catch (MethodCallException | VersionRetrievalException | IOException e) {
 			throw new DataExportException(e);
+		} catch (JSONException e) {
+			throw new DataExportException(e);
 		}
-    }
+	}
 
 
 	@Override

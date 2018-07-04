@@ -9,11 +9,10 @@
     <xs:element name="operation">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="operator">
+                <xs:element name="operator" minOccurs="0">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
-                            <xs:enumeration value="de.julielab.concepts.db.core.BoltOperator"/>
-                            <xs:enumeration value="de.julielab.concepts.db.core.CypherFileDBOperator"/>
+                            <xs:enumeration value="CypherOperator"/>
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>

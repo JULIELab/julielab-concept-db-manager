@@ -65,7 +65,7 @@ public class DatabaseOperationService implements ParameterExposing{
                         operatorFound = true;
                     }
                 } catch (ConceptDatabaseConnectionException e) {
-                    log.debug("Database operator " + operator.getClass().getCanonicalName() + " could not serve the connection configuration " + ConfigurationUtils.toString(connectionConfiguration) + ": " + e.getMessage());
+                    log.debug("Database operator " + operator.getClass().getCanonicalName() + " is skipped because it could not serve the connection configuration " + ConfigurationUtils.toString(connectionConfiguration) + ": " + e.getMessage() + ". Looking for another compatible operator.");
                 }
             }
         } catch (ConfigurationException e) {

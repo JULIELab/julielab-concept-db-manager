@@ -75,28 +75,6 @@ public interface DataExporter extends ExtensionPoint, DatabaseConnected, Paramet
 		return br.readLine().trim();
 	}
 
-	default void writeBase64GzipToFile(String file, String data) throws DataExportException {
-		try {
-			byte[] decoded = DatatypeConverter.parseBase64Binary(data);
-			InputStream is = new ByteArrayInputStream(decoded);
-			try {
-				is = new GZIPInputStream(is);
-			} catch (ZipException e) {
-				// don't do anything; so it's not in GZIP format, OK.
-			}
-			BufferedInputStream bufis = new BufferedInputStream(is);
-			byte[] buffer = new byte[2048];
-			try (BufferedWriter bw = FileUtilities.getWriterToFile(new File(file))) {
-				int bytesRead = -1;
-				while ((bytesRead = bufis.read(buffer, 0, buffer.length)) > 0) {
-					bw.write(new String(buffer, 0, bytesRead));
-				}
-			}
-		} catch (IOException e) {
-			throw new DataExportException(e);
-		}
-	}
-
     /**
      * Decodes data that has been encoded into a string. The <tt>decodingConfig</tt> determines
      * which decodings are applied in which order. The following decodings are available:
@@ -149,6 +127,16 @@ public interface DataExporter extends ExtensionPoint, DatabaseConnected, Paramet
 		}
 		return toString(currentDataState);
 	}
+
+	default void writeData(File outputFile, String resourceHeader, String decodedResponse) throws IOException, DataExportException {
+		if (!outputFile.getAbsoluteFile().getParentFile().exists())
+			outputFile.getAbsoluteFile().getParentFile().mkdirs();
+		try (BufferedWriter bw = FileUtilities.getWriterToFile(outputFile)) {
+			bw.write(resourceHeader);
+			bw.write(decodedResponse);
+		}
+	}
+
 
 	default String toString(Object o) {
 		if (o instanceof String)

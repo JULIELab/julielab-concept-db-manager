@@ -54,7 +54,7 @@ public class CypherFileDBOperator implements DatabaseOperator {
 
     @Override
     public String getName() {
-        return "CypherFileDBOperator";
+        return "CypherOperator";
     }
 
     @Override

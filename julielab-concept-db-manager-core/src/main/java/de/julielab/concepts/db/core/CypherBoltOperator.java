@@ -8,20 +8,16 @@ import de.julielab.java.utilities.ConfigurationUtilities;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.neo4j.driver.internal.types.InternalTypeSystem;
 import org.neo4j.driver.v1.*;
-import org.neo4j.driver.v1.types.TypeSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static org.neo4j.driver.internal.types.InternalTypeSystem.TYPE_SYSTEM;
 
@@ -29,8 +25,8 @@ import static org.neo4j.driver.internal.types.InternalTypeSystem.TYPE_SYSTEM;
  * Sends a given Cypher query and writes the retrieved results into the given output file. One record per line,
  * fields are tab-separated, all field values are converted to strings.
  */
-public class BoltOperator implements DatabaseOperator {
-    private final static Logger log = LoggerFactory.getLogger(BoltOperator.class);
+public class CypherBoltOperator implements DatabaseOperator {
+    private final static Logger log = LoggerFactory.getLogger(CypherBoltOperator.class);
 
     private Driver driver;
     private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
@@ -77,7 +73,7 @@ public class BoltOperator implements DatabaseOperator {
 
     @Override
     public String getName() {
-        return "BoltOperator";
+        return "CypherOperator";
     }
 
     @Override

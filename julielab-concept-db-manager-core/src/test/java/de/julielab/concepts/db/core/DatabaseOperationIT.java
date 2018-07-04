@@ -44,7 +44,6 @@ public class DatabaseOperationIT {
 
 
         ImportMapping importMapping = new ImportMapping("id1", "id2", "EQUAL");
-        ConceptInsertionService conceptInsertion = ConceptInsertionService.getInstance(connectionConfig);
         MappingInsertionService mappingInsertion = MappingInsertionService.getInstance(connectionConfig);
         DatabaseOperationService dbOperation = DatabaseOperationService.getInstance(connectionConfig);
 
@@ -59,17 +58,42 @@ public class DatabaseOperationIT {
         }
     }
 
-    @Test(dependsOnMethods = "testAggregation")
-    public void testCypherOperator() throws ConfigurationException, DatabaseOperationException, IOException, ConceptDatabaseConnectionException {
-        XMLConfiguration config = ConfigurationUtilities.loadXmlConfiguration(new File("src/test/resources/boltoperationconfig.xml"));
+    public void testBoltCypherOperator() throws ConfigurationException, DatabaseOperationException, IOException, ConceptDatabaseConnectionException {
+        XMLConfiguration config = ConfigurationUtilities.loadXmlConfiguration(new File("src/test/resources/cypheroperationconfig.xml"));
         config.setProperty(slash(CONNECTION, URI), "bolt://localhost:" + ITTestsSetup.neo4j.getMappedPort(7687));
 
-        // Before the usage of the operator, we do not expect a value for the testprop property
+        // First, clear property we will set for the test
         Driver driver = BoltConnectionService.getInstance().getBoltDriver(config.configurationAt(CONNECTION));
+        driver.session().writeTransaction(tx -> tx.run("MATCH (c:CONCEPT) REMOVE c.testprop"));
+        // Check that the property is indeed not set
         String propQuery = "MATCH (c:CONCEPT) WHERE 'id1' IN c.sourceIds RETURN c.testprop";
         StatementResult result = driver.session().readTransaction(tx -> tx.run(propQuery));
         assertThat(result.next().get(0).hasType(InternalTypeSystem.TYPE_SYSTEM.NULL()));
 
+        // Apply the operation configuration
+        DatabaseOperationService operationService = DatabaseOperationService.getInstance(config.configurationAt(CONNECTION));
+        operationService.operate(config.configurationAt(slash(OPERATIONS, OPERATION)));
+
+        // And now there should be a number
+        result = driver.session().readTransaction(tx -> tx.run(propQuery));
+        Record record = result.next();
+        assertThat(record.get(0).hasType(InternalTypeSystem.TYPE_SYSTEM.NUMBER()));
+        assertThat(record.get(0).asInt()).isEqualTo(42);
+    }
+
+    public void testHttpCypherOperator() throws ConfigurationException, DatabaseOperationException, IOException, ConceptDatabaseConnectionException {
+        XMLConfiguration config = ConfigurationUtilities.loadXmlConfiguration(new File("src/test/resources/cypheroperationconfig.xml"));
+        // First, clear property we will set for the test. We use a BOLT connection because it's so easy to use
+        config.setProperty(slash(CONNECTION, URI), "bolt://localhost:" + ITTestsSetup.neo4j.getMappedPort(7687));
+        Driver driver = BoltConnectionService.getInstance().getBoltDriver(config.configurationAt(CONNECTION));
+        driver.session().writeTransaction(tx -> tx.run("MATCH (c:CONCEPT) REMOVE c.testprop"));
+        // Check that the property is indeed not set
+        String propQuery = "MATCH (c:CONCEPT) WHERE 'id1' IN c.sourceIds RETURN c.testprop";
+        StatementResult result = driver.session().readTransaction(tx -> tx.run(propQuery));
+        assertThat(result.next().get(0).hasType(InternalTypeSystem.TYPE_SYSTEM.NULL()));
+
+        // Now switch to the HTTP connection for the actual test
+        config.setProperty(slash(CONNECTION, URI), "http://localhost:" + ITTestsSetup.neo4j.getMappedPort(7474));
         // Apply the operation configuration
         DatabaseOperationService operationService = DatabaseOperationService.getInstance(config.configurationAt(CONNECTION));
         operationService.operate(config.configurationAt(slash(OPERATIONS, OPERATION)));
