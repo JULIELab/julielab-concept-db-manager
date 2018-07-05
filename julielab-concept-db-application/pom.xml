@@ -52,6 +52,8 @@
 									</excludes>
 								</filter>
 							</filters>
+                            <shadedArtifactAttached>true</shadedArtifactAttached>
+                            <shadedClassifierName>shaded</shadedClassifierName>
 						</configuration>
 					</execution>
 				</executions>

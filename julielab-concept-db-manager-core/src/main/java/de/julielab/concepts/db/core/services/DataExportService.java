@@ -65,16 +65,16 @@ public class DataExportService implements ParameterExposing {
         boolean exporterExecuted = false;
         while (exporterIt.hasNext()) {
             DataExporter exporter = exporterIt.next();
-            try {
-                if (exporter.hasName(exporterName)) {
-                    exporterFound = true;
+            if (exporter.hasName(exporterName)) {
+                exporterFound = true;
+                try {
                     exporter.setConnection(connectionConfiguration);
-                    exporter.exportData(exportConfig);
-                    exporterExecuted = true;
+                } catch (ConceptDatabaseConnectionException e) {
+                    log.debug("The exporter {} does not support the given connection. Continue search for a compatible exporter.", exporter.getClass().getCanonicalName());
+                    continue;
                 }
-            } catch (ConceptDatabaseConnectionException e) {
-                log.debug("The exporter {} does not support the given connection. Continue search for a compatible exporter.", exporter.getClass().getCanonicalName());
-                throw e;
+                exporter.exportData(exportConfig);
+                exporterExecuted = true;
             }
         }
         if (!exporterFound)

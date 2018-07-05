@@ -46,9 +46,7 @@ public class ServerPluginExporter extends ServerPluginCallBase implements DataEx
             String decodedResponse = decode(response, exportConfig.configurationAt(slash(CONFIGURATION, DECODING)));
             writeData(outputFile, getResourceHeader(connectionConfiguration),decodedResponse);
             log.info("Done.");
-        } catch (UnsupportedEncodingException e) {
-            throw new ConceptDatabaseConnectionException(e);
-        } catch (IOException e) {
+        }  catch (IOException e) {
             throw new DataExportException("Decoding the retrieved data failed. Decoding configuration is "
                     + ConfigurationUtils.toString(exportConfig.configurationAt(slash(CONFIGURATION, DECODING))), e);
         } catch (JSONException e) {

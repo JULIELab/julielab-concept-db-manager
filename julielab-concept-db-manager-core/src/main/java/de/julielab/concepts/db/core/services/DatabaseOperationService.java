@@ -58,15 +58,16 @@ public class DatabaseOperationService implements ParameterExposing {
             for (Iterator<DatabaseOperator> operatorIterator = loader.iterator(); operatorIterator.hasNext(); ) {
                 DatabaseOperator operator = operatorIterator.next();
                 log.trace("Checking if operator with name {} matches the demanded operator name", operator.getName());
-                try {
-                    if (operator.hasName(operatorName)) {
-                        operatorFound = true;
+                if (operator.hasName(operatorName)) {
+                    operatorFound = true;
+                    try {
                         operator.setConnection(connectionConfiguration);
-                        operator.operate(operationConfiguration);
-                        operatorExecuted = true;
+                    } catch (ConceptDatabaseConnectionException e) {
+                        log.debug("Database operator " + operator.getClass().getCanonicalName() + " is skipped because it could not serve the connection configuration " + ConfigurationUtils.toString(connectionConfiguration) + ": " + e.getMessage() + ". Looking for another compatible operator.");
+                        continue;
                     }
-                } catch (ConceptDatabaseConnectionException e) {
-                    log.debug("Database operator " + operator.getClass().getCanonicalName() + " is skipped because it could not serve the connection configuration " + ConfigurationUtils.toString(connectionConfiguration) + ": " + e.getMessage() + ". Looking for another compatible operator.");
+                    operator.operate(operationConfiguration);
+                    operatorExecuted = true;
                 }
             }
         } catch (ConfigurationException e) {
