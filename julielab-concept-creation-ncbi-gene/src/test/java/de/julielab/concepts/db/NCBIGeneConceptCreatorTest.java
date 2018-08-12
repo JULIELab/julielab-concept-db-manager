@@ -42,7 +42,7 @@ public class NCBIGeneConceptCreatorTest {
 	@AfterTest
 	@BeforeTest
 	public void afterTest() throws IOException {
-		FileUtils.deleteDirectory(TEST_DB);
+		FileUtils.deleteQuietly(TEST_DB);
 	}
 
 	@Test
