@@ -23,7 +23,7 @@ public class VersioningServiceTest {
 	@BeforeClass
 	@AfterClass
 	public void setupTest() throws Exception {
-		FileUtils.deleteRecursively(new File("src/test/resources/graph.db"));
+		org.testcontainers.shaded.org.apache.commons.io.FileUtils.deleteQuietly(new File("src/test/resources/graph.db"));
 	}
 	
 	private static final Logger log = LoggerFactory.getLogger(VersioningServiceTest.class);
