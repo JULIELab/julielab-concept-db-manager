@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xsi:noNamespaceSchemaLocation="conceptdb.xsd">
+                 xmlns="http://www.julielab.de/conceptdb"
+                 xsi:schemaLocation="http://www.julielab.de/conceptdb http://www.julielab.de/conceptdb/conceptdb-1.0.0.xsd
+                 http://www.julielab.de/conceptdb/concepts/ncbigene http://www.julielab.de/conceptdb/concepts/ncbigene-1.0.0.xsd
+                 http://www.julielab.de/conceptdb/exporters/serverplugin http://www.julielab.de/conceptdb/exporters/serverplugin-1.0.0.xsd">
     <versioning>
         <version>1.0-test</version>
     </versioning>
@@ -12,12 +15,14 @@
     </connection>
     <imports>
         <import>
+            <serverplugininserter>
+                <pluginname>ConceptManager</pluginname>
+                <pluginendpoint>insert_concepts</pluginendpoint>
+            </serverplugininserter>
             <concepts>
-                <creator>
+                <creator xmlns="http://www.julielab.de/conceptdb/concepts/ncbigene">
                     <name>de.julielab.concepts.db.creators.NCBIGeneConceptCreator</name>
                     <configuration>
-                        <pluginname>ConceptManager</pluginname>
-                        <pluginendpoint>insert_concepts</pluginendpoint>
                         <basepath>src/test/resources/geneconcepts/</basepath>
                         <gene_info>genes/gene_info_test</gene_info>
                         <genedescriptions>genes/gene2summary_test</genedescriptions>
@@ -31,81 +36,75 @@
         </import>
     </imports>
     <exports>
-        <export>
-            <serverpluginexporter>
-                <configuration>
-                    <decoding>
-                        <json2bytearray>true</json2bytearray>
-                        <base64>false</base64>
-                        <gzip>true</gzip>
-                    </decoding>
-                    <pluginname>
-                        Export
-                    </pluginname>
-                    <pluginendpoint>
-                        term_id_mapping
-                    </pluginendpoint>
-                    <outputfile>
-                        genes.idmap
-                    </outputfile>
-                    <parameters>
-                        <id_property>
-                            originalId
-                        </id_property>
-                        <labels tojson="true">
-                            <label>ID_MAP_NCBI_GENES</label>
-                        </labels>
-                    </parameters>
-                </configuration>
-            </serverpluginexporter>
+        <export xmlns="http://www.julielab.de/conceptdb/exporters/serverplugin">
+            <configuration>
+                <decoding>
+                    <json2bytearray>true</json2bytearray>
+                    <base64>false</base64>
+                    <gzip>true</gzip>
+                </decoding>
+                <pluginname>
+                    Export
+                </pluginname>
+                <pluginendpoint>
+                    term_id_mapping
+                </pluginendpoint>
+                <outputfile>
+                    genes.idmap
+                </outputfile>
+                <parameters>
+                    <parameter parametername="id_property">
+                        originalId
+                    </parameter>
+                    <parameter parametername="labels" tojson="true">
+                        <label>ID_MAP_NCBI_GENES</label>
+                    </parameter>
+                </parameters>
+            </configuration>
         </export>
-        <export>
-            <serverpluginexporter>
-                <configuration>
-                    <decoding>
-                        <json2bytearray>false</json2bytearray>
-                        <base64>true</base64>
-                        <gzip>true</gzip>
-                    </decoding>
-                    <pluginname>
-                        Export
-                    </pluginname>
-                    <pluginendpoint>
-                        element_aggregate_id_mapping
-                    </pluginendpoint>
-                    <outputfile>
-                        elements.2aggid
-                    </outputfile>
-                    <parameters>
-                        <labels tojson="true">
-                            <label>AGGREGATE_TOP_HOMOLOGY</label>
-                            <label>AGGREGATE_HOMOLOGENE</label>
-                            <label>AGGREGATE_GENEGROUP</label>
-                        </labels>
-                    </parameters>
-                </configuration>
-            </serverpluginexporter>
+        <export xmlns="http://www.julielab.de/conceptdb/exporters/serverplugin">
+            <configuration>
+                <decoding>
+                    <json2bytearray>false</json2bytearray>
+                    <base64>true</base64>
+                    <gzip>true</gzip>
+                </decoding>
+                <pluginname>
+                    Export
+                </pluginname>
+                <pluginendpoint>
+                    element_aggregate_id_mapping
+                </pluginendpoint>
+                <outputfile>
+                    elements.2aggid
+                </outputfile>
+                <parameters>
+                    <parameter parametername="labels" tojson="true">
+                        <label>AGGREGATE_TOP_HOMOLOGY</label>
+                        <label>AGGREGATE_HOMOLOGENE</label>
+                        <label>AGGREGATE_GENEGROUP</label>
+                    </parameter>
+                </parameters>
+            </configuration>
         </export>
-        <export>
-            <serverpluginexporter>
-                <configuration>
-                    <decoding>
-                        <json2bytearray>true</json2bytearray>
-                        <base64>false</base64>
-                        <gzip>true</gzip>
-                    </decoding>
-                    <pluginname>
-                        Export
-                    </pluginname>
-                    <pluginendpoint>
-                        hypernyms
-                    </pluginendpoint>
-                    <outputfile>
-                        hypernyms.tid
-                    </outputfile>
-                    <parameters/>
-                </configuration>
-            </serverpluginexporter>
+        <export xmlns="http://www.julielab.de/conceptdb/exporters/serverplugin">
+            <configuration>
+                <decoding>
+                    <json2bytearray>true</json2bytearray>
+                    <base64>false</base64>
+                    <gzip>true</gzip>
+                </decoding>
+                <pluginname>
+                    Export
+                </pluginname>
+                <pluginendpoint>
+                    hypernyms
+                </pluginendpoint>
+                <outputfile>
+                    hypernyms.tid
+                </outputfile>
+                <parameters/>
+            </configuration>
         </export>
     </exports>
 </conceptdatabase>
