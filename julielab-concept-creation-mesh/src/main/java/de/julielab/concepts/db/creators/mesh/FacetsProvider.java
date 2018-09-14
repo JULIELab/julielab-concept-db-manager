@@ -256,7 +256,7 @@ public class FacetsProvider {
 //		return false;
 //	}
 
-	public static ImportFacet createMeshImportFacet(String facetname, String facetGroupName) throws FacetCreationException {
+	public static ImportFacet createMeshImportFacet(String facetname, String facetGroupName, int facetGroupPosition) throws FacetCreationException {
 		// To avoid naming collisions, facets may have the naming prefix "Facet"
 		String cssId =  "mesh_" + facetname;
 		Integer position = null;
@@ -264,8 +264,6 @@ public class FacetsProvider {
 		List<String> facetGroupGeneralLabels = new ArrayList<>();
 		List<String> facetUniqueLabels = new ArrayList<>();
 		List<String> facetGeneralLabels = new ArrayList<>();
-
-		Integer facetGroupPosition = null;
 
 
 		String facetName = null;

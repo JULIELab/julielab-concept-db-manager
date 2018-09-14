@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://www.julielab.de/conceptdb/concepts/mesh"
+           targetNamespace="http://www.julielab.de/conceptdb/concepts/mesh"
+           elementFormDefault="qualified">
+
+    <!-- The name of the NCBI Gene Concept Creator provider. Only names determining the respective class are allowed. -->
+    <xs:element name="name">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="MeshConceptCreator"/>
+                <xs:enumeration value="de.julielab.concepts.db.creators.mesh.MeshConceptCreator"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <!-- Configuration elements -->
+    <xs:element name="meshfile" type="xs:string">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+               Path to the MeSH XML file.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="suppfile" type="xs:string"/>
+    <xs:annotation>
+        <xs:documentation xml:lang="en">
+            Path to the MeSH Supplementary Concepts XML file.
+        </xs:documentation>
+    </xs:annotation>
+    <xs:element name="facetgroup" type="xs:string"/>
+    <xs:annotation>
+        <xs:documentation xml:lang="en">
+            The name of the facet group to which the MeSH facets should be added to.
+        </xs:documentation>
+    </xs:annotation>
+
+
+    <!-- The provider configuration -->
+    <xs:element name="configuration">
+        <xs:complexType>
+            <xs:all>
+                <xs:element ref="meshfile"/>
+                <xs:element ref="suppfile" minOccurs="0"/>
+                <xs:element ref="facetgroup"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- The root concept creator element -->
+    <xs:element name="creator">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="name"/>
+                <xs:element ref="configuration"/>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        The optional name element can be given to all concept creators, operators and exporters.
+                        When calling the Concept DB Application, the application mode parameters can be given
+                        an optional list of names. Only the inserters, operators or exporters on the list will be
+                        executed.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

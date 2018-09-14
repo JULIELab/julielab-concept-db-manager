@@ -1,0 +1,24 @@
+<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns="http://www.julielab.de/conceptdb"
+                 xsi:schemaLocation="http://www.julielab.de/conceptdb http://www.julielab.de/conceptdb/conceptdb-1.0.0.xsd
+        http://www.julielab.de/conceptdb/concepts/mesh http://www.julielab.de/conceptdb/concepts/mesh-1.0.0.xsd">
+    <versioning>
+        <version>1.0-test</version>
+    </versioning>
+    <connection>
+        <uri>src/test/resources/graph.db</uri>
+    </connection>
+    <imports>
+        <import>
+            <concepts>
+                <creator xmlns="http://www.julielab.de/conceptdb/concepts/mesh">
+                    <name>de.julielab.concepts.db.creators.mesh.MeshConceptCreator</name>
+                    <configuration>
+                        <meshfile>src/test/resources/mesh2017_snippet.xml</meshfile>
+                         <facetgroup>MeSH</facetgroup>
+                    </configuration>
+                </creator>
+            </concepts>
+        </import>
+    </imports>
+</conceptdatabase>

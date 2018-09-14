@@ -10,7 +10,11 @@
 	<name>JULIE Lab Concept Creation Provider MeSH</name>
 	<description>This project contains algorithms to create database concepts from the XML version of the MeSH. There is a full API to work with MeSH XML in this project.</description>
 	<dependencies>
-		<dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+        </dependency>
+        <dependency>
 			<groupId>org.jgrapht</groupId>
 			<artifactId>jgrapht-jdk1.5</artifactId>
 			<version>0.7.3</version>
@@ -24,6 +28,12 @@
 			<artifactId>
   			julielab-neo4j-plugins-concepts-representation
   		</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.6</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
