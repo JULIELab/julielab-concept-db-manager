@@ -1,6 +1,5 @@
 package de.julielab.concepts.db.creators.mesh;
 
-import de.julielab.concepts.db.core.services.ConceptCreationService;
 import de.julielab.concepts.db.core.services.ConceptInsertionService;
 import de.julielab.concepts.db.core.services.FileConnectionService;
 import de.julielab.java.utilities.ConfigurationUtilities;
@@ -25,13 +24,7 @@ import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Array;
-import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.CONNECTION;
@@ -44,9 +37,9 @@ import static java.util.stream.Collectors.toCollection;
 import static org.testng.AssertJUnit.assertNotNull;
 import static org.assertj.core.api.Assertions.*;
 
-public class MeshConceptCreatorTest {
+public class XmlConceptCreatorTest {
     private static final File TEST_DB = new File("src/test/resources/graph.db");
-    private static Logger log = LoggerFactory.getLogger(MeshConceptCreatorTest.class);
+    private static Logger log = LoggerFactory.getLogger(XmlConceptCreatorTest.class);
 
     @AfterTest
     @BeforeTest
@@ -59,9 +52,9 @@ public class MeshConceptCreatorTest {
         XMLConfiguration xmlConfiguration = ConfigurationUtilities.loadXmlConfiguration(new File("src/test/resources/meshSnippetImportConfig.xml"));
         HierarchicalConfiguration<ImmutableNode> connectionConfiguration = xmlConfiguration.configurationAt(CONNECTION);
         ConceptInsertionService insertionService = ConceptInsertionService.getInstance(connectionConfiguration);
-        MeshConceptCreator meshConceptCreator = new MeshConceptCreator();
+        XmlConceptCreator xmlConceptCreator = new XmlConceptCreator();
         HierarchicalConfiguration<ImmutableNode> importConfig = xmlConfiguration.configurationAt(slash(IMPORTS, IMPORT));
-        Stream<ImportConcepts> concepts = meshConceptCreator.createConcepts(importConfig);
+        Stream<ImportConcepts> concepts = xmlConceptCreator.createConcepts(importConfig);
         for (ImportConcepts ic : concepts.collect(toCollection(ArrayList::new))) {
             insertionService.insertConcepts(importConfig, ic);
         }
@@ -112,4 +105,20 @@ public class MeshConceptCreatorTest {
             tx.success();
         }
     }
+
+//    @Test
+//    public void testSimpleXmlFormat() throws Exception {
+//        XMLConfiguration xmlConfiguration = ConfigurationUtilities.loadXmlConfiguration(new File("src/test/resources/simpleXmlImportConfig.xml"));
+//        HierarchicalConfiguration<ImmutableNode> connectionConfiguration = xmlConfiguration.configurationAt(CONNECTION);
+//        ConceptInsertionService insertionService = ConceptInsertionService.getInstance(connectionConfiguration);
+//        XmlConceptCreator xmlConceptCreator = new XmlConceptCreator();
+//        HierarchicalConfiguration<ImmutableNode> importConfig = xmlConfiguration.configurationAt(slash(IMPORTS, IMPORT));
+//        Stream<ImportConcepts> concepts = xmlConceptCreator.createConcepts(importConfig);
+//        for (ImportConcepts ic : concepts.collect(toCollection(ArrayList::new))) {
+//            insertionService.insertConcepts(importConfig, ic);
+//        }
+//
+//        FileConnectionService fileConnectionService = FileConnectionService.getInstance();
+//        GraphDatabaseService graphdb = fileConnectionService.getDatabase(connectionConfiguration);
+//    }
 }

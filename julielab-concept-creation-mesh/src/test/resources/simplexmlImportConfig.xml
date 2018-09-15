@@ -15,10 +15,11 @@
                     <name>de.julielab.concepts.db.creators.mesh.XmlConceptCreator</name>
                     <configuration>
                         <input>
-                            <xmlfile>src/test/resources/mesh2017_snippet.xml</xmlfile>
-                            <format>MESH_XML</format>
-                            <sourcename>MeSH XML</sourcename>
-                            <originalsource>MeSH XML</originalsource>
+                            <xmlfile>src/test/resources/leukocytes.xml</xmlfile>
+                            <format>SIMPLE_XML</format>
+                            <sourcename>Immunology Concepts</sourcename>
+                            <originalsource idregex="D[0-9]+">MeSH XML</originalsource>
+                            <originalsource>Immunology Concepts</originalsource>
                         </input>
                         <facetgroup>MeSH</facetgroup>
                     </configuration>

@@ -9,35 +9,33 @@ import de.julielab.concepts.util.ConceptCreationException;
 import de.julielab.concepts.util.FacetCreationException;
 import de.julielab.java.utilities.ConfigurationUtilities;
 import de.julielab.neo4j.plugins.datarepresentation.*;
+import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
-import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Collectors.toMap;
 
-public class MeshConceptCreator implements ConceptCreator {
+public class XmlConceptCreator implements ConceptCreator {
 
     public static final String INPUT = "input";
     public static final String XMLFILE = "xmlfile";
     public static final String FORMAT = "format";
     public static final String FACETGROUP = "facetgroup";
-    public static final String ORG_ID_REGEX = "originalidregex";
+    public static final String REGEX = "idregex";
     public static final String ORG_SOURCE = "originalsource";
     public static final String SOURCE_NAME = "sourcename";
 
 
-    private final static Logger log = LoggerFactory.getLogger(MeshConceptCreator.class);
+    private final static Logger log = LoggerFactory.getLogger(XmlConceptCreator.class);
     public static Set<String> FORMATS = new HashSet<>(Arrays.asList("MESH_XML", "MESH_SUPPLEMENTARY_XML", "SIMPLE_XML"));
 
     @Override
@@ -45,21 +43,24 @@ public class MeshConceptCreator implements ConceptCreator {
         String confPath = slash(CONCEPTS, CREATOR, CONFIGURATION);
         Tree conceptTree;
         String facetGroupName;
+        Map<String, List<ConceptSourceMatcher>> conceptSourceMatchers = new HashMap<>();
         try {
             facetGroupName = ConfigurationUtilities.requirePresent(slash(confPath, FACETGROUP), importConfig::getString);
+            // These matchers will get the concept's original ID and look for a match. The same is done for the original source.
+            // Each matcher is queried in the given order. The first matcher to return a non-null value will also terminate the query process.
+            // Each matcher can also have a "non-match" source, allowing for "either-or" decisions.
+            // Lastly, a matcher may just be given the (original) source without a regular expression. In this case, the source will always be returned by the matcher.
+            for (HierarchicalConfiguration<ImmutableNode> inputConfig : importConfig.configurationsAt(slash(confPath, INPUT))) {
+                String fileName = ConfigurationUtilities.requirePresent(XMLFILE, inputConfig::getString);
+                List<ConceptSourceMatcher> matcherList = inputConfig.configurationsAt(ORG_SOURCE).stream().map(ConceptSourceMatcher::new).collect(Collectors.toList());
+                conceptSourceMatchers.put(fileName, matcherList);
+            }
         } catch (ConfigurationException e) {
             throw new ConceptCreationException(e);
         }
-        // These matchers will get the concept's original ID and look for a match. The same is done for the original source.
-        // Each matcher is queried in the given order. The first matcher to return a non-null value will also terminate the query process.
-        // Each matcher can also have a "non-match" source, allowing for "either-or" decisions.
-        // Lastly, a matcher may just be given the (original) source without a regular expression. In this case, the source will always be returned by the matcher.
-        Map<String, ConceptSourceMatcher> conceptSourceMatchers = importConfig.configurationsAt(slash(confPath, INPUT))
-                .stream()
-                .map(ConceptSourceMatcher::new)
-                .collect(Collectors.toMap(m -> m.getSourceFile(), m -> m));
+        Map<String, String> file2Source = importConfig.configurationsAt(slash(confPath, INPUT)).stream().collect(Collectors.toMap(c -> c.getString(XMLFILE), c -> c.getString(SOURCE_NAME)));
 
-        Map<Descriptor, String> desc2Source = new HashMap<>();
+        Map<Descriptor, String> desc2File = new HashMap<>();
         try {
             conceptTree = new Tree("Concepts Tree");
             for (HierarchicalConfiguration<ImmutableNode> input : importConfig.configurationsAt(slash(confPath, INPUT))) {
@@ -71,17 +72,17 @@ public class MeshConceptCreator implements ConceptCreator {
                 switch (format) {
                     case "MESH_XML": {
                         List<Descriptor> descriptors = DataImporter.fromOriginalMeshXml(file, conceptTree, true);
-                        descriptors.forEach(d -> desc2Source.put(d, file));
+                        descriptors.forEach(d -> desc2File.put(d, file));
                         break;
                     }
                     case "MESH_SUPPLEMENTARY_XML": {
                         List<Descriptor> descriptors = DataImporter.fromSupplementaryConceptsXml(file, conceptTree);
-                        descriptors.forEach(d -> desc2Source.put(d, file));
+                        descriptors.forEach(d -> desc2File.put(d, file));
                         break;
                     }
                     case "SIMPLE_XML": {
                         List<Descriptor> descriptors = DataImporter.fromUserDefinedMeshXml(file, conceptTree);
-                        descriptors.forEach(d -> desc2Source.put(d, file));
+                        descriptors.forEach(d -> desc2File.put(d, file));
                         break;
                     }
                 }
@@ -93,11 +94,11 @@ public class MeshConceptCreator implements ConceptCreator {
             throw new ConceptCreationException(e);
         }
 
-        return createConceptsFromTree(conceptTree, facetGroupName, desc2Source, conceptSourceMatchers).stream();
+        return createConceptsFromTree(conceptTree, facetGroupName, file2Source, desc2File, conceptSourceMatchers).stream();
 
     }
 
-    private List<ImportConcepts> createConceptsFromTree(Tree tree, String facetGroupName, Map<Descriptor, String> desc2Source, Map<String, ConceptSourceMatcher> conceptSourceMatchers) throws ConceptCreationException, FacetCreationException {
+    private List<ImportConcepts> createConceptsFromTree(Tree tree, String facetGroupName, Map<String, String> file2Source, Map<Descriptor, String> desc2File, Map<String, List<ConceptSourceMatcher>> conceptSourceMatchers) throws ConceptCreationException, FacetCreationException {
         // Sanity check.
         List<Descriptor> rootChildren2 = tree.childDescriptorsOf(tree.getRootDesc());
         for (Descriptor facet : rootChildren2) {
@@ -179,10 +180,10 @@ public class MeshConceptCreator implements ConceptCreator {
                 for (Descriptor parentDescriptor : parentDescriptors) {
                     // Exclude the facet nodes, they are no concepts.
                     if (!facetDescriptors.contains(parentDescriptor)) {
-                        parents.add(getConceptCoordinate(parentDescriptor, conceptSourceMatchers, desc2Source));
+                        parents.add(getConceptCoordinate(parentDescriptor, file2Source, conceptSourceMatchers, desc2File));
                     }
                 }
-                ImportConcept term = new ImportConcept(preferredName, synonyms, Arrays.asList(description), getConceptCoordinate(desc, conceptSourceMatchers, desc2Source), parents);
+                ImportConcept term = new ImportConcept(preferredName, synonyms, Arrays.asList(description), getConceptCoordinate(desc, file2Source, conceptSourceMatchers, desc2File), parents);
                 concepts.add(term);
 
                 counter.inc();
@@ -198,23 +199,27 @@ public class MeshConceptCreator implements ConceptCreator {
      * Creates the concept coordinates for the given descriptor.
      * </p>
      * <p>To determine the original source - if any - the concept source matcher for the descriptor's source file will
-     * be fetched via <tt>desc2Source</tt> and <tt>conceptSourceMatchers</tt>. The matcher will then match the
+     * be fetched via <tt>desc2File</tt> and <tt>conceptSourceMatchers</tt>. The matcher will then match the
      * descriptor's UID. If this is successful (either because there was a regular expression match oder no expression
      * was given at all but the original source was given anyway), the original source is set to the output of the
      * matcher. The current source is always set to the one that was configured and that is also stored in the matcher.
      * </p>
      *
      * @param desc
+     * @param file2Source
      * @param conceptSourceMatchers
-     * @param desc2Source
+     * @param desc2File
      * @return
      */
-    private ConceptCoordinates getConceptCoordinate(Descriptor desc, Map<String, ConceptSourceMatcher> conceptSourceMatchers, Map<Descriptor, String> desc2Source) {
-        String sourceFile = desc2Source.get(desc);
-        ConceptSourceMatcher conceptSourceMatcher = conceptSourceMatchers.get(sourceFile);
-        String source = conceptSourceMatcher.getSource();
-        String originalSource = conceptSourceMatcher.matchOriginalId(desc.getUI());
-        return new ConceptCoordinates(desc.getUI(), source, originalSource != null ? desc.getUI() : null, originalSource, true);
+    private ConceptCoordinates getConceptCoordinate(Descriptor desc, Map<String, String> file2Source, Map<String, List<ConceptSourceMatcher>> conceptSourceMatchers, Map<Descriptor, String> desc2File) {
+        String sourceFile = desc2File.get(desc);
+        String sourceName = file2Source.get(sourceFile);
+        String originalSource = null;
+        List<ConceptSourceMatcher> conceptSourceMatcherList = conceptSourceMatchers.get(sourceFile);
+        for (Iterator<ConceptSourceMatcher> iterator = conceptSourceMatcherList.iterator(); originalSource == null && iterator.hasNext(); ) {
+            originalSource = iterator.next().matchOriginalId(desc.getUI());
+        }
+        return new ConceptCoordinates(desc.getUI(), sourceName, originalSource != null ? desc.getUI() : null, originalSource, true);
     }
 
     @Override
@@ -230,7 +235,7 @@ public class MeshConceptCreator implements ConceptCreator {
         template.addProperty(slash(confPath, INPUT, XMLFILE), "");
         template.addProperty(slash(confPath, INPUT, FORMAT), "");
         template.addProperty(slash(confPath, INPUT, SOURCE_NAME), "");
-        template.addProperty(slash(confPath, INPUT, ORG_ID_REGEX), "");
         template.addProperty(slash(confPath, INPUT, ORG_SOURCE), "");
+        template.addProperty(slash(confPath, INPUT, ORG_SOURCE, "@" + REGEX), "");
     }
 }

@@ -1,9 +1,12 @@
 package de.julielab.concepts.db.creators.mesh;
 
 import de.julielab.java.utilities.ConfigurationUtilities;
+import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
+
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 /**
  * A helper class to check if a given ID is an original ID and if so, what it original source was. This is configured
@@ -12,16 +15,11 @@ import org.apache.commons.configuration2.tree.ImmutableNode;
 public class ConceptSourceMatcher {
     private String orgRegex;
     private String orgSource;
-    private String source;
-    private String sourceFile;
 
     public ConceptSourceMatcher(HierarchicalConfiguration<ImmutableNode> inputConfig) {
-        orgRegex = inputConfig.getString(MeshConceptCreator.ORG_ID_REGEX);
-        orgSource = inputConfig.getString(MeshConceptCreator.ORG_SOURCE);
-
         try {
-            source = ConfigurationUtilities.requirePresent(MeshConceptCreator.SOURCE_NAME, inputConfig::getString);
-            sourceFile = ConfigurationUtilities.requirePresent(MeshConceptCreator.XMLFILE, inputConfig::getString);
+            orgSource = ConfigurationUtilities.requirePresent("", inputConfig::getString);
+            orgRegex = inputConfig.getString("@" + XmlConceptCreator.REGEX);
         } catch (ConfigurationException e) {
             throw new IllegalArgumentException(e);
         }
@@ -37,16 +35,4 @@ public class ConceptSourceMatcher {
         return null;
     }
 
-
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
-    }
-
-    public String getSourceFile() {
-        return sourceFile;
-    }
 }
