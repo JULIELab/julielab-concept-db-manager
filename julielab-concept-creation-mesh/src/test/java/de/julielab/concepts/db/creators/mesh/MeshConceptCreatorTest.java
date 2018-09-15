@@ -75,6 +75,8 @@ public class MeshConceptCreatorTest {
             assertNotNull(bodyRegions);
             Iterable<Relationship> relationships = bodyRegions.getRelationships(Direction.OUTGOING, ConceptManager.EdgeTypes.IS_BROADER_THAN);
             assertThat(relationships).extracting(r -> r.getEndNode()).extracting(n -> n.getProperty(PROP_ORG_ID)).containsExactlyInAnyOrder("D005121", "D006257", "D009333");
+            assertThat(relationships).extracting(r -> r.getEndNode()).extracting(n -> n.getProperty(ConceptConstants.PROP_SOURCES)).flatExtracting(a -> Arrays.asList(a)).containsExactlyInAnyOrder("MeSH XML", "MeSH XML", "MeSH XML");
+            assertThat(relationships).extracting(r -> r.getEndNode()).extracting(n -> n.getProperty(ConceptConstants.PROP_ORG_SRC)).containsExactlyInAnyOrder("MeSH XML", "MeSH XML", "MeSH XML");
 
             Node facet = bodyRegions.getSingleRelationship(ConceptManager.EdgeTypes.HAS_ROOT_CONCEPT, Direction.INCOMING).getStartNode();
             assertThat(facet.getProperty(FacetConstants.PROP_NAME)).isEqualTo("Anatomy");

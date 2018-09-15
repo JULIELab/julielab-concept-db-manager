@@ -5,67 +5,38 @@ import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 
+/**
+ * A helper class to check if a given ID is an original ID and if so, what it original source was. This is configured
+ * in the XML configuration.
+ */
 public class ConceptSourceMatcher {
     private String orgRegex;
     private String orgSource;
-    private String regex;
     private String source;
     private String sourceFile;
-
-    private String noMatchOrgSource;
-    private String noMatchSource;
 
     public ConceptSourceMatcher(HierarchicalConfiguration<ImmutableNode> inputConfig) {
         orgRegex = inputConfig.getString(MeshConceptCreator.ORG_ID_REGEX);
         orgSource = inputConfig.getString(MeshConceptCreator.ORG_SOURCE);
-        regex = inputConfig.getString(MeshConceptCreator.SRC_ID_REGEX);
-        source = inputConfig.getString(MeshConceptCreator.SOURCE);
 
-        noMatchOrgSource = inputConfig.getString(MeshConceptCreator.NO_MATCH_ORG_SOURCE);
-        noMatchSource = inputConfig.getString(MeshConceptCreator.NO_MATCH_SOURCE);
-
-        sourceFile = inputConfig.getString(MeshConceptCreator.XMLFILE);
-    }
-
-    public String matchSourceId(String sourceId) {
-        if (regex != null && sourceId.matches(regex)) {
-            return source;
-        } else if (regex == null && source != null) {
-            return source;
-        } else if (noMatchSource != null) {
-            return noMatchSource;
+        try {
+            source = ConfigurationUtilities.requirePresent(MeshConceptCreator.SOURCE_NAME, inputConfig::getString);
+            sourceFile = ConfigurationUtilities.requirePresent(MeshConceptCreator.XMLFILE, inputConfig::getString);
+        } catch (ConfigurationException e) {
+            throw new IllegalArgumentException(e);
         }
-        return null;
     }
+
 
     public String matchOriginalId(String originalId) {
         if (orgRegex != null && originalId.matches(orgRegex)) {
             return orgSource;
         } else if (orgRegex == null && orgSource != null) {
             return orgSource;
-        } else if (noMatchOrgSource != null) {
-            return noMatchOrgSource;
         }
         return null;
     }
 
-
-    public void setNoMatchOrgSource(String noMatchOrgSource) {
-        this.noMatchOrgSource = noMatchOrgSource;
-    }
-
-
-    public void setNoMatchSource(String noMatchSource) {
-        this.noMatchSource = noMatchSource;
-    }
-
-    public String getRegex() {
-        return regex;
-    }
-
-    public void setRegex(String regex) {
-        this.regex = regex;
-    }
 
     public String getSource() {
         return source;
@@ -73,22 +44,6 @@ public class ConceptSourceMatcher {
 
     public void setSource(String source) {
         this.source = source;
-    }
-
-    public String getOrgRegex() {
-        return orgRegex;
-    }
-
-    public void setOrgRegex(String orgRegex) {
-        this.orgRegex = orgRegex;
-    }
-
-    public String getOrgSource() {
-        return orgSource;
-    }
-
-    public void setOrgSource(String orgSource) {
-        this.orgSource = orgSource;
     }
 
     public String getSourceFile() {

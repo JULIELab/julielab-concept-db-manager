@@ -34,10 +34,7 @@ public class MeshConceptCreator implements ConceptCreator {
     public static final String FACETGROUP = "facetgroup";
     public static final String ORG_ID_REGEX = "originalidregex";
     public static final String ORG_SOURCE = "originalsource";
-    public static final String SRC_ID_REGEX = "sourceidregex";
-    public static final String SOURCE = "source";
-    public static final String NO_MATCH_ORG_SOURCE = "nomatchoriginalsource";
-    public static final String NO_MATCH_SOURCE = "nomatchsource";
+    public static final String SOURCE_NAME = "sourcename";
 
 
     private final static Logger log = LoggerFactory.getLogger(MeshConceptCreator.class);
@@ -95,7 +92,6 @@ public class MeshConceptCreator implements ConceptCreator {
         } catch (Exception e) {
             throw new ConceptCreationException(e);
         }
-
 
         return createConceptsFromTree(conceptTree, facetGroupName, desc2Source, conceptSourceMatchers).stream();
 
@@ -183,11 +179,10 @@ public class MeshConceptCreator implements ConceptCreator {
                 for (Descriptor parentDescriptor : parentDescriptors) {
                     // Exclude the facet nodes, they are no concepts.
                     if (!facetDescriptors.contains(parentDescriptor)) {
-                        String parentId = parentDescriptor.getUI();
-                        parents.add(getMeshConceptCoordinate(parentId));
+                        parents.add(getConceptCoordinate(parentDescriptor, conceptSourceMatchers, desc2Source));
                     }
                 }
-                ImportConcept term = new ImportConcept(preferredName, synonyms, Arrays.asList(description), getMeshConceptCoordinate(termId), parents);
+                ImportConcept term = new ImportConcept(preferredName, synonyms, Arrays.asList(description), getConceptCoordinate(desc, conceptSourceMatchers, desc2Source), parents);
                 concepts.add(term);
 
                 counter.inc();
@@ -198,9 +193,28 @@ public class MeshConceptCreator implements ConceptCreator {
     }
 
 
-    private ConceptCoordinates getConceptCoordinate(String originalId, String sourceId, List<ConceptSourceMatcher> sourceMatchers) {
-        String source = uid.matches("D[0-9]+") ? source = SOURCE_MESH : SOURCE_SUPP;
-        return new ConceptCoordinates(uid, source, uid, source, true);
+    /**
+     * <p>
+     * Creates the concept coordinates for the given descriptor.
+     * </p>
+     * <p>To determine the original source - if any - the concept source matcher for the descriptor's source file will
+     * be fetched via <tt>desc2Source</tt> and <tt>conceptSourceMatchers</tt>. The matcher will then match the
+     * descriptor's UID. If this is successful (either because there was a regular expression match oder no expression
+     * was given at all but the original source was given anyway), the original source is set to the output of the
+     * matcher. The current source is always set to the one that was configured and that is also stored in the matcher.
+     * </p>
+     *
+     * @param desc
+     * @param conceptSourceMatchers
+     * @param desc2Source
+     * @return
+     */
+    private ConceptCoordinates getConceptCoordinate(Descriptor desc, Map<String, ConceptSourceMatcher> conceptSourceMatchers, Map<Descriptor, String> desc2Source) {
+        String sourceFile = desc2Source.get(desc);
+        ConceptSourceMatcher conceptSourceMatcher = conceptSourceMatchers.get(sourceFile);
+        String source = conceptSourceMatcher.getSource();
+        String originalSource = conceptSourceMatcher.matchOriginalId(desc.getUI());
+        return new ConceptCoordinates(desc.getUI(), source, originalSource != null ? desc.getUI() : null, originalSource, true);
     }
 
     @Override
@@ -212,8 +226,11 @@ public class MeshConceptCreator implements ConceptCreator {
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
         String confPath = slash(basePath, CONCEPTS, CREATOR, CONFIGURATION);
         template.addProperty(slash(basePath, CONCEPTS, CREATOR, NAME), getName());
-        template.addProperty(slash(confPath, XMLFILE), "");
-        template.addProperty(slash(confPath, SUPPFILE), "");
         template.addProperty(slash(confPath, FACETGROUP), "");
+        template.addProperty(slash(confPath, INPUT, XMLFILE), "");
+        template.addProperty(slash(confPath, INPUT, FORMAT), "");
+        template.addProperty(slash(confPath, INPUT, SOURCE_NAME), "");
+        template.addProperty(slash(confPath, INPUT, ORG_ID_REGEX), "");
+        template.addProperty(slash(confPath, INPUT, ORG_SOURCE), "");
     }
 }

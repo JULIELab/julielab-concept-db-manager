@@ -15,19 +15,75 @@
     </xs:element>
 
     <!-- Configuration elements -->
-    <xs:element name="meshfile" type="xs:string">
+    <xs:element name="input" type="xs:string">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Subconfiguration of one XML concepts input file.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="xmlfile"/>
+                <xs:element ref="format"/>
+                <xs:element ref="sourcename"/>
+                <xs:element ref="originalidregex" minOccurs="0"/>
+                <xs:element ref="originalsource" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="xmlfile" type="xs:string">
         <xs:annotation>
             <xs:documentation xml:lang="en">
                Path to the MeSH XML file.
             </xs:documentation>
         </xs:annotation>
     </xs:element>
-    <xs:element name="suppfile" type="xs:string"/>
+
+    <xs:element name="format">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                The XML concept creator is able to read different XML formats. This type
+                defines which valid format names can be specified.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="MESH_XML"/>
+                <xs:enumeration value="MESH_SUPPLEMENTARY_XML"/>
+                <xs:enumeration value="SIMPLE_XML"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="sourcename" type="xs:string"/>
     <xs:annotation>
         <xs:documentation xml:lang="en">
-            Path to the MeSH Supplementary Concepts XML file.
+            The name of the current source from which the concepts are read. E.g. 'MeSH' or 'Anatomy MeSH Subset with
+            custom concepts'. The source name is used to distinguish between concepts from different sources that
+            have the same ID (might happen when using concepts from different databases). To have the system
+            recognize that two concepts are actually the same concept despite coming from different sources,
+            the original source is used. Refer to the 'originalidregex' and 'originalsource' elements.
         </xs:documentation>
     </xs:annotation>
+
+    <xs:element name="originalidregex" type="xs:string"/>
+    <xs:annotation>
+        <xs:documentation xml:lang="en">
+            A regular expression that, if given, will be applied to the IDs of the created concepts. If the expression
+            matches, the ID will also be used as the original ID. For this to work, the 'origiginalsource' element
+            is also required.
+        </xs:documentation>
+    </xs:annotation>
+
+    <xs:element name="originalsource" type="xs:string"/>
+    <xs:annotation>
+        <xs:documentation xml:lang="en">
+            If the regular expression in the 'originalregex' element matches a concept ID, it will be given this
+            original source name.
+        </xs:documentation>
+    </xs:annotation>
+
     <xs:element name="facetgroup" type="xs:string"/>
     <xs:annotation>
         <xs:documentation xml:lang="en">
@@ -40,8 +96,7 @@
     <xs:element name="configuration">
         <xs:complexType>
             <xs:all>
-                <xs:element ref="meshfile" minOccurs="0"/>
-                <xs:element ref="suppfile" minOccurs="0"/>
+                <xs:element ref="input"/>
                 <xs:element ref="facetgroup"/>
             </xs:all>
         </xs:complexType>
