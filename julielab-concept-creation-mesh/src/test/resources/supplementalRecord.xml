@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!DOCTYPE SupplementalRecordSet SYSTEM "https://www.nlm.nih.gov/databases/dtd/nlmsupplementalrecordset_20170101.dtd">
+<SupplementalRecordSet LanguageCode = "eng">
+    <SupplementalRecord SCRClass = "1">
+        <SupplementalRecordUI>C114158</SupplementalRecordUI>
+        <SupplementalRecordName>
+            <String>quantum dye macrocyclic europium-chelate</String>
+        </SupplementalRecordName>
+        <DateCreated>
+            <Year>1998</Year>
+            <Month>09</Month>
+            <Day>14</Day>
+        </DateCreated>
+        <DateRevised>
+            <Year>2003</Year>
+            <Month>08</Month>
+            <Day>08</Day>
+        </DateRevised>
+        <Note>a macrocyclic europium-chelate; structure in first source
+        </Note>
+        <Frequency>2</Frequency>
+        <HeadingMappedToList>
+            <HeadingMappedTo>
+                <DescriptorReferredTo>
+                    <DescriptorUI>*D005063</DescriptorUI>
+                    <DescriptorName>
+                        <String>Europium</String>
+                    </DescriptorName>
+                </DescriptorReferredTo>
+            </HeadingMappedTo>
+            <HeadingMappedTo>
+                <DescriptorReferredTo>
+                    <DescriptorUI>*D009942</DescriptorUI>
+                    <DescriptorName>
+                        <String>Organometallic Compounds</String>
+                    </DescriptorName>
+                </DescriptorReferredTo>
+            </HeadingMappedTo>
+        </HeadingMappedToList>
+        <SourceList>
+            <Source>Glycobiology 1998 Sep;8(9):849-56</Source>
+        </SourceList>
+        <ConceptList>
+            <Concept PreferredConceptYN="Y">
+                <ConceptUI>M0294520</ConceptUI>
+                <ConceptName>
+                    <String>quantum dye macrocyclic europium-chelate</String>
+                </ConceptName>
+                <RegistryNumber>0</RegistryNumber>
+                <TermList>
+                    <Term  ConceptPreferredTermYN="Y"  IsPermutedTermYN="N"  LexicalTag="NON"  RecordPreferredTermYN="Y">
+                        <TermUI>T324525</TermUI>
+                        <String>quantum dye macrocyclic europium-chelate</String>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>NLM (1998)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                    <Term  ConceptPreferredTermYN="N"  IsPermutedTermYN="N"  LexicalTag="NON"  RecordPreferredTermYN="N">
+                        <TermUI>T324524</TermUI>
+                        <String>QD macrocyclic</String>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>NLM (1998)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                </TermList>
+            </Concept>
+        </ConceptList>
+    </SupplementalRecord>
+</SupplementalRecordSet>

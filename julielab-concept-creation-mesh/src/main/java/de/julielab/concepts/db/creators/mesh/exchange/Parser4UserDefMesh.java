@@ -339,6 +339,11 @@ public class Parser4UserDefMesh extends DefaultHandler {
 	private void addFacet(Tree data, String facetName) {
 		// We must append "facet" to avoid a name collision between facet and descriptor with name "Gene Expression"
 		String name = "Facet " + facetName;
+//		if (data.hasDescriptorByName(name)) {
+//		    logger.debug("Facet node with name {} already existed and is reused.", name);
+//            facet = data.getDescriptorByName(name);
+//            return;
+//        }
 
 		facet = new Descriptor();
 		facet.setSemedicoFacet(true);

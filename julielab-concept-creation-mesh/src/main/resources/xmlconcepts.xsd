@@ -116,7 +116,7 @@
     <xs:element name="configuration">
         <xs:complexType>
             <xs:all>
-                <xs:element ref="input"/>
+                <xs:element ref="input" maxOccurs="unbounded"/>
             </xs:all>
         </xs:complexType>
     </xs:element>

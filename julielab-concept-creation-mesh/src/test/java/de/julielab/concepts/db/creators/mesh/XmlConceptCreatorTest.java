@@ -123,7 +123,36 @@ public class XmlConceptCreatorTest {
         try (Transaction tx = graphdb.beginTx()) {
             Node node = graphdb.findNode(CONCEPT, PROP_ORG_ID, "D007801");
             assertNotNull(node);
-            assertThat(node).extracting(n -> n.getProperty(PROP_SOURCES)).flatExtracting(Arrays::asList).containsExactly("MeSH XML");
+            // Check that the original source regular expression detection works
+            assertThat(node).extracting(n -> n.getProperty(PROP_ORG_SRC)).containsExactly("MeSH XML");
+            assertThat(node).extracting(n -> n.getProperty(PROP_SOURCES)).flatExtracting(Arrays::asList).containsExactly("Immunology Concepts");
+
+            tx.success();
+        }
+    }
+
+    @Test
+    public void testMultipleConnectedImports() throws Exception {
+        XMLConfiguration xmlConfiguration = ConfigurationUtilities.loadXmlConfiguration(new File("src/test/resources/multipleConnectedImportsConfig.xml"));
+        HierarchicalConfiguration<ImmutableNode> connectionConfiguration = xmlConfiguration.configurationAt(CONNECTION);
+        ConceptInsertionService insertionService = ConceptInsertionService.getInstance(connectionConfiguration);
+        XmlConceptCreator xmlConceptCreator = new XmlConceptCreator();
+        HierarchicalConfiguration<ImmutableNode> importConfig = xmlConfiguration.configurationAt(slash(IMPORTS, IMPORT));
+        Stream<ImportConcepts> concepts = xmlConceptCreator.createConcepts(importConfig);
+        for (ImportConcepts ic : concepts.collect(toCollection(ArrayList::new))) {
+            insertionService.insertConcepts(importConfig, ic);
+        }
+
+        FileConnectionService fileConnectionService = FileConnectionService.getInstance();
+        GraphDatabaseService graphdb = fileConnectionService.getDatabase(connectionConfiguration);
+        // Tests for the Anatomy concepts in the test data
+        try (Transaction tx = graphdb.beginTx()) {
+            // The snippet contains - amongst others - the concept for "body parts" and some of its subclasses
+            Node bodyRegions = graphdb.findNode(CONCEPT, PROP_ORG_ID, "D005063");
+            assertNotNull(bodyRegions);
+            Iterable<Relationship> relationships = bodyRegions.getRelationships(Direction.OUTGOING, ConceptManager.EdgeTypes.IS_BROADER_THAN);
+            // The descriptor for "head" should also be there
+            assertThat(relationships).extracting(r -> r.getEndNode()).extracting(n -> n.getProperty(PROP_ORG_ID)).containsExactlyInAnyOrder("C114158");
 
             tx.success();
         }
