@@ -1,9 +1,6 @@
 package de.julielab.concepts.db.creators.mesh.exchange;
 
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.xml.sax.Attributes;
@@ -63,6 +60,8 @@ public class Parser4UserDefMesh extends DefaultHandler {
 
 	// prefix for names
 	String namePrefix;
+
+	private List<Descriptor> createdDescriptors = new ArrayList<>();
 
 	/**
 	 * Constructor
@@ -175,7 +174,11 @@ public class Parser4UserDefMesh extends DefaultHandler {
 		currentBuffer.setLength(0);
 	}
 
-	@Override
+    public List<Descriptor> getCreatedDescriptors() {
+        return createdDescriptors;
+    }
+
+    @Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 
 		if (localName.equals("canonic")) {
@@ -238,6 +241,8 @@ public class Parser4UserDefMesh extends DefaultHandler {
 
 			// update ui2desc map
 			ui2desc.put(desc.getUI(), desc);
+            createdDescriptors.add(desc);
+
 
 			// DEBUG
 			if (desc.getConcepts().size() > 1) {

@@ -17,53 +17,91 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
+import static java.util.stream.Collectors.toCollection;
+import static java.util.stream.Collectors.toMap;
 
 public class MeshConceptCreator implements ConceptCreator {
 
-    public static final String MESHFILE = "meshfile";
-    public static final String SUPPFILE = "suppfile";
+    public static final String INPUT = "input";
+    public static final String XMLFILE = "xmlfile";
+    public static final String FORMAT = "format";
     public static final String FACETGROUP = "facetgroup";
+    public static final String ORG_ID_REGEX = "originalidregex";
+    public static final String ORG_SOURCE = "originalsource";
+    public static final String SRC_ID_REGEX = "sourceidregex";
+    public static final String SOURCE = "source";
+    public static final String NO_MATCH_ORG_SOURCE = "nomatchoriginalsource";
+    public static final String NO_MATCH_SOURCE = "nomatchsource";
 
-    public static final String SOURCE_MESH = "Medical Subject Headings";
-    public static final String SOURCE_SUPP = "Medical Subject Headings, Supplementary Concepts";
+
     private final static Logger log = LoggerFactory.getLogger(MeshConceptCreator.class);
+    public static Set<String> FORMATS = new HashSet<>(Arrays.asList("MESH_XML", "MESH_SUPPLEMENTARY_XML", "SIMPLE_XML"));
 
     @Override
     public Stream<ImportConcepts> createConcepts(HierarchicalConfiguration<ImmutableNode> importConfig) throws ConceptCreationException, FacetCreationException {
         String confPath = slash(CONCEPTS, CREATOR, CONFIGURATION);
-        Tree mesh;
+        Tree conceptTree;
         String facetGroupName;
         try {
             facetGroupName = ConfigurationUtilities.requirePresent(slash(confPath, FACETGROUP), importConfig::getString);
         } catch (ConfigurationException e) {
             throw new ConceptCreationException(e);
         }
+        // These matchers will get the concept's original ID and look for a match. The same is done for the original source.
+        // Each matcher is queried in the given order. The first matcher to return a non-null value will also terminate the query process.
+        // Each matcher can also have a "non-match" source, allowing for "either-or" decisions.
+        // Lastly, a matcher may just be given the (original) source without a regular expression. In this case, the source will always be returned by the matcher.
+        Map<String, ConceptSourceMatcher> conceptSourceMatchers = importConfig.configurationsAt(slash(confPath, INPUT))
+                .stream()
+                .map(ConceptSourceMatcher::new)
+                .collect(Collectors.toMap(m -> m.getSourceFile(), m -> m));
+
+        Map<Descriptor, String> desc2Source = new HashMap<>();
         try {
-            String meshFile = ConfigurationUtilities.requirePresent(slash(confPath, MESHFILE), importConfig::getString);
-            String suppFile = importConfig.getString(slash(confPath, SUPPFILE));
-            mesh = new Tree("MeSH Descriptors and Supplementaries");
-            log.info("Reading the MeSH XML descriptors from {}", meshFile);
-            DataImporter.fromOriginalMeshXml(meshFile, mesh, true);
-            if (!StringUtils.isBlank(suppFile)) {
-                log.info("Reading the MeSH Supplementary concepts from {}", suppFile);
-                DataImporter.fromSupplementaryConceptsXml(suppFile, mesh);
+            conceptTree = new Tree("Concepts Tree");
+            for (HierarchicalConfiguration<ImmutableNode> input : importConfig.configurationsAt(slash(confPath, INPUT))) {
+                String file = ConfigurationUtilities.requirePresent(XMLFILE, input::getString);
+                String format = ConfigurationUtilities.requirePresent(FORMAT, input::getString);
+                if (!FORMATS.contains(format))
+                    throw new ConceptCreationException("Unknown concept XML format: " + format + ". Supported formats: " + FORMATS);
+                log.info("Adding data from {} to the internal concept hierarchy representation that will be inserted into the database.");
+                switch (format) {
+                    case "MESH_XML": {
+                        List<Descriptor> descriptors = DataImporter.fromOriginalMeshXml(file, conceptTree, true);
+                        descriptors.forEach(d -> desc2Source.put(d, file));
+                        break;
+                    }
+                    case "MESH_SUPPLEMENTARY_XML": {
+                        List<Descriptor> descriptors = DataImporter.fromSupplementaryConceptsXml(file, conceptTree);
+                        descriptors.forEach(d -> desc2Source.put(d, file));
+                        break;
+                    }
+                    case "SIMPLE_XML": {
+                        List<Descriptor> descriptors = DataImporter.fromUserDefinedMeshXml(file, conceptTree);
+                        descriptors.forEach(d -> desc2Source.put(d, file));
+                        break;
+                    }
+                }
             }
-            mesh.verifyIntegrity();
-            log.info("MeSH file reading finished.");
+
+            conceptTree.verifyIntegrity();
+            log.info("Concept XML data reading finished.");
         } catch (Exception e) {
             throw new ConceptCreationException(e);
         }
 
 
-        return createConceptsFromTree(mesh, facetGroupName).stream();
+        return createConceptsFromTree(conceptTree, facetGroupName, desc2Source, conceptSourceMatchers).stream();
 
     }
 
-    private List<ImportConcepts> createConceptsFromTree(Tree tree, String facetGroupName) throws ConceptCreationException, FacetCreationException {
+    private List<ImportConcepts> createConceptsFromTree(Tree tree, String facetGroupName, Map<Descriptor, String> desc2Source, Map<String, ConceptSourceMatcher> conceptSourceMatchers) throws ConceptCreationException, FacetCreationException {
         // Sanity check.
         List<Descriptor> rootChildren2 = tree.childDescriptorsOf(tree.getRootDesc());
         for (Descriptor facet : rootChildren2) {
@@ -125,7 +163,6 @@ public class MeshConceptCreator implements ConceptCreator {
             counter.startMsg();
             log.info("Converting descriptors for facet {} to Semedico terms...", facetName);
             ImportFacet importFacet;
-            // TODO repair
             importFacet = FacetsProvider.createMeshImportFacet(facetName, facetGroupName, 0);
 
             List<ImportConcept> concepts = new ArrayList<>();
@@ -160,29 +197,22 @@ public class MeshConceptCreator implements ConceptCreator {
         return importConcepts;
     }
 
-    /**
-     * Returns an instance of {@link ConceptCoordinates} where source ID and original ID are set to the given
-     * MeSH UID and <tt>uniqueSource</tt> is set to <tt>true</tt>. The source and original source is set to
-     * {@link #SOURCE_MESH} for UIDs beginning with a <tt>D</tt> followed by a number and {@link #SOURCE_SUPP} otherwise.
-     *
-     * @param uid
-     * @return
-     */
-    private ConceptCoordinates getMeshConceptCoordinate(String uid) {
+
+    private ConceptCoordinates getConceptCoordinate(String originalId, String sourceId, List<ConceptSourceMatcher> sourceMatchers) {
         String source = uid.matches("D[0-9]+") ? source = SOURCE_MESH : SOURCE_SUPP;
         return new ConceptCoordinates(uid, source, uid, source, true);
     }
 
     @Override
     public String getName() {
-      return  getClass().getSimpleName();
+        return getClass().getSimpleName();
     }
 
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
         String confPath = slash(basePath, CONCEPTS, CREATOR, CONFIGURATION);
         template.addProperty(slash(basePath, CONCEPTS, CREATOR, NAME), getName());
-        template.addProperty(slash(confPath, MESHFILE), "");
+        template.addProperty(slash(confPath, XMLFILE), "");
         template.addProperty(slash(confPath, SUPPFILE), "");
         template.addProperty(slash(confPath, FACETGROUP), "");
     }

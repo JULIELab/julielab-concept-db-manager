@@ -40,7 +40,7 @@
     <xs:element name="configuration">
         <xs:complexType>
             <xs:all>
-                <xs:element ref="meshfile"/>
+                <xs:element ref="meshfile" minOccurs="0"/>
                 <xs:element ref="suppfile" minOccurs="0"/>
                 <xs:element ref="facetgroup"/>
             </xs:all>

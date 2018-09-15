@@ -50,6 +50,15 @@ public class Parser4Mesh extends DefaultHandler {
 	// DescriptorRecord - but we only want to parse the first one!
 	private boolean descUiParsedflag;
 
+	// stores all descriptors created by this parser. Serves to identify new descriptors in case of multiple source
+	// are merged into the same tree
+
+	public List<Descriptor> getCreatedDescriptors() {
+		return createdDescriptors;
+	}
+
+	private List<Descriptor> createdDescriptors = new ArrayList<>();
+
 	/**
 	 * Constructor
 	 * 
@@ -69,7 +78,7 @@ public class Parser4Mesh extends DefaultHandler {
 	 * 
 	 * @param data
 	 *            The Tree instance to import the data to.
-	 * @param createMeshFacets
+	 * @param data
 	 */
 	public Parser4Mesh(Tree data) {
 		this(data, false);
@@ -127,6 +136,7 @@ public class Parser4Mesh extends DefaultHandler {
 		if (localName.equals("DescriptorRecord")) {
 			data.addDescriptor(desc, treeNumbers);
 			counter.inc();
+            createdDescriptors.add(desc);
 			desc = null;
 			treeNumbers = null;
 		} else if (localName.equals("TreeNumber")) {

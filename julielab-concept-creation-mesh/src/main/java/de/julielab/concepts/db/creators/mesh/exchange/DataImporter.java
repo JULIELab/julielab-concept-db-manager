@@ -6,12 +6,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.zip.GZIPInputStream;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import de.julielab.concepts.db.creators.mesh.components.Descriptor;
 import org.slf4j.Logger;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -29,204 +31,202 @@ import de.julielab.concepts.db.creators.mesh.modifications.DescAdditions;
  * <li>Own XML (adaption of MeSH-XML)</li>
  * <li>more to come ...</li>
  * </ul>
- * 
+ *
  * @author Philipp Lucas
  */
 public class DataImporter {
 
-	private static Logger logger = org.slf4j.LoggerFactory.getLogger(DataImporter.class);
+    private static Logger logger = org.slf4j.LoggerFactory.getLogger(DataImporter.class);
 
-	/**
-	 * Imports descriptors following the MeSH XML syntax from a file. Previous content of data will not be overwritten.
-	 * 
-	 * @param xmlFilepath
-	 *            Path to XML file.
-	 * @param data
-	 *            Tree instance to import data to.
-	 * @throws Exception
-	 */
-	public static void fromOriginalMeshXml(String xmlFilepath, Tree data) throws Exception {
-		fromOriginalMeshXml(xmlFilepath, data, false);
-	}
-	
-	public static void fromOriginalMeshXml(String xmlFilepath, Tree data, boolean createMeshFacets) throws Exception {
-		logger.info("# Importing descriptor records from MeSH XML file '" + xmlFilepath + "' ... ");
+    /**
+     * Imports descriptors following the MeSH XML syntax from a file. Previous content of data will not be overwritten.
+     *
+     * @param xmlFilepath Path to XML file.
+     * @param data        Tree instance to import data to.
+     * @throws Exception
+     */
+    public static void fromOriginalMeshXml(String xmlFilepath, Tree data) throws Exception {
+        fromOriginalMeshXml(xmlFilepath, data, false);
+    }
 
-		try {
-			SAXParserFactory factory = SAXParserFactory.newInstance();
-			factory.setValidating(false);
-			factory.setNamespaceAware(true);
+    public static List<Descriptor> fromOriginalMeshXml(String xmlFilepath, Tree data, boolean createMeshFacets) throws Exception {
+        logger.info("# Importing descriptor records from MeSH XML file '" + xmlFilepath + "' ... ");
 
-			SAXParser parser = factory.newSAXParser();
-			XMLReader xmlReader = parser.getXMLReader();
+        Parser4Mesh saxHandler;
+        try {
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            factory.setValidating(false);
+            factory.setNamespaceAware(true);
 
-			// BufferedReader reader = new BufferedReader(new FileReader(xmlFilepath), 8192*8);
-			// InputSource inputSource = new InputSource(reader);
-			InputStream is = new FileInputStream(new File(xmlFilepath));
-			if (xmlFilepath.endsWith("gz") || xmlFilepath.endsWith("gzip"))
-				is = new GZIPInputStream(is);
-			InputSource inputSource = new InputSource(is);
-			inputSource.setSystemId(new File(xmlFilepath).getCanonicalPath()); // to resolve relative dtd file in xml
-																				// file
+            SAXParser parser = factory.newSAXParser();
+            XMLReader xmlReader = parser.getXMLReader();
 
-			Parser4Mesh saxHandler = new Parser4Mesh(data, createMeshFacets);
-			xmlReader.setContentHandler(saxHandler);
+            // BufferedReader reader = new BufferedReader(new FileReader(xmlFilepath), 8192*8);
+            // InputSource inputSource = new InputSource(reader);
+            InputStream is = new FileInputStream(new File(xmlFilepath));
+            if (xmlFilepath.endsWith("gz") || xmlFilepath.endsWith("gzip"))
+                is = new GZIPInputStream(is);
+            InputSource inputSource = new InputSource(is);
+            inputSource.setSystemId(new File(xmlFilepath).getCanonicalPath()); // to resolve relative dtd file in xml
+            // file
 
-			xmlReader.parse(inputSource);
+            saxHandler = new Parser4Mesh(data, createMeshFacets);
+            xmlReader.setContentHandler(saxHandler);
 
-		} catch (ParserConfigurationException | SAXException | IOException e) {
-			logger.error(e.getMessage());
-			throw e;
-		}
-		logger.info("# ... done.");
-	}
+            xmlReader.parse(inputSource);
 
-	/**
-	 * Imports MeSH Supplementary Concept Records following the appropriate XML syntax from a file. Previous content of
-	 * data will not be overwritten.
-	 * 
-	 * @param xmlFilepath
-	 *            Path to XML file.
-	 * @param data
-	 *            Tree instance to import data to.
-	 * @throws Exception
-	 */
-	public static void fromSupplementaryConceptsXml(String xmlFilepath, Tree data) throws Exception {
-		logger.info("# Importing descriptor records from MeSH XML file '" + xmlFilepath + "' ... ");
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
+        logger.info("# ... done.");
+        return saxHandler.getCreatedDescriptors();
+    }
 
-		try {
-			SAXParserFactory factory = SAXParserFactory.newInstance();
-			factory.setValidating(false);
-			factory.setNamespaceAware(true);
+    /**
+     * Imports MeSH Supplementary Concept Records following the appropriate XML syntax from a file. Previous content of
+     * data will not be overwritten.
+     *
+     * @param xmlFilepath Path to XML file.
+     * @param data        Tree instance to import data to.
+     * @throws Exception
+     */
+    public static List<Descriptor> fromSupplementaryConceptsXml(String xmlFilepath, Tree data) throws Exception {
+        logger.info("# Importing descriptor records from MeSH XML file '" + xmlFilepath + "' ... ");
 
-			SAXParser parser = factory.newSAXParser();
-			XMLReader xmlReader = parser.getXMLReader();
+        Parser4SupplementaryConcepts saxHandler;
+        try {
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            factory.setValidating(false);
+            factory.setNamespaceAware(true);
 
-			// BufferedReader reader = new BufferedReader(new FileReader(xmlFilepath), 8192*8);
-			// InputSource inputSource = new InputSource(reader);
-			InputStream is = new FileInputStream(new File(xmlFilepath));
-			if (xmlFilepath.endsWith("gz") || xmlFilepath.endsWith("gzip"))
-				is = new GZIPInputStream(is);
-			InputSource inputSource = new InputSource(is);
-			inputSource.setSystemId(new File(xmlFilepath).getCanonicalPath()); // to resolve relative dtd file in xml
-																				// file
+            SAXParser parser = factory.newSAXParser();
+            XMLReader xmlReader = parser.getXMLReader();
 
-			Parser4SupplementaryConcepts saxHandler = new Parser4SupplementaryConcepts(data);
-			xmlReader.setContentHandler(saxHandler);
+            // BufferedReader reader = new BufferedReader(new FileReader(xmlFilepath), 8192*8);
+            // InputSource inputSource = new InputSource(reader);
+            InputStream is = new FileInputStream(new File(xmlFilepath));
+            if (xmlFilepath.endsWith("gz") || xmlFilepath.endsWith("gzip"))
+                is = new GZIPInputStream(is);
+            InputSource inputSource = new InputSource(is);
+            inputSource.setSystemId(new File(xmlFilepath).getCanonicalPath()); // to resolve relative dtd file in xml
+            // file
 
-			xmlReader.parse(inputSource);
+            saxHandler = new Parser4SupplementaryConcepts(data);
+            xmlReader.setContentHandler(saxHandler);
 
-		} catch (ParserConfigurationException | SAXException | IOException e) {
-			logger.error(e.getMessage());
-			throw e;
-		}
-		logger.info("# ... done.");
-	}
+            xmlReader.parse(inputSource);
 
-	/**
-	 * <p>
-	 * Imports descriptors following the user defined MeSH XML syntax from a file. Previous content of data will not be
-	 * overwritten. 'user defined' in this context refers to the XML format that was previously used as an intermediate
-	 * format for importing MeSH data into the semedico DBMS.
-	 * </p>
-	 * 
-	 * @param xmlDirPath
-	 *            Path to directory with XML files. Each file refers to a named 'facet' (see XML), and each such facet
-	 *            is represented by a descriptor with one tree vertex. Hence, all tree vertices of that file are (not
-	 *            necessarily direct) children of this 'facet tree vertex'.
-	 * @param newData
-	 *            Tree instance to import data to.
-	 * @throws IOException
-	 * @throws SAXException
-	 */
-	public static void fromUserDefinedMeshXml(String xmlDirPath, Tree newData) throws IOException, SAXException {
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
+        logger.info("# ... done.");
+        return saxHandler.getCreatedDescriptors();
+    }
 
-		logger.info("# Importing 'user defined' descriptor records from directory '" + xmlDirPath + "' ... ");
+    /**
+     * <p>
+     * Imports descriptors following the user defined MeSH XML syntax from a file. Previous content of data will not be
+     * overwritten. 'user defined' in this context refers to the XML format that was previously used as an intermediate
+     * format for importing MeSH data into the semedico DBMS.
+     * </p>
+     *
+     * @param xmlDirPath Path to directory with XML files. Each file refers to a named 'facet' (see XML), and each such facet
+     *                   is represented by a descriptor with one tree vertex. Hence, all tree vertices of that file are (not
+     *                   necessarily direct) children of this 'facet tree vertex'.
+     * @param newData    Tree instance to import data to.
+     * @throws IOException
+     * @throws SAXException
+     */
+    public static List<Descriptor> fromUserDefinedMeshXml(String xmlDirPath, Tree newData) throws IOException, SAXException {
 
-		File dir = new File(xmlDirPath);
-		if (!dir.isDirectory()) {
-			logger.error("The path '" + xmlDirPath + "' does not point at a directory. Aborting.");
-			System.exit(1);
-		}
+        logger.info("# Importing 'user defined' descriptor records from directory '" + xmlDirPath + "' ... ");
 
-		// read in data from all XML files in the directory xmlFilepath
-		for (File xmlFile : dir.listFiles()) {
-//			if (!xmlFile.getName().contains("symptoms")) {
-//				System.out.println("Excluding file " + xmlFile + " in DAtaImporter");
-//				continue;
-//			}
-			try {
-				if (".".equals(xmlFile.getName()) || "..".equals(xmlFile.getName())) {
-					continue; // Ignore the self and parent aliases.
-				}
+        File dir = new File(xmlDirPath);
+        if (!dir.isDirectory()) {
+            logger.error("The path '" + xmlDirPath + "' does not point at a directory. Aborting.");
+            System.exit(1);
+        }
 
-				logger.info("# Importing 'user defined' descriptor records from XML file '" + xmlFile.getPath()
-						+ "' ... ");
+        // read in data from all XML files in the directory xmlFilepath
+        //			if (!xmlFile.getName().contains("symptoms")) {
+        //				System.out.println("Excluding file " + xmlFile + " in DAtaImporter");
+        //				continue;
+        //			}
+                Parser4UserDefMesh saxHandler = null;
+        for (File xmlFile : dir.listFiles()) {
+            try {
+                if (".".equals(xmlFile.getName()) || "..".equals(xmlFile.getName())) {
+                    continue; // Ignore the self and parent aliases.
+                }
 
-				XMLReader xmlReader = XMLReaderFactory.createXMLReader();
-				// FileReader reader = new FileReader(xmlFile);
-				// InputSource inputSource = new InputSource(reader);
+                logger.info("# Importing 'user defined' descriptor records from XML file '" + xmlFile.getPath()
+                        + "' ... ");
 
-				InputStream is = new FileInputStream(xmlFile);
-				if (xmlFile.getName().endsWith("gz") || xmlFile.getName().endsWith("gzip"))
-					is = new GZIPInputStream(is);
-				InputSource inputSource = new InputSource(is);
+                XMLReader xmlReader = XMLReaderFactory.createXMLReader();
+                // FileReader reader = new FileReader(xmlFile);
+                // InputSource inputSource = new InputSource(reader);
 
-				Parser4UserDefMesh saxHandler = new Parser4UserDefMesh(newData, xmlFile.getName());
-				xmlReader.setContentHandler(saxHandler);
+                InputStream is = new FileInputStream(xmlFile);
+                if (xmlFile.getName().endsWith("gz") || xmlFile.getName().endsWith("gzip"))
+                    is = new GZIPInputStream(is);
+                InputSource inputSource = new InputSource(is);
 
-				xmlReader.parse(inputSource);
+                saxHandler = new Parser4UserDefMesh(newData, xmlFile.getName());
+                xmlReader.setContentHandler(saxHandler);
 
-				is.close();
-				// reader.close();
+                xmlReader.parse(inputSource);
 
-			} catch (FileNotFoundException e) {
-				logger.error(e.getMessage());
-				throw e;
-			} catch (IOException e) {
-				logger.error(e.getMessage());
-				throw e;
-			} catch (SAXException e) {
-				logger.error(e.getMessage());
-				throw e;
-			}
-		}
+                is.close();
+                // reader.close();
 
-		logger.info("# ... done with directory '" + xmlDirPath + "'.");
-	}
+            } catch (FileNotFoundException e) {
+                logger.error(e.getMessage());
+                throw e;
+            } catch (IOException e) {
+                logger.error(e.getMessage());
+                throw e;
+            } catch (SAXException e) {
+                logger.error(e.getMessage());
+                throw e;
+            }
+        }
+        logger.info("# ... done with directory '" + xmlDirPath + "'.");
+        return saxHandler.getCreatedDescriptors();
+    }
 
-	/**
-	 * Imports descriptors following a file with the the "OwnXML" format.
-	 * 
-	 * @param xmlFilepath
-	 *            Path to XML file.
-	 * @return Returns the imported descriptors.
-	 */
-	public static DescAdditions fromOwnXML(String xmlFilepath) {
-		logger.info("# Importing descriptor records from MeSH XML file '" + xmlFilepath + "' ... ");
-		DescAdditions newDescs = null;
-		try {
+    /**
+     * Imports descriptors following a file with the the "OwnXML" format.
+     *
+     * @param xmlFilepath Path to XML file.
+     * @return Returns the imported descriptors.
+     */
+    public static DescAdditions fromOwnXML(String xmlFilepath) {
+        logger.info("# Importing descriptor records from MeSH XML file '" + xmlFilepath + "' ... ");
+        DescAdditions newDescs = null;
+        try {
 
-			XMLReader xmlReader = XMLReaderFactory.createXMLReader();
-			FileReader reader = new FileReader(xmlFilepath);
-			InputSource inputSource = new InputSource(reader);
+            XMLReader xmlReader = XMLReaderFactory.createXMLReader();
+            FileReader reader = new FileReader(xmlFilepath);
+            InputSource inputSource = new InputSource(reader);
 
-			Parser4OwnMesh saxHandler = new Parser4OwnMesh();
-			xmlReader.setContentHandler(saxHandler);
+            Parser4OwnMesh saxHandler = new Parser4OwnMesh();
+            xmlReader.setContentHandler(saxHandler);
 
-			xmlReader.parse(inputSource);
+            xmlReader.parse(inputSource);
 
-			newDescs = saxHandler.getNewDescriptors();
+            newDescs = saxHandler.getNewDescriptors();
 
-		} catch (FileNotFoundException e) {
-			logger.error(e.getMessage());
-		} catch (IOException e) {
-			logger.error(e.getMessage());
-		} catch (SAXException e) {
-			logger.error(e.getMessage());
-		}
-		logger.info("# ... done.");
-		return newDescs;
-	}
+        } catch (FileNotFoundException e) {
+            logger.error(e.getMessage());
+        } catch (IOException e) {
+            logger.error(e.getMessage());
+        } catch (SAXException e) {
+            logger.error(e.getMessage());
+        }
+        logger.info("# ... done.");
+        return newDescs;
+    }
 
 }
