@@ -71,14 +71,9 @@
     <xs:element name="originalsources">
         <xs:annotation>
             <xs:documentation xml:lang="en">
-                The original source given to concepts that match the regular expression specified by the 'idregex'
-                attribute. If this attribute is not given, all concepts that have not been matched by another
-                idregex will obtain this original ID. It is important to note that an arbitrary number of
-                'originalsource' elements may be given. They will be applied to the source ID of each concept
-                in the order they are defined in the XML configuration file. If a match happens - or not regular
-                expression is provided - all remaining originalsource elements will be discarded. Thus,
-                an element without the 'idregex' attribute delivers a default value and should be listed last.
-                Also note that no originalsource element is required.
+               An array of 'source' elements. Each element may given the 'idregex' attribute. If given, the
+                attribute will be used to match against concept IDs. In case of a mach, the respective source
+                will be assigned to the concept as its original source.
             </xs:documentation>
         </xs:annotation>
         <xs:complexType>
@@ -91,7 +86,14 @@
     <xs:element name="source" type="xs:string">
         <xs:annotation>
             <xs:documentation xml:lang="en">
-                An original source name that will be assignend to concepts whose ID matches the given regular expression.
+                The original source given to concepts that match the regular expression specified by the 'idregex'
+                attribute. If this attribute is not given, all concepts that have not been matched by another
+                idregex will obtain this original ID. It is important to note that an arbitrary number of
+                'originalsource' elements may be given. They will be applied to the source ID of each concept
+                in the order they are defined in the XML configuration file. If a match happens - or not regular
+                expression is provided - all remaining originalsource elements will be discarded. Thus,
+                an element without the 'idregex' attribute delivers a default value and should be listed last.
+                Also note that no originalsource element is required.
             </xs:documentation>
         </xs:annotation>
         <xs:complexType>
@@ -110,21 +112,11 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="facetgroup" type="xs:string">
-        <xs:annotation>
-            <xs:documentation xml:lang="en">
-                The name of the facet group to which the MeSH facets should be added to.
-            </xs:documentation>
-        </xs:annotation>
-    </xs:element>
-
-
     <!-- The provider configuration -->
     <xs:element name="configuration">
         <xs:complexType>
             <xs:all>
                 <xs:element ref="input"/>
-                <xs:element ref="facetgroup"/>
             </xs:all>
         </xs:complexType>
     </xs:element>

@@ -18,8 +18,10 @@
                             <xmlfile>src/test/resources/leukocytes.xml</xmlfile>
                             <format>SIMPLE_XML</format>
                             <sourcename>Immunology Concepts</sourcename>
-                            <originalsource idregex="D[0-9]+">MeSH XML</originalsource>
-                            <originalsource>Immunology Concepts</originalsource>
+                            <originalsources>
+                                <source idregex="D[0-9]+">MeSH XML</source>
+                                <source>Immunology Concepts</source>
+                            </originalsources>
                         </input>
                         <facetgroup>MeSH</facetgroup>
                     </configuration>

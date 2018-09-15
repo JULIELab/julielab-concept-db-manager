@@ -1,6 +1,7 @@
 package de.julielab.concepts.db.creators.mesh;
 
 import com.google.common.collect.LinkedHashMultimap;
+import de.julielab.concepts.db.core.services.FacetCreationService;
 import de.julielab.concepts.db.core.spi.ConceptCreator;
 import de.julielab.concepts.db.creators.mesh.components.Descriptor;
 import de.julielab.concepts.db.creators.mesh.exchange.DataImporter;
@@ -45,7 +46,6 @@ public class XmlConceptCreator implements ConceptCreator {
         String facetGroupName;
         Map<String, List<ConceptSourceMatcher>> conceptSourceMatchers = new HashMap<>();
         try {
-            facetGroupName = ConfigurationUtilities.requirePresent(slash(confPath, FACETGROUP), importConfig::getString);
             // These matchers will get the concept's original ID and look for a match. The same is done for the original source.
             // Each matcher is queried in the given order. The first matcher to return a non-null value will also terminate the query process.
             // Each matcher can also have a "non-match" source, allowing for "either-or" decisions.
@@ -68,7 +68,7 @@ public class XmlConceptCreator implements ConceptCreator {
                 String format = ConfigurationUtilities.requirePresent(FORMAT, input::getString);
                 if (!FORMATS.contains(format))
                     throw new ConceptCreationException("Unknown concept XML format: " + format + ". Supported formats: " + FORMATS);
-                log.info("Adding data from {} to the internal concept hierarchy representation that will be inserted into the database.");
+                log.info("Adding data from {} to the internal concept hierarchy representation that will be inserted into the database.", file);
                 switch (format) {
                     case "MESH_XML": {
                         List<Descriptor> descriptors = DataImporter.fromOriginalMeshXml(file, conceptTree, true);
@@ -94,11 +94,11 @@ public class XmlConceptCreator implements ConceptCreator {
             throw new ConceptCreationException(e);
         }
 
-        return createConceptsFromTree(conceptTree, facetGroupName, file2Source, desc2File, conceptSourceMatchers).stream();
+        return createConceptsFromTree(conceptTree, importConfig, file2Source, desc2File, conceptSourceMatchers).stream();
 
     }
 
-    private List<ImportConcepts> createConceptsFromTree(Tree tree, String facetGroupName, Map<String, String> file2Source, Map<Descriptor, String> desc2File, Map<String, List<ConceptSourceMatcher>> conceptSourceMatchers) throws ConceptCreationException, FacetCreationException {
+    private List<ImportConcepts> createConceptsFromTree(Tree tree, HierarchicalConfiguration<ImmutableNode> importConfig, Map<String, String> file2Source, Map<Descriptor, String> desc2File, Map<String, List<ConceptSourceMatcher>> conceptSourceMatchers) throws ConceptCreationException, FacetCreationException {
         // Sanity check.
         List<Descriptor> rootChildren2 = tree.childDescriptorsOf(tree.getRootDesc());
         for (Descriptor facet : rootChildren2) {
@@ -158,9 +158,8 @@ public class XmlConceptCreator implements ConceptCreator {
             Collections.sort(sortedDescriptorsInFacet);
             counter = new ProgressCounter(sortedDescriptorsInFacet.size(), 1000, "Semedico term");
             counter.startMsg();
-            log.info("Converting descriptors for facet {} to Semedico terms...", facetName);
-            ImportFacet importFacet;
-            importFacet = FacetsProvider.createMeshImportFacet(facetName, facetGroupName, 0);
+            log.info("Converting descriptors for facet {} to import concepts...", facetName);
+            ImportFacet importFacet = FacetCreationService.getInstance().createFacet(importConfig, facetName);
 
             List<ImportConcept> concepts = new ArrayList<>();
             ImportConcepts conceptsWithFacet = new ImportConcepts(concepts, importFacet);

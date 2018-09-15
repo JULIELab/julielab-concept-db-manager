@@ -144,10 +144,6 @@ public class DataImporter {
         logger.info("# Importing 'user defined' descriptor records from directory '" + xmlDirPath + "' ... ");
 
         File dir = new File(xmlDirPath);
-        if (!dir.isDirectory()) {
-            logger.error("The path '" + xmlDirPath + "' does not point at a directory. Aborting.");
-            System.exit(1);
-        }
 
         // read in data from all XML files in the directory xmlFilepath
         //			if (!xmlFile.getName().contains("symptoms")) {
@@ -155,7 +151,11 @@ public class DataImporter {
         //				continue;
         //			}
                 Parser4UserDefMesh saxHandler = null;
-        for (File xmlFile : dir.listFiles()) {
+        File[] files;
+        if (dir.isDirectory())
+                files = dir.listFiles();
+        else files = new File[] {dir};
+        for (File xmlFile : files) {
             try {
                 if (".".equals(xmlFile.getName()) || "..".equals(xmlFile.getName())) {
                     continue; // Ignore the self and parent aliases.

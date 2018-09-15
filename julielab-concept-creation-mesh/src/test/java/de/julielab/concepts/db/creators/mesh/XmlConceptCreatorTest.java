@@ -68,7 +68,7 @@ public class XmlConceptCreatorTest {
             assertNotNull(bodyRegions);
             Iterable<Relationship> relationships = bodyRegions.getRelationships(Direction.OUTGOING, ConceptManager.EdgeTypes.IS_BROADER_THAN);
             assertThat(relationships).extracting(r -> r.getEndNode()).extracting(n -> n.getProperty(PROP_ORG_ID)).containsExactlyInAnyOrder("D005121", "D006257", "D009333");
-            assertThat(relationships).extracting(r -> r.getEndNode()).extracting(n -> n.getProperty(ConceptConstants.PROP_SOURCES)).flatExtracting(a -> Arrays.asList(a)).containsExactlyInAnyOrder("MeSH XML", "MeSH XML", "MeSH XML");
+            assertThat(relationships).extracting(r -> r.getEndNode()).extracting(n -> n.getProperty(PROP_SOURCES)).flatExtracting(a -> Arrays.asList(a)).containsExactlyInAnyOrder("MeSH XML", "MeSH XML", "MeSH XML");
             assertThat(relationships).extracting(r -> r.getEndNode()).extracting(n -> n.getProperty(ConceptConstants.PROP_ORG_SRC)).containsExactlyInAnyOrder("MeSH XML", "MeSH XML", "MeSH XML");
 
             Node facet = bodyRegions.getSingleRelationship(ConceptManager.EdgeTypes.HAS_ROOT_CONCEPT, Direction.INCOMING).getStartNode();
@@ -106,19 +106,26 @@ public class XmlConceptCreatorTest {
         }
     }
 
-//    @Test
-//    public void testSimpleXmlFormat() throws Exception {
-//        XMLConfiguration xmlConfiguration = ConfigurationUtilities.loadXmlConfiguration(new File("src/test/resources/simpleXmlImportConfig.xml"));
-//        HierarchicalConfiguration<ImmutableNode> connectionConfiguration = xmlConfiguration.configurationAt(CONNECTION);
-//        ConceptInsertionService insertionService = ConceptInsertionService.getInstance(connectionConfiguration);
-//        XmlConceptCreator xmlConceptCreator = new XmlConceptCreator();
-//        HierarchicalConfiguration<ImmutableNode> importConfig = xmlConfiguration.configurationAt(slash(IMPORTS, IMPORT));
-//        Stream<ImportConcepts> concepts = xmlConceptCreator.createConcepts(importConfig);
-//        for (ImportConcepts ic : concepts.collect(toCollection(ArrayList::new))) {
-//            insertionService.insertConcepts(importConfig, ic);
-//        }
-//
-//        FileConnectionService fileConnectionService = FileConnectionService.getInstance();
-//        GraphDatabaseService graphdb = fileConnectionService.getDatabase(connectionConfiguration);
-//    }
+    @Test
+    public void testSimpleXmlFormat() throws Exception {
+        XMLConfiguration xmlConfiguration = ConfigurationUtilities.loadXmlConfiguration(new File("src/test/resources/simpleXmlImportConfig.xml"));
+        HierarchicalConfiguration<ImmutableNode> connectionConfiguration = xmlConfiguration.configurationAt(CONNECTION);
+        ConceptInsertionService insertionService = ConceptInsertionService.getInstance(connectionConfiguration);
+        XmlConceptCreator xmlConceptCreator = new XmlConceptCreator();
+        HierarchicalConfiguration<ImmutableNode> importConfig = xmlConfiguration.configurationAt(slash(IMPORTS, IMPORT));
+        Stream<ImportConcepts> concepts = xmlConceptCreator.createConcepts(importConfig);
+        for (ImportConcepts ic : concepts.collect(toCollection(ArrayList::new))) {
+            insertionService.insertConcepts(importConfig, ic);
+        }
+
+        FileConnectionService fileConnectionService = FileConnectionService.getInstance();
+        GraphDatabaseService graphdb = fileConnectionService.getDatabase(connectionConfiguration);
+        try (Transaction tx = graphdb.beginTx()) {
+            Node node = graphdb.findNode(CONCEPT, PROP_ORG_ID, "D007801");
+            assertNotNull(node);
+            assertThat(node).extracting(n -> n.getProperty(PROP_SOURCES)).flatExtracting(Arrays::asList).containsExactly("MeSH XML");
+
+            tx.success();
+        }
+    }
 }
