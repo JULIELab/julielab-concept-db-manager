@@ -18,7 +18,9 @@
                             <xmlfile>src/test/resources/mesh2017_snippet.xml</xmlfile>
                             <format>MESH_XML</format>
                             <sourcename>MeSH XML</sourcename>
-                            <originalsource>MeSH XML</originalsource>
+                            <originalsources>
+                                <source>MeSH XML</source>
+                            </originalsources>
                         </input>
                         <facetgroup>MeSH</facetgroup>
                     </configuration>

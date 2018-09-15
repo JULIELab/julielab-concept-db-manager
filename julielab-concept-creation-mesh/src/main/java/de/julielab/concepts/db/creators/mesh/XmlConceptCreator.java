@@ -9,7 +9,6 @@ import de.julielab.concepts.util.ConceptCreationException;
 import de.julielab.concepts.util.FacetCreationException;
 import de.julielab.java.utilities.ConfigurationUtilities;
 import de.julielab.neo4j.plugins.datarepresentation.*;
-import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
@@ -31,7 +30,8 @@ public class XmlConceptCreator implements ConceptCreator {
     public static final String FORMAT = "format";
     public static final String FACETGROUP = "facetgroup";
     public static final String REGEX = "idregex";
-    public static final String ORG_SOURCE = "originalsource";
+    public static final String ORG_SOURCES = "originalsources";
+    public static final String SOURCE = "source";
     public static final String SOURCE_NAME = "sourcename";
 
 
@@ -52,7 +52,7 @@ public class XmlConceptCreator implements ConceptCreator {
             // Lastly, a matcher may just be given the (original) source without a regular expression. In this case, the source will always be returned by the matcher.
             for (HierarchicalConfiguration<ImmutableNode> inputConfig : importConfig.configurationsAt(slash(confPath, INPUT))) {
                 String fileName = ConfigurationUtilities.requirePresent(XMLFILE, inputConfig::getString);
-                List<ConceptSourceMatcher> matcherList = inputConfig.configurationsAt(ORG_SOURCE).stream().map(ConceptSourceMatcher::new).collect(Collectors.toList());
+                List<ConceptSourceMatcher> matcherList = inputConfig.configurationsAt(slash(ORG_SOURCES, SOURCE)).stream().map(ConceptSourceMatcher::new).collect(Collectors.toList());
                 conceptSourceMatchers.put(fileName, matcherList);
             }
         } catch (ConfigurationException e) {
@@ -235,7 +235,7 @@ public class XmlConceptCreator implements ConceptCreator {
         template.addProperty(slash(confPath, INPUT, XMLFILE), "");
         template.addProperty(slash(confPath, INPUT, FORMAT), "");
         template.addProperty(slash(confPath, INPUT, SOURCE_NAME), "");
-        template.addProperty(slash(confPath, INPUT, ORG_SOURCE), "");
-        template.addProperty(slash(confPath, INPUT, ORG_SOURCE, "@" + REGEX), "");
+        template.addProperty(slash(confPath, INPUT, ORG_SOURCES), "");
+        template.addProperty(slash(confPath, INPUT, ORG_SOURCES, "@" + REGEX), "");
     }
 }

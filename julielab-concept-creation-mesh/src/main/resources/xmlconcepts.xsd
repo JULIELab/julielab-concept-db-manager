@@ -26,7 +26,7 @@
                 <xs:element ref="xmlfile"/>
                 <xs:element ref="format"/>
                 <xs:element ref="sourcename"/>
-                <xs:element ref="originalsource" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element ref="originalsources" minOccurs="0" maxOccurs="unbounded"/>
             </xs:all>
         </xs:complexType>
     </xs:element>
@@ -68,7 +68,7 @@
         </xs:annotation>
     </xs:element>
 
-    <xs:element name="originalsource">
+    <xs:element name="originalsources">
         <xs:annotation>
             <xs:documentation xml:lang="en">
                 The original source given to concepts that match the regular expression specified by the 'idregex'
@@ -79,6 +79,19 @@
                 expression is provided - all remaining originalsource elements will be discarded. Thus,
                 an element without the 'idregex' attribute delivers a default value and should be listed last.
                 Also note that no originalsource element is required.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+           <xs:sequence>
+               <xs:element ref="source" maxOccurs="unbounded"/>
+           </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="source" type="xs:string">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                An original source name that will be assignend to concepts whose ID matches the given regular expression.
             </xs:documentation>
         </xs:annotation>
         <xs:complexType>
@@ -96,7 +109,6 @@
             </xs:simpleContent>
         </xs:complexType>
     </xs:element>
-
 
     <xs:element name="facetgroup" type="xs:string">
         <xs:annotation>
