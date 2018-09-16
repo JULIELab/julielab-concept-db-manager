@@ -33,8 +33,8 @@ public abstract class ServerPluginCallBase extends FunctionCallBase {
             throws ConceptDatabaseConnectionException, MethodCallException {
         try {
             String baseUri = requirePresent(NetworkConnectionCredentials.CONFKEY_URI, key -> connectionConfig.getString(key));
-            String pluginName = requirePresent(slash(CONFIGURATION, PLUGIN_NAME), key -> methodCallConfig.getString(key));
-            String pluginEndpoint = requirePresent(slash(CONFIGURATION, PLUGIN_ENDPOINT), key -> methodCallConfig.getString(key));
+            String pluginName = requirePresent(slash(PLUGIN_NAME), key -> methodCallConfig.getString(key));
+            String pluginEndpoint = requirePresent(slash(PLUGIN_ENDPOINT), key -> methodCallConfig.getString(key));
             Map<String, Object> parameters = null;
             if (methodCallConfig.getKeys(slash(CONFIGURATION, PARAMETERS)).hasNext()) {
                 try {
@@ -74,8 +74,8 @@ public abstract class ServerPluginCallBase extends FunctionCallBase {
 
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
-        template.addProperty(slash(basePath, CONFIGURATION, PLUGIN_NAME), "");
-        template.addProperty(slash(basePath, CONFIGURATION, PLUGIN_ENDPOINT), "");
+        template.addProperty(slash(basePath, PLUGIN_NAME), "");
+        template.addProperty(slash(basePath, PLUGIN_ENDPOINT), "");
         template.addProperty(slash(basePath, CONFIGURATION, PARAMETERS, "parametername"), "value");
         template.addProperty(ws(slash(basePath, CONFIGURATION, PARAMETERS, "parametername"), "@parametername"), "optional: parameter name");
         template.addProperty(slash(basePath, CONFIGURATION, PARAMETERS, "arrayparameter", "arrayitem"), Arrays.asList("value1", "value2"));

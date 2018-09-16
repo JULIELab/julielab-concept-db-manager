@@ -11,13 +11,13 @@
     <exports>
         <export xmlns="http://www.julielab.de/conceptdb/exporters/serverplugin">
             <exporter>ServerPluginExporter</exporter>
-            <configuration>
                 <pluginname>
                     Export
                 </pluginname>
                 <pluginendpoint>
                     lingpipe_dictionary
                 </pluginendpoint>
+            <configuration>
                 <outputfile>
                     src/test/resources/output/serverplugindict.txt
                 </outputfile>

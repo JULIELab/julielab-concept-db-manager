@@ -8,17 +8,6 @@
     <xs:element name="pluginname" type="xs:string"/>
     <xs:element name="pluginendpoint" type="xs:string"/>
 
-    <xs:complexType name="serverpluginconfigurationtype">
-        <xs:complexContent>
-            <xs:extension base="exportconfigurationtype">
-                <xs:sequence>
-                    <xs:element ref="pluginname"/>
-                    <xs:element ref="pluginendpoint"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
     <xs:complexType name="serverpluginexportertype">
         <xs:complexContent>
             <xs:extension base="exportertype">
@@ -31,7 +20,9 @@
                             </xs:restriction>
                         </xs:simpleType>
                     </xs:element>
-                    <xs:element name="configuration" type="serverpluginconfigurationtype"/>
+                    <xs:element ref="pluginname"/>
+                    <xs:element ref="pluginendpoint"/>
+                    <xs:element name="configuration" type="exportconfigurationtype"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>

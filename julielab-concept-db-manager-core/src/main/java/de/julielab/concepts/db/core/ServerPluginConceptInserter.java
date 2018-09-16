@@ -37,15 +37,15 @@ public class ServerPluginConceptInserter implements ConceptInserter {
 	public void insertConcepts(HierarchicalConfiguration<ImmutableNode> importConfig, ImportConcepts concepts)
 			throws ConceptInsertionException {
 		try {
-			checkParameters(importConfig, slash(CONFIGURATION, PLUGIN_NAME), slash(CONFIGURATION, PLUGIN_ENDPOINT));
+			checkParameters(importConfig, slash(SERVER_PLUGIN_INSERTER, PLUGIN_NAME), slash(SERVER_PLUGIN_INSERTER, PLUGIN_ENDPOINT));
 
 			ObjectMapper jsonMapper = new ObjectMapper().registerModule(new Jdk8Module());
 			jsonMapper.setSerializationInclusion(Include.NON_NULL);
 			jsonMapper.setSerializationInclusion(Include.NON_EMPTY);
 
 			String serverUri = connectionConfiguration.getString(URI);
-			String pluginName = importConfig.getString(slash(CONFIGURATION, PLUGIN_NAME));
-			String pluginEndpoint = importConfig.getString(slash(CONFIGURATION, PLUGIN_ENDPOINT));
+			String pluginName = importConfig.getString(slash(SERVER_PLUGIN_INSERTER, PLUGIN_NAME));
+			String pluginEndpoint = importConfig.getString(slash(SERVER_PLUGIN_INSERTER, PLUGIN_ENDPOINT));
 			HttpConnectionService httpService = HttpConnectionService.getInstance();
 			HttpPost httpPost = httpService.getHttpPostRequest(connectionConfiguration, serverUri + String
 					.format(ServerPluginConnectionConstants.SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint));
