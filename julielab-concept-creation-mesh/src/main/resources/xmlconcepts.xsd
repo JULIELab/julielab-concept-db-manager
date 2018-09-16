@@ -83,7 +83,7 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="source" type="xs:string">
+    <xs:element name="source">
         <xs:annotation>
             <xs:documentation xml:lang="en">
                 The original source given to concepts that match the regular expression specified by the 'idregex'
@@ -115,9 +115,9 @@
     <!-- The provider configuration -->
     <xs:element name="configuration">
         <xs:complexType>
-            <xs:all>
+            <xs:sequence>
                 <xs:element ref="input" maxOccurs="unbounded"/>
-            </xs:all>
+            </xs:sequence>
         </xs:complexType>
     </xs:element>
 
