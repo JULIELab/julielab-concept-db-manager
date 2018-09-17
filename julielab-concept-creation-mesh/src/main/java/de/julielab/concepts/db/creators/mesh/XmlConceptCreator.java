@@ -212,9 +212,13 @@ public class XmlConceptCreator implements ConceptCreator {
      */
     private ConceptCoordinates getConceptCoordinate(Descriptor desc, Map<String, String> file2Source, Map<String, List<ConceptSourceMatcher>> conceptSourceMatchers, Map<Descriptor, String> desc2File) {
         String sourceFile = desc2File.get(desc);
+        if (sourceFile == null)
+            throw new IllegalArgumentException("The source file for the following descriptor is null: " + desc);
         String sourceName = file2Source.get(sourceFile);
         String originalSource = null;
         List<ConceptSourceMatcher> conceptSourceMatcherList = conceptSourceMatchers.get(sourceFile);
+        if (conceptSourceMatcherList == null)
+            throw new IllegalStateException("The concept source matcher for the source file " + sourceFile + " is null");
         for (Iterator<ConceptSourceMatcher> iterator = conceptSourceMatcherList.iterator(); originalSource == null && iterator.hasNext(); ) {
             originalSource = iterator.next().matchOriginalId(desc.getUI());
         }

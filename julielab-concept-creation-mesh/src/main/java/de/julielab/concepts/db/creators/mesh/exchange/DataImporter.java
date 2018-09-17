@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.GZIPInputStream;
 
@@ -155,6 +156,7 @@ public class DataImporter {
         if (dir.isDirectory())
                 files = dir.listFiles();
         else files = new File[] {dir};
+        List<Descriptor> allCreatedDescriptors = new ArrayList<>();
         for (File xmlFile : files) {
             try {
                 if (".".equals(xmlFile.getName()) || "..".equals(xmlFile.getName())) {
@@ -178,6 +180,8 @@ public class DataImporter {
 
                 xmlReader.parse(inputSource);
 
+                allCreatedDescriptors.addAll(saxHandler.getCreatedDescriptors());
+
                 is.close();
                 // reader.close();
 
@@ -193,7 +197,7 @@ public class DataImporter {
             }
         }
         logger.info("# ... done with directory '" + xmlDirPath + "'.");
-        return saxHandler.getCreatedDescriptors();
+        return allCreatedDescriptors;
     }
 
     /**
