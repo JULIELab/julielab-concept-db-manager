@@ -37,18 +37,18 @@
     </imports>
     <exports>
         <export xmlns="http://www.julielab.de/conceptdb/exporters/serverplugin">
+            <pluginname>
+                Export
+            </pluginname>
+            <pluginendpoint>
+                term_id_mapping
+            </pluginendpoint>
             <configuration>
                 <decoding>
                     <json2bytearray>true</json2bytearray>
                     <base64>false</base64>
                     <gzip>true</gzip>
                 </decoding>
-                <pluginname>
-                    Export
-                </pluginname>
-                <pluginendpoint>
-                    term_id_mapping
-                </pluginendpoint>
                 <outputfile>
                     genes.idmap
                 </outputfile>
@@ -63,18 +63,18 @@
             </configuration>
         </export>
         <export xmlns="http://www.julielab.de/conceptdb/exporters/serverplugin">
+            <pluginname>
+                Export
+            </pluginname>
+            <pluginendpoint>
+                element_aggregate_id_mapping
+            </pluginendpoint>
             <configuration>
                 <decoding>
                     <json2bytearray>false</json2bytearray>
                     <base64>true</base64>
                     <gzip>true</gzip>
                 </decoding>
-                <pluginname>
-                    Export
-                </pluginname>
-                <pluginendpoint>
-                    element_aggregate_id_mapping
-                </pluginendpoint>
                 <outputfile>
                     elements.2aggid
                 </outputfile>
@@ -88,18 +88,18 @@
             </configuration>
         </export>
         <export xmlns="http://www.julielab.de/conceptdb/exporters/serverplugin">
+            <pluginname>
+                Export
+            </pluginname>
+            <pluginendpoint>
+                hypernyms
+            </pluginendpoint>
             <configuration>
                 <decoding>
                     <json2bytearray>true</json2bytearray>
                     <base64>false</base64>
                     <gzip>true</gzip>
                 </decoding>
-                <pluginname>
-                    Export
-                </pluginname>
-                <pluginendpoint>
-                    hypernyms
-                </pluginendpoint>
                 <outputfile>
                     hypernyms.tid
                 </outputfile>
