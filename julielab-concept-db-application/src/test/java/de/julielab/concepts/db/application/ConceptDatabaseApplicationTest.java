@@ -24,7 +24,6 @@ import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,7 +38,7 @@ public class ConceptDatabaseApplicationTest {
 	private static XMLConfiguration configuration;
 
 	@BeforeClass
-	public static void setup() throws ConfigurationException, IOException {
+	public static void setup() throws ConfigurationException {
 		// All we do in the long next lines is to read the test configuration file, get
 		// the path to the test database and delete it.
 		Parameters params = new Parameters();
@@ -59,7 +58,7 @@ public class ConceptDatabaseApplicationTest {
 	}
 
 	@Test
-	public void testConceptImport() throws URISyntaxException, ConceptDatabaseConnectionException, DataExportException, VersioningException, CmdLineException {
+	public void testConceptImport() throws ConceptDatabaseConnectionException, DataExportException, VersioningException, CmdLineException {
 		ConceptDatabaseApplication.main(new String[] { "--import", "-c", SIMPLEIMPORT, "-nv"});
 
 		// Check if the Plant Ontology has been imported as expected.

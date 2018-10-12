@@ -92,7 +92,6 @@ public class ConceptDatabaseApplication {
     private static void doExports(CLIParameters parameters, XMLConfiguration configuration, HierarchicalConfiguration<ImmutableNode> connectionConfiguration) throws DataExportException, ConceptDatabaseConnectionException {
         DataExportService dataExportService = DataExportService.getInstance(connectionConfiguration);
         List<HierarchicalConfiguration<ImmutableNode>> applicableExports = new ArrayList<>();
-
         List<String> selectedSteps = !isUnspecified(parameters.doExport) ? parameters.doExport : parameters.doAll;
 
         if (!isUnspecified(selectedSteps)) {
