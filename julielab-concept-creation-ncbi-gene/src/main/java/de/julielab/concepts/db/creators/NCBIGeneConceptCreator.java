@@ -2,6 +2,7 @@ package de.julielab.concepts.db.creators;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
 import de.julielab.concepts.db.core.DefaultFacetCreator;
 import de.julielab.concepts.db.core.services.FacetCreationService;
 import de.julielab.concepts.db.core.spi.ConceptCreator;
@@ -16,22 +17,17 @@ import de.julielab.semedico.resources.ResourceTermLabels;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.LineIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static java.util.stream.Collectors.joining;
 
@@ -80,17 +76,9 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         List<String> aggregateCopyProperties = Arrays.asList(ConceptConstants.PROP_PREF_NAME,
                 ConceptConstants.PROP_SYNONYMS, ConceptConstants.PROP_WRITING_VARIANTS,
                 ConceptConstants.PROP_DESCRIPTIONS, ConceptConstants.PROP_FACETS);
-        Multimap<String, HomologeneRecord> groupId2Homolo = HashMultimap.create();
-        LineIterator iterator = FileUtils.lineIterator(homologene);
-        while (iterator.hasNext()) {
-            String line = iterator.next();
-            String[] split = line.split("\t");
-            if (split.length != 6)
-                throw new IllegalStateException("Expected 6 fields in homologene file format, but got " + split.length
-                        + " in line \"" + line + "\"");
-            HomologeneRecord record = new HomologeneRecord(split);
-            groupId2Homolo.put(record.groupId, record);
-        }
+        final Stream<HomologeneRecord> recordStream = FileUtilities.getReaderFromFile(homologene).lines().map(line -> line.split("\t")).map(HomologeneRecord::new);
+        Multimap<String, HomologeneRecord> groupId2Homolo = Multimaps.index(recordStream.iterator(), r -> r.groupId);
+        log.info("Got {} homologene records", groupId2Homolo.size());
 
         // create homologene aggregates
         Map<String, String> genes2HomoloGroup = new HashMap<>();
@@ -149,14 +137,17 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 
         // add the orthology information from gene group to make gene group aggregates
         Multimap<String, String> geneGroupOrthologs = HashMultimap.create();
-        iterator = FileUtils.lineIterator(geneGroup);
+        final Iterator<String> iterator = FileUtilities.getReaderFromFile(geneGroup).lines().iterator();
         // Format: tax_id GeneID relationship Other_tax_id Other_GeneID (tab is
         // used as a separator, pound sign - start of a comment)
         while (iterator.hasNext()) {
             String geneGroupLine = iterator.next();
+            System.out.println(geneGroupLine);
             if (geneGroupLine.startsWith("#"))
                 continue;
             String[] geneGroupRecord = geneGroupLine.split("\t");
+            if (geneGroupRecord.length < 5)
+                throw new IllegalArgumentException("The line " + geneGroupLine + " does not have at least 5 tab-separated columns.");
             String relationship = geneGroupRecord[2];
             if (!relationship.equals("Ortholog"))
                 continue;
@@ -164,6 +155,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             String gene2 = geneGroupRecord[4];
             geneGroupOrthologs.put(gene1, gene2);
         }
+        log.info("Got {} orthology relations from gene_group file {}", geneGroupOrthologs.size(), geneGroup);
 
         // 1. create separate gene group aggregates
         // 2. when there are non-empty intersection between homologene and gene
@@ -326,9 +318,9 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
     private void setSpeciesQualifier(File ncbiTaxNames, Map<String, String> geneId2Tax,
                                      Collection<ImportConcept> geneTerms) throws IOException {
         Map<String, TaxonomyRecord> taxNameRecords = new HashMap<>();
-        LineIterator lineIt = FileUtils.lineIterator(ncbiTaxNames, "UTF-8");
+        Iterator<String> lineIt = FileUtilities.getReaderFromFile(ncbiTaxNames).lines().iterator();
         while (lineIt.hasNext()) {
-            String recordString = lineIt.nextLine();
+            String recordString = lineIt.next();
             // at the end of the line there is no more tab, thus we have
             // actually
             // two record seperators
@@ -371,12 +363,12 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 
     protected void convertGeneInfoToTerms(File geneInfo, File organisms, File geneDescriptions,
                                           Map<String, String> geneId2Tax, Map<TermCoordinates, ImportConcept> termsByGeneId) throws IOException {
-        Set<String> organismSet = new HashSet<>(IOUtils.readLines(new FileInputStream(organisms), "UTF-8"));
+        Set<String> organismSet = FileUtilities.getReaderFromFile(organisms).lines().collect(Collectors.toSet());
 
-        LineIterator lineIt = FileUtils.lineIterator(geneDescriptions, "UTF-8");
+        Iterator<String> lineIt = FileUtilities.getReaderFromFile(geneDescriptions).lines().iterator();
         Map<String, String> gene2Summary = new HashMap<>();
         while (lineIt.hasNext()) {
-            String line = lineIt.nextLine();
+            String line = lineIt.next();
             String[] split = line.split("\t");
             String geneId = split[0];
             String summary = split[1];
@@ -636,5 +628,4 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             geneId = record[2];
         }
     }
-
 }

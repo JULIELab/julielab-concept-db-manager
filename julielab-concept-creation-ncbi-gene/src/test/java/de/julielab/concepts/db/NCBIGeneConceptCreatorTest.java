@@ -23,6 +23,7 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -42,6 +43,7 @@ public class NCBIGeneConceptCreatorTest {
 	@AfterTest
 	@BeforeTest
 	public void afterTest() throws IOException {
+
 		FileUtils.deleteQuietly(TEST_DB);
 	}
 
