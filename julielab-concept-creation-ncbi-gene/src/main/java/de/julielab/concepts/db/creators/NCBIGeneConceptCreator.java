@@ -536,12 +536,12 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         }
 
         String basepath = importConfig.getString(slash(confPath, BASEPATH), "");
-        File geneInfo = new File(basepath + importConfig.getString(slash(confPath, GENE_INFO)));
-        File geneDescriptions = new File(basepath + importConfig.getString(slash(confPath, GENEDESCRIPTIONS)));
-        File organisms = new File(basepath + importConfig.getString(slash(confPath, ORGANISMLIST)));
-        File ncbiTaxNames = new File(basepath + importConfig.getString(slash(confPath, ORGANISMNAMES)));
-        File homologene = new File(basepath + importConfig.getString(slash(confPath, HOMOLOGENE)));
-        File geneGroup = new File(basepath + importConfig.getString(slash(confPath, GENE_GROUP)));
+        File geneInfo = resolvePath(basepath, importConfig.getString(slash(confPath, GENE_INFO)));
+        File geneDescriptions = resolvePath(basepath, importConfig.getString(slash(confPath, GENEDESCRIPTIONS)));
+        File organisms = resolvePath(basepath, importConfig.getString(slash(confPath, ORGANISMLIST)));
+        File ncbiTaxNames = resolvePath(basepath, importConfig.getString(slash(confPath, ORGANISMNAMES)));
+        File homologene = resolvePath(basepath, importConfig.getString(slash(confPath, HOMOLOGENE)));
+        File geneGroup = resolvePath(basepath, importConfig.getString(slash(confPath, GENE_GROUP)));
         List<File> notFound = new ArrayList<>();
         for (File f : Arrays.asList(geneInfo, geneDescriptions, organisms, ncbiTaxNames, homologene, geneGroup)) {
             if (!f.exists())
@@ -579,6 +579,18 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             throw new ConceptCreationException(e);
         }
 
+    }
+
+    /**
+     * Checks if <tt>filepath</tt> is an absolute path. If so, <tt>filepath</tt> is returned. Otherweise, <tt>basepath + filepath</tt> is returned.
+     * @param basepath A base path to resolve the potentially relative <tt>filepath</tt> against.
+     * @param filepath The - potentially relative to <tt>basepath</tt> - path to a file.
+     * @return The complete path to the file pointed to by <tt>filepath</tt>.
+     */
+    private File resolvePath(String basepath, String filepath) {
+        String delimiter = !basepath.endsWith(File.separator) && !filepath.startsWith(File.separator) ? File.separator : "";
+        String path = new File(filepath).isAbsolute() ? filepath : basepath + delimiter + filepath;
+        return new File(path);
     }
 
     @Override
