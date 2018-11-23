@@ -127,7 +127,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
     private ImportConcept findTopHomologyAggregate(ImportConcept concept, Map<ConceptCoordinates, ImportConcept> termsByGeneId) {
         if (concept.coordinates.sourceId.startsWith(TOP_HOMOLOGY_PREFIX))
             return concept;
-        System.out.println("Haha!");
+        System.out.println(concept);
+        System.out.println(concept.parentCoordinates);
         ImportConcept topHomologyConcept = null;
         for (ConceptCoordinates parentCoordinates : concept.parentCoordinates) {
             final ImportConcept parent = termsByGeneId.get(parentCoordinates);
