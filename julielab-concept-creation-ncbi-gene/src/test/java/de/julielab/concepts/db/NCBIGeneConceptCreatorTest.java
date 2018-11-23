@@ -8,7 +8,6 @@ import de.julielab.java.utilities.ConfigurationUtilities;
 import de.julielab.neo4j.plugins.ConceptManager.EdgeTypes;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcept;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
-import de.julielab.neo4j.plugins.datarepresentation.TermCoordinates;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
@@ -23,12 +22,10 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.java.utilities.ConfigurationUtilities.dot;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static de.julielab.neo4j.plugins.ConceptManager.ConceptLabel.AGGREGATE;
 import static de.julielab.neo4j.plugins.datarepresentation.constants.ConceptConstants.PROP_ORG_ID;
@@ -86,7 +83,7 @@ public class NCBIGeneConceptCreatorTest {
 		assertTrue(geneId2Tax.size() > 0);
 		assertEquals("9606", geneId2Tax.get("3558"));
 		// The keys are lowercased to avoid problems due to different casing.
-		ImportConcept term = termsByGeneId.get(new TermCoordinates("3558", NCBIGeneConceptCreator.NCBI_GENE_SOURCE));
+		ImportConcept term = termsByGeneId.get(NCBIGeneConceptCreator.getGeneCoordinates("3558"));
 		assertEquals("IL2", term.prefName);
 		assertEquals("3558", term.coordinates.originalId);
 		assertNotNull(term.descriptions);
