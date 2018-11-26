@@ -44,16 +44,16 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
     public static final String ORGANISMNAMES = "organismnames";
     public static final String HOMOLOGENE = "homologene";
     public static final String GENE_GROUP = "gene_group";
-    public String HOMOLOGENE_PREFIX = "homologene";
+    public static final String HOMOLOGENE_PREFIX = "homologene";
     /**
      * "gene_group" is the name of the file specifying the ortholog relationships
      * between genes. Also, NCBI Gene, searching for a specific ortholog group works
      * by search for "ortholog_gene_2475[group]" where the number is the ID of the
      * gene that represents the group, the human gene, most of the time.
      */
-    public String GENE_GROUP_PREFIX = "genegroup";
-    public String TOP_ORTHOLOGY_PREFIX = "toporthology";
-    public String TOP_HOMOLOGY_PREFIX = "tophomology";
+    public static final String GENE_GROUP_PREFIX = "genegroup";
+    public static final String TOP_ORTHOLOGY_PREFIX = "toporthology";
+    public static final String TOP_HOMOLOGY_PREFIX = "tophomology";
     private int homologeneAggregateCounter;
     private int orthologAggregateCounter;
     private int topOrthologAggregateCounter;
@@ -96,20 +96,21 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             ImportConcept topHomologyAggregate = findTopHomologyAggregate(gene, termsByGeneId);
             if (topHomologyAggregate == null) {
                 Set<ImportConcept> topAggregates = findTopOrthologsAndHomologyAggregates(gene, termsByGeneId, new TreeSet<>(Comparator.comparingLong(System::identityHashCode)));
-                topHomologyAggregate = new ImportConcept(topAggregates.stream().map(ic -> ic.coordinates).collect(toList()), aggregateCopyProperties);
-                topHomologyAggregate.coordinates = new ConceptCoordinates();
-                topHomologyAggregate.coordinates.sourceId = TOP_HOMOLOGY_PREFIX + topHomologyAggregateCounter;
-                topHomologyAggregate.coordinates.source = SEMEDICO_RESOURCE_MANAGEMENT_SOURCE;
-                topHomologyAggregate.aggregateIncludeInHierarchy = true;
-                topHomologyAggregate.generalLabels = Arrays.asList("AGGREGATE_TOP_HOMOLOGY",
-                        "NO_PROCESSING_GAZETTEER");
-                ConceptCoordinates topHomologyCoordinates = topHomologyAggregate.coordinates;
-                termsByGeneId.put(topHomologyAggregate.coordinates, topHomologyAggregate);
-                topAggregates.forEach(agg -> agg.addParent(topHomologyCoordinates));
-                ++topHomologyAggregateCounter;
+                // Only if there is more then one aggregate for the current gene we need a new top aggregate to unite the existing aggregates
+                if (topAggregates.size() > 1) {
+                    topHomologyAggregate = new ImportConcept(topAggregates.stream().map(ic -> ic.coordinates).collect(toList()), aggregateCopyProperties);
+                    topHomologyAggregate.coordinates = new ConceptCoordinates();
+                    topHomologyAggregate.coordinates.sourceId = TOP_HOMOLOGY_PREFIX + topHomologyAggregateCounter;
+                    topHomologyAggregate.coordinates.source = SEMEDICO_RESOURCE_MANAGEMENT_SOURCE;
+                    topHomologyAggregate.aggregateIncludeInHierarchy = true;
+                    topHomologyAggregate.generalLabels = Arrays.asList("AGGREGATE_TOP_HOMOLOGY",
+                            "NO_PROCESSING_GAZETTEER");
+                    ConceptCoordinates topHomologyCoordinates = topHomologyAggregate.coordinates;
+                    termsByGeneId.put(topHomologyAggregate.coordinates, topHomologyAggregate);
+                    topAggregates.forEach(agg -> agg.addParent(topHomologyCoordinates));
+                    ++topHomologyAggregateCounter;
+                }
             }
-
-
         }
     }
 
@@ -127,8 +128,6 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
     private ImportConcept findTopHomologyAggregate(ImportConcept concept, Map<ConceptCoordinates, ImportConcept> termsByGeneId) {
         if (concept.coordinates.sourceId.startsWith(TOP_HOMOLOGY_PREFIX))
             return concept;
-        System.out.println(concept);
-        System.out.println(concept.parentCoordinates);
         ImportConcept topHomologyConcept = null;
         for (ConceptCoordinates parentCoordinates : concept.parentCoordinates) {
             final ImportConcept parent = termsByGeneId.get(parentCoordinates);
@@ -253,7 +252,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
                     topOrthologyAggregate.coordinates.source = SEMEDICO_RESOURCE_MANAGEMENT_SOURCE;
                     topOrthologyAggregate.aggregateIncludeInHierarchy = true;
                     topOrthologyAggregate.generalLabels = Arrays.asList("AGGREGATE_TOP_ORTHOLOGY", "NO_PROCESSING_GAZETTEER");
-                    termsByGeneId.put(new ConceptCoordinates(topOrthologyAggregate.coordinates.sourceId, topOrthologyAggregate.coordinates.source, true),
+                    termsByGeneId.put(topOrthologyAggregate.coordinates,
                             topOrthologyAggregate);
                     ++topOrthologAggregateCounter;
                 }
