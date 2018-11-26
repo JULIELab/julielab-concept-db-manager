@@ -87,10 +87,23 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
                 ConceptConstants.PROP_DESCRIPTIONS, ConceptConstants.PROP_FACETS);
 
         createHomologeneAggregates(genes2Aggregate, homologene, termsByGeneId, aggregateCopyProperties);
+        System.out.println("After homologene aggs");
+        checkfornullparentcoords(termsByGeneId);
         createGeneOrthologyAggregates(genes2Aggregate, geneGroup, termsByGeneId, aggregateCopyProperties);
+        System.out.println("After ortho aggs");
+        checkfornullparentcoords(termsByGeneId);
         createTopHomologyAggregates(genes2Aggregate, termsByGeneId, aggregateCopyProperties);
+        System.out.println("After top-homologene aggs");
+        checkfornullparentcoords(termsByGeneId);
 
 
+    }
+
+    private void checkfornullparentcoords(Map<ConceptCoordinates,ImportConcept> termsByGeneId) {
+        for (ImportConcept c : termsByGeneId.values()) {
+            if (c.parentCoordinates == null)
+                throw new IllegalArgumentException(c.coordinates.toString());
+        }
     }
 
     private void createTopHomologyAggregates(Multimap<String, ConceptCoordinates> genes2Aggregate, Map<ConceptCoordinates, ImportConcept> termsByGeneId, List<String> aggregateCopyProperties) {
@@ -335,8 +348,6 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
                 termsByGeneId.put(aggregate.coordinates,
                         aggregate);
                 ++homologeneAggregateCounter;
-            if (aggregate.parentCoordinates == null)
-                throw new IllegalStateException("WTF. " + aggregate);
                 for (ConceptCoordinates geneCoords : homologuousGeneCoords) {
                     String geneId = geneCoords.originalId;
                     ImportConcept gene = termsByGeneId.get(geneCoords);
