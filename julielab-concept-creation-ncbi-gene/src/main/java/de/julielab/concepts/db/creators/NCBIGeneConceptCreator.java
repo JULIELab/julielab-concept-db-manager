@@ -61,6 +61,10 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
     private Logger log = LoggerFactory.getLogger(NCBIGeneConceptCreator.class);
 
     public NCBIGeneConceptCreator() {
+        resetCounters();
+    }
+
+    private void resetCounters() {
         this.homologeneAggregateCounter = 0;
         this.orthologAggregateCounter = 0;
         this.topOrthologAggregateCounter = 0;
@@ -243,6 +247,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
                 Set<ImportConcept> seenOrthologyClusters = new TreeSet<>(Comparator.comparingLong(System::identityHashCode));
                 for (ImportConcept cluster : clusters) {
                     topOrthologyAggregate = findTopOrtholog(cluster, seenOrthologyClusters, genes2OrthoAggregate, orthoAgg2TopOrtho);
+                    if (topOrthologyAggregate != null)
+                        break;
                 }
                 // If there is not yet a top orthology aggregate, create it now
                 if (topOrthologyAggregate == null) {
@@ -270,9 +276,9 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 
     private ImportConcept findTopOrtholog(ImportConcept orthologyCluster, Set<ImportConcept> seenOrthologyClusters, Multimap<String, ImportConcept> genes2OrthoAggregate, Map<ConceptCoordinates, ImportConcept> orthoAgg2TopOrtho) {
         // First check if the orthology cluster is already connected to a top orthology aggregate
-        ImportConcept topOrthology = orthoAgg2TopOrtho.get(orthologyCluster.coordinates);
+        ImportConcept topOrtholog = orthoAgg2TopOrtho.get(orthologyCluster.coordinates);
         seenOrthologyClusters.add(orthologyCluster);
-        if (topOrthology == null) {
+        if (topOrtholog == null) {
             // Try to find a top orthology aggregate that is connected - perhaps indirectly - through one of the orthology cluster's gene elements
             for (ConceptCoordinates element : orthologyCluster.elementCoordinates) {
                 final Collection<ImportConcept> orthologyClustersOfElement = genes2OrthoAggregate.get(element.originalId);
@@ -284,13 +290,13 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
                     // Make a recursive call to all of the other orthology clusters of the current gene element.
                     // Through the recursion we will follow the connections from gene elements to their orthology clusters, to their elements until there is nothing more to go to.
                     // In order to not go back the cluster where the search started, we pass the current gene's element id
-                    topOrthology = findTopOrtholog(orthologyClusterOfElement, seenOrthologyClusters, genes2OrthoAggregate, orthoAgg2TopOrtho);
-                    if (topOrthology != null)
-                        break;
+                    topOrtholog = findTopOrtholog(orthologyClusterOfElement, seenOrthologyClusters, genes2OrthoAggregate, orthoAgg2TopOrtho);
+                    if (topOrtholog != null)
+                        return topOrtholog;
                 }
             }
         }
-        return topOrthology;
+        return topOrtholog;
     }
 
     private void createHomologeneAggregates(Multimap<String, ConceptCoordinates> genes2Aggregate, File homologene, Map<ConceptCoordinates, ImportConcept> termsByGeneId, List<String> aggregateCopyProperties) throws IOException {
@@ -578,6 +584,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
     @Override
     public Stream<ImportConcepts> createConcepts(HierarchicalConfiguration<ImmutableNode> importConfig)
             throws ConceptCreationException, FacetCreationException {
+        resetCounters();
         String confPath = slash(CONCEPTS, CREATOR, CONFIGURATION);
         try {
             ConfigurationUtilities.checkParameters(importConfig, slash(confPath, GENE_INFO), slash(confPath, GENEDESCRIPTIONS), slash(confPath, ORGANISMLIST),

@@ -20,9 +20,7 @@ import org.apache.commons.io.FileUtils;
 import org.neo4j.graphdb.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,11 +48,11 @@ public class NCBIGeneConceptCreatorTest {
     private static final File TEST_DB = new File("src/test/resources/graph.db");
     private static Logger log = LoggerFactory.getLogger(NCBIGeneConceptCreatorTest.class);
 
-    @AfterTest
-    @BeforeTest
-    public void afterTest() throws IOException {
-
-        FileUtils.deleteQuietly(TEST_DB);
+    @AfterMethod
+    @BeforeMethod
+    public void deleteDb() throws IOException {
+        log.debug("Deleting the test DB directory");
+        FileUtils.deleteDirectory(TEST_DB);
     }
 
     @Test
@@ -175,6 +173,7 @@ public class NCBIGeneConceptCreatorTest {
         }
         assertTrue("The following gene IDs where not found in the database: " + expectedGeneIds,
                 expectedGeneIds.isEmpty());
+        FileConnectionService.getInstance().shutdown();
     }
 
     @Test
@@ -226,7 +225,7 @@ public class NCBIGeneConceptCreatorTest {
                         assertThat(aggregatingNodes.size()).isEqualTo(1);
                         final Node aggregateOfOrthologAggregate = aggregatingNodes.stream().findAny().get();
                         final String aggregateSourceId = ((String[]) aggregateOfOrthologAggregate.getProperty(PROP_SRC_IDS))[0];
-                        assertThat(aggregateSourceId).overridingErrorMessage("Expecting the node with properties <%s> to be element of the aggregate <%s> but was <%s> instead", PropertyUtilities.getNodePropertiesAsString(orthologAggregate), NCBIGeneConceptCreator.TOP_ORTHOLOGY_PREFIX + 1, aggregateSourceId).isEqualTo(NCBIGeneConceptCreator.TOP_ORTHOLOGY_PREFIX + 0);
+                        assertThat(aggregateSourceId).overridingErrorMessage("Expecting the node with properties <%s> to be element of the aggregate <%s> but was <%s> instead", PropertyUtilities.getNodePropertiesAsString(orthologAggregate), NCBIGeneConceptCreator.TOP_ORTHOLOGY_PREFIX + 0, aggregateSourceId).isEqualTo(NCBIGeneConceptCreator.TOP_ORTHOLOGY_PREFIX + 0);
                     } else {
                         // this is orthology cluster g11, there shouldn't be any governing aggregate
                         assertThat(aggregatingNodes).isEmpty();
@@ -239,10 +238,11 @@ public class NCBIGeneConceptCreatorTest {
             final List<Node> topOrthologyAggregates = graphdb.findNodes(Label.label("AGGREGATE_GENEGROUP")).stream().collect(Collectors.toList());
             assertThat(topOrthologyAggregates.size()).isEqualTo(5);
 
+
             tx.success();
         }
+        FileConnectionService.getInstance().shutdown();
     }
-
 
 
 }
