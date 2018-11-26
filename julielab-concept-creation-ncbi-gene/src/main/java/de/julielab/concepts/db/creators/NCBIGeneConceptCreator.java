@@ -10,6 +10,7 @@ import de.julielab.concepts.util.ConceptCreationException;
 import de.julielab.concepts.util.FacetCreationException;
 import de.julielab.java.utilities.ConfigurationUtilities;
 import de.julielab.java.utilities.FileUtilities;
+import de.julielab.neo4j.plugins.auxiliaries.PropertyUtilities;
 import de.julielab.neo4j.plugins.datarepresentation.*;
 import de.julielab.neo4j.plugins.datarepresentation.constants.ConceptConstants;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
@@ -133,6 +134,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         if (concept.coordinates.sourceId.startsWith(TOP_HOMOLOGY_PREFIX))
             return concept;
         ImportConcept topHomologyConcept = null;
+        if (concept.parentCoordinates == null)
+            throw new IllegalArgumentException("The passed concept does have null parents " + concept.coordinates);
         for (ConceptCoordinates parentCoordinates : concept.parentCoordinates) {
             final ImportConcept parent = termsByGeneId.get(parentCoordinates);
             topHomologyConcept = findTopHomologyAggregate(parent, termsByGeneId);
