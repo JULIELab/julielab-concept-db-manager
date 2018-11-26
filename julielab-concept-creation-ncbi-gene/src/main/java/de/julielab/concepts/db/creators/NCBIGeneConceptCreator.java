@@ -86,6 +86,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
                 ConceptConstants.PROP_SYNONYMS, ConceptConstants.PROP_WRITING_VARIANTS,
                 ConceptConstants.PROP_DESCRIPTIONS, ConceptConstants.PROP_FACETS);
 
+        System.out.println("Before homologene aggs");
+        checkfornullparentcoords(termsByGeneId);
         createHomologeneAggregates(genes2Aggregate, homologene, termsByGeneId, aggregateCopyProperties);
         System.out.println("After homologene aggs");
         checkfornullparentcoords(termsByGeneId);
