@@ -335,7 +335,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
                 termsByGeneId.put(aggregate.coordinates,
                         aggregate);
                 ++homologeneAggregateCounter;
-
+            if (aggregate.parentCoordinates == null)
+                throw new IllegalStateException("WTF. " + aggregate);
                 for (ConceptCoordinates geneCoords : homologuousGeneCoords) {
                     String geneId = geneCoords.originalId;
                     ImportConcept gene = termsByGeneId.get(geneCoords);
@@ -346,7 +347,6 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
                     genes2Aggregate.put(geneId,
                             new ConceptCoordinates(aggregate.coordinates.sourceId, aggregate.coordinates.source, true));
                     gene.addParent(aggregate.coordinates);
-                    // gene.addParentSrcId(aggregate.coordinates.sourceId);
                     // If we actually aggregate multiple genes into one, the
                     // elements should disappear behind the aggregate and as such
                     // should not be present in the query dictionary or suggestions.
