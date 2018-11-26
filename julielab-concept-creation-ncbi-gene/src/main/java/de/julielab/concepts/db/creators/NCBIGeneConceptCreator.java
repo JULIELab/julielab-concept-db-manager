@@ -189,7 +189,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
                 return newset;
             });
         }
-        log.info("Got {} orthology groups from gene_orthology file {}", geneGroupOrthologs.size(), geneGroup);
+        log.info("Got {} orthology groups from gene_ortholog file {}", geneGroupOrthologs.size(), geneGroup);
 
         // 1. create separate gene orthology aggregates
         // 2. for overlapping gene orthology aggregates, create a top-orthology aggregate
