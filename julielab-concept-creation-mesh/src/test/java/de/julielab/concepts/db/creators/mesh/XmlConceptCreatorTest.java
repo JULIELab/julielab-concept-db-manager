@@ -97,10 +97,10 @@ public class XmlConceptCreatorTest {
         // Test that the MeSH concepts have their expected properties; we test in on one example, the Eukariota
         try (Transaction tx = graphdb.beginTx()) {
             Node eukaryota = graphdb.findNode(CONCEPT, PROP_ORG_ID, "D056890");
-            assertThat(eukaryota).extracting(n -> n.getProperty(PROP_PREF_NAME)).containsExactly("Eukaryota");
-            assertThat(eukaryota).extracting(n -> n.getProperty(PROP_SYNONYMS)).flatExtracting(a -> Arrays.asList(a)).containsExactlyInAnyOrder("Eucarya", "Eukarya", "Eukaryotes");
+            assertThat(eukaryota.getProperty(PROP_PREF_NAME)).isEqualTo("Eukaryota");
+            assertThat((String[])eukaryota.getProperty(PROP_SYNONYMS)).containsExactlyInAnyOrder("Eucarya", "Eukarya", "Eukaryotes");
             // We need to normalize the XML indentation here, thus the replaceAll
-            assertThat(eukaryota).extracting(n -> n.getProperty(PROP_DESCRIPTIONS)).flatExtracting(a -> Arrays.asList(a)).matches(desc -> ((String) desc.get(0)).replaceAll("\\s+", " ").contains("They comprise almost all multicellular and many unicellular organisms"));
+            assertThat((String[])eukaryota.getProperty(PROP_DESCRIPTIONS)).matches(desc -> desc[0].replaceAll("\\s+", " ").contains("They comprise almost all multicellular and many unicellular organisms"));
 
             tx.success();
         }
@@ -124,8 +124,8 @@ public class XmlConceptCreatorTest {
             Node node = graphdb.findNode(CONCEPT, PROP_ORG_ID, "D007801");
             assertNotNull(node);
             // Check that the original source regular expression detection works
-            assertThat(node).extracting(n -> n.getProperty(PROP_ORG_SRC)).containsExactly("MeSH XML");
-            assertThat(node).extracting(n -> n.getProperty(PROP_SOURCES)).flatExtracting(Arrays::asList).containsExactly("Immunology Concepts");
+            assertThat(node.getProperty(PROP_ORG_SRC)).isEqualTo("MeSH XML");
+            assertThat((String[])node.getProperty(PROP_SOURCES)).containsExactly("Immunology Concepts");
 
             tx.success();
         }
