@@ -14,10 +14,10 @@ import org.testng.annotations.Test;
 public class ITTestsSetup {
     private final static Logger log = LoggerFactory.getLogger(ITTestsSetup.class);
 
-    public static GenericContainer neo4j = new GenericContainer("neo4j:3.3.1").
+    public static GenericContainer neo4j = new GenericContainer("neo4j:3.5.17").
             withEnv("NEO4J_AUTH", "none").withExposedPorts(7474, 7687).
-            withClasspathResourceMapping("julielab-neo4j-plugins-concepts-1.8.0-assembly.jar",
-                    "/var/lib/neo4j/plugins/julielab-neo4j-plugins-concepts-1.8.0-assembly.jar",
+            withClasspathResourceMapping("julielab-neo4j-plugins-concepts-2.1.0-SNAPSHOT-assembly.jar",
+                    "/var/lib/neo4j/plugins/julielab-neo4j-plugins-concepts-2.1.0-SNAPSHOT-assembly.jar",
                     BindMode.READ_WRITE);
 
     @BeforeSuite(groups = "integration-tests")

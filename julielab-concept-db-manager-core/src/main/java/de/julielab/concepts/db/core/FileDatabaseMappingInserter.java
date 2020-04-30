@@ -13,11 +13,12 @@ import de.julielab.neo4j.plugins.datarepresentation.ImportMapping;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.json.JSONException;
 import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.shell.util.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.stream.Stream;
 
 public class FileDatabaseMappingInserter extends JavaMethodCallBase implements MappingInserter {
@@ -44,7 +45,7 @@ public class FileDatabaseMappingInserter extends JavaMethodCallBase implements M
             if (log.isInfoEnabled())
                 log.info("Inserting mappings into file based Neo4j database");
             cm.insertMappings(graphDb, jsonMapper.writeValueAsString(mappings));
-        } catch (JSONException | JsonProcessingException e) {
+        } catch (IOException e) {
             log.error("Could not translate mapping into JSON.");
             throw new MappingInsertionException(e);
         }

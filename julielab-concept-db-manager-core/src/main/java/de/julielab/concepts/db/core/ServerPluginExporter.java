@@ -12,7 +12,7 @@ import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.neo4j.shell.util.json.JSONException;
+import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

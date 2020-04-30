@@ -2,6 +2,7 @@ package de.julielab.concepts.db.core.spi;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.util.Base64;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipException;
 
@@ -15,10 +16,7 @@ import de.julielab.concepts.db.core.services.VersioningService;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DataExportException;
 import de.julielab.concepts.util.VersionRetrievalException;
-import org.neo4j.shell.util.json.JSONArray;
-import org.neo4j.shell.util.json.JSONException;
-
-import javax.xml.bind.DatatypeConverter;
+import org.json.JSONArray;
 
 /**
  * <p>
@@ -93,14 +91,20 @@ public interface DataExporter extends ExtensionPoint, DatabaseConnected, Paramet
      * @param decodingConfig
      * @return
      * @throws IOException
-     * @throws JSONException
      */
 	default String decode(String inputData, HierarchicalConfiguration<ImmutableNode> decodingConfig)
-			throws IOException, JSONException {
+			throws IOException {
 		Object currentDataState = inputData;
+		String currentDataString = toString(currentDataState);
 		for (String key : (Iterable<String>) decodingConfig::getKeys) {
 			if (key.equalsIgnoreCase("base64") && decodingConfig.getBoolean(key))
-				currentDataState = DatatypeConverter.parseBase64Binary(toString(currentDataState));
+				try {
+					currentDataState = Base64.getDecoder().decode(currentDataString);
+				} catch (IllegalArgumentException e) {
+					// There are quotes we don't want
+					if (e.getMessage().contains("Illegal base64 character 22"))
+						currentDataState = Base64.getDecoder().decode(currentDataString.substring(1, currentDataString.length() - 1));
+				}
 			if (key.equalsIgnoreCase("gzip") && decodingConfig.getBoolean(key)) {
 				InputStream is = new ByteArrayInputStream(
 						currentDataState instanceof String ? ((String) currentDataState).getBytes()
@@ -117,7 +121,7 @@ public interface DataExporter extends ExtensionPoint, DatabaseConnected, Paramet
 				}
 			}
 			if (key.equalsIgnoreCase("json2bytearray") && decodingConfig.getBoolean(key)) {
-				JSONArray jsonArray = new JSONArray(toString(currentDataState));
+				JSONArray jsonArray = new JSONArray(currentDataString);
 				byte[] bytes = new byte[jsonArray.length()];
 				for (int i = 0; i < jsonArray.length(); i++) {
 					bytes[i] = (byte) jsonArray.getInt(i);
@@ -125,7 +129,7 @@ public interface DataExporter extends ExtensionPoint, DatabaseConnected, Paramet
 				currentDataState = bytes;
 			}
 		}
-		return toString(currentDataState);
+		return currentDataString;
 	}
 
 	default void writeData(File outputFile, String resourceHeader, String decodedResponse) throws IOException, DataExportException {

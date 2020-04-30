@@ -8,8 +8,8 @@ import de.julielab.concepts.util.MethodCallException;
 import de.julielab.concepts.util.VersionRetrievalException;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.json.JSONException;
 import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.shell.util.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

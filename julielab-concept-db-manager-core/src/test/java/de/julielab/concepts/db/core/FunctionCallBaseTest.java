@@ -6,7 +6,7 @@ import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
-import org.neo4j.shell.util.json.JSONArray;
+import org.json.JSONArray;
 import org.testng.annotations.Test;
 
 import java.io.File;
