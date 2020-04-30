@@ -114,7 +114,7 @@ public class Parser4UserDefMesh extends DefaultHandler {
 		// Transplantation facet, for example: All terms in there specify a parent, so up to now this facet doesn't
 		// seem
 		// to have a single root.
-		Set<Descriptor> newFacetRoots = new HashSet<>();
+		Set<Descriptor> newFacetRoots = new LinkedHashSet<>();
 		// Determine UIs in the parent map that don't have an entry in the descriptor map; this means that the parent
 		// is
 		// not included in this facet.
@@ -131,7 +131,7 @@ public class Parser4UserDefMesh extends DefaultHandler {
 		// Now add the newly determined facet roots to the existing facet roots.
 		Set<Descriptor> facetRoots = parentUi2children.get(facet.getUI());
 		if (null == facetRoots) {
-			facetRoots = new HashSet<>();
+			facetRoots = new LinkedHashSet<>();
 			parentUi2children.put(facet.getUI(), facetRoots);
 		}
 		facetRoots.addAll(newFacetRoots);

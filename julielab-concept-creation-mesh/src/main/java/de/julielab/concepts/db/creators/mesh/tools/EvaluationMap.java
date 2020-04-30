@@ -1,9 +1,6 @@
 package de.julielab.concepts.db.creators.mesh.tools;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Set;
+import java.util.*;
 
 import org.slf4j.Logger;
 
@@ -156,7 +153,7 @@ public class EvaluationMap {
 
 		// save all values to delete (those less than max-d)
 		max = max - d;
-		Collection<Double> toDelete = new HashSet<Double>();
+		Collection<Double> toDelete = new LinkedHashSet<Double>();
 		for (double v : values) {
 			if (v < max) {
 				toDelete.add(v);

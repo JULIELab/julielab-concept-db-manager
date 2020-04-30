@@ -26,11 +26,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
@@ -196,7 +192,7 @@ public class MakeCategoryAttachment {
 				+ "ATermClass \tCategory \tDisease \tWordlist");
 		bw.newLine();
 
-		Set<Descriptor> ageingDescs = new HashSet<Descriptor>();
+		Set<Descriptor> ageingDescs = new LinkedHashSet<Descriptor>();
 		for (Descriptor d : categoryAttacher.descriptorAttachments.keys())
 			ageingDescs.add(d);
 
@@ -208,7 +204,7 @@ public class MakeCategoryAttachment {
 		 * 
 		 * modersohn
 		 */
-		Set<Descriptor> descList = new HashSet<Descriptor>();
+		Set<Descriptor> descList = new LinkedHashSet<Descriptor>();
 
 		for (Descriptor d : categoryAttacher.descriptorAttachments.keys()) {
 			if (!descList.contains(d)) {

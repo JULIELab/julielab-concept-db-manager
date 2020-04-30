@@ -2,6 +2,7 @@ package de.julielab.concepts.db.creators.mesh.modifications;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -117,7 +118,7 @@ implements TreeModficationsInterface {
 	 */
 	public void removeUnnecessary() {
 		// collect all to remove
-		Set<Old> store = new HashSet<Old>();
+		Set<Old> store = new LinkedHashSet<Old>();
 		for (Old o : getOldSet()) {
 			if ( getNew(o).equals(o)) {
 				store.add(o);
