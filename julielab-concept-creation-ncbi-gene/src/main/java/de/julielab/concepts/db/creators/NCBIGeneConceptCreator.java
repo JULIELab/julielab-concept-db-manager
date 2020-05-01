@@ -10,7 +10,6 @@ import de.julielab.concepts.util.ConceptCreationException;
 import de.julielab.concepts.util.FacetCreationException;
 import de.julielab.java.utilities.ConfigurationUtilities;
 import de.julielab.java.utilities.FileUtilities;
-import de.julielab.neo4j.plugins.auxiliaries.PropertyUtilities;
 import de.julielab.neo4j.plugins.datarepresentation.*;
 import de.julielab.neo4j.plugins.datarepresentation.constants.ConceptConstants;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
@@ -87,7 +86,6 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
                 ConceptConstants.PROP_DESCRIPTIONS, ConceptConstants.PROP_FACETS);
 
         final ImportConcept ic = new ImportConcept();
-        System.out.println(ic.parentCoordinates);
 
         System.out.println("Before homologene aggs");
         checkfornullparentcoords(termsByGeneId);
@@ -180,8 +178,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             String relationship = geneGroupRecord[2];
             if (!relationship.equals("Ortholog"))
                 continue;
-            String gene1 = geneGroupRecord[1];
-            String gene2 = geneGroupRecord[4];
+            String gene1 = geneGroupRecord[1].intern();
+            String gene2 = geneGroupRecord[4].intern();
             geneGroupOrthologs.compute(gene1, (gene, set) -> {
                 Set<String> newset = set;
                 if (newset == null) newset = new HashSet<>();
@@ -229,7 +227,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             if (groupGeneCoords.size() > 1) {
                 ImportConcept orthologyCluster = new ImportConcept(groupGeneCoords, aggregateCopyProperties);
                 orthologyCluster.coordinates = new ConceptCoordinates();
-                orthologyCluster.coordinates.sourceId = GENE_GROUP_PREFIX + geneGroupId;
+                orthologyCluster.coordinates.sourceId = (GENE_GROUP_PREFIX + geneGroupId).intern();
                 orthologyCluster.coordinates.source = "GeneOrthology";
                 orthologyCluster.coordinates.originalSource = "GeneOrthology";
                 orthologyCluster.coordinates.originalId = geneGroupId;
@@ -321,6 +319,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
     }
 
     private void createHomologeneAggregates(Multimap<String, ConceptCoordinates> genes2Aggregate, File homologene, Map<ConceptCoordinates, ImportConcept> termsByGeneId, List<String> aggregateCopyProperties) throws IOException {
+        // The HomologeneRecord class interns its fields
         final Stream<HomologeneRecord> recordStream = FileUtilities.getReaderFromFile(homologene).lines().map(line -> line.split("\t")).map(HomologeneRecord::new);
         Multimap<String, HomologeneRecord> groupId2Homolo = Multimaps.index(recordStream.iterator(), r -> r.groupId);
         log.info("Got {} homologene records", groupId2Homolo.size());
@@ -344,7 +343,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             if (homologuousGeneCoords.size() >= 1) {
                 ImportConcept aggregate = new ImportConcept(homologuousGeneCoords, aggregateCopyProperties);
                 aggregate.coordinates = new ConceptCoordinates();
-                aggregate.coordinates.sourceId = HOMOLOGENE_PREFIX + groupId;
+                aggregate.coordinates.sourceId = (HOMOLOGENE_PREFIX + groupId).intern();
                 aggregate.coordinates.source = "Homologene";
                 aggregate.coordinates.originalSource = "Homologene";
                 aggregate.coordinates.originalId = groupId;
@@ -405,9 +404,9 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             // actually
             // two record seperators
             String[] split = recordString.split("(\t\\|\t)|(\t\\|)");
-            String taxId = split[0];
-            String name = split[1];
-            String nameClass = split[3];
+            String taxId = split[0].intern();
+            String name = split[1].intern();
+            String nameClass = split[3].intern();
 
             TaxonomyRecord record = taxNameRecords.get(taxId);
             if (null == record) {
@@ -424,13 +423,15 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             String taxId = geneId2Tax.get(gene.coordinates.originalId);
             TaxonomyRecord taxonomyRecord = taxNameRecords.get(taxId);
 
-            if (null == taxonomyRecord)
-                throw new IllegalStateException("No NCBI Taxonomy name record was found for the taxonomy ID " + taxId);
+            if (null == taxonomyRecord) {
+                log.warn("No NCBI Taxonomy name record was found for the taxonomy ID {}", taxId);
+                continue;
+            }
 
             // Set the species as a qualifier
             String speciesQualifier = taxonomyRecord.scientificName;
             if (null != taxonomyRecord.geneBankCommonName)
-                speciesQualifier += " (" + taxonomyRecord.geneBankCommonName + ")";
+                speciesQualifier += (" (" + taxonomyRecord.geneBankCommonName + ")").intern();
             gene.addQualifier(speciesQualifier);
 
             // Set an NCBI Gene like species-related display name.
@@ -450,8 +451,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         while (lineIt.hasNext()) {
             String line = lineIt.next();
             String[] split = line.split("\t");
-            String geneId = split[0];
-            String summary = split[1];
+            String geneId = split[0].intern();
+            String summary = split[1].intern();
             gene2Summary.put(geneId, summary);
         }
 
@@ -461,7 +462,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
                 String record = it.next();
                 ImportConcept term = createGeneTerm(record, gene2Summary);
                 String[] split = record.split("\t", 2);
-                String taxId = split[0];
+                String taxId = split[0].intern();
                 if (organismSet.contains(taxId) || organismSet.isEmpty()) {
                     geneId2Tax.put(term.coordinates.originalId, taxId);
                     termsByGeneId.put(term.coordinates,
@@ -505,7 +506,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         String ncbiDescription = split[8];
         if (prefName.length() < 3 && ncbiDescription.length() > 2)
             prefName = ncbiDescription;
-        String originalId = split[1];
+        String originalId = split[1].intern();
         String synonymString = split[4];
         String otherDesignations = split[13];
         // synonyms:
@@ -514,15 +515,15 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         // 3. other designations
         String[] synonymSplit = synonymString.split("\\|");
         for (int i = 0; i < synonymSplit.length; i++) {
-            String synonym = synonymSplit[i];
+            String synonym = synonymSplit[i].intern();
             synonyms.add(synonym);
         }
         String[] otherDesignationsSplit = otherDesignations.split("\\|");
         for (int i = 0; i < otherDesignationsSplit.length; i++) {
             String synonym = otherDesignationsSplit[i];
-            synonyms.add(synonym);
+            synonyms.add(synonym.intern());
         }
-        String description = gene2Summary.get(originalId);
+        String description = gene2Summary.get(originalId).intern();
 
         // remove synonyms that are too short
         for (Iterator<String> synonymIt = synonyms.iterator(); synonymIt.hasNext(); ) {
@@ -632,7 +633,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             log.info("Beginning import of NCBI Genes.");
             Map<String, String> geneId2Tax = new HashMap<>();
             Map<ConceptCoordinates, ImportConcept> termsByGeneId = new HashMap<>();
-            log.info("Converting NCBI Gene source files into Semedico terms.");
+            log.info("Converting NCBI Gene source files into nodes for the concept graph.");
             convertGeneInfoToTerms(geneInfo, organisms, geneDescriptions, geneId2Tax, termsByGeneId);
             setSpeciesQualifier(ncbiTaxNames, geneId2Tax, termsByGeneId.values());
             log.info("Got {} terms from source files..", termsByGeneId.values().size());
@@ -683,7 +684,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         String geneBankCommonName;
 
         public TaxonomyRecord(String taxId) {
-            this.taxId = taxId;
+            this.taxId = taxId.intern();
         }
     }
 
@@ -711,9 +712,9 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
          * @author faessler
          */
         public HomologeneRecord(String[] record) {
-            groupId = record[0];
-            taxId = record[1];
-            geneId = record[2];
+            groupId = record[0].intern();
+            taxId = record[1].intern();
+            geneId = record[2].intern();
         }
     }
 }
