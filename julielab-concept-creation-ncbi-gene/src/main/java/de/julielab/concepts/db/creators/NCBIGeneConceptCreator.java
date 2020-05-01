@@ -523,7 +523,9 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             String synonym = otherDesignationsSplit[i];
             synonyms.add(synonym.intern());
         }
-        String description = gene2Summary.get(originalId).intern();
+        String description = gene2Summary.get(originalId);
+        if (description != null)
+            description = description.intern();
 
         // remove synonyms that are too short
         for (Iterator<String> synonymIt = synonyms.iterator(); synonymIt.hasNext(); ) {
