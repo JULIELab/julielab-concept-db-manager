@@ -12,6 +12,7 @@ import de.julielab.concepts.util.ConceptInsertionException;
 import de.julielab.concepts.util.InternalNeo4jException;
 import de.julielab.java.utilities.ConfigurationUtilities;
 import de.julielab.neo4j.plugins.ConceptManager;
+import de.julielab.neo4j.plugins.datarepresentation.ImportConcept;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
@@ -22,8 +23,11 @@ import org.apache.http.entity.StringEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
@@ -52,7 +56,19 @@ public class ServerPluginConceptInserter implements ConceptInserter {
             HttpPost httpPost = httpService.getHttpPostRequest(connectionConfiguration, serverUri + String
                     .format(ServerPluginConnectionConstants.SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint));
             Map<String, String> dataMap = new HashMap<>();
-            dataMap.put(ConceptManager.KEY_CONCEPTS, jsonMapper.writeValueAsString(concepts.getConcepts()));
+            StringWriter sw = new StringWriter();
+            List<ImportConcept> importConcepts = concepts.getConcepts();
+            for (int i = 0; i < importConcepts.size(); i++) {
+                ImportConcept importConcept = importConcepts.get(i);
+                try {
+                    jsonMapper.writeValue(sw, importConcept);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                importConcepts.set(i, null);
+            }
+            //dataMap.put(ConceptManager.KEY_CONCEPTS, jsonMapper.writeValueAsString(concepts.getConcepts()));
+            dataMap.put(ConceptManager.KEY_CONCEPTS, sw.getBuffer().toString());
             dataMap.put(ConceptManager.KEY_FACET, jsonMapper.writeValueAsString(concepts.getFacet()));
             if (concepts.getImportOptions() != null)
                 dataMap.put(ConceptManager.KEY_IMPORT_OPTIONS,

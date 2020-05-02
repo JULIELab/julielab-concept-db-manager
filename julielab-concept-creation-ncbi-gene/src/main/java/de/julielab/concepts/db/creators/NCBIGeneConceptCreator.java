@@ -85,12 +85,11 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
                 ConceptConstants.PROP_SYNONYMS, ConceptConstants.PROP_WRITING_VARIANTS,
                 ConceptConstants.PROP_DESCRIPTIONS, ConceptConstants.PROP_FACETS);
 
-        final ImportConcept ic = new ImportConcept();
-
         System.out.println("Before homologene aggs");
         checkfornullparentcoords(termsByGeneId);
-        createHomologeneAggregates(genes2Aggregate, homologene, termsByGeneId, aggregateCopyProperties);
-        System.out.println("After homologene aggs");
+        // Homologene is not updated any more and deprecated in favor of the gene groups
+        //createHomologeneAggregates(genes2Aggregate, homologene, termsByGeneId, aggregateCopyProperties);
+        //System.out.println("After homologene aggs");
         checkfornullparentcoords(termsByGeneId);
         createGeneOrthologyAggregates(genes2Aggregate, geneGroup, termsByGeneId, aggregateCopyProperties);
         System.out.println("After ortho aggs");
