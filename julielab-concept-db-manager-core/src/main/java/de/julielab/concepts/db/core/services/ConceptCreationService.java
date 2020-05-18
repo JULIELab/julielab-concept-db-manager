@@ -16,7 +16,7 @@ import java.util.ServiceLoader;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.java.utilities.ConfigurationUtilities.dot;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static de.julielab.java.utilities.ConfigurationUtilities.last;
 
 public class ConceptCreationService implements ParameterExposing{
@@ -49,7 +49,7 @@ public class ConceptCreationService implements ParameterExposing{
 	 */
 	public Stream<ImportConcepts> createConcepts(HierarchicalConfiguration<ImmutableNode> importConfig)
 			throws ConceptCreationException, FacetCreationException {
-		String providername = importConfig.getString(dot(CONCEPTS, CREATOR, NAME));
+		String providername = importConfig.getString(slash(CONCEPTS, CREATOR, NAME));
 		Iterator<ConceptCreator> providerIt = loader.iterator();
 		while (providerIt.hasNext()) {
 			ConceptCreator conceptCreator = providerIt.next();

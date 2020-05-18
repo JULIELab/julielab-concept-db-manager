@@ -2,6 +2,7 @@ package de.julielab.concepts.db.creators;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
 import de.julielab.concepts.db.core.DefaultFacetCreator;
 import de.julielab.concepts.db.core.services.FacetCreationService;
 import de.julielab.concepts.db.core.spi.ConceptCreator;
@@ -16,24 +17,21 @@ import de.julielab.semedico.resources.ResourceTermLabels;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.LineIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.java.utilities.ConfigurationUtilities.dot;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
 
 public class NCBIGeneConceptCreator implements ConceptCreator {
 
@@ -46,110 +44,126 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
     public static final String ORGANISMNAMES = "organismnames";
     public static final String HOMOLOGENE = "homologene";
     public static final String GENE_GROUP = "gene_group";
-    public String HOMOLOGENE_PREFIX = "homologene";
+    public static final String HOMOLOGENE_PREFIX = "homologene";
     /**
      * "gene_group" is the name of the file specifying the ortholog relationships
      * between genes. Also, NCBI Gene, searching for a specific ortholog group works
      * by search for "ortholog_gene_2475[group]" where the number is the ID of the
      * gene that represents the group, the human gene, most of the time.
      */
-    public String GENE_GROUP_PREFIX = "genegroup";
-    public String TOP_HOMOLOGY_PREFIX = "tophomology";
+    public static final String GENE_GROUP_PREFIX = "genegroup";
+    public static final String TOP_ORTHOLOGY_PREFIX = "toporthology";
+    public static final String TOP_HOMOLOGY_PREFIX = "tophomology";
     private int homologeneAggregateCounter;
     private int orthologAggregateCounter;
+    private int topOrthologAggregateCounter;
     private int topHomologyAggregateCounter;
     private Logger log = LoggerFactory.getLogger(NCBIGeneConceptCreator.class);
 
     public NCBIGeneConceptCreator() {
+        resetCounters();
+    }
+
+    private void resetCounters() {
         this.homologeneAggregateCounter = 0;
         this.orthologAggregateCounter = 0;
+        this.topOrthologAggregateCounter = 0;
         this.topHomologyAggregateCounter = 0;
     }
 
     /**
      * @param termsByGeneId
      * @param homologene
-     * @param geneGroup     see http://www.ncbi.nlm.nih.gov/news/03-13-2014-gene-provides-
-     *                      orthologs-regions/
+     * @param geneGroup     see https://ncbiinsights.ncbi.nlm.nih.gov/2018/02/27/gene_orthologs-file-gene-ftp/
      * @throws IOException
      */
-    private void createHomologyAggregates(Map<TermCoordinates, ImportConcept> termsByGeneId, File homologene,
+    private void createHomologyAggregates(Map<ConceptCoordinates, ImportConcept> termsByGeneId, File homologene,
                                           File geneGroup) throws IOException {
-        Multimap<String, TermCoordinates> genes2Aggregate = HashMultimap.create();
+        Multimap<String, ConceptCoordinates> genes2Aggregate = HashMultimap.create();
 
         List<String> aggregateCopyProperties = Arrays.asList(ConceptConstants.PROP_PREF_NAME,
                 ConceptConstants.PROP_SYNONYMS, ConceptConstants.PROP_WRITING_VARIANTS,
                 ConceptConstants.PROP_DESCRIPTIONS, ConceptConstants.PROP_FACETS);
-        Multimap<String, HomologeneRecord> groupId2Homolo = HashMultimap.create();
-        LineIterator iterator = FileUtils.lineIterator(homologene);
-        while (iterator.hasNext()) {
-            String line = iterator.next();
-            String[] split = line.split("\t");
-            if (split.length != 6)
-                throw new IllegalStateException("Expected 6 fields in homologene file format, but got " + split.length
-                        + " in line \"" + line + "\"");
-            HomologeneRecord record = new HomologeneRecord(split);
-            groupId2Homolo.put(record.groupId, record);
+
+        checkfornullparentcoords(termsByGeneId);
+        // Homologene is not updated any more and deprecated in favor of the gene groups
+        //createHomologeneAggregates(genes2Aggregate, homologene, termsByGeneId, aggregateCopyProperties);
+        //System.out.println("After homologene aggs");
+        checkfornullparentcoords(termsByGeneId);
+        createGeneOrthologyAggregates(genes2Aggregate, geneGroup, termsByGeneId, aggregateCopyProperties);
+        System.out.println("After ortho aggs");
+        checkfornullparentcoords(termsByGeneId);
+        createTopHomologyAggregates(genes2Aggregate, termsByGeneId, aggregateCopyProperties);
+        System.out.println("After top-homologene aggs");
+        checkfornullparentcoords(termsByGeneId);
+
+
+    }
+
+    private void checkfornullparentcoords(Map<ConceptCoordinates,ImportConcept> termsByGeneId) {
+        for (ImportConcept c : termsByGeneId.values()) {
+            if (c.parentCoordinates == null)
+                throw new IllegalArgumentException(c.coordinates.toString());
         }
+    }
 
-        // create homologene aggregates
-        Map<String, String> genes2HomoloGroup = new HashMap<>();
-        for (String groupId : groupId2Homolo.keySet()) {
-            Collection<HomologeneRecord> group = groupId2Homolo.get(groupId);
-            List<String> homologuousGeneIds = new ArrayList<>(group.size());
-            List<String> homologuousGeneSources = new ArrayList<>(group.size());
-            List<TermCoordinates> homologuousGeneCoords = new ArrayList<>(group.size());
-            for (HomologeneRecord record : group) {
-                String geneId = record.geneId;
-                TermCoordinates geneCoords = new TermCoordinates(geneId, NCBI_GENE_SOURCE);
-                if (!termsByGeneId.containsKey(geneCoords))
-                    continue;
-                homologuousGeneIds.add(geneId);
-                homologuousGeneSources.add(NCBI_GENE_SOURCE);
-                homologuousGeneCoords.add(geneCoords);
-            }
-            // Only continue if more than one gene in this homologene cluster are included
-            // in our gene_info
-            if (homologuousGeneCoords.size() >= 1) {
-                ImportConcept aggregate = new ImportConcept(homologuousGeneCoords, aggregateCopyProperties);
-                aggregate.coordinates = new ConceptCoordinates();
-                aggregate.coordinates.sourceId = HOMOLOGENE_PREFIX + groupId;
-                aggregate.coordinates.source = "Homologene";
-                aggregate.aggregateIncludeInHierarchy = true;
-                aggregate.generalLabels = Arrays.asList("AGGREGATE_HOMOLOGENE", "NO_PROCESSING_GAZETTEER");
-                aggregate.coordinates.originalSource = "Homologene";
-                aggregate.coordinates.originalId = groupId;
-                termsByGeneId.put(new TermCoordinates(aggregate.coordinates.sourceId, aggregate.coordinates.source),
-                        aggregate);
-                ++homologeneAggregateCounter;
-
-                for (TermCoordinates geneCoords : homologuousGeneCoords) {
-                    String geneId = geneCoords.id;
-                    ImportConcept gene = termsByGeneId.get(geneCoords);
-                    if (genes2HomoloGroup.containsKey(geneId))
-                        throw new IllegalStateException(
-                                "Gene with ID " + geneId + " is taking part in multiple homologene groups.");
-                    genes2HomoloGroup.put(geneId, groupId);
-                    genes2Aggregate.put(geneId,
-                            new TermCoordinates(aggregate.coordinates.sourceId, aggregate.coordinates.source));
-                    gene.addParent(aggregate.coordinates);
-                    // gene.addParentSrcId(aggregate.coordinates.sourceId);
-                    // If we actually aggregate multiple genes into one, the
-                    // elements should disappear behind the aggregate and as such
-                    // should not be present in the query dictionary or suggestions.
-
-                    if (homologuousGeneIds.size() > 1) {
-                        gene.addGeneralLabel(ResourceTermLabels.Gazetteer.NO_QUERY_DICTIONARY.name(),
-                                ResourceTermLabels.Suggestions.NO_SUGGESTIONS.name());
-                    }
+    private void createTopHomologyAggregates(Multimap<String, ConceptCoordinates> genes2Aggregate, Map<ConceptCoordinates, ImportConcept> termsByGeneId, List<String> aggregateCopyProperties) {
+        // Now create top homology aggregates where necessary and connect the
+        // top homology aggregate to the gene group and homology aggregates.
+        for (String geneId : genes2Aggregate.keySet()) {
+            final ImportConcept gene = termsByGeneId.get(getGeneCoordinates(geneId));
+            ImportConcept topHomologyAggregate = findTopHomologyAggregate(gene, termsByGeneId);
+            if (topHomologyAggregate == null) {
+                Set<ImportConcept> topAggregates = findTopOrthologsAndHomologyAggregates(gene, termsByGeneId, new TreeSet<>(Comparator.comparingLong(System::identityHashCode)));
+                // Only if there is more then one aggregate for the current gene we need a new top aggregate to unite the existing aggregates
+                if (topAggregates.size() > 1) {
+                    topHomologyAggregate = new ImportConcept(topAggregates.stream().map(ic -> ic.coordinates).collect(toList()), aggregateCopyProperties);
+                    topHomologyAggregate.coordinates = new ConceptCoordinates();
+                    topHomologyAggregate.coordinates.sourceId = TOP_HOMOLOGY_PREFIX + topHomologyAggregateCounter;
+                    topHomologyAggregate.coordinates.source = SEMEDICO_RESOURCE_MANAGEMENT_SOURCE;
+                    topHomologyAggregate.aggregateIncludeInHierarchy = true;
+                    topHomologyAggregate.generalLabels = Arrays.asList("AGGREGATE_TOP_HOMOLOGY",
+                            "NO_PROCESSING_GAZETTEER");
+                    ConceptCoordinates topHomologyCoordinates = topHomologyAggregate.coordinates;
+                    termsByGeneId.put(topHomologyAggregate.coordinates, topHomologyAggregate);
+                    topAggregates.forEach(agg -> agg.addParent(topHomologyCoordinates));
+                    ++topHomologyAggregateCounter;
                 }
             }
         }
-        // end homologene aggregates
+    }
 
+    private Set<ImportConcept> findTopOrthologsAndHomologyAggregates(ImportConcept concept, Map<ConceptCoordinates, ImportConcept> termsByGeneId, Set<ImportConcept> importConcepts) {
+        // Finds aggregates that are a gene orthology aggregate without a top orthology aggregate, are a top orthology aggregate or a homology aggregate
+        Predicate<ImportConcept> isSought = c -> (c.coordinates.sourceId.startsWith(GENE_GROUP_PREFIX) && !c.parentCoordinates.stream().map(termsByGeneId::get).filter(p -> p.coordinates.sourceId.startsWith(TOP_ORTHOLOGY_PREFIX)).findAny().isPresent()) || c.coordinates.sourceId.startsWith(TOP_ORTHOLOGY_PREFIX) || c.coordinates.sourceId.startsWith(HOMOLOGENE_PREFIX);
+        if (isSought.test(concept))
+            importConcepts.add(concept);
+        for (ImportConcept parent : (Iterable<ImportConcept>) () -> concept.parentCoordinates.stream().map(termsByGeneId::get).iterator()) {
+            findTopOrthologsAndHomologyAggregates(parent, termsByGeneId, importConcepts);
+        }
+        return importConcepts;
+    }
+
+    private ImportConcept findTopHomologyAggregate(ImportConcept concept, Map<ConceptCoordinates, ImportConcept> termsByGeneId) {
+        if (concept.coordinates.sourceId.startsWith(TOP_HOMOLOGY_PREFIX))
+            return concept;
+        ImportConcept topHomologyConcept = null;
+        if (concept.parentCoordinates == null)
+            throw new IllegalArgumentException("The passed concept does have null parents " + concept.coordinates);
+        for (ConceptCoordinates parentCoordinates : concept.parentCoordinates) {
+            final ImportConcept parent = termsByGeneId.get(parentCoordinates);
+            topHomologyConcept = findTopHomologyAggregate(parent, termsByGeneId);
+            if (topHomologyConcept != null)
+                break;
+        }
+        return topHomologyConcept;
+    }
+
+
+    private void createGeneOrthologyAggregates(Multimap<String, ConceptCoordinates> genes2Aggregate, File geneGroup, Map<ConceptCoordinates, ImportConcept> termsByGeneId, List<String> aggregateCopyProperties) throws IOException {
         // add the orthology information from gene group to make gene group aggregates
-        Multimap<String, String> geneGroupOrthologs = HashMultimap.create();
-        iterator = FileUtils.lineIterator(geneGroup);
+        Map<String, Set<String>> geneGroupOrthologs = new HashMap<>();
+        final Iterator<String> iterator = FileUtilities.getReaderFromFile(geneGroup).lines().iterator();
         // Format: tax_id GeneID relationship Other_tax_id Other_GeneID (tab is
         // used as a separator, pound sign - start of a comment)
         while (iterator.hasNext()) {
@@ -157,28 +171,38 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             if (geneGroupLine.startsWith("#"))
                 continue;
             String[] geneGroupRecord = geneGroupLine.split("\t");
+            if (geneGroupRecord.length < 5)
+                throw new IllegalArgumentException("The line " + geneGroupLine + " does not have at least 5 tab-separated columns.");
             String relationship = geneGroupRecord[2];
             if (!relationship.equals("Ortholog"))
                 continue;
-            String gene1 = geneGroupRecord[1];
-            String gene2 = geneGroupRecord[4];
-            geneGroupOrthologs.put(gene1, gene2);
+            String gene1 = geneGroupRecord[1].intern();
+            String gene2 = geneGroupRecord[4].intern();
+            geneGroupOrthologs.compute(gene1, (gene, set) -> {
+                Set<String> newset = set;
+                if (newset == null) newset = new HashSet<>();
+                newset.add(gene2);
+                return newset;
+            });
         }
+        log.info("Got {} orthology groups from gene_ortholog file {}", geneGroupOrthologs.size(), geneGroup);
 
-        // 1. create separate gene group aggregates
-        // 2. when there are non-empty intersection between homologene and gene
-        // group aggregate elements, create a top homology aggregate
-        // 3. set the new top homology aggregate as parent of the homologene and
-        // group aggregate nodes
-        Map<String, String> genes2OrthoGroup = new HashMap<>();
+        // 1. create separate gene orthology aggregates
+        // 2. for overlapping gene orthology aggregates, create a top-orthology aggregate
+        // 3. when there is a non-empty intersection between homologene and (top) gene
+        // orthology aggregate elements, create a top homology aggregate
+        // 4. set the new top homology aggregate as parent of the homologene and
+        // (top) group aggregate nodes
+        Multimap<String, ImportConcept> genes2OrthoAggregate = HashMultimap.create();
         for (String geneGroupId : geneGroupOrthologs.keySet()) {
             Collection<String> mappingTargets = geneGroupOrthologs.get(geneGroupId);
             List<String> groupGeneIds = new ArrayList<>(mappingTargets.size() + 1);
-            List<TermCoordinates> groupGeneCoords = new ArrayList<>(mappingTargets.size() + 1);
+            List<ConceptCoordinates> groupGeneCoords = new ArrayList<>(mappingTargets.size() + 1);
+            // Create coordinates for this gene cluster's genes
             for (String geneId : mappingTargets) {
                 // it is possible that some elements of a gene group are not in
                 // our version of gene_info (e.g. due to species filtering)
-                TermCoordinates geneCoords = new TermCoordinates(geneId, NCBI_GENE_SOURCE);
+                ConceptCoordinates geneCoords = getGeneCoordinates(geneId);
                 if (!termsByGeneId.containsKey(geneCoords)) {
                     continue;
                 }
@@ -187,43 +211,36 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             }
             // The gene group ID is also a valid gene. Most of the time the
             // human version. It has to be added to the resulting aggregate
-            // node, as well.
+            // node as well.
             // But here also we should check if we even know a gene with this ID
-            if (termsByGeneId.containsKey(new TermCoordinates(geneGroupId, NCBI_GENE_SOURCE))) {
+            if (termsByGeneId.containsKey(getGeneCoordinates(geneGroupId))) {
                 groupGeneIds.add(geneGroupId);
-                groupGeneCoords.add(new TermCoordinates(geneGroupId, NCBI_GENE_SOURCE));
+                groupGeneCoords.add(getGeneCoordinates(geneGroupId));
             }
 
+            // Create the aggregate for this orthology gene cluster.
             // The set of genes participating in this gene group might be empty or only
             // contain a single element because all other elements were not included in the
             // input gene_info. Then, we don't need an aggregate.
             if (groupGeneCoords.size() > 1) {
-                ImportConcept aggregate = new ImportConcept(groupGeneCoords, aggregateCopyProperties);
-                aggregate.coordinates = new ConceptCoordinates();
-                aggregate.coordinates.sourceId = GENE_GROUP_PREFIX + geneGroupId;
-                aggregate.coordinates.source = "GeneGroup";
-                aggregate.coordinates.originalSource = "GeneGroup";
-                aggregate.coordinates.originalId = geneGroupId;
-                aggregate.aggregateIncludeInHierarchy = true;
-                aggregate.generalLabels = Arrays.asList("AGGREGATE_GENEGROUP", "NO_PROCESSING_GAZETTEER");
-                termsByGeneId.put(new TermCoordinates(aggregate.coordinates.sourceId, aggregate.coordinates.source),
-                        aggregate);
+                ImportConcept orthologyCluster = new ImportConcept(groupGeneCoords, aggregateCopyProperties);
+                orthologyCluster.coordinates = new ConceptCoordinates();
+                orthologyCluster.coordinates.sourceId = (GENE_GROUP_PREFIX + geneGroupId).intern();
+                orthologyCluster.coordinates.source = "GeneOrthology";
+                orthologyCluster.coordinates.originalSource = "GeneOrthology";
+                orthologyCluster.coordinates.originalId = geneGroupId;
+                orthologyCluster.aggregateIncludeInHierarchy = true;
+                orthologyCluster.generalLabels = Arrays.asList("AGGREGATE_GENEGROUP", "NO_PROCESSING_GAZETTEER");
+                termsByGeneId.put(orthologyCluster.coordinates,
+                        orthologyCluster);
                 ++orthologAggregateCounter;
 
                 for (String geneId : groupGeneIds) {
-                    ImportConcept gene = termsByGeneId.get(new TermCoordinates(geneId, NCBI_GENE_SOURCE));
-                    // it can happen that gene_group lists a gene we do not work
-                    // with (e.g. since we filter for a subset of organisms)
-                    // outcommented: should now already be handled above
-                    // if (null == gene)
-                    // continue;
-                    if (genes2OrthoGroup.containsKey(geneId))
-                        throw new IllegalStateException(
-                                "Gene with ID " + geneId + " is taking part in multiple ortholog gene groups.");
-                    genes2OrthoGroup.put(geneId, geneGroupId);
+                    ImportConcept gene = termsByGeneId.get(getGeneCoordinates(geneId));
+                    genes2OrthoAggregate.put(geneId, orthologyCluster);
                     genes2Aggregate.put(geneId,
-                            new TermCoordinates(aggregate.coordinates.sourceId, aggregate.coordinates.source));
-                    gene.addParent(aggregate.coordinates);
+                            new ConceptCoordinates(orthologyCluster.coordinates.sourceId, orthologyCluster.coordinates.source, true));
+                    gene.addParent(orthologyCluster.coordinates);
                     // If we actually aggregate multiple genes into one, the
                     // elements should disappear behind the aggregate and as such
                     // should not be present in the query dictionary or suggestions.
@@ -236,75 +253,127 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             }
         }
 
-        // Now create top homology aggregates where necessary and connect the
-        // top homology aggregate to the gene group and homology aggregates.
-        for (String geneId : genes2Aggregate.keySet()) {
-            Collection<TermCoordinates> aggregateCoords = genes2Aggregate.get(geneId);
-            // we only create a top homology node if the gene is element of a
-            // gene group and a homology aggregate
-            if (aggregateCoords.size() > 1) {
-                // First check if these aggregates already have a top-aggregate
-                int hasNoTopAggregate = 0;
-                TermCoordinates existingAggregateCoords = null;
-                for (TermCoordinates aggregateCoord : aggregateCoords) {
-                    ImportConcept aggregate = termsByGeneId.get(aggregateCoord);
-                    if (!aggregate.hasParents())
-                        ++hasNoTopAggregate;
-                    else if (aggregate.parentCoordinates.size() == 1)
-                        existingAggregateCoords = new TermCoordinates(aggregate.parentCoordinates.get(0).sourceId,
-                                aggregate.parentCoordinates.get(0).source);
-                    else
-                        throw new IllegalStateException("The aggregate with ID " + aggregateCoord.id
-                                + " has multiple parents: " + aggregate.parentCoordinates.stream().map(c -> c.sourceId)
-                                .collect(Collectors.toList()));
+        // Create top-orthology aggregates for genes taking part in multiple orthology clusters
+        Map<ConceptCoordinates, ImportConcept> orthoAgg2TopOrtho = new HashMap<>();
+        for (String geneid : genes2OrthoAggregate.keySet()) {
+            final Collection<ImportConcept> clusters = genes2OrthoAggregate.get(geneid);
+            // If there is only one cluster associated with the current gene, we don't need to do anything here
+            if (clusters.size() > 1) {
+                ImportConcept topOrthologyAggregate = null;
+                // Find an already existing top orthology cluster, if existing
+                Set<ImportConcept> seenOrthologyClusters = new TreeSet<>(Comparator.comparingLong(System::identityHashCode));
+                for (ImportConcept cluster : clusters) {
+                    topOrthologyAggregate = findTopOrtholog(cluster, seenOrthologyClusters, genes2OrthoAggregate, orthoAgg2TopOrtho);
+                    if (topOrthologyAggregate != null)
+                        break;
                 }
-                // just some information
-                if (hasNoTopAggregate > 0 && hasNoTopAggregate != aggregateCoords.size())
-                    log.trace("The gene concept " + geneId + " is element of " + aggregateCoords.size()
-                            + " aggregates. However, at least one of those aggregates already is part of a top aggregate while at least one other is not. This means in this case, gene group is not a strict superset of homologene. The already found top aggregate will be used to represent also this term. Aggregates of this term are: "
-                            + aggregateCoords);
-                    // no top homology aggregate missing, continue with the next
-                    // gene
-                else if (hasNoTopAggregate == 0)
-                    continue;
-
-                ImportConcept topHomologyAggregate;
-                if (null == existingAggregateCoords) {
-                    topHomologyAggregate = new ImportConcept(new ArrayList<>(aggregateCoords), aggregateCopyProperties);
-                    topHomologyAggregate.coordinates = new ConceptCoordinates();
-                    topHomologyAggregate.coordinates.sourceId = TOP_HOMOLOGY_PREFIX + topHomologyAggregateCounter;
-                    topHomologyAggregate.coordinates.source = SEMEDICO_RESOURCE_MANAGEMENT_SOURCE;
-                    topHomologyAggregate.aggregateIncludeInHierarchy = true;
-                    topHomologyAggregate.generalLabels = Arrays.asList("AGGREGATE_TOP_HOMOLOGY",
-                            "NO_PROCESSING_GAZETTEER");
-                    termsByGeneId.put(new TermCoordinates(topHomologyAggregate.coordinates.sourceId,
-                            topHomologyAggregate.coordinates.source), topHomologyAggregate);
-                    ++topHomologyAggregateCounter;
-                } else {
-                    topHomologyAggregate = termsByGeneId.get(existingAggregateCoords);
-                    // add the new aggregate(s) that also should be governed by
-                    // the top aggregate
-                    for (TermCoordinates aggregateCoord : aggregateCoords) {
-                        if (!topHomologyAggregate.elementCoordinates.contains(aggregateCoord)) {
-                            topHomologyAggregate.elementCoordinates.add(aggregateCoord);
-                        }
-                    }
+                // If there is not yet a top orthology aggregate, create it now
+                if (topOrthologyAggregate == null) {
+                    topOrthologyAggregate = new ImportConcept(new ArrayList<>(), aggregateCopyProperties);
+                    topOrthologyAggregate.coordinates = new ConceptCoordinates();
+                    topOrthologyAggregate.coordinates.sourceId = TOP_ORTHOLOGY_PREFIX + topOrthologAggregateCounter;
+                    topOrthologyAggregate.coordinates.source = SEMEDICO_RESOURCE_MANAGEMENT_SOURCE;
+                    topOrthologyAggregate.aggregateIncludeInHierarchy = true;
+                    topOrthologyAggregate.generalLabels = Arrays.asList("AGGREGATE_TOP_ORTHOLOGY", "NO_PROCESSING_GAZETTEER");
+                    termsByGeneId.put(topOrthologyAggregate.coordinates,
+                            topOrthologyAggregate);
+                    ++topOrthologAggregateCounter;
                 }
-                for (TermCoordinates aggregateCoord : aggregateCoords) {
-                    ImportConcept aggregate = termsByGeneId.get(aggregateCoord);
-                    aggregate.addParentIfNotExists(topHomologyAggregate.coordinates);
-                    // parentSrcIds =
-                    // Collections.singletonList(topHomologyAggregate.coordinates.sourceId);
-                    // aggregate.parentSources =
-                    // Collections.singletonList(topHomologyAggregate.coordinates.source);
-                    aggregate.addGeneralLabel(ResourceTermLabels.Gazetteer.NO_QUERY_DICTIONARY.name(),
-                            ResourceTermLabels.Suggestions.NO_SUGGESTIONS.name());
+                // Connect the current gene orthology clusters to the top orthology aggregate
+                for (ImportConcept cluster : clusters) {
+                    ConceptCoordinates clusterCoordinates = cluster.coordinates;
+                    if (!topOrthologyAggregate.elementCoordinates.contains(clusterCoordinates))
+                        topOrthologyAggregate.elementCoordinates.add(clusterCoordinates);
+                    orthoAgg2TopOrtho.put(clusterCoordinates, topOrthologyAggregate);
+                    cluster.addParent(topOrthologyAggregate.coordinates);
                 }
             }
         }
     }
 
-    private List<ImportConcept> makeTermList(Map<TermCoordinates, ImportConcept> termsByGeneId) {
+    private ImportConcept findTopOrtholog(ImportConcept orthologyCluster, Set<ImportConcept> seenOrthologyClusters, Multimap<String, ImportConcept> genes2OrthoAggregate, Map<ConceptCoordinates, ImportConcept> orthoAgg2TopOrtho) {
+        // First check if the orthology cluster is already connected to a top orthology aggregate
+        ImportConcept topOrtholog = orthoAgg2TopOrtho.get(orthologyCluster.coordinates);
+        seenOrthologyClusters.add(orthologyCluster);
+        if (topOrtholog == null) {
+            // Try to find a top orthology aggregate that is connected - perhaps indirectly - through one of the orthology cluster's gene elements
+            for (ConceptCoordinates element : orthologyCluster.elementCoordinates) {
+                final Collection<ImportConcept> orthologyClustersOfElement = genes2OrthoAggregate.get(element.originalId);
+                for (ImportConcept orthologyClusterOfElement : orthologyClustersOfElement) {
+                    // Do not make a recursive call to the original orthology cluster because then we would never terminate
+                    if (seenOrthologyClusters.contains(orthologyClusterOfElement))
+                        continue;
+                    seenOrthologyClusters.add(orthologyClusterOfElement);
+                    // Make a recursive call to all of the other orthology clusters of the current gene element.
+                    // Through the recursion we will follow the connections from gene elements to their orthology clusters, to their elements until there is nothing more to go to.
+                    // In order to not go back the cluster where the search started, we pass the current gene's element id
+                    topOrtholog = findTopOrtholog(orthologyClusterOfElement, seenOrthologyClusters, genes2OrthoAggregate, orthoAgg2TopOrtho);
+                    if (topOrtholog != null)
+                        return topOrtholog;
+                }
+            }
+        }
+        return topOrtholog;
+    }
+
+    private void createHomologeneAggregates(Multimap<String, ConceptCoordinates> genes2Aggregate, File homologene, Map<ConceptCoordinates, ImportConcept> termsByGeneId, List<String> aggregateCopyProperties) throws IOException {
+        // The HomologeneRecord class interns its fields
+        final Stream<HomologeneRecord> recordStream = FileUtilities.getReaderFromFile(homologene).lines().map(line -> line.split("\t")).map(HomologeneRecord::new);
+        Multimap<String, HomologeneRecord> groupId2Homolo = Multimaps.index(recordStream.iterator(), r -> r.groupId);
+        log.info("Got {} homologene records", groupId2Homolo.size());
+        Map<String, String> genes2HomoloGroup = new HashMap<>();
+        for (String groupId : groupId2Homolo.keySet()) {
+            Collection<HomologeneRecord> group = groupId2Homolo.get(groupId);
+            List<String> homologuousGeneIds = new ArrayList<>(group.size());
+            List<String> homologuousGeneSources = new ArrayList<>(group.size());
+            List<ConceptCoordinates> homologuousGeneCoords = new ArrayList<>(group.size());
+            for (HomologeneRecord record : group) {
+                String geneId = record.geneId;
+                ConceptCoordinates geneCoords = getGeneCoordinates(geneId);
+                if (!termsByGeneId.containsKey(geneCoords))
+                    continue;
+                homologuousGeneIds.add(geneId);
+                homologuousGeneSources.add(NCBI_GENE_SOURCE);
+                homologuousGeneCoords.add(geneCoords);
+            }
+            // Only continue if more than one gene in this homologene cluster are included
+            // in our gene_info
+            if (homologuousGeneCoords.size() >= 1) {
+                ImportConcept aggregate = new ImportConcept(homologuousGeneCoords, aggregateCopyProperties);
+                aggregate.coordinates = new ConceptCoordinates();
+                aggregate.coordinates.sourceId = (HOMOLOGENE_PREFIX + groupId).intern();
+                aggregate.coordinates.source = "Homologene";
+                aggregate.coordinates.originalSource = "Homologene";
+                aggregate.coordinates.originalId = groupId;
+                aggregate.aggregateIncludeInHierarchy = true;
+                aggregate.generalLabels = Arrays.asList("AGGREGATE_HOMOLOGENE", "NO_PROCESSING_GAZETTEER");
+                termsByGeneId.put(aggregate.coordinates,
+                        aggregate);
+                ++homologeneAggregateCounter;
+                for (ConceptCoordinates geneCoords : homologuousGeneCoords) {
+                    String geneId = geneCoords.originalId;
+                    ImportConcept gene = termsByGeneId.get(geneCoords);
+                    if (genes2HomoloGroup.containsKey(geneId))
+                        throw new IllegalStateException(
+                                "Gene with ID " + geneId + " is taking part in multiple homologene groups.");
+                    genes2HomoloGroup.put(geneId, groupId);
+                    genes2Aggregate.put(geneId,
+                            new ConceptCoordinates(aggregate.coordinates.sourceId, aggregate.coordinates.source, true));
+                    gene.addParent(aggregate.coordinates);
+                    // If we actually aggregate multiple genes into one, the
+                    // elements should disappear behind the aggregate and as such
+                    // should not be present in the query dictionary or suggestions.
+
+                    if (homologuousGeneIds.size() > 1) {
+                        gene.addGeneralLabel(ResourceTermLabels.Gazetteer.NO_QUERY_DICTIONARY.name(),
+                                ResourceTermLabels.Suggestions.NO_SUGGESTIONS.name());
+                    }
+                }
+            }
+        }
+    }
+
+    private List<ImportConcept> makeTermList(Map<ConceptCoordinates, ImportConcept> termsByGeneId) {
         List<ImportConcept> terms = new ArrayList<>(termsByGeneId.size());
         for (ImportConcept term : termsByGeneId.values()) {
             terms.add(term);
@@ -326,16 +395,16 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
     private void setSpeciesQualifier(File ncbiTaxNames, Map<String, String> geneId2Tax,
                                      Collection<ImportConcept> geneTerms) throws IOException {
         Map<String, TaxonomyRecord> taxNameRecords = new HashMap<>();
-        LineIterator lineIt = FileUtils.lineIterator(ncbiTaxNames, "UTF-8");
+        Iterator<String> lineIt = FileUtilities.getReaderFromFile(ncbiTaxNames).lines().iterator();
         while (lineIt.hasNext()) {
-            String recordString = lineIt.nextLine();
+            String recordString = lineIt.next();
             // at the end of the line there is no more tab, thus we have
             // actually
             // two record seperators
             String[] split = recordString.split("(\t\\|\t)|(\t\\|)");
-            String taxId = split[0];
-            String name = split[1];
-            String nameClass = split[3];
+            String taxId = split[0].intern();
+            String name = split[1].intern();
+            String nameClass = split[3].intern();
 
             TaxonomyRecord record = taxNameRecords.get(taxId);
             if (null == record) {
@@ -352,13 +421,15 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             String taxId = geneId2Tax.get(gene.coordinates.originalId);
             TaxonomyRecord taxonomyRecord = taxNameRecords.get(taxId);
 
-            if (null == taxonomyRecord)
-                throw new IllegalStateException("No NCBI Taxonomy name record was found for the taxonomy ID " + taxId);
+            if (null == taxonomyRecord) {
+                log.warn("No NCBI Taxonomy name record was found for the taxonomy ID {}", taxId);
+                continue;
+            }
 
             // Set the species as a qualifier
             String speciesQualifier = taxonomyRecord.scientificName;
             if (null != taxonomyRecord.geneBankCommonName)
-                speciesQualifier += " (" + taxonomyRecord.geneBankCommonName + ")";
+                speciesQualifier += (" (" + taxonomyRecord.geneBankCommonName + ")").intern();
             gene.addQualifier(speciesQualifier);
 
             // Set an NCBI Gene like species-related display name.
@@ -370,16 +441,16 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
     }
 
     protected void convertGeneInfoToTerms(File geneInfo, File organisms, File geneDescriptions,
-                                          Map<String, String> geneId2Tax, Map<TermCoordinates, ImportConcept> termsByGeneId) throws IOException {
-        Set<String> organismSet = new HashSet<>(IOUtils.readLines(new FileInputStream(organisms), "UTF-8"));
+                                          Map<String, String> geneId2Tax, Map<ConceptCoordinates, ImportConcept> termsByGeneId) throws IOException {
+        Set<String> organismSet = FileUtilities.getReaderFromFile(organisms).lines().collect(Collectors.toSet());
 
-        LineIterator lineIt = FileUtils.lineIterator(geneDescriptions, "UTF-8");
+        Iterator<String> lineIt = FileUtilities.getReaderFromFile(geneDescriptions).lines().iterator();
         Map<String, String> gene2Summary = new HashMap<>();
         while (lineIt.hasNext()) {
-            String line = lineIt.nextLine();
+            String line = lineIt.next();
             String[] split = line.split("\t");
-            String geneId = split[0];
-            String summary = split[1];
+            String geneId = split[0].intern();
+            String summary = split[1].intern();
             gene2Summary.put(geneId, summary);
         }
 
@@ -389,10 +460,10 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
                 String record = it.next();
                 ImportConcept term = createGeneTerm(record, gene2Summary);
                 String[] split = record.split("\t", 2);
-                String taxId = split[0];
+                String taxId = split[0].intern();
                 if (organismSet.contains(taxId) || organismSet.isEmpty()) {
                     geneId2Tax.put(term.coordinates.originalId, taxId);
-                    termsByGeneId.put(new TermCoordinates(term.coordinates.originalId, term.coordinates.originalSource),
+                    termsByGeneId.put(term.coordinates,
                             term);
                 }
             }
@@ -433,7 +504,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         String ncbiDescription = split[8];
         if (prefName.length() < 3 && ncbiDescription.length() > 2)
             prefName = ncbiDescription;
-        String originalId = split[1];
+        String originalId = split[1].intern();
         String synonymString = split[4];
         String otherDesignations = split[13];
         // synonyms:
@@ -442,15 +513,17 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         // 3. other designations
         String[] synonymSplit = synonymString.split("\\|");
         for (int i = 0; i < synonymSplit.length; i++) {
-            String synonym = synonymSplit[i];
+            String synonym = synonymSplit[i].intern();
             synonyms.add(synonym);
         }
         String[] otherDesignationsSplit = otherDesignations.split("\\|");
         for (int i = 0; i < otherDesignationsSplit.length; i++) {
             String synonym = otherDesignationsSplit[i];
-            synonyms.add(synonym);
+            synonyms.add(synonym.intern());
         }
         String description = gene2Summary.get(originalId);
+        if (description != null)
+            description = description.intern();
 
         // remove synonyms that are too short
         for (Iterator<String> synonymIt = synonyms.iterator(); synonymIt.hasNext(); ) {
@@ -458,7 +531,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
                 synonymIt.remove();
         }
         ImportConcept geneTerm = new ImportConcept(prefName, synonyms, description,
-                new ConceptCoordinates(originalId, NCBI_GENE_SOURCE, originalId, NCBI_GENE_SOURCE));
+                getGeneCoordinates(originalId));
 
         /**
          * Gene IDs are given by a Gene Normalization component like GeNo. Thus, genes
@@ -469,6 +542,10 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 
         return geneTerm;
 
+    }
+
+    public static ConceptCoordinates getGeneCoordinates(String originalId) {
+        return new ConceptCoordinates(originalId, NCBI_GENE_SOURCE, originalId, NCBI_GENE_SOURCE);
     }
 
     @Override
@@ -527,21 +604,22 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
     @Override
     public Stream<ImportConcepts> createConcepts(HierarchicalConfiguration<ImmutableNode> importConfig)
             throws ConceptCreationException, FacetCreationException {
-        String confPath = dot(CONCEPTS, CREATOR, CONFIGURATION);
+        resetCounters();
+        String confPath = slash(CONCEPTS, CREATOR, CONFIGURATION);
         try {
-            ConfigurationUtilities.checkParameters(importConfig, dot(confPath, GENE_INFO), dot(confPath, GENEDESCRIPTIONS), dot(confPath, ORGANISMLIST),
-                    dot(confPath, ORGANISMNAMES), dot(confPath, HOMOLOGENE), dot(confPath, GENE_GROUP));
+            ConfigurationUtilities.checkParameters(importConfig, slash(confPath, GENE_INFO), slash(confPath, GENEDESCRIPTIONS), slash(confPath, ORGANISMLIST),
+                    slash(confPath, ORGANISMNAMES), slash(confPath, HOMOLOGENE), slash(confPath, GENE_GROUP));
         } catch (ConfigurationException e) {
             throw new ConceptCreationException(e);
         }
 
-        String basepath = importConfig.getString(dot(confPath, BASEPATH), "");
-        File geneInfo = new File(basepath + importConfig.getString(dot(confPath, GENE_INFO)));
-        File geneDescriptions = new File(basepath + importConfig.getString(dot(confPath, GENEDESCRIPTIONS)));
-        File organisms = new File(basepath + importConfig.getString(dot(confPath, ORGANISMLIST)));
-        File ncbiTaxNames = new File(basepath + importConfig.getString(dot(confPath, ORGANISMNAMES)));
-        File homologene = new File(basepath + importConfig.getString(dot(confPath, HOMOLOGENE)));
-        File geneGroup = new File(basepath + importConfig.getString(dot(confPath, GENE_GROUP)));
+        String basepath = importConfig.getString(slash(confPath, BASEPATH), "");
+        File geneInfo = resolvePath(basepath, importConfig.getString(slash(confPath, GENE_INFO)));
+        File geneDescriptions = resolvePath(basepath, importConfig.getString(slash(confPath, GENEDESCRIPTIONS)));
+        File organisms = resolvePath(basepath, importConfig.getString(slash(confPath, ORGANISMLIST)));
+        File ncbiTaxNames = resolvePath(basepath, importConfig.getString(slash(confPath, ORGANISMNAMES)));
+        File homologene = resolvePath(basepath, importConfig.getString(slash(confPath, HOMOLOGENE)));
+        File geneGroup = resolvePath(basepath, importConfig.getString(slash(confPath, GENE_GROUP)));
         List<File> notFound = new ArrayList<>();
         for (File f : Arrays.asList(geneInfo, geneDescriptions, organisms, ncbiTaxNames, homologene, geneGroup)) {
             if (!f.exists())
@@ -554,31 +632,44 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         try {
             log.info("Beginning import of NCBI Genes.");
             Map<String, String> geneId2Tax = new HashMap<>();
-            Map<TermCoordinates, ImportConcept> termsByGeneId = new HashMap<>();
-            log.info("Converting NCBI Gene source files into Semedico terms.");
-            convertGeneInfoToTerms(geneInfo, organisms, geneDescriptions, geneId2Tax, termsByGeneId);
-            setSpeciesQualifier(ncbiTaxNames, geneId2Tax, termsByGeneId.values());
-            log.info("Got {} terms from source files..", termsByGeneId.values().size());
+            Map<ConceptCoordinates, ImportConcept> conceptsByGeneId = new HashMap<>();
+            log.info("Converting NCBI Gene source files into nodes for the concept graph.");
+            convertGeneInfoToTerms(geneInfo, organisms, geneDescriptions, geneId2Tax, conceptsByGeneId);
+            setSpeciesQualifier(ncbiTaxNames, geneId2Tax, conceptsByGeneId.values());
+            log.info("Got {} terms from source files..", conceptsByGeneId.values().size());
             log.info("Creating homology aggregates");
-            createHomologyAggregates(termsByGeneId, homologene, geneGroup);
+            createHomologyAggregates(conceptsByGeneId, homologene, geneGroup);
             log.info("Created {} homology aggregates", homologeneAggregateCounter);
             log.info("Created {} orthology aggregates", orthologAggregateCounter);
             log.info("Created {} top-homology aggregates, governing homologene and orthology aggregates",
                     topHomologyAggregateCounter);
-            log.info("Got {} terms overall (genes and homology aggregates)", termsByGeneId.size());
+            log.info("Got {} terms overall (genes and homology aggregates)", conceptsByGeneId.size());
 
-            List<ImportConcept> terms = makeTermList(termsByGeneId);
+            List<ImportConcept> concepts = makeTermList(conceptsByGeneId);
             ImportFacet facet = FacetCreationService.getInstance().createFacet(importConfig);
             ImportOptions options = new ImportOptions();
             options.createHollowAggregateElements = true;
             options.doNotCreateHollowParents = true;
-            ImportConcepts importConcepts = new ImportConcepts(terms, facet);
+            ImportConcepts importConcepts = new ImportConcepts(concepts, facet);
             importConcepts.setImportOptions(options);
             return Stream.of(importConcepts);
         } catch (IOException e) {
             throw new ConceptCreationException(e);
         }
 
+    }
+
+    /**
+     * Checks if <tt>filepath</tt> is an absolute path. If so, <tt>filepath</tt> is returned. Otherweise, <tt>basepath + filepath</tt> is returned.
+     *
+     * @param basepath A base path to resolve the potentially relative <tt>filepath</tt> against.
+     * @param filepath The - potentially relative to <tt>basepath</tt> - path to a file.
+     * @return The complete path to the file pointed to by <tt>filepath</tt>.
+     */
+    private File resolvePath(String basepath, String filepath) {
+        String delimiter = !basepath.endsWith(File.separator) && !filepath.startsWith(File.separator) ? File.separator : "";
+        String path = new File(filepath).isAbsolute() ? filepath : basepath + delimiter + filepath;
+        return new File(path);
     }
 
     @Override
@@ -591,8 +682,9 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         String taxId;
         String scientificName;
         String geneBankCommonName;
+
         public TaxonomyRecord(String taxId) {
-            this.taxId = taxId;
+            this.taxId = taxId.intern();
         }
     }
 
@@ -602,6 +694,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         String geneId;
         // The homology cluster ID
         String groupId;
+
         /**
          * From the homologene README file:
          *
@@ -619,10 +712,9 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
          * @author faessler
          */
         public HomologeneRecord(String[] record) {
-            groupId = record[0];
-            taxId = record[1];
-            geneId = record[2];
+            groupId = record[0].intern();
+            taxId = record[1].intern();
+            geneId = record[2].intern();
         }
     }
-
 }

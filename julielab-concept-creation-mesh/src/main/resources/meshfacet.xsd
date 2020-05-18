@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           version="1.0.0"
+           targetNamespace="http://www.julielab.de/conceptdb/facets/mesh"
+           xmlns="http://www.julielab.de/conceptdb/facets/mesh"
+           elementFormDefault="qualified">
+
+    <xs:element name="name">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="MeshFacetCreator"/>
+                <xs:enumeration value="de.julielab.concepts.db.creators.mesh.MeshFacetCreator"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+
+    <xs:element name="labels">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                A set of labels that will be added as Neo4j node labels in the database.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="label" type="xs:string" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="facetgroup">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                All facets are assembled in facet groups. Facet groups are just nodes in the database that collect multiple facets, creating an additional hierarchical layer. They are uniquely identified via their name.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="configuration">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="labels" minOccurs="0"/>
+                <xs:element ref="facetgroup"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="creator">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="name"/>
+                <xs:element ref="configuration"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

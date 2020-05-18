@@ -1,2 +1,4 @@
+de.julielab.concepts.db.core.CypherBoltExporter
 de.julielab.concepts.db.core.ServerPluginExporter
-de.julielab.concepts.db.core.FileDatabaseExporter
+de.julielab.concepts.db.core.JavaClassFileDBExporter
+de.julielab.concepts.db.core.CypherHttpExporter

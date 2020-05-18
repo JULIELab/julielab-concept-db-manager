@@ -1,0 +1,1986 @@
+<?xml version="1.0"?>
+<!DOCTYPE DescriptorRecordSet SYSTEM "https://www.nlm.nih.gov/databases/dtd/nlmdescriptorrecordset_20170101.dtd">
+<DescriptorRecordSet LanguageCode="eng">
+    <DescriptorRecord DescriptorClass="1">
+        <DescriptorUI>D001829</DescriptorUI>
+        <DescriptorName>
+            <String>Body Regions</String>
+        </DescriptorName>
+        <DateCreated>
+            <Year>1999</Year>
+            <Month>01</Month>
+            <Day>01</Day>
+        </DateCreated>
+        <DateRevised>
+            <Year>2015</Year>
+            <Month>06</Month>
+            <Day>05</Day>
+        </DateRevised>
+        <DateEstablished>
+            <Year>1998</Year>
+            <Month>01</Month>
+            <Day>01</Day>
+        </DateEstablished>
+        <AllowableQualifiersList>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000469</QualifierUI>
+                    <QualifierName>
+                        <String>parasitology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PS</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000002</QualifierUI>
+                    <QualifierName>
+                        <String>abnormalities</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>AB</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000382</QualifierUI>
+                    <QualifierName>
+                        <String>microbiology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>MI</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000000981</QualifierUI>
+                    <QualifierName>
+                        <String>diagnostic imaging</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>DG</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000502</QualifierUI>
+                    <QualifierName>
+                        <String>physiology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PH</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000503</QualifierUI>
+                    <QualifierName>
+                        <String>physiopathology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PP</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000294</QualifierUI>
+                    <QualifierName>
+                        <String>innervation</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>IR</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000821</QualifierUI>
+                    <QualifierName>
+                        <String>virology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>VI</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000528</QualifierUI>
+                    <QualifierName>
+                        <String>radiation effects</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>RE</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000033</QualifierUI>
+                    <QualifierName>
+                        <String>anatomy &amp; histology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>AH</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000098</QualifierUI>
+                    <QualifierName>
+                        <String>blood supply</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>BS</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000196</QualifierUI>
+                    <QualifierName>
+                        <String>embryology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>EM</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000254</QualifierUI>
+                    <QualifierName>
+                        <String>growth &amp; development</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>GD</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000293</QualifierUI>
+                    <QualifierName>
+                        <String>injuries</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>IN</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000601</QualifierUI>
+                    <QualifierName>
+                        <String>surgery</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>SU</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000473</QualifierUI>
+                    <QualifierName>
+                        <String>pathology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PA</Abbreviation>
+            </AllowableQualifier>
+        </AllowableQualifiersList>
+        <Annotation>INDEXER: Do not use
+        </Annotation>
+        <HistoryNote>98; use explode 1971-97
+        </HistoryNote>
+        <PublicMeSHNote>98
+        </PublicMeSHNote>
+        <PreviousIndexingList>
+            <PreviousIndexing>specific region (1966-1997)</PreviousIndexing>
+        </PreviousIndexingList>
+        <TreeNumberList>
+            <TreeNumber>A01</TreeNumber>
+        </TreeNumberList>
+        <ConceptList>
+            <Concept PreferredConceptYN="Y">
+                <ConceptUI>M0002749</ConceptUI>
+                <ConceptName>
+                    <String>Body Regions</String>
+                </ConceptName>
+                <ScopeNote>Anatomical areas of the body.
+                </ScopeNote>
+                <TermList>
+                    <Term ConceptPreferredTermYN="Y" IsPermutedTermYN="N" LexicalTag="NON" RecordPreferredTermYN="Y">
+                        <TermUI>T005279</TermUI>
+                        <String>Body Regions</String>
+                        <DateCreated>
+                            <Year>1999</Year>
+                            <Month>01</Month>
+                            <Day>01</Day>
+                        </DateCreated>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>NLM (1966)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="Y" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T005279</TermUI>
+                        <String>Body Region</String>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="Y" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T005279</TermUI>
+                        <String>Region, Body</String>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="Y" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T005279</TermUI>
+                        <String>Regions, Body</String>
+                    </Term>
+                </TermList>
+            </Concept>
+        </ConceptList>
+    </DescriptorRecord>
+    <DescriptorRecord DescriptorClass = "1">
+        <DescriptorUI>D009333</DescriptorUI>
+        <DescriptorName>
+            <String>Neck</String>
+        </DescriptorName>
+        <DateCreated>
+            <Year>1999</Year>
+            <Month>01</Month>
+            <Day>01</Day>
+        </DateCreated>
+        <DateRevised>
+            <Year>2015</Year>
+            <Month>06</Month>
+            <Day>16</Day>
+        </DateRevised>
+        <DateEstablished>
+            <Year>1966</Year>
+            <Month>01</Month>
+            <Day>01</Day>
+        </DateEstablished>
+        <AllowableQualifiersList>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000469</QualifierUI>
+                    <QualifierName>
+                        <String>parasitology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PS</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000002</QualifierUI>
+                    <QualifierName>
+                        <String>abnormalities</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>AB</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000382</QualifierUI>
+                    <QualifierName>
+                        <String>microbiology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>MI</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000000981</QualifierUI>
+                    <QualifierName>
+                        <String>diagnostic imaging</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>DG</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000502</QualifierUI>
+                    <QualifierName>
+                        <String>physiology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PH</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000503</QualifierUI>
+                    <QualifierName>
+                        <String>physiopathology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PP</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000294</QualifierUI>
+                    <QualifierName>
+                        <String>innervation</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>IR</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000821</QualifierUI>
+                    <QualifierName>
+                        <String>virology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>VI</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000528</QualifierUI>
+                    <QualifierName>
+                        <String>radiation effects</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>RE</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000033</QualifierUI>
+                    <QualifierName>
+                        <String>anatomy &amp; histology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>AH</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000098</QualifierUI>
+                    <QualifierName>
+                        <String>blood supply</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>BS</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000196</QualifierUI>
+                    <QualifierName>
+                        <String>embryology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>EM</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000254</QualifierUI>
+                    <QualifierName>
+                        <String>growth &amp; development</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>GD</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000601</QualifierUI>
+                    <QualifierName>
+                        <String>surgery</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>SU</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000473</QualifierUI>
+                    <QualifierName>
+                        <String>pathology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PA</Abbreviation>
+            </AllowableQualifier>
+        </AllowableQualifiersList>
+        <Annotation>as a region &amp; for soft parts but note that NECK MUSCLES is also available; bones = CERVICAL VERTEBRAE; "cervical lymph nodes" = LYMPH NODES (IM) + NECK (NIM); "neck dissection" probably refers to dissection of lymph nodes in cancer: index LYMPH NODE EXCISION (IM) + NECK (NIM) for general or unspecified or RADICAL NECK DISSECTION if specified
+        </Annotation>
+        <NLMClassificationNumber>WE 708</NLMClassificationNumber>
+        <EntryCombinationList>
+            <EntryCombination>
+                <ECIN>
+                    <DescriptorReferredTo>
+                        <DescriptorUI>D009333</DescriptorUI>
+                        <DescriptorName>
+                            <String>Neck</String>
+                        </DescriptorName>
+                    </DescriptorReferredTo>
+                    <QualifierReferredTo>
+                        <QualifierUI>Q000293</QualifierUI>
+                        <QualifierName>
+                            <String>injuries</String>
+                        </QualifierName>
+                    </QualifierReferredTo>
+                </ECIN>
+                <ECOUT>
+                    <DescriptorReferredTo>
+                        <DescriptorUI>D019838</DescriptorUI>
+                        <DescriptorName>
+                            <String>Neck Injuries</String>
+                        </DescriptorName>
+                    </DescriptorReferredTo>
+                </ECOUT>
+            </EntryCombination>
+        </EntryCombinationList>
+        <SeeRelatedList>
+            <SeeRelatedDescriptor>
+                <DescriptorReferredTo>
+                    <DescriptorUI>D002574</DescriptorUI>
+                    <DescriptorName>
+                        <String>Cervical Vertebrae</String>
+                    </DescriptorName>
+                </DescriptorReferredTo>
+            </SeeRelatedDescriptor>
+            <SeeRelatedDescriptor>
+                <DescriptorReferredTo>
+                    <DescriptorUI>D009334</DescriptorUI>
+                    <DescriptorName>
+                        <String>Neck Muscles</String>
+                    </DescriptorName>
+                </DescriptorReferredTo>
+            </SeeRelatedDescriptor>
+        </SeeRelatedList>
+        <ConsiderAlso>consider also terms at CERVICAL and CERVICO-
+        </ConsiderAlso>
+        <TreeNumberList>
+            <TreeNumber>A01.598</TreeNumber>
+        </TreeNumberList>
+        <ConceptList>
+            <Concept PreferredConceptYN="Y">
+                <ConceptUI>M0014541</ConceptUI>
+                <ConceptName>
+                    <String>Neck</String>
+                </ConceptName>
+                <ScopeNote>The part of a human or animal body connecting the HEAD to the rest of the body.
+                </ScopeNote>
+                <TermList>
+                    <Term  ConceptPreferredTermYN="Y"  IsPermutedTermYN="N"  LexicalTag="NON"  RecordPreferredTermYN="Y">
+                        <TermUI>T027844</TermUI>
+                        <String>Neck</String>
+                        <DateCreated>
+                            <Year>1999</Year>
+                            <Month>01</Month>
+                            <Day>01</Day>
+                        </DateCreated>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>NLM (1966)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                    <Term  ConceptPreferredTermYN="N"  IsPermutedTermYN="Y"  LexicalTag="NON"  RecordPreferredTermYN="N">
+                        <TermUI>T027844</TermUI>
+                        <String>Necks</String>
+                    </Term>
+                </TermList>
+            </Concept>
+        </ConceptList>
+    </DescriptorRecord>
+    <DescriptorRecord DescriptorClass="1">
+        <DescriptorUI>D005121</DescriptorUI>
+        <DescriptorName>
+            <String>Extremities</String>
+        </DescriptorName>
+        <DateCreated>
+            <Year>1999</Year>
+            <Month>01</Month>
+            <Day>01</Day>
+        </DateCreated>
+        <DateRevised>
+            <Year>2015</Year>
+            <Month>06</Month>
+            <Day>15</Day>
+        </DateRevised>
+        <DateEstablished>
+            <Year>1966</Year>
+            <Month>01</Month>
+            <Day>01</Day>
+        </DateEstablished>
+        <AllowableQualifiersList>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000637</QualifierUI>
+                    <QualifierName>
+                        <String>transplantation</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>TR</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000469</QualifierUI>
+                    <QualifierName>
+                        <String>parasitology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PS</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000382</QualifierUI>
+                    <QualifierName>
+                        <String>microbiology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>MI</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000000981</QualifierUI>
+                    <QualifierName>
+                        <String>diagnostic imaging</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>DG</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000502</QualifierUI>
+                    <QualifierName>
+                        <String>physiology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PH</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000503</QualifierUI>
+                    <QualifierName>
+                        <String>physiopathology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PP</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000294</QualifierUI>
+                    <QualifierName>
+                        <String>innervation</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>IR</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000821</QualifierUI>
+                    <QualifierName>
+                        <String>virology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>VI</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000528</QualifierUI>
+                    <QualifierName>
+                        <String>radiation effects</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>RE</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000033</QualifierUI>
+                    <QualifierName>
+                        <String>anatomy &amp; histology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>AH</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000098</QualifierUI>
+                    <QualifierName>
+                        <String>blood supply</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>BS</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000196</QualifierUI>
+                    <QualifierName>
+                        <String>embryology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>EM</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000254</QualifierUI>
+                    <QualifierName>
+                        <String>growth &amp; development</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>GD</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000293</QualifierUI>
+                    <QualifierName>
+                        <String>injuries</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>IN</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000601</QualifierUI>
+                    <QualifierName>
+                        <String>surgery</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>SU</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000473</QualifierUI>
+                    <QualifierName>
+                        <String>pathology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PA</Abbreviation>
+            </AllowableQualifier>
+        </AllowableQualifiersList>
+        <EntryCombinationList>
+            <EntryCombination>
+                <ECIN>
+                    <DescriptorReferredTo>
+                        <DescriptorUI>D005121</DescriptorUI>
+                        <DescriptorName>
+                            <String>Extremities</String>
+                        </DescriptorName>
+                    </DescriptorReferredTo>
+                    <QualifierReferredTo>
+                        <QualifierUI>Q000002</QualifierUI>
+                        <QualifierName>
+                            <String>abnormalities</String>
+                        </QualifierName>
+                    </QualifierReferredTo>
+                </ECIN>
+                <ECOUT>
+                    <DescriptorReferredTo>
+                        <DescriptorUI>D017880</DescriptorUI>
+                        <DescriptorName>
+                            <String>Limb Deformities, Congenital</String>
+                        </DescriptorName>
+                    </DescriptorReferredTo>
+                </ECOUT>
+            </EntryCombination>
+        </EntryCombinationList>
+        <TreeNumberList>
+            <TreeNumber>A01.378</TreeNumber>
+        </TreeNumberList>
+        <ConceptList>
+            <Concept PreferredConceptYN="Y">
+                <ConceptUI>M0008078</ConceptUI>
+                <ConceptName>
+                    <String>Extremities</String>
+                </ConceptName>
+                <ScopeNote>The farthest or outermost projections of the body, such as the HAND and FOOT.
+                </ScopeNote>
+                <TermList>
+                    <Term ConceptPreferredTermYN="Y" IsPermutedTermYN="N" LexicalTag="NON" RecordPreferredTermYN="Y">
+                        <TermUI>T015675</TermUI>
+                        <String>Extremities</String>
+                        <DateCreated>
+                            <Year>1999</Year>
+                            <Month>01</Month>
+                            <Day>01</Day>
+                        </DateCreated>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>NLM (1966)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="Y" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T015675</TermUI>
+                        <String>Extremity</String>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="N" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T015676</TermUI>
+                        <String>Limbs</String>
+                        <DateCreated>
+                            <Year>1974</Year>
+                            <Month>03</Month>
+                            <Day>30</Day>
+                        </DateCreated>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>UNK (19XX)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="Y" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T015676</TermUI>
+                        <String>Limb</String>
+                    </Term>
+                </TermList>
+            </Concept>
+        </ConceptList>
+    </DescriptorRecord>
+    <DescriptorRecord DescriptorClass="1">
+        <DescriptorUI>D006257</DescriptorUI>
+        <DescriptorName>
+            <String>Head</String>
+        </DescriptorName>
+        <DateCreated>
+            <Year>1999</Year>
+            <Month>01</Month>
+            <Day>01</Day>
+        </DateCreated>
+        <DateRevised>
+            <Year>2015</Year>
+            <Month>06</Month>
+            <Day>16</Day>
+        </DateRevised>
+        <DateEstablished>
+            <Year>1966</Year>
+            <Month>01</Month>
+            <Day>01</Day>
+        </DateEstablished>
+        <AllowableQualifiersList>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000469</QualifierUI>
+                    <QualifierName>
+                        <String>parasitology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PS</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000002</QualifierUI>
+                    <QualifierName>
+                        <String>abnormalities</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>AB</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000382</QualifierUI>
+                    <QualifierName>
+                        <String>microbiology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>MI</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000000981</QualifierUI>
+                    <QualifierName>
+                        <String>diagnostic imaging</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>DG</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000502</QualifierUI>
+                    <QualifierName>
+                        <String>physiology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PH</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000503</QualifierUI>
+                    <QualifierName>
+                        <String>physiopathology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PP</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000294</QualifierUI>
+                    <QualifierName>
+                        <String>innervation</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>IR</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000821</QualifierUI>
+                    <QualifierName>
+                        <String>virology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>VI</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000528</QualifierUI>
+                    <QualifierName>
+                        <String>radiation effects</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>RE</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000033</QualifierUI>
+                    <QualifierName>
+                        <String>anatomy &amp; histology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>AH</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000098</QualifierUI>
+                    <QualifierName>
+                        <String>blood supply</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>BS</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000196</QualifierUI>
+                    <QualifierName>
+                        <String>embryology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>EM</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000254</QualifierUI>
+                    <QualifierName>
+                        <String>growth &amp; development</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>GD</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000601</QualifierUI>
+                    <QualifierName>
+                        <String>surgery</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>SU</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000473</QualifierUI>
+                    <QualifierName>
+                        <String>pathology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PA</Abbreviation>
+            </AllowableQualifier>
+        </AllowableQualifiersList>
+        <Annotation>usually NIM as site; soft parts = FACE, bony parts = SKULL; /anat: consider also CEPHALOMETRY; /inj
+            = CRANIOCEREBRAL TRAUMA but consider also SKULL &amp; FACIAL BONES &amp; specifics under each with /inj;
+            HEAD-DOWN TILT is available for physiological aspects of this position
+        </Annotation>
+        <EntryCombinationList>
+            <EntryCombination>
+                <ECIN>
+                    <DescriptorReferredTo>
+                        <DescriptorUI>D006257</DescriptorUI>
+                        <DescriptorName>
+                            <String>Head</String>
+                        </DescriptorName>
+                    </DescriptorReferredTo>
+                    <QualifierReferredTo>
+                        <QualifierUI>Q000293</QualifierUI>
+                        <QualifierName>
+                            <String>injuries</String>
+                        </QualifierName>
+                    </QualifierReferredTo>
+                </ECIN>
+                <ECOUT>
+                    <DescriptorReferredTo>
+                        <DescriptorUI>D006259</DescriptorUI>
+                        <DescriptorName>
+                            <String>Craniocerebral Trauma</String>
+                        </DescriptorName>
+                    </DescriptorReferredTo>
+                </ECOUT>
+            </EntryCombination>
+        </EntryCombinationList>
+        <SeeRelatedList>
+            <SeeRelatedDescriptor>
+                <DescriptorReferredTo>
+                    <DescriptorUI>D005147</DescriptorUI>
+                    <DescriptorName>
+                        <String>Facial Bones</String>
+                    </DescriptorName>
+                </DescriptorReferredTo>
+            </SeeRelatedDescriptor>
+            <SeeRelatedDescriptor>
+                <DescriptorReferredTo>
+                    <DescriptorUI>D012886</DescriptorUI>
+                    <DescriptorName>
+                        <String>Skull</String>
+                    </DescriptorName>
+                </DescriptorReferredTo>
+            </SeeRelatedDescriptor>
+        </SeeRelatedList>
+        <TreeNumberList>
+            <TreeNumber>A01.456</TreeNumber>
+        </TreeNumberList>
+        <ConceptList>
+            <Concept PreferredConceptYN="Y">
+                <ConceptUI>M0009817</ConceptUI>
+                <ConceptName>
+                    <String>Head</String>
+                </ConceptName>
+                <ScopeNote>The upper part of the human body, or the front or upper part of the body of an animal,
+                    typically separated from the rest of the body by a neck, and containing the brain, mouth, and sense
+                    organs.
+                </ScopeNote>
+                <TermList>
+                    <Term ConceptPreferredTermYN="Y" IsPermutedTermYN="N" LexicalTag="NON" RecordPreferredTermYN="Y">
+                        <TermUI>T018949</TermUI>
+                        <String>Head</String>
+                        <DateCreated>
+                            <Year>1999</Year>
+                            <Month>01</Month>
+                            <Day>01</Day>
+                        </DateCreated>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>NLM (1966)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="Y" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T018949</TermUI>
+                        <String>Heads</String>
+                    </Term>
+                </TermList>
+            </Concept>
+        </ConceptList>
+    </DescriptorRecord>
+    <DescriptorRecord DescriptorClass="1">
+        <DescriptorUI>D034941</DescriptorUI>
+        <DescriptorName>
+            <String>Upper Extremity</String>
+        </DescriptorName>
+        <DateCreated>
+            <Year>2002</Year>
+            <Month>07</Month>
+            <Day>03</Day>
+        </DateCreated>
+        <DateEstablished>
+            <Year>2003</Year>
+            <Month>01</Month>
+            <Day>01</Day>
+        </DateEstablished>
+        <AllowableQualifiersList>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000469</QualifierUI>
+                    <QualifierName>
+                        <String>parasitology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PS</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000382</QualifierUI>
+                    <QualifierName>
+                        <String>microbiology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>MI</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000000981</QualifierUI>
+                    <QualifierName>
+                        <String>diagnostic imaging</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>DG</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000502</QualifierUI>
+                    <QualifierName>
+                        <String>physiology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PH</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000503</QualifierUI>
+                    <QualifierName>
+                        <String>physiopathology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PP</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000294</QualifierUI>
+                    <QualifierName>
+                        <String>innervation</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>IR</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000821</QualifierUI>
+                    <QualifierName>
+                        <String>virology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>VI</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000528</QualifierUI>
+                    <QualifierName>
+                        <String>radiation effects</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>RE</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000033</QualifierUI>
+                    <QualifierName>
+                        <String>anatomy &amp; histology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>AH</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000098</QualifierUI>
+                    <QualifierName>
+                        <String>blood supply</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>BS</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000196</QualifierUI>
+                    <QualifierName>
+                        <String>embryology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>EM</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000254</QualifierUI>
+                    <QualifierName>
+                        <String>growth &amp; development</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>GD</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000293</QualifierUI>
+                    <QualifierName>
+                        <String>injuries</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>IN</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000601</QualifierUI>
+                    <QualifierName>
+                        <String>surgery</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>SU</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000473</QualifierUI>
+                    <QualifierName>
+                        <String>pathology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PA</Abbreviation>
+            </AllowableQualifier>
+        </AllowableQualifiersList>
+        <Annotation>prefer specifics; Manual 21.58: table of human, primate &amp; non-primate extremities
+        </Annotation>
+        <HistoryNote>2003; use ARM 1987-2002
+        </HistoryNote>
+        <PublicMeSHNote>2003; see ARM 1987-2002
+        </PublicMeSHNote>
+        <PreviousIndexingList>
+            <PreviousIndexing>Arm (1963-2002)</PreviousIndexing>
+        </PreviousIndexingList>
+        <EntryCombinationList>
+            <EntryCombination>
+                <ECIN>
+                    <DescriptorReferredTo>
+                        <DescriptorUI>D034941</DescriptorUI>
+                        <DescriptorName>
+                            <String>Upper Extremity</String>
+                        </DescriptorName>
+                    </DescriptorReferredTo>
+                    <QualifierReferredTo>
+                        <QualifierUI>Q000002</QualifierUI>
+                        <QualifierName>
+                            <String>abnormalities</String>
+                        </QualifierName>
+                    </QualifierReferredTo>
+                </ECIN>
+                <ECOUT>
+                    <DescriptorReferredTo>
+                        <DescriptorUI>D038062</DescriptorUI>
+                        <DescriptorName>
+                            <String>Upper Extremity Deformities, Congenital</String>
+                        </DescriptorName>
+                    </DescriptorReferredTo>
+                </ECOUT>
+            </EntryCombination>
+        </EntryCombinationList>
+        <SeeRelatedList>
+            <SeeRelatedDescriptor>
+                <DescriptorReferredTo>
+                    <DescriptorUI>D001133</DescriptorUI>
+                    <DescriptorName>
+                        <String>Bones of Upper Extremity</String>
+                    </DescriptorName>
+                </DescriptorReferredTo>
+            </SeeRelatedDescriptor>
+        </SeeRelatedList>
+        <TreeNumberList>
+            <TreeNumber>A01.378.800</TreeNumber>
+        </TreeNumberList>
+        <ConceptList>
+            <Concept PreferredConceptYN="Y">
+                <ConceptUI>M0406510</ConceptUI>
+                <ConceptName>
+                    <String>Upper Extremity</String>
+                </ConceptName>
+                <ScopeNote>The region of the upper limb in animals, extending from the deltoid region to the HAND, and
+                    including the ARM; AXILLA; and SHOULDER.
+                </ScopeNote>
+                <TermList>
+                    <Term ConceptPreferredTermYN="Y" IsPermutedTermYN="N" LexicalTag="NON" RecordPreferredTermYN="Y">
+                        <TermUI>T003413</TermUI>
+                        <String>Upper Extremity</String>
+                        <DateCreated>
+                            <Year>1986</Year>
+                            <Month>06</Month>
+                            <Day>23</Day>
+                        </DateCreated>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>UNK (19XX)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="Y" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T003413</TermUI>
+                        <String>Extremities, Upper</String>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="Y" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T003413</TermUI>
+                        <String>Upper Extremities</String>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="N" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T472424</TermUI>
+                        <String>Membrum superius</String>
+                        <DateCreated>
+                            <Year>2001</Year>
+                            <Month>12</Month>
+                            <Day>06</Day>
+                        </DateCreated>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>NLM (2003)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="N" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T472425</TermUI>
+                        <String>Upper Limb</String>
+                        <DateCreated>
+                            <Year>2001</Year>
+                            <Month>12</Month>
+                            <Day>06</Day>
+                        </DateCreated>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>NLM (2003)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="Y" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T472425</TermUI>
+                        <String>Limb, Upper</String>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="Y" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T472425</TermUI>
+                        <String>Limbs, Upper</String>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="Y" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T472425</TermUI>
+                        <String>Upper Limbs</String>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="N" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T003412</TermUI>
+                        <String>Extremity, Upper</String>
+                        <DateCreated>
+                            <Year>1986</Year>
+                            <Month>06</Month>
+                            <Day>23</Day>
+                        </DateCreated>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>UNK (19XX)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                </TermList>
+            </Concept>
+        </ConceptList>
+    </DescriptorRecord>
+    <DescriptorRecord DescriptorClass="1">
+        <DescriptorUI>D035002</DescriptorUI>
+        <DescriptorName>
+            <String>Lower Extremity</String>
+        </DescriptorName>
+        <DateCreated>
+            <Year>2002</Year>
+            <Month>07</Month>
+            <Day>03</Day>
+        </DateCreated>
+        <DateEstablished>
+            <Year>2003</Year>
+            <Month>01</Month>
+            <Day>01</Day>
+        </DateEstablished>
+        <AllowableQualifiersList>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000469</QualifierUI>
+                    <QualifierName>
+                        <String>parasitology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PS</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000382</QualifierUI>
+                    <QualifierName>
+                        <String>microbiology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>MI</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000000981</QualifierUI>
+                    <QualifierName>
+                        <String>diagnostic imaging</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>DG</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000502</QualifierUI>
+                    <QualifierName>
+                        <String>physiology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PH</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000503</QualifierUI>
+                    <QualifierName>
+                        <String>physiopathology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PP</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000294</QualifierUI>
+                    <QualifierName>
+                        <String>innervation</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>IR</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000821</QualifierUI>
+                    <QualifierName>
+                        <String>virology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>VI</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000528</QualifierUI>
+                    <QualifierName>
+                        <String>radiation effects</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>RE</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000033</QualifierUI>
+                    <QualifierName>
+                        <String>anatomy &amp; histology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>AH</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000098</QualifierUI>
+                    <QualifierName>
+                        <String>blood supply</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>BS</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000196</QualifierUI>
+                    <QualifierName>
+                        <String>embryology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>EM</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000254</QualifierUI>
+                    <QualifierName>
+                        <String>growth &amp; development</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>GD</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000293</QualifierUI>
+                    <QualifierName>
+                        <String>injuries</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>IN</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000601</QualifierUI>
+                    <QualifierName>
+                        <String>surgery</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>SU</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000473</QualifierUI>
+                    <QualifierName>
+                        <String>pathology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PA</Abbreviation>
+            </AllowableQualifier>
+        </AllowableQualifiersList>
+        <Annotation>prefer specifics; Manual 21.58: table of human, primate &amp; non-primate extremities
+        </Annotation>
+        <HistoryNote>2003; use LEG 1987-2002
+        </HistoryNote>
+        <PublicMeSHNote>2003; see LEG 1987-2002
+        </PublicMeSHNote>
+        <PreviousIndexingList>
+            <PreviousIndexing>Leg (1964-2002)</PreviousIndexing>
+        </PreviousIndexingList>
+        <EntryCombinationList>
+            <EntryCombination>
+                <ECIN>
+                    <DescriptorReferredTo>
+                        <DescriptorUI>D035002</DescriptorUI>
+                        <DescriptorName>
+                            <String>Lower Extremity</String>
+                        </DescriptorName>
+                    </DescriptorReferredTo>
+                    <QualifierReferredTo>
+                        <QualifierUI>Q000002</QualifierUI>
+                        <QualifierName>
+                            <String>abnormalities</String>
+                        </QualifierName>
+                    </QualifierReferredTo>
+                </ECIN>
+                <ECOUT>
+                    <DescriptorReferredTo>
+                        <DescriptorUI>D038061</DescriptorUI>
+                        <DescriptorName>
+                            <String>Lower Extremity Deformities, Congenital</String>
+                        </DescriptorName>
+                    </DescriptorReferredTo>
+                </ECOUT>
+            </EntryCombination>
+        </EntryCombinationList>
+        <TreeNumberList>
+            <TreeNumber>A01.378.610</TreeNumber>
+        </TreeNumberList>
+        <ConceptList>
+            <Concept PreferredConceptYN="Y">
+                <ConceptUI>M0406670</ConceptUI>
+                <ConceptName>
+                    <String>Lower Extremity</String>
+                </ConceptName>
+                <ScopeNote>The region of the lower limb in animals, extending from the gluteal region to the FOOT, and
+                    including the BUTTOCKS; HIP; and LEG.
+                </ScopeNote>
+                <TermList>
+                    <Term ConceptPreferredTermYN="Y" IsPermutedTermYN="N" LexicalTag="NON" RecordPreferredTermYN="Y">
+                        <TermUI>T023468</TermUI>
+                        <String>Lower Extremity</String>
+                        <DateCreated>
+                            <Year>1986</Year>
+                            <Month>06</Month>
+                            <Day>23</Day>
+                        </DateCreated>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>UNK (19XX)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="Y" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T023468</TermUI>
+                        <String>Extremities, Lower</String>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="Y" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T023468</TermUI>
+                        <String>Lower Extremities</String>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="N" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T483400</TermUI>
+                        <String>Lower Limb</String>
+                        <DateCreated>
+                            <Year>2002</Year>
+                            <Month>02</Month>
+                            <Day>25</Day>
+                        </DateCreated>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>NLM (2003)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="Y" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T483400</TermUI>
+                        <String>Limb, Lower</String>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="Y" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T483400</TermUI>
+                        <String>Limbs, Lower</String>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="Y" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T483400</TermUI>
+                        <String>Lower Limbs</String>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="N" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T472588</TermUI>
+                        <String>Membrum inferius</String>
+                        <DateCreated>
+                            <Year>2001</Year>
+                            <Month>12</Month>
+                            <Day>06</Day>
+                        </DateCreated>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>NLM (2003)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="N" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T023467</TermUI>
+                        <String>Extremity, Lower</String>
+                        <DateCreated>
+                            <Year>1986</Year>
+                            <Month>06</Month>
+                            <Day>23</Day>
+                        </DateCreated>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>UNK (19XX)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                </TermList>
+            </Concept>
+        </ConceptList>
+    </DescriptorRecord>
+    <DescriptorRecord DescriptorClass="1">
+        <DescriptorUI>D001105</DescriptorUI>
+        <DescriptorName>
+            <String>Archaea</String>
+        </DescriptorName>
+        <DateCreated>
+            <Year>1980</Year>
+            <Month>04</Month>
+            <Day>02</Day>
+        </DateCreated>
+        <DateRevised>
+            <Year>2009</Year>
+            <Month>07</Month>
+            <Day>06</Day>
+        </DateRevised>
+        <DateEstablished>
+            <Year>1991</Year>
+            <Month>01</Month>
+            <Day>01</Day>
+        </DateEstablished>
+        <AllowableQualifiersList>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000276</QualifierUI>
+                    <QualifierName>
+                        <String>immunology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>IM</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000502</QualifierUI>
+                    <QualifierName>
+                        <String>physiology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PH</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000201</QualifierUI>
+                    <QualifierName>
+                        <String>enzymology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>EN</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000166</QualifierUI>
+                    <QualifierName>
+                        <String>cytology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>CY</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000737</QualifierUI>
+                    <QualifierName>
+                        <String>chemistry</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>CH</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000187</QualifierUI>
+                    <QualifierName>
+                        <String>drug effects</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>DE</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000821</QualifierUI>
+                    <QualifierName>
+                        <String>virology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>VI</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000528</QualifierUI>
+                    <QualifierName>
+                        <String>radiation effects</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>RE</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000145</QualifierUI>
+                    <QualifierName>
+                        <String>classification</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>CL</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000235</QualifierUI>
+                    <QualifierName>
+                        <String>genetics</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>GE</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000254</QualifierUI>
+                    <QualifierName>
+                        <String>growth &amp; development</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>GD</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000302</QualifierUI>
+                    <QualifierName>
+                        <String>isolation &amp; purification</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>IP</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000378</QualifierUI>
+                    <QualifierName>
+                        <String>metabolism</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>ME</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000472</QualifierUI>
+                    <QualifierName>
+                        <String>pathogenicity</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PY</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000648</QualifierUI>
+                    <QualifierName>
+                        <String>ultrastructure</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>UL</Abbreviation>
+            </AllowableQualifier>
+        </AllowableQualifiersList>
+        <Annotation>in taxonomy, one of the 3 domains of life along with BACTERIA &amp; Eucarya
+        </Annotation>
+        <HistoryNote>98(81); ARCHAEA was see ARCHAEOBACTERIA 1995-97
+        </HistoryNote>
+        <PublicMeSHNote>98; see ARCHAEOBACTERIA 1992-97, see ARCHAEBACTERIA 1991, see BACTERIA 1981-90; ARCHAEA was see
+            ARCHAEOBACTERIA 1995-97
+        </PublicMeSHNote>
+        <PreviousIndexingList>
+            <PreviousIndexing>Bacteria (1966-1980)</PreviousIndexing>
+        </PreviousIndexingList>
+        <TreeNumberList>
+            <TreeNumber>B02</TreeNumber>
+        </TreeNumberList>
+        <ConceptList>
+            <Concept PreferredConceptYN="Y">
+                <ConceptUI>M0001661</ConceptUI>
+                <ConceptName>
+                    <String>Archaea</String>
+                </ConceptName>
+                <ScopeNote>One of the three domains of life (the others being BACTERIA and Eukarya), formerly called
+                    Archaebacteria under the taxon Bacteria, but now considered separate and distinct. They are
+                    characterized by: (1) the presence of characteristic tRNAs and ribosomal RNAs; (2) the absence of
+                    peptidoglycan cell walls; (3) the presence of ether-linked lipids built from branched-chain
+                    subunits; and (4) their occurrence in unusual habitats. While archaea resemble bacteria in
+                    morphology and genomic organization, they resemble eukarya in their method of genomic replication.
+                    The domain contains at least four kingdoms: CRENARCHAEOTA; EURYARCHAEOTA; NANOARCHAEOTA; and
+                    KORARCHAEOTA.
+                </ScopeNote>
+                <TermList>
+                    <Term ConceptPreferredTermYN="Y" IsPermutedTermYN="N" LexicalTag="NON" RecordPreferredTermYN="Y">
+                        <TermUI>T003344</TermUI>
+                        <String>Archaea</String>
+                        <DateCreated>
+                            <Year>1999</Year>
+                            <Month>01</Month>
+                            <Day>01</Day>
+                        </DateCreated>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>NLM (1981)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="N" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T003343</TermUI>
+                        <String>Archaeobacteria</String>
+                        <DateCreated>
+                            <Year>1996</Year>
+                            <Month>09</Month>
+                            <Day>30</Day>
+                        </DateCreated>
+                        <EntryVersion>ARCHAEOBACT</EntryVersion>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>NLM (1998)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="N" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T003346</TermUI>
+                        <String>Archebacteria</String>
+                        <DateCreated>
+                            <Year>1991</Year>
+                            <Month>04</Month>
+                            <Day>18</Day>
+                        </DateCreated>
+                        <EntryVersion>ARCHEBACT</EntryVersion>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>NLM (1992)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="N" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T003345</TermUI>
+                        <String>Archaebacteria</String>
+                        <DateCreated>
+                            <Year>1991</Year>
+                            <Month>03</Month>
+                            <Day>30</Day>
+                        </DateCreated>
+                        <EntryVersion>ARCHAEBACT</EntryVersion>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>NLM (1992)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="N" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T003347</TermUI>
+                        <String>Archaeon</String>
+                        <DateCreated>
+                            <Year>1997</Year>
+                            <Month>03</Month>
+                            <Day>04</Day>
+                        </DateCreated>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>NLM (1998)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                </TermList>
+            </Concept>
+        </ConceptList>
+    </DescriptorRecord>
+    <DescriptorRecord DescriptorClass="1">
+        <DescriptorUI>D056890</DescriptorUI>
+        <DescriptorName>
+            <String>Eukaryota</String>
+        </DescriptorName>
+        <DateCreated>
+            <Year>2009</Year>
+            <Month>07</Month>
+            <Day>06</Day>
+        </DateCreated>
+        <DateRevised>
+            <Year>2010</Year>
+            <Month>06</Month>
+            <Day>25</Day>
+        </DateRevised>
+        <DateEstablished>
+            <Year>2010</Year>
+            <Month>01</Month>
+            <Day>01</Day>
+        </DateEstablished>
+        <AllowableQualifiersList>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000276</QualifierUI>
+                    <QualifierName>
+                        <String>immunology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>IM</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000502</QualifierUI>
+                    <QualifierName>
+                        <String>physiology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PH</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000201</QualifierUI>
+                    <QualifierName>
+                        <String>enzymology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>EN</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000166</QualifierUI>
+                    <QualifierName>
+                        <String>cytology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>CY</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000737</QualifierUI>
+                    <QualifierName>
+                        <String>chemistry</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>CH</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000187</QualifierUI>
+                    <QualifierName>
+                        <String>drug effects</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>DE</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000821</QualifierUI>
+                    <QualifierName>
+                        <String>virology</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>VI</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000528</QualifierUI>
+                    <QualifierName>
+                        <String>radiation effects</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>RE</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000145</QualifierUI>
+                    <QualifierName>
+                        <String>classification</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>CL</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000235</QualifierUI>
+                    <QualifierName>
+                        <String>genetics</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>GE</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000254</QualifierUI>
+                    <QualifierName>
+                        <String>growth &amp; development</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>GD</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000302</QualifierUI>
+                    <QualifierName>
+                        <String>isolation &amp; purification</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>IP</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000378</QualifierUI>
+                    <QualifierName>
+                        <String>metabolism</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>ME</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000472</QualifierUI>
+                    <QualifierName>
+                        <String>pathogenicity</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>PY</Abbreviation>
+            </AllowableQualifier>
+            <AllowableQualifier>
+                <QualifierReferredTo>
+                    <QualifierUI>Q000648</QualifierUI>
+                    <QualifierName>
+                        <String>ultrastructure</String>
+                    </QualifierName>
+                </QualifierReferredTo>
+                <Abbreviation>UL</Abbreviation>
+            </AllowableQualifier>
+        </AllowableQualifiersList>
+        <Annotation>do not confuse with EUKARYOTIC CELLS; specific algae and protozoa are located under various groups
+            treed under Eukaryota
+        </Annotation>
+        <HistoryNote>2010
+        </HistoryNote>
+        <PublicMeSHNote>2010
+        </PublicMeSHNote>
+        <PreviousIndexingList>
+            <PreviousIndexing>Eukaryotic Cells (1986-2009)</PreviousIndexing>
+        </PreviousIndexingList>
+        <TreeNumberList>
+            <TreeNumber>B01</TreeNumber>
+        </TreeNumberList>
+        <ConceptList>
+            <Concept PreferredConceptYN="Y">
+                <ConceptUI>M0533154</ConceptUI>
+                <ConceptName>
+                    <String>Eukaryota</String>
+                </ConceptName>
+                <ScopeNote>One of the three domains of life (the others being BACTERIA and ARCHAEA), also called
+                    Eukarya. These are organisms whose cells are enclosed in membranes and possess a nucleus. They
+                    comprise almost all multicellular and many unicellular organisms, and are traditionally divided into
+                    groups (sometimes called kingdoms) including ANIMALS; PLANTS; FUNGI; and various algae and other
+                    taxa that were previously part of the old kingdom Protista.
+                </ScopeNote>
+                <TermList>
+                    <Term ConceptPreferredTermYN="Y" IsPermutedTermYN="N" LexicalTag="NON" RecordPreferredTermYN="Y">
+                        <TermUI>T746503</TermUI>
+                        <String>Eukaryota</String>
+                        <DateCreated>
+                            <Year>2009</Year>
+                            <Month>02</Month>
+                            <Day>24</Day>
+                        </DateCreated>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>NLM (2010)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="Y" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T746503</TermUI>
+                        <String>Eukaryotas</String>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="N" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T746505</TermUI>
+                        <String>Eukarya</String>
+                        <DateCreated>
+                            <Year>2009</Year>
+                            <Month>02</Month>
+                            <Day>24</Day>
+                        </DateCreated>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>NLM (2010)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="N" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T746506</TermUI>
+                        <String>Eucarya</String>
+                        <DateCreated>
+                            <Year>2009</Year>
+                            <Month>02</Month>
+                            <Day>24</Day>
+                        </DateCreated>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>NLM (2010)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="N" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T746504</TermUI>
+                        <String>Eukaryotes</String>
+                        <DateCreated>
+                            <Year>2009</Year>
+                            <Month>02</Month>
+                            <Day>24</Day>
+                        </DateCreated>
+                        <ThesaurusIDlist>
+                            <ThesaurusID>NLM (2010)</ThesaurusID>
+                        </ThesaurusIDlist>
+                    </Term>
+                    <Term ConceptPreferredTermYN="N" IsPermutedTermYN="Y" LexicalTag="NON" RecordPreferredTermYN="N">
+                        <TermUI>T746504</TermUI>
+                        <String>Eukaryote</String>
+                    </Term>
+                </TermList>
+            </Concept>
+        </ConceptList>
+    </DescriptorRecord>
+</DescriptorRecordSet>

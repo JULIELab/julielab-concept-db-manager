@@ -1,0 +1,32 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://www.julielab.de/conceptdb/exporters/cypher"
+           version="1.0.0"
+           targetNamespace="http://www.julielab.de/conceptdb/exporters/cypher"
+           elementFormDefault="qualified">
+    <xs:include schemaLocation="http://www.julielab.de/conceptdb/exporters/exporterbase-1.0.0.xsd"/>
+
+    <xs:complexType name="cypherexportertype">
+        <xs:sequence>
+            <xs:element name="exporter">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="CypherExporter"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="configuration" type="exportcypherquerytype"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The optional name element can be given to all concept imports, operators and exporters.
+                    When calling the Concept DB Application, the application mode parameters can be given
+                    an optional list of names. Only the inserters, operators or exporters on the list will be
+                    executed.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:element name="export" type="cypherexportertype"/>
+</xs:schema>

@@ -11,6 +11,9 @@ import org.apache.commons.configuration2.tree.ImmutableNode;
 
 import java.util.stream.Stream;
 
+/**
+ * Mappings represent equivalence relations between concepts.
+ */
 public interface MappingCreator extends ExtensionPoint, DatabaseConnected, ParameterExposing {
     Stream<ImportMapping> createMappings(HierarchicalConfiguration<ImmutableNode> importConfig)
             throws MappingCreationException;

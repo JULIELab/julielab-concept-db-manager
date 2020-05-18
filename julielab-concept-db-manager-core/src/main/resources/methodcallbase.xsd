@@ -1,0 +1,116 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://www.julielab.de/conceptdb/methodcall"
+           version="1.0.0"
+           targetNamespace="http://www.julielab.de/conceptdb/methodcall"
+           elementFormDefault="qualified">
+
+    <xs:element name="pluginname" type="xs:string"/>
+    <xs:element name="pluginendpoint" type="xs:string"/>
+
+    <xs:element name="parameter">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                A parameter to determine how exactly the database operation or data export should be performed.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="arrayitem">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">
+                            For array-valued parameters, this element may be used to specify the array elements.
+                            This is
+                            only for convenience purposes, the actual element name is not used internally.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:any/>
+            </xs:sequence>
+            <xs:attribute name="parametername" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        Optional. Only required for server plugins. Specifies the name of the parameter the
+                        parameter
+                        value is associated to.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="parametertype" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        Optional. Only required for classes directly working directly with the file database. Must
+                        denote the fully qualified Java type name that the specified method requires. This is
+                        required
+                        to be able to call the method via reflection.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="tojson" type="xs:boolean">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        Optional. Specifies if the parameter value should be JSON-encoded. This is often used for
+                        arrays. Neo4j server plugins do not accept such complex objects. Thus, complex values are
+                        first
+                        converted into a JSON array representation and then sent as a string to the plugin. Since we
+                        use
+                        the plugin code also when using the file database directly, this technique also applies
+                        here.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="elementtype" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        Optional. Required when working directly with the file database and when the parameter is
+                        multi-valued. For calling the desired method correctly, we need to know of what type the
+                        arrays
+                        must
+                        be to represent the given values.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="parameters">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                <p>Data export from or operation in the Neo4j database is either done from a running Neo4j server or
+                    directly from the Neo4j data directory which is used as a file-based database.
+                </p>
+                <p>For server plugin exporters, the parameters are named and will be sent as a JSON object to plugin
+                    endpoint. The plugin will then retrieve the parameters by name and return the adequate data. Thus,
+                    the order of the parameters does not matter.
+                </p>
+                <p>For file database exporters, internally a Java method is called via reflection. Thus, parameters are
+                    not determined by name but exclusively by their order. It must thus be known which method is called
+                    and which parameters it expects in which order.
+                </p>
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:choice>
+                <xs:sequence>
+                    <xs:element ref="parameter" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+
+
+    <!-- For data export and data operations we call server plugins or plain Java methods. Here we can define parameters
+          for these calls -->
+    <xs:complexType name="methodcallconfigtype">
+        <xs:sequence>
+            <xs:element ref="parameters"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- The type for cypher queries -->
+    <xs:complexType name="cypherquerytype">
+        <xs:sequence>
+            <xs:element name="cypherquery" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

@@ -2,10 +2,7 @@ package de.julielab.concepts.db.core;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.julielab.concepts.db.core.http.Response;
-import de.julielab.concepts.db.core.http.Result;
-import de.julielab.concepts.db.core.http.Statement;
-import de.julielab.concepts.db.core.http.Statements;
+import de.julielab.concepts.db.core.http.*;
 import de.julielab.concepts.db.core.services.HttpConnectionService;
 import de.julielab.concepts.db.core.services.NetworkConnectionCredentials;
 import de.julielab.concepts.db.core.spi.Versioning;
@@ -25,7 +22,6 @@ import static de.julielab.concepts.db.core.VersioningConstants.CREATE_VERSION;
 public class HttpVersioning implements Versioning {
 
 	private static final Logger log = LoggerFactory.getLogger(HttpVersioning.class);
-	private static final String TRANSACTION_ENDPOINT = "/db/data/transaction/commit";
 	private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
 	private HttpConnectionService httpService;
 
@@ -38,7 +34,7 @@ public class HttpVersioning implements Versioning {
 		Statements statements = new Statements(
 				new Statement(CREATE_VERSION, VERSION, version));
 		String baseUri = connectionConfiguration.getString(NetworkConnectionCredentials.CONFKEY_URI);
-		String transactionalUri = baseUri + TRANSACTION_ENDPOINT;
+		String transactionalUri = baseUri + Constants.TRANSACTION_ENDPOINT;
 		try {
 			Response response = httpService.sendStatements(statements, transactionalUri, connectionConfiguration);
 			if (!response.getErrors().isEmpty())
@@ -66,7 +62,7 @@ public class HttpVersioning implements Versioning {
 		jsonMapper.setSerializationInclusion(Include.NON_EMPTY);
 		try {
 			String baseUri = connectionConfiguration.getString(NetworkConnectionCredentials.CONFKEY_URI);
-			Response response = httpService.sendStatements(statements, baseUri + TRANSACTION_ENDPOINT,
+			Response response = httpService.sendStatements(statements, baseUri + Constants.TRANSACTION_ENDPOINT,
 					connectionConfiguration);
 			Result result = response.getSingleResult();
 			if (!result.getData().isEmpty())

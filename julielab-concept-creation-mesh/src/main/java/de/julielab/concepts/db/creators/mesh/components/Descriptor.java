@@ -90,7 +90,7 @@ public class Descriptor implements Comparable <Descriptor>{
     }
     
     /**
-     * @param term The concept to add. You cannot 2nd preferred concept.
+     * @param concept The concept to add.
      * @return True if concept was successfully added, false if the concept is already contained.
      */
     public boolean addConcept(Concept concept) {
@@ -114,7 +114,7 @@ public class Descriptor implements Comparable <Descriptor>{
     }
     
     /**
-     * @param term The vertex to add.
+     * @param vertex The vertex to add.
      * @return True if vertex was successfully added, false if the vertex is already contained.
      */
     public boolean addTreeVertex(TreeVertex vertex) {

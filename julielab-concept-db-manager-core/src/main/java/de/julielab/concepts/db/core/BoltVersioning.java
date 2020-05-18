@@ -45,7 +45,7 @@ public class BoltVersioning implements Versioning {
 	}
 
 	@Override
-	public String getVersion() throws VersionRetrievalException {
+	public String getVersion() {
 		try (Session session = driver.session(); Transaction tx = session.beginTransaction()) {
 			StatementResult result = tx.run(new Statement(GET_VERSION));
 			if (result.hasNext()) {

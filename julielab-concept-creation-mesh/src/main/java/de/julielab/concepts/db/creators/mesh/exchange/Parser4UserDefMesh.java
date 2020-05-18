@@ -1,9 +1,6 @@
 package de.julielab.concepts.db.creators.mesh.exchange;
 
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.xml.sax.Attributes;
@@ -64,6 +61,8 @@ public class Parser4UserDefMesh extends DefaultHandler {
 	// prefix for names
 	String namePrefix;
 
+	private List<Descriptor> createdDescriptors = new ArrayList<>();
+
 	/**
 	 * Constructor
 	 * 
@@ -115,7 +114,7 @@ public class Parser4UserDefMesh extends DefaultHandler {
 		// Transplantation facet, for example: All terms in there specify a parent, so up to now this facet doesn't
 		// seem
 		// to have a single root.
-		Set<Descriptor> newFacetRoots = new HashSet<>();
+		Set<Descriptor> newFacetRoots = new LinkedHashSet<>();
 		// Determine UIs in the parent map that don't have an entry in the descriptor map; this means that the parent
 		// is
 		// not included in this facet.
@@ -132,7 +131,7 @@ public class Parser4UserDefMesh extends DefaultHandler {
 		// Now add the newly determined facet roots to the existing facet roots.
 		Set<Descriptor> facetRoots = parentUi2children.get(facet.getUI());
 		if (null == facetRoots) {
-			facetRoots = new HashSet<>();
+			facetRoots = new LinkedHashSet<>();
 			parentUi2children.put(facet.getUI(), facetRoots);
 		}
 		facetRoots.addAll(newFacetRoots);
@@ -175,7 +174,11 @@ public class Parser4UserDefMesh extends DefaultHandler {
 		currentBuffer.setLength(0);
 	}
 
-	@Override
+    public List<Descriptor> getCreatedDescriptors() {
+        return createdDescriptors;
+    }
+
+    @Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
 
 		if (localName.equals("canonic")) {
@@ -238,6 +241,8 @@ public class Parser4UserDefMesh extends DefaultHandler {
 
 			// update ui2desc map
 			ui2desc.put(desc.getUI(), desc);
+            createdDescriptors.add(desc);
+
 
 			// DEBUG
 			if (desc.getConcepts().size() > 1) {
@@ -334,6 +339,11 @@ public class Parser4UserDefMesh extends DefaultHandler {
 	private void addFacet(Tree data, String facetName) {
 		// We must append "facet" to avoid a name collision between facet and descriptor with name "Gene Expression"
 		String name = "Facet " + facetName;
+//		if (data.hasDescriptorByName(name)) {
+//		    logger.debug("Facet node with name {} already existed and is reused.", name);
+//            facet = data.getDescriptorByName(name);
+//            return;
+//        }
 
 		facet = new Descriptor();
 		facet.setSemedicoFacet(true);

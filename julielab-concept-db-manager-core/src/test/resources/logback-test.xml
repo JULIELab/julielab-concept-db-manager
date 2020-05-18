@@ -9,6 +9,7 @@
     </appender>
 
     <logger name="de.julielab.concepts.db.core" level="DEBUG" />
+    <logger name="de.julielab.concepts.db.core.services.DatabaseOperationService" level="TRACE"/>
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>

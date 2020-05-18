@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ConfigTest {
     @Test
     public void testConfiguration() throws ConfigurationException {
-        XMLConfiguration config = ConfigurationUtilities.loadXmlConfiguration(new File("src/test/resources/testconfig.xml"));
+        XMLConfiguration config = ConfigurationUtilities.loadXmlConfiguration(new File("src/test/resources/functioncalltestconfig.xml"));
         config.setExpressionEngine(new XPathExpressionEngine());
         assertThat(config).extracting(
                 c -> c.getString(slash(EXPORTS, EXPORT, CONFIGURATION, PLUGIN_ENDPOINT)),

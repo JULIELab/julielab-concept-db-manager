@@ -6,8 +6,19 @@ public class Neo4jServerErrorResponse {
     private String message;
     private String exception;
     private String fullname;
+
     private List<String> stackTrace;
     private List<Neo4jServerError> errors;
+
+    private Neo4jServerErrorResponse cause;
+
+    public Neo4jServerErrorResponse getCause() {
+        return cause;
+    }
+
+    public void setCause(Neo4jServerErrorResponse cause) {
+        this.cause = cause;
+    }
 
     public String getMessage() {
         return message;

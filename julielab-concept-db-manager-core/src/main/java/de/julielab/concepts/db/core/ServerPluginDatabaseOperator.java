@@ -42,6 +42,6 @@ private final static Logger log = LoggerFactory.getLogger(ServerPluginDatabaseOp
 
     @Override
     public String getName() {
-        return "serverplugindatabaseoperator";
+        return "ServerpluginDatabaseOperator";
     }
 }

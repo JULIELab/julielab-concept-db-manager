@@ -1,0 +1,42 @@
+<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns="http://www.julielab.de/conceptdb"
+                 xsi:schemaLocation="http://www.julielab.de/conceptdb http://www.julielab.de/conceptdb/conceptdb-1.0.0.xsd
+        http://www.julielab.de/conceptdb/concepts/xml http://www.julielab.de/conceptdb/concepts/xmlconcepts-1.0.0.xsd
+http://www.julielab.de/conceptdb/facets/simplexml http://www.julielab.de/conceptdb/facet/simplexmlfacet-1.0.0.xsd">
+    <versioning>
+        <version>1.0-test</version>
+    </versioning>
+    <connection>
+        <uri>src/test/resources/graph.db</uri>
+    </connection>
+    <imports>
+        <import>
+            <concepts>
+                <creator xmlns="http://www.julielab.de/conceptdb/concepts/xml">
+                    <name>de.julielab.concepts.db.creators.mesh.XmlConceptCreator</name>
+                    <configuration>
+                        <input>
+                            <xmlfile>src/test/resources/leukocytes.xml</xmlfile>
+                            <format>SIMPLE_XML</format>
+                            <sourcename>Immunology Concepts</sourcename>
+                            <originalsources>
+                                <source idregex="D[0-9]+">MeSH XML</source>
+                                <source>Immunology Concepts</source>
+                            </originalsources>
+                        </input>
+                    </configuration>
+                </creator>
+            </concepts>
+            <facet>
+                <creator xmlns="http://www.julielab.de/conceptdb/facets/simplexml">
+                    <name>de.julielab.concepts.db.creators.mesh.SimpleXmlFacetCreator</name>
+                    <configuration>
+                        <facetgroup>
+                            <name>Immunology</name>
+                        </facetgroup>
+                    </configuration>
+                </creator>
+            </facet>
+        </import>
+    </imports>
+</conceptdatabase>

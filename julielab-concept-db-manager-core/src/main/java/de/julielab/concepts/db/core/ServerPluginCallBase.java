@@ -5,7 +5,9 @@ import de.julielab.concepts.db.core.services.HttpConnectionService;
 import de.julielab.concepts.db.core.services.NetworkConnectionCredentials;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.MethodCallException;
+import de.julielab.java.utilities.ConfigurationUtilities;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -29,47 +31,51 @@ public abstract class ServerPluginCallBase extends FunctionCallBase {
 
     public String callNeo4jServerPlugin(HierarchicalConfiguration<ImmutableNode> connectionConfig, HierarchicalConfiguration<ImmutableNode> methodCallConfig)
             throws ConceptDatabaseConnectionException, MethodCallException {
-        String baseUri = connectionConfig.getString(NetworkConnectionCredentials.CONFKEY_URI);
-        String pluginName = methodCallConfig.getString(dot(CONFIGURATION, PLUGIN_NAME));
-        String pluginEndpoint = methodCallConfig.getString(dot(CONFIGURATION, PLUGIN_ENDPOINT));
-        Map<String, Object> parameters = null;
-        if (methodCallConfig.getKeys(dot(CONFIGURATION, PARAMETERS)).hasNext()) {
-            try {
-                HierarchicalConfiguration<ImmutableNode> parameterConfiguration = methodCallConfig.configurationAt(dot(CONFIGURATION, PARAMETERS));
-                Map<String, FunctionCallBase.Parameter> parameterMap = null;
-                parameterMap = parseParameters(parameterConfiguration);
-                parameters = parameterMap.values().stream()
-                        .collect(Collectors.toMap(FunctionCallBase.Parameter::getName, FunctionCallBase.Parameter::getRequestValue));
-            } catch (MethodCallException e) {
-                throw new MethodCallException(e);
-            }
-        }
-
-        HttpConnectionService httpService = HttpConnectionService.getInstance();
-        String completePluginEndpointUri = baseUri + String.format(SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint);
-        HttpPost request = httpService.getHttpPostRequest(connectionConfig, completePluginEndpointUri);
-        Gson gson = new Gson();
         try {
-            String parameterJson = null;
-            if (parameters != null) {
-                parameterJson = gson.toJson(parameters);
-                request.setEntity(new StringEntity(parameterJson));
+            String baseUri = requirePresent(NetworkConnectionCredentials.CONFKEY_URI, key -> connectionConfig.getString(key));
+            String pluginName = requirePresent(slash(PLUGIN_NAME), key -> methodCallConfig.getString(key));
+            String pluginEndpoint = requirePresent(slash(PLUGIN_ENDPOINT), key -> methodCallConfig.getString(key));
+            Map<String, Object> parameters = null;
+            if (methodCallConfig.getKeys(slash(CONFIGURATION, PARAMETERS)).hasNext()) {
+                try {
+                    HierarchicalConfiguration<ImmutableNode> parameterConfiguration = methodCallConfig.configurationAt(slash(CONFIGURATION, PARAMETERS));
+                    Map<String, Parameter> parameterMap;
+                    parameterMap = parseParameters(parameterConfiguration);
+                    parameters = parameterMap.values().stream()
+                            .collect(Collectors.toMap(Parameter::getName, Parameter::getRequestValue));
+                } catch (MethodCallException e) {
+                    throw new MethodCallException(e);
+                }
             }
-            log.info("Sending request {} to {}", parameterJson, completePluginEndpointUri);
-            return httpService.sendRequest(request);
-        } catch (UnsupportedEncodingException e) {
+
+            HttpConnectionService httpService = HttpConnectionService.getInstance();
+            String completePluginEndpointUri = baseUri + String.format(SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint);
+            HttpPost request = httpService.getHttpPostRequest(connectionConfig, completePluginEndpointUri);
+            Gson gson = new Gson();
+            try {
+                String parameterJson = null;
+                if (parameters != null) {
+                    parameterJson = gson.toJson(parameters);
+                    request.setEntity(new StringEntity(parameterJson));
+                }
+                log.info("Sending request {} to {}", parameterJson, completePluginEndpointUri);
+                return httpService.sendRequest(request);
+            } catch (UnsupportedEncodingException e) {
+                throw new ConceptDatabaseConnectionException(e);
+            } catch (ConceptDatabaseConnectionException e) {
+                log.error("Connection error when posting parameters {} to plugin {}, endpoint {}", parameters, pluginName,
+                        pluginEndpoint);
+                throw e;
+            }
+        } catch (ConfigurationException e) {
             throw new ConceptDatabaseConnectionException(e);
-        } catch (ConceptDatabaseConnectionException e) {
-            log.error("Connection error when posting parameters {} to plugin {}, endpoint {}", parameters, pluginName,
-                    pluginEndpoint);
-           throw e;
         }
     }
 
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
-        template.addProperty(slash(basePath, CONFIGURATION, PLUGIN_NAME), "");
-        template.addProperty(slash(basePath, CONFIGURATION, PLUGIN_ENDPOINT), "");
+        template.addProperty(slash(basePath, PLUGIN_NAME), "");
+        template.addProperty(slash(basePath, PLUGIN_ENDPOINT), "");
         template.addProperty(slash(basePath, CONFIGURATION, PARAMETERS, "parametername"), "value");
         template.addProperty(ws(slash(basePath, CONFIGURATION, PARAMETERS, "parametername"), "@parametername"), "optional: parameter name");
         template.addProperty(slash(basePath, CONFIGURATION, PARAMETERS, "arrayparameter", "arrayitem"), Arrays.asList("value1", "value2"));

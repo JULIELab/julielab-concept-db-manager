@@ -1,0 +1,49 @@
+<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns="http://www.julielab.de/conceptdb"
+                 xsi:schemaLocation="http://www.julielab.de/conceptdb http://www.julielab.de/conceptdb/conceptdb-1.0.0.xsd
+        http://www.julielab.de/conceptdb/concepts/xml http://www.julielab.de/conceptdb/concepts/xmlconcepts-1.0.0.xsd
+        http://www.julielab.de/conceptdb/facets/mesh http://www.julielab.de/conceptdb/facets/meshfacet-1.0.0.xsd">
+    <versioning>
+        <version>1.0-test</version>
+    </versioning>
+    <connection>
+        <uri>src/test/resources/graph.db</uri>
+    </connection>
+    <imports>
+        <import>
+            <concepts>
+                <creator xmlns="http://www.julielab.de/conceptdb/concepts/xml">
+                    <name>de.julielab.concepts.db.creators.mesh.XmlConceptCreator</name>
+                    <configuration>
+                        <input>
+                            <xmlfile>src/test/resources/europiumDescriptor.xml</xmlfile>
+                            <format>MESH_XML</format>
+                            <sourcename>MeSH XML</sourcename>
+                            <originalsources>
+                                <source>MeSH XML</source>
+                            </originalsources>
+                        </input>
+                        <input>
+                            <xmlfile>src/test/resources/supplementalRecord.xml</xmlfile>
+                            <format>MESH_SUPPLEMENTARY_XML</format>
+                            <sourcename>MeSH Supplementary XML</sourcename>
+                            <originalsources>
+                                <source>MeSH Supplementary XML</source>
+                            </originalsources>
+                        </input>
+                    </configuration>
+                </creator>
+            </concepts>
+            <facet>
+                <creator xmlns="http://www.julielab.de/conceptdb/facets/mesh">
+                    <name>de.julielab.concepts.db.creators.mesh.MeshFacetCreator</name>
+                    <configuration>
+                        <facetgroup>
+                            <name>MeSH</name>
+                        </facetgroup>
+                    </configuration>
+                </creator>
+            </facet>
+        </import>
+    </imports>
+</conceptdatabase>

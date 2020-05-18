@@ -1,6 +1,7 @@
 package de.julielab.concepts.db.creators.mesh;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -57,7 +58,7 @@ public class TreeModificator extends TreeModificationContainer {
 	 * Removes all empty descriptors. An descriptor is empty if it doesn't have any tree-vertices attached to it.
 	 */
 	public Set<Descriptor> removeEmptyDescriptors() {
-		Set<Descriptor> descRemoved = new HashSet<Descriptor>();
+		Set<Descriptor> descRemoved = new LinkedHashSet<Descriptor>();
 		for (Descriptor desc : data.getAllDescriptors()) {
 			if (!desc.hasTreeVertices()) {
 				descRemoved.add(desc);

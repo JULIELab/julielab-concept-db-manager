@@ -256,20 +256,18 @@ public class FacetsProvider {
 //		return false;
 //	}
 
-	public static ImportFacet createMeshImportFacet(String facetname, String facetGroupName) throws FacetCreationException {
+	public static ImportFacet createMeshImportFacet(String facetNameParameter, String facetGroupName, int facetGroupPosition) throws FacetCreationException {
 		// To avoid naming collisions, facets may have the naming prefix "Facet"
-		String cssId =  "mesh_" + facetname;
+		String cssId =  "mesh_" + facetNameParameter;
 		Integer position = null;
 		String sourceType = FacetConstants.SRC_TYPE_HIERARCHICAL;
 		List<String> facetGroupGeneralLabels = new ArrayList<>();
 		List<String> facetUniqueLabels = new ArrayList<>();
 		List<String> facetGeneralLabels = new ArrayList<>();
 
-		Integer facetGroupPosition = null;
 
-
-		String facetName = null;
-		switch (facetname) {
+		String facetName;
+		switch (facetNameParameter) {
 		case "A":
 			facetName = "Anatomy";
 			position = 0;
@@ -335,7 +333,7 @@ public class FacetsProvider {
 			position = 15;
 			break;
 		default:
-			throw new FacetCreationException("Facet with name \"" + facetName + "\" is unknown.");
+			throw new FacetCreationException("Facet with name \"" + facetNameParameter + "\" is unknown.");
 		}
 
 

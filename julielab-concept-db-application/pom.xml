@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>de.julielab</groupId>
 		<artifactId>julielab-concept-db-manager</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent>
 	<artifactId>julielab-concept-db-application</artifactId>
 	<build>
@@ -52,6 +52,8 @@
 									</excludes>
 								</filter>
 							</filters>
+                            <shadedArtifactAttached>true</shadedArtifactAttached>
+                            <shadedClassifierName>shaded</shadedClassifierName>
 						</configuration>
 					</execution>
 				</executions>
@@ -74,6 +76,11 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>args4j</groupId>
+			<artifactId>args4j</artifactId>
+			<version>2.33</version>
 		</dependency>
 		<dependency>
 			<groupId>de.julielab</groupId>

@@ -1,0 +1,102 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://www.julielab.de/conceptdb/exporters/exporterbase"
+           version="1.0.0"
+           targetNamespace="http://www.julielab.de/conceptdb/exporters/exporterbase"
+           elementFormDefault="qualified">
+
+    <xs:include schemaLocation="http://www.julielab.de/conceptdb/methodcallbase-1.0.0.xsd"/>
+
+    <xs:element name="outputfile" type="xs:string"/>
+
+    <!-- Decoding possibilities -->
+    <xs:element name="json2bytearray" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Since it is not possible to transfer a byte stream directly from a Neo4j server plugin, one possibility
+                is to encode the byte stream as a JSON array. Each byte is then a number in the resulting JSON array.
+                Setting this element to true will lead to interpret the data sent by the server plugin as JSON-encoded
+                byte array. Refer to the plugin documentation to learn which encoding methodology is employed. This
+                method is very inefficient and shouldn't be used by server plugins. Use the base64 encoding instead.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="base64" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Since it is not possible to transfer a byte stream directly from a Neo4j server plugin, one possibility
+                is to encode the byte stream in a base64 string and send this. Setting this element to true will result
+                have the data receiving code attempting to decode a base64 string into a byte stream. Refer to the
+                plugin documentation to learn which encoding methodology is employed.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="gzip" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                If the data sent by the server plugin is in GZIP format, set this element to true for uncompressing the
+                data before writing it into the output file.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="decoding">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                When exporting data from the database, complex data is typically encoded into a string. This element
+                allows to specify how to retrieve the original data. What to use depends on the server plugin or file
+                database method that is employed.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:choice>
+                    <xs:element ref="json2bytearray"/>
+                    <xs:element ref="base64"/>
+                </xs:choice>
+                <xs:sequence>
+                    <xs:element ref="gzip"/>
+                </xs:sequence>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="exportcypherquerytype">
+        <xs:complexContent>
+            <xs:extension base="cypherquerytype">
+                <xs:sequence>
+                    <xs:element ref="outputfile"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- This extends the methodcallconfigtype with decoding of retrieved data and a file to write the output to -->
+    <xs:complexType name="exportconfigurationtype">
+        <xs:complexContent>
+            <xs:extension base="methodcallconfigtype">
+                <xs:sequence>
+                    <xs:element ref="decoding"/>
+                    <xs:element name="outputfile" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="exportertype">
+        <xs:sequence>
+            <xs:element name="configuration" type="exportconfigurationtype"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The optional name element can be given to all concept creators, operators and exporters.
+                    When calling the Concept DB Application, the application mode parameters can be given
+                    an optional list of names. Only the inserters, operators or exporters on the list will be
+                    executed.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="type" type="xs:string"/>
+    </xs:complexType>
+
+</xs:schema>

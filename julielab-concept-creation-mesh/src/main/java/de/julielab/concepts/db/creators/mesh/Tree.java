@@ -289,7 +289,7 @@ public class Tree extends DefaultDirectedGraph<TreeVertex, DefaultEdge> {
 		}
 
 		// Separate set for iteration in order to avoid concurrency problems...
-		Set<DefaultEdge> delE = new HashSet<DefaultEdge>(outgoingEdgesOf(vertex));
+		Set<DefaultEdge> delE = new LinkedHashSet<DefaultEdge>(outgoingEdgesOf(vertex));
 		for (DefaultEdge e : delE) {
 			removeEdge(e);
 		}

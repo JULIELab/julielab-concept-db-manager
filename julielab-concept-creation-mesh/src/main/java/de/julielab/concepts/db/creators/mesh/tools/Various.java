@@ -1,6 +1,7 @@
 package de.julielab.concepts.db.creators.mesh.tools;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -46,7 +47,7 @@ public class Various {
 		
 		int conflictCnt = 0;
 		for (Descriptor parentDesc : data.getAllDescriptors()) {
-			Set<Descriptor> childDescs = new HashSet<Descriptor>(); // HERE
+			Set<Descriptor> childDescs = new LinkedHashSet<>(); // HERE
 			
 			for (TreeVertex parentVertex : parentDesc.getTreeVertices()) {				
 				for (TreeVertex childVertex : data.childVerticesOf(parentVertex)) {
@@ -101,7 +102,7 @@ public class Various {
 		for (Descriptor parentDesc : data.getAllDescriptors()) 			{
 			for (TreeVertex parentVertex : parentDesc.getTreeVertices()) {
 				
-				Set<Descriptor> childDescs = new HashSet<Descriptor>(); // HERE
+				Set<Descriptor> childDescs = new LinkedHashSet<>(); // HERE
 				
 				for (TreeVertex childVertex : data.childVerticesOf(parentVertex)) {
 					

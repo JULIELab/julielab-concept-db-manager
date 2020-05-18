@@ -30,13 +30,13 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.java.utilities.ConfigurationUtilities.dot;
+import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 public class
 JulielabBioPortalToolsMappingCreator implements MappingCreator {
 
-    public static final String ALLOWED_ACRONYMS = "allowed_acronyms";
+    public static final String ALLOWED_ACRONYMS = "allowedacronyms";
     private final static Logger log = LoggerFactory.getLogger(JulielabBioPortalToolsMappingCreator.class);
 
     @Override
@@ -50,10 +50,10 @@ JulielabBioPortalToolsMappingCreator implements MappingCreator {
     public Stream<ImportMapping> createMappings(HierarchicalConfiguration<ImmutableNode> importConfig) throws MappingCreationException {
 
         try {
-            ConfigurationUtilities.checkParameters(importConfig, dot(MAPPINGS, CREATOR, CONFIGURATION, PATH), dot(MAPPINGS, CREATOR, CONFIGURATION, ALLOWED_ACRONYMS));
-            ConfigurationUtilities.checkFilesExist(importConfig, dot(MAPPINGS, CREATOR, CONFIGURATION, PATH));
-            String pathToMappings = importConfig.getString(dot(MAPPINGS, CREATOR, CONFIGURATION, PATH));
-            final Set<Object> allowedAcronyms = new HashSet<>(importConfig.getList(dot(MAPPINGS, CREATOR, CONFIGURATION, ALLOWED_ACRONYMS)));
+            ConfigurationUtilities.checkParameters(importConfig, slash(MAPPINGS, CREATOR, CONFIGURATION, PATH), slash(MAPPINGS, CREATOR, CONFIGURATION, ALLOWED_ACRONYMS));
+            ConfigurationUtilities.checkFilesExist(importConfig, slash(MAPPINGS, CREATOR, CONFIGURATION, PATH));
+            String pathToMappings = importConfig.getString(slash(MAPPINGS, CREATOR, CONFIGURATION, PATH));
+            final Set<Object> allowedAcronyms = new HashSet<>(importConfig.getList(slash(MAPPINGS, CREATOR, CONFIGURATION, ALLOWED_ACRONYMS)));
             log.info("Importing mappings from {}{}", pathToMappings, allowedAcronyms != null && !allowedAcronyms.isEmpty() ? " for acronyms " + allowedAcronyms : "");
             File file = new File(pathToMappings);
             Stream<ImportMapping> mappings = Stream.empty();

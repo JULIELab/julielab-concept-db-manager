@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           version="1.0.0"
            targetNamespace="http://www.julielab.de/conceptdb"
            xmlns="http://www.julielab.de/conceptdb"
            elementFormDefault="qualified">
+
+
+    <xs:annotation>
+        <xs:documentation xml:lang="en">
+            <p>This is the core XML Schema to create a valid configuration for the JULIE Lab Concept Database Manager.
+            It defines elements for versioning a database (<em>versioning</em>), creating a connection to it
+            (<em>connection</em>em>), importing data (nodes, edges, <em>imports</em>), executing database-internal
+            operations (<em>operations</em>) on the data and exporting portions of the database
+            to files (<em>exports</em>).
+            </p>
+        </xs:documentation>
+    </xs:annotation>
+
+    <xs:element name="pluginname" type="xs:string"/>
+    <xs:element name="pluginendpoint" type="xs:string"/>
 
     <xs:element name="version" type="xs:string"/>
     <xs:element name="uri" type="xs:string"/>
     <xs:element name="user" type="xs:string"/>
     <xs:element name="password" type="xs:string"/>
-    <xs:element name="pluginname" type="xs:string"/>
-    <xs:element name="pluginendpoint" type="xs:string"/>
 
     <xs:element name="versioning">
         <xs:complexType>
@@ -19,11 +33,14 @@
         </xs:complexType>
     </xs:element>
 
-    <!-- Concept import -->
+    <!-- Concept, facet and mappings import -->
     <xs:element name="concepts">
         <xs:annotation>
             <xs:documentation xml:lang="en">
-                This is an extension point for concept creation providers. Those define their own XML Schema. For each provider, its configuration schema must be included in the configuration XML document. The provider root element - most commonly <em>creator</em> - then needs to have set the namespace to the respective XML Schema, e.g. &lt;creator xmlns="http://www.mydomain.de/myschema"&lt;.
+                This is an extension point for concept creation providers. Those define their own XML Schema. For each
+                provider, its configuration schema must be included in the configuration XML document. The provider root
+                element - most commonly <em>creator</em> - then needs to have set the namespace to the respective XML
+                Schema, e.g. &lt;creator xmlns="http://www.mydomain.de/myschema"&gt;.
             </xs:documentation>
         </xs:annotation>
         <xs:complexType>
@@ -36,7 +53,10 @@
     <xs:element name="facet">
         <xs:annotation>
             <xs:documentation xml:lang="en">
-                This is an extension point for facet creation providers. Those define their own XML Schema. For each provider, its configuration schema must be included in the configuration XML document. The provider root element - most commonly <em>creator</em> - then needs to have set the namespace to the respective XML Schema, e.g. &lt;creator xmlns="http://www.mydomain.de/myschema"&lt;.
+                This is an extension point for facet creation providers. Those define their own XML Schema. For each
+                provider, its configuration schema must be included in the configuration XML document. The provider root
+                element - most commonly <em>creator</em> - then needs to have set the namespace to the respective XML
+                Schema, e.g. &lt;creator xmlns="http://www.mydomain.de/myschema"&gt;.
             </xs:documentation>
         </xs:annotation>
         <xs:complexType>
@@ -49,7 +69,11 @@
     <xs:element name="mappings">
         <xs:annotation>
             <xs:documentation xml:lang="en">
-                This is an extension point for mapping creation providers. Those define their own XML Schema. For each provider, its configuration schema must be included in the configuration XML document. The provider root element - most commonly <em>creator</em> - then needs to have set the namespace to the respective XML Schema, e.g. &lt;creator xmlns="http://www.mydomain.de/myschema"&lt;. A commonly used mapping provider is contained in the <em>julielab-concept-creation-bioportal</em> project.
+                This is an extension point for mapping creation providers. Those define their own XML Schema. For each
+                provider, its configuration schema must be included in the configuration XML document. The provider root
+                element - most commonly <em>creator</em> - then needs to have set the namespace to the respective XML
+                Schema, e.g. &lt;creator xmlns="http://www.mydomain.de/myschema"&gt;. A commonly used mapping provider
+                is contained in the <em>julielab-concept-creation-bioportal</em> project.
             </xs:documentation>
         </xs:annotation>
         <xs:complexType>
@@ -62,11 +86,21 @@
     <xs:element name="import">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="serverpluginimporter"/>
+                <xs:element ref="serverplugininserter" minOccurs="0"/>
                 <xs:element ref="concepts" minOccurs="0"/>
                 <xs:element ref="facet" minOccurs="0"/>
                 <xs:element ref="mappings" minOccurs="0"/>
             </xs:sequence>
+            <xs:attribute name="name" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        The optional name element can be given to all concept imports, operators and exporters.
+                        When calling the Concept DB Application, the application mode parameters can be given
+                        an optional list of names. Only the inserters, operators or exporters on the list will be
+                        executed.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
         </xs:complexType>
     </xs:element>
 
@@ -78,7 +112,7 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="serverpluginimporter">
+    <xs:element name="serverplugininserter">
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="pluginname"/>
@@ -86,17 +120,43 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <!-- End concept imports -->
+    <!-- End imports -->
 
-    <xs:element name="configuration"/>
 
+    <!-- In-database operations -->
+
+    <xs:element name="operations">
+        <xs:complexType>
+            <xs:sequence>
+                <!-- Extension point for individual exporters -->
+                <xs:any maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- End database operations -->
+
+
+    <!-- Data export -->
+
+
+    <xs:element name="exports">
+        <xs:complexType>
+            <xs:sequence>
+                <!-- Extension point for individual exporters -->
+                <xs:any maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- End data export -->
 
     <xs:element name="connection">
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="uri"/>
-                <xs:element ref="user"/>
-                <xs:element ref="password"/>
+                <xs:element ref="user" minOccurs="0"/>
+                <xs:element ref="password" minOccurs="0"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -106,7 +166,9 @@
             <xs:sequence>
                 <xs:element ref="versioning"/>
                 <xs:element ref="connection"/>
-                <xs:element ref="imports"/>
+                <xs:element ref="imports" minOccurs="0"/>
+                <xs:element ref="operations" minOccurs="0"/>
+                <xs:element ref="exports" minOccurs="0"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
