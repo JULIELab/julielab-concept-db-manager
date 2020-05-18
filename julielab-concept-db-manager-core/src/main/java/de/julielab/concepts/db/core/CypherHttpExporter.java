@@ -26,10 +26,14 @@ import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static java.util.stream.Collectors.joining;
 
-public class CypherHttpExporter implements DataExporter {
+public class CypherHttpExporter extends DataExporterImpl {
     private final static Logger log = LoggerFactory.getLogger(CypherHttpExporter.class);
     private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
     private HttpConnectionService httpService;
+
+    public CypherHttpExporter() {
+        super(log);
+    }
 
     @Override
     public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration) throws ConceptDatabaseConnectionException {

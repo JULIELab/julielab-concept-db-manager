@@ -85,7 +85,6 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
                 ConceptConstants.PROP_SYNONYMS, ConceptConstants.PROP_WRITING_VARIANTS,
                 ConceptConstants.PROP_DESCRIPTIONS, ConceptConstants.PROP_FACETS);
 
-        System.out.println("Before homologene aggs");
         checkfornullparentcoords(termsByGeneId);
         // Homologene is not updated any more and deprecated in favor of the gene groups
         //createHomologeneAggregates(genes2Aggregate, homologene, termsByGeneId, aggregateCopyProperties);
@@ -633,25 +632,25 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         try {
             log.info("Beginning import of NCBI Genes.");
             Map<String, String> geneId2Tax = new HashMap<>();
-            Map<ConceptCoordinates, ImportConcept> termsByGeneId = new HashMap<>();
+            Map<ConceptCoordinates, ImportConcept> conceptsByGeneId = new HashMap<>();
             log.info("Converting NCBI Gene source files into nodes for the concept graph.");
-            convertGeneInfoToTerms(geneInfo, organisms, geneDescriptions, geneId2Tax, termsByGeneId);
-            setSpeciesQualifier(ncbiTaxNames, geneId2Tax, termsByGeneId.values());
-            log.info("Got {} terms from source files..", termsByGeneId.values().size());
+            convertGeneInfoToTerms(geneInfo, organisms, geneDescriptions, geneId2Tax, conceptsByGeneId);
+            setSpeciesQualifier(ncbiTaxNames, geneId2Tax, conceptsByGeneId.values());
+            log.info("Got {} terms from source files..", conceptsByGeneId.values().size());
             log.info("Creating homology aggregates");
-            createHomologyAggregates(termsByGeneId, homologene, geneGroup);
+            createHomologyAggregates(conceptsByGeneId, homologene, geneGroup);
             log.info("Created {} homology aggregates", homologeneAggregateCounter);
             log.info("Created {} orthology aggregates", orthologAggregateCounter);
             log.info("Created {} top-homology aggregates, governing homologene and orthology aggregates",
                     topHomologyAggregateCounter);
-            log.info("Got {} terms overall (genes and homology aggregates)", termsByGeneId.size());
+            log.info("Got {} terms overall (genes and homology aggregates)", conceptsByGeneId.size());
 
-            List<ImportConcept> terms = makeTermList(termsByGeneId);
+            List<ImportConcept> concepts = makeTermList(conceptsByGeneId);
             ImportFacet facet = FacetCreationService.getInstance().createFacet(importConfig);
             ImportOptions options = new ImportOptions();
             options.createHollowAggregateElements = true;
             options.doNotCreateHollowParents = true;
-            ImportConcepts importConcepts = new ImportConcepts(terms, facet);
+            ImportConcepts importConcepts = new ImportConcepts(concepts, facet);
             importConcepts.setImportOptions(options);
             return Stream.of(importConcepts);
         } catch (IOException e) {

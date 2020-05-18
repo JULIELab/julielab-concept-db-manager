@@ -1,11 +1,8 @@
 package de.julielab.concepts.db.core;
 
 import de.julielab.concepts.db.core.services.FileConnectionService;
-import de.julielab.concepts.db.core.spi.DataExporter;
-import de.julielab.concepts.db.core.spi.DatabaseOperator;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DataExportException;
-import de.julielab.concepts.util.DatabaseOperationException;
 import de.julielab.concepts.util.VersionRetrievalException;
 import de.julielab.java.utilities.ConfigurationUtilities;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
@@ -27,10 +24,14 @@ import java.util.stream.Collectors;
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
-public class CypherFileDBExporter implements DataExporter {
+public class CypherFileDBExporter extends DataExporterImpl {
     private final static Logger log = LoggerFactory.getLogger(CypherFileDBExporter.class);
     private GraphDatabaseService graphDb;
     private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
+
+    public CypherFileDBExporter() {
+        super(log);
+    }
 
     @Override
     public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration) throws ConceptDatabaseConnectionException {
@@ -51,7 +52,7 @@ public class CypherFileDBExporter implements DataExporter {
     }
 
     @Override
-    public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws ConceptDatabaseConnectionException, DataExportException {
+    public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws DataExportException {
         try {
             String cypherQuery = ConfigurationUtilities.requirePresent(slash(CONFIGURATION, CYPHER_QUERY), exportConfig::getString);
             String outputPath = ConfigurationUtilities.requirePresent(slash(CONFIGURATION, OUTPUT_FILE), exportConfig::getString);
@@ -61,7 +62,7 @@ public class CypherFileDBExporter implements DataExporter {
                 Result result = graphDb.execute(cypherQuery);
                 while (result.hasNext()) {
                     Map<String, Object> resultMap = result.next();
-                    outputLines.add(resultMap.values().stream().map(v -> v.toString()).collect(Collectors.joining("\t")));
+                    outputLines.add(resultMap.values().stream().map(Object::toString).collect(Collectors.joining("\t")));
                 }
                 tx.success();
             }

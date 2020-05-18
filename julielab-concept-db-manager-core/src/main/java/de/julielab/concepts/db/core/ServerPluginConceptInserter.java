@@ -36,7 +36,7 @@ import static de.julielab.java.utilities.ConfigurationUtilities.checkParameters;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 public class ServerPluginConceptInserter implements ConceptInserter {
-    public static final int CONCEPT_IMPORT_BATCH_SIZE = 50;
+    public static final int CONCEPT_IMPORT_BATCH_SIZE = 1000;
     private static final Logger log = LoggerFactory.getLogger(ServerPluginConceptInserter.class);
     private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
 
@@ -83,7 +83,7 @@ public class ServerPluginConceptInserter implements ConceptInserter {
 
                     String response = HttpConnectionService.getInstance().sendRequest(httpPost);
                     if (log.isDebugEnabled())
-                        log.debug("Server plugin response to concept insertion for batch {}: {}", response, (int) (i / CONCEPT_IMPORT_BATCH_SIZE));
+                        log.debug("Server plugin response to concept insertion for batch {}/{}: {}", (i / CONCEPT_IMPORT_BATCH_SIZE), importConcepts.size()/CONCEPT_IMPORT_BATCH_SIZE,  response);
                     sw.getBuffer().delete(0, sw.getBuffer().length());
                     sw.write("[");
                 } else {
