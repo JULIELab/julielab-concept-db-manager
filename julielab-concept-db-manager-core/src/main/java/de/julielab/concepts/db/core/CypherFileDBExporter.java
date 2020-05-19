@@ -59,12 +59,11 @@ public class CypherFileDBExporter extends DataExporterImpl {
             log.info("Sending Cypher query {} to Neo4j embedded database", cypherQuery);
             List<String> outputLines = new ArrayList<>();
             try (Transaction tx = graphDb.beginTx()) {
-                Result result = graphDb.execute(cypherQuery);
+                Result result = tx.execute(cypherQuery);
                 while (result.hasNext()) {
                     Map<String, Object> resultMap = result.next();
                     outputLines.add(resultMap.values().stream().map(Object::toString).collect(Collectors.joining("\t")));
                 }
-                tx.success();
             }
             writeData(new File(outputPath),
                     getResourceHeader(connectionConfiguration),

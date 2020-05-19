@@ -9,7 +9,7 @@ import de.julielab.concepts.db.core.services.NetworkConnectionCredentials;
 import de.julielab.concepts.db.core.spi.MappingInserter;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.MappingInsertionException;
-import de.julielab.neo4j.plugins.ConceptManager;
+import de.julielab.neo4j.plugins.concepts.ConceptManager;
 import de.julielab.neo4j.plugins.datarepresentation.ImportMapping;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
@@ -45,7 +45,8 @@ public class ServerPluginMappingInserter extends ServerPluginCallBase implements
             HttpPost httpPost = httpService.getHttpPostRequest(connectionConfiguration, serverUri + String
                     .format(ServerPluginConnectionConstants.SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint));
             Map<String, String> dataMap = new HashMap<>();
-            dataMap.put(ConceptManager.KEY_MAPPINGS, jsonMapper.writeValueAsString(mappings));
+            // TODO fix like in ConceptInserter
+//            dataMap.put(ConceptManager.KEY_MAPPINGS, jsonMapper.writeValueAsString(mappings));
             httpPost.setEntity(new StringEntity(jsonMapper.writeValueAsString(dataMap)));
 
             String response = HttpConnectionService.getInstance().sendRequest(httpPost);

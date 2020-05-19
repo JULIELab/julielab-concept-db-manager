@@ -1,8 +1,11 @@
 package de.julielab.concepts.db.core;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import de.julielab.concepts.db.core.services.HttpConnectionService;
@@ -11,7 +14,7 @@ import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.ConceptInsertionException;
 import de.julielab.concepts.util.InternalNeo4jException;
 import de.julielab.java.utilities.ConfigurationUtilities;
-import de.julielab.neo4j.plugins.ConceptManager;
+import de.julielab.neo4j.plugins.concepts.ConceptManager;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcept;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 import de.julielab.neo4j.plugins.datarepresentation.ImportFacet;
@@ -20,13 +23,12 @@ import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +36,7 @@ import java.util.Map;
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.checkParameters;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
+import static de.julielab.neo4j.plugins.datarepresentation.ImportConcepts.*;
 
 public class ServerPluginConceptInserter implements ConceptInserter {
     public static final int CONCEPT_IMPORT_BATCH_SIZE = 1000;
@@ -50,6 +53,11 @@ public class ServerPluginConceptInserter implements ConceptInserter {
             jsonMapper.setSerializationInclusion(Include.NON_NULL);
             jsonMapper.setSerializationInclusion(Include.NON_EMPTY);
 
+            JsonFactory jf = new JsonFactory(jsonMapper);
+
+            PipedOutputStream jsonOut = new PipedOutputStream();
+            PipedInputStream entityStream = new PipedInputStream(jsonOut);
+            JsonGenerator g = jf.createGenerator(jsonOut);
             String serverUri = connectionConfiguration.getString(URI);
             String pluginName = importConfig.getString(slash(SERVER_PLUGIN_INSERTER, PLUGIN_NAME));
             String pluginEndpoint = importConfig.getString(slash(SERVER_PLUGIN_INSERTER, PLUGIN_ENDPOINT));
@@ -57,40 +65,32 @@ public class ServerPluginConceptInserter implements ConceptInserter {
             HttpPost httpPost = httpService.getHttpPostRequest(connectionConfiguration, serverUri + String
                     .format(ServerPluginConnectionConstants.SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint));
 
-            // We first create the facet. While this can be done in a single request together with the concepts
-            // to be imported, we want to import the concepts batch-wise. This requires knowledge of the target
-            // facet ID. Because when we don't specify the facet ID, a new facet would be created with each
-            // batch of concepts.
-            String facetId = createFacet(concepts, jsonMapper, httpPost);
+            g.writeObjectField(NAME_FACET, concepts.getFacet());
+            g.writeObjectField(NAME_IMPORT_OPTIONS, concepts.getImportOptions());
 
-            ImportFacet createdFacet = new ImportFacet(facetId);
-            String createdFacetJson = jsonMapper.writeValueAsString(createdFacet);
-            Map<String, String> dataMap = new HashMap<>();
-            StringWriter sw = new StringWriter();
-            List<ImportConcept> importConcepts = concepts.getConcepts();
-            sw.write("[");
-            for (int i = 0; i < importConcepts.size(); i++) {
-                ImportConcept importConcept = importConcepts.get(i);
-                jsonMapper.writeValue(sw, importConcept);
-                if (i > 0 && (i % CONCEPT_IMPORT_BATCH_SIZE == 0 || i == importConcepts.size() - 1)) {
-                    sw.write("]");
-                    dataMap.put(ConceptManager.KEY_CONCEPTS, sw.getBuffer().toString());
-                    dataMap.put(ConceptManager.KEY_FACET, createdFacetJson);
-                    if (concepts.getImportOptions() != null)
-                        dataMap.put(ConceptManager.KEY_IMPORT_OPTIONS,
-                                jsonMapper.writeValueAsString(concepts.getImportOptions()));
-                    httpPost.setEntity(new StringEntity(jsonMapper.writeValueAsString(dataMap)));
-
-                    String response = HttpConnectionService.getInstance().sendRequest(httpPost);
-                    if (log.isDebugEnabled())
-                        log.debug("Server plugin response to concept insertion for batch {}/{}: {}", (i / CONCEPT_IMPORT_BATCH_SIZE), importConcepts.size()/CONCEPT_IMPORT_BATCH_SIZE,  response);
-                    sw.getBuffer().delete(0, sw.getBuffer().length());
-                    sw.write("[");
-                } else {
-                    sw.write(",");
+            Thread concept2json = new Thread(() -> {
+                try {
+                    List<ImportConcept> importConcepts = concepts.getConcepts();
+                    g.writeFieldName(NAME_CONCEPTS);
+                    g.writeStartArray();
+                    for (int i = 0; i < importConcepts.size(); i++) {
+                        ImportConcept importConcept = importConcepts.get(i);
+                        g.writeObject(importConcept);
+                    }
+                    g.writeEndArray();
+                    jsonOut.close();
+                    entityStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            }
-            //dataMap.put(ConceptManager.KEY_CONCEPTS, jsonMapper.writeValueAsString(concepts.getConcepts()));
+            });
+            concept2json.start();
+
+            httpPost.setEntity(new InputStreamEntity(entityStream));
+
+            String response = HttpConnectionService.getInstance().sendRequest(httpPost);
+            if (log.isDebugEnabled())
+                log.debug("Server plugin response to concept insertion: {}", response);
         } catch (InternalNeo4jException e) {
             final ObjectMapper om = new ObjectMapper();
             om.enable(SerializationFeature.INDENT_OUTPUT);

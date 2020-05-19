@@ -31,23 +31,23 @@ public class FileVersioning implements Versioning {
 		if (null != existingVersion)
 			throw new VersioningException("The database already has a version: " + existingVersion);
 		try (Transaction tx = graphDb.beginTx()) {
-			graphDb.execute(VersioningConstants.CREATE_VERSION,
+			tx.execute(VersioningConstants.CREATE_VERSION,
 					Collections.singletonMap(VERSION, version));
 			log.info("Created database version node for version {}", version);
-			tx.success();
+			tx.commit();
 		}
 		// Schema and data manipulation transactions must be separated.
 		try (Transaction tx = graphDb.beginTx()) {
-			graphDb.execute(VersioningConstants.CREATE_UNIQUE_CONSTRAINT);
+			tx.execute(VersioningConstants.CREATE_UNIQUE_CONSTRAINT);
 			log.info("Created UNIQUE constraint on the version node.");
-			tx.success();
+			tx.commit();
 		}
 	}
 
 	@Override
 	public String getVersion() throws VersionRetrievalException {
 		try (Transaction tx = graphDb.beginTx()) {
-			Result result = graphDb.execute(VersioningConstants.GET_VERSION);
+			Result result = tx.execute(VersioningConstants.GET_VERSION);
 			if (result.hasNext()) {
 				Map<String, Object> record = result.next();
 				return (String) record.get(VERSION);

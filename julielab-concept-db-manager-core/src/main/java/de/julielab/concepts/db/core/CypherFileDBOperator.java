@@ -36,9 +36,9 @@ public class CypherFileDBOperator implements DatabaseOperator {
             String cypherQuery = ConfigurationUtilities.requirePresent(slash(CONFIGURATION, CYPHER_QUERY), operationConfigration::getString);
             log.info("Sending Cypher query {} to Neo4j embedded database", cypherQuery);
             try (Transaction tx = graphDb.beginTx()) {
-                Result result = graphDb.execute(cypherQuery);
+                Result result = tx.execute(cypherQuery);
                 log.info("Neo4j response: "+ System.getProperty("line.separator") + result.resultAsString());
-                tx.success();
+                tx.commit();
             }
             log.info("Done.");
         }

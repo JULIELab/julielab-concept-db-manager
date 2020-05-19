@@ -1,5 +1,14 @@
 package de.julielab.concepts.db.core.services;
 
+import de.julielab.concepts.util.ConceptDatabaseConnectionException;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.neo4j.dbms.api.DatabaseManagementService;
+import org.neo4j.dbms.api.DatabaseManagementServiceBuilder;
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -7,14 +16,7 @@ import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.configuration2.HierarchicalConfiguration;
-import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.factory.GraphDatabaseFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import de.julielab.concepts.util.ConceptDatabaseConnectionException;
+import static org.neo4j.configuration.GraphDatabaseSettings.DEFAULT_DATABASE_NAME;
 
 public class FileConnectionService {
 
@@ -23,13 +25,11 @@ public class FileConnectionService {
 	public static final String CONFKEY_URI = "uri";
 	public static final String CONFKEY_CONNECTION = "connection";
 
-	private Map<String, GraphDatabaseService> dbs;
+	private Map<String, DatabaseManagementService> dbs;
 
 	private static FileConnectionService service;
-	private GraphDatabaseFactory graphDatabaseFactory;
 
 	private FileConnectionService() {
-		graphDatabaseFactory = new GraphDatabaseFactory();
 		dbs = new HashMap<>();
 	}
 
@@ -54,7 +54,7 @@ public class FileConnectionService {
 			File dbFile = dbUri.isAbsolute() ? new File(dbUri) : new File(dbUri.getRawSchemeSpecificPart());
 			log.debug("Accessing file database located at {}", dbFile);
 			return dbs.computeIfAbsent(dbFile.getCanonicalPath(),
-					k -> graphDatabaseFactory.newEmbeddedDatabase(dbFile));
+					k -> new DatabaseManagementServiceBuilder(dbFile).build()).database(DEFAULT_DATABASE_NAME);
 		} catch (IOException | URISyntaxException e) {
 			throw new ConceptDatabaseConnectionException(e);
 		}
@@ -64,7 +64,7 @@ public class FileConnectionService {
 	 * Shuts down all graph databases opened by this service.
 	 */
 	public void shutdown() {
-		dbs.values().forEach(GraphDatabaseService::shutdown);
+		dbs.values().forEach(DatabaseManagementService::shutdown);
 		dbs.clear();
 	}
 
