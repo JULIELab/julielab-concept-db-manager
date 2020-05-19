@@ -8,7 +8,7 @@ import de.julielab.java.utilities.ConfigurationUtilities;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.neo4j.driver.v1.*;
+import org.neo4j.driver.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +29,6 @@ public class CypherBoltOperator implements DatabaseOperator {
     private final static Logger log = LoggerFactory.getLogger(CypherBoltOperator.class);
 
     private Driver driver;
-    private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
 
     @Override
     public void operate(HierarchicalConfiguration<ImmutableNode> exportConfig) throws DatabaseOperationException {
@@ -38,7 +37,7 @@ public class CypherBoltOperator implements DatabaseOperator {
 
             log.info("Sending Cypher statement {} to Neo4j", query);
             try (Session session = driver.session()) {
-                StatementResult result = session.writeTransaction(tx -> tx.run(query));
+                Result result = session.writeTransaction(tx -> tx.run(query));
                 List<String> responseLines = new ArrayList<>();
                 while (result.hasNext()) {
                     Record record = result.next();
@@ -53,7 +52,7 @@ public class CypherBoltOperator implements DatabaseOperator {
                         else responseLines.add("<return value currently not supported>");
                     }
                 }
-                log.info("Neo4j response: " + responseLines.stream().collect(Collectors.joining("\t")));
+                log.info("Neo4j response: " + String.join("\t", responseLines));
             }
             log.info("Done.");
         } catch (ConfigurationException e) {
@@ -63,7 +62,6 @@ public class CypherBoltOperator implements DatabaseOperator {
 
     @Override
     public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration) throws ConceptDatabaseConnectionException {
-        this.connectionConfiguration = connectionConfiguration;
         try {
             driver = BoltConnectionService.getInstance().getBoltDriver(connectionConfiguration);
         } catch (IOException e) {

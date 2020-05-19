@@ -6,13 +6,11 @@ import de.julielab.neo4j.plugins.datarepresentation.*;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.tree.xpath.XPathExpressionEngine;
-import org.neo4j.driver.v1.Driver;
-import org.neo4j.driver.v1.GraphDatabase;
-import org.neo4j.driver.v1.Session;
-import org.neo4j.driver.v1.StatementResult;
+import org.neo4j.driver.Driver;
+import org.neo4j.driver.Result;
+import org.neo4j.driver.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
@@ -52,7 +50,7 @@ public class InserterIT {
         Driver driver = BoltConnectionService.getInstance().getBoltDriver(config.configurationAt(CONNECTION));
         try (Session s = driver.session()) {
             Map<String, Object> resultMap = s.readTransaction(tx -> {
-                StatementResult result = tx.run("MATCH (c:CONCEPT) RETURN COUNT(c) AS count");
+                Result result = tx.run("MATCH (c:CONCEPT) RETURN COUNT(c) AS count");
                 if (result.hasNext())
                     return result.next().asMap();
                 return null;

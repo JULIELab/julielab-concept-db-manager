@@ -11,7 +11,7 @@
     <logger name="de.julielab.concepts.db.core" level="DEBUG" />
     <logger name="de.julielab.concepts.db.core.services.DatabaseOperationService" level="TRACE"/>
 
-    <root level="trace">
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>

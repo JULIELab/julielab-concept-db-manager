@@ -10,8 +10,11 @@ import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.neo4j.driver.Driver;
+import org.neo4j.driver.Record;
+import org.neo4j.driver.Result;
+import org.neo4j.driver.Session;
 import org.neo4j.driver.internal.types.InternalTypeSystem;
-import org.neo4j.driver.v1.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
@@ -53,7 +56,7 @@ public class DatabaseOperationIT {
         config.setProperty(slash(CONNECTION, URI), "bolt://localhost:" + ITTestsSetup.neo4j.getMappedPort(7687));
         Driver driver = BoltConnectionService.getInstance().getBoltDriver(config.configurationAt(CONNECTION));
         try (Session session = driver.session()) {
-            StatementResult result = session.readTransaction(tx -> tx.run("MATCH (a:MAPPING_AGGREGATE) RETURN COUNT(a) AS count"));
+            Result result = session.readTransaction(tx -> tx.run("MATCH (a:MAPPING_AGGREGATE) RETURN COUNT(a) AS count"));
             assertThat(result.single().asMap()).containsEntry("count", 1L);
         }
     }
@@ -67,7 +70,7 @@ public class DatabaseOperationIT {
         driver.session().writeTransaction(tx -> tx.run("MATCH (c:CONCEPT) REMOVE c.testprop"));
         // Check that the property is indeed not set
         String propQuery = "MATCH (c:CONCEPT) WHERE 'id1' IN c.sourceIds RETURN c.testprop";
-        StatementResult result = driver.session().readTransaction(tx -> tx.run(propQuery));
+        Result result = driver.session().readTransaction(tx -> tx.run(propQuery));
         assertThat(result.next().get(0).hasType(InternalTypeSystem.TYPE_SYSTEM.NULL()));
 
         // Apply the operation configuration
@@ -89,7 +92,7 @@ public class DatabaseOperationIT {
         driver.session().writeTransaction(tx -> tx.run("MATCH (c:CONCEPT) REMOVE c.testprop"));
         // Check that the property is indeed not set
         String propQuery = "MATCH (c:CONCEPT) WHERE 'id1' IN c.sourceIds RETURN c.testprop";
-        StatementResult result = driver.session().readTransaction(tx -> tx.run(propQuery));
+        Result result = driver.session().readTransaction(tx -> tx.run(propQuery));
         assertThat(result.next().get(0).hasType(InternalTypeSystem.TYPE_SYSTEM.NULL()));
 
         // Now switch to the HTTP connection for the actual test

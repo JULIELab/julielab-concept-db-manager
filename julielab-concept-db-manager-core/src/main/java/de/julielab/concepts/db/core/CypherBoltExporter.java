@@ -8,7 +8,7 @@ import de.julielab.java.utilities.ConfigurationUtilities;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.neo4j.driver.v1.*;
+import org.neo4j.driver.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +44,7 @@ public class CypherBoltExporter extends DataExporterImpl {
 
             log.info("Sending Cypher query {} to Neo4j and writing the results to {}", query, outputFile);
             try (Session session = driver.session()) {
-                StatementResult result = session.readTransaction(tx -> tx.run(query));
+                Result result = session.readTransaction(tx -> tx.run(query));
                 List<String> fieldValues = new ArrayList<>();
                 while (result.hasNext()) {
                     Record record = result.next();

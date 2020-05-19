@@ -6,9 +6,9 @@ import de.julielab.jssf.commons.spi.ParameterExposing;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.neo4j.driver.v1.AuthTokens;
-import org.neo4j.driver.v1.Driver;
-import org.neo4j.driver.v1.GraphDatabase;
+import org.neo4j.driver.AuthTokens;
+import org.neo4j.driver.Driver;
+import org.neo4j.driver.GraphDatabase;
 
 import java.io.IOException;
 import java.net.URI;
@@ -21,7 +21,7 @@ import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 public class BoltConnectionService implements ParameterExposing {
 
-	private Map<NetworkConnectionCredentials, Driver> drivers;
+	private final Map<NetworkConnectionCredentials, Driver> drivers;
 	private static BoltConnectionService service;
 
 	public BoltConnectionService() {

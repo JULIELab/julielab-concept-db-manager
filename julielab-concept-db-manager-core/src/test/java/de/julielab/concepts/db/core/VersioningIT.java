@@ -9,12 +9,13 @@ import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.neo4j.driver.v1.Driver;
-import org.neo4j.driver.v1.Session;
-import org.neo4j.driver.v1.Statement;
-import org.neo4j.driver.v1.Transaction;
+import org.neo4j.driver.Driver;
+import org.neo4j.driver.Session;
+import org.neo4j.driver.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -30,19 +31,30 @@ public class VersioningIT {
 
 
     private static final Logger log = LoggerFactory.getLogger(VersioningIT.class);
+    private Driver driver;
 
-    @BeforeMethod
-    public void setupTest() throws IOException, ConfigurationException, ConceptDatabaseConnectionException {
+    @BeforeClass
+    public void loadConfig() throws ConfigurationException, IOException, ConceptDatabaseConnectionException {
         XMLConfiguration configuration = ConfigurationUtilities
                 .loadXmlConfiguration(new File("src/test/resources/boltversioningconfig.xml"));
         configuration.setProperty(slash(CONNECTION, URI), "bolt://localhost:" + ITTestsSetup.neo4j.getMappedPort(7687));
         HierarchicalConfiguration<ImmutableNode> connectionConfiguration = configuration
                 .configurationAt(CONNECTION);
-        Driver driver = BoltConnectionService.getInstance().getBoltDriver(connectionConfiguration);
-        try (Session session = driver.session(); Transaction tx = session.beginTransaction()) {
-            log.debug("Deleting existent VERSION node");
-            tx.run(new Statement("MATCH (v:VERSION) delete v"));
-            tx.success();
+        driver = BoltConnectionService.getInstance().getBoltDriver(connectionConfiguration);
+    }
+
+    @AfterMethod
+    public void setupTest() {
+        try (Session session = driver.session()) {
+            try (Transaction tx = session.beginTransaction()) {
+                log.debug("Deleting existent VERSION node");
+                tx.run("MATCH (v:VERSION) delete v");
+                tx.commit();
+            }
+            try (Transaction tx = session.beginTransaction()) {
+                tx.run("DROP CONSTRAINT ON (v:VERSION) ASSERT v." + VERSION + " IS UNIQUE");
+                tx.commit();
+            }
         }
     }
 
