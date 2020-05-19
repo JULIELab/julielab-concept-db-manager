@@ -19,7 +19,7 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element ref="pluginname"/>
+                <xs:element ref="pluginname" minOccurs="0"/>
                 <xs:element ref="pluginendpoint"/>
                 <xs:element name="configuration" type="methodcallconfigtype"/>
             </xs:sequence>
