@@ -51,10 +51,16 @@ public class ITTestsSetup {
         Slf4jLogConsumer toStringConsumer = new Slf4jLogConsumer(log);
         neo4j.followOutput(toStringConsumer, OutputFrame.OutputType.STDOUT);
 
-        HttpURLConnection conn = (HttpURLConnection) URI.create("http://localhost:" + neo4j.getMappedPort(7474) + "/concepts/"  + Indexes.INDEXES_REST_ENDPOINT+"/"+Indexes.CREATE_INDEXES+"?"+Indexes.DB_NAME+"="+DEFAULT_DATABASE_NAME).toURL().openConnection();
+        HttpURLConnection conn = (HttpURLConnection) URI.create("http://localhost:" + neo4j.getMappedPort(7474) + "/concepts/" + Indexes.INDEXES_REST_ENDPOINT + "/" + Indexes.CREATE_INDEXES + "?" + Indexes.DB_NAME + "=" + DEFAULT_DATABASE_NAME).toURL().openConnection();
         conn.setRequestMethod("PUT");
-        if(conn.getErrorStream() != null)
-            log.error("Error occurred when trying to create indexes: {}", IOUtils.toString(conn.getErrorStream(), UTF_8));
+        if (conn.getErrorStream() != null) {
+            String errormsg = IOUtils.toString(conn.getErrorStream(), UTF_8);
+            log.error("Error occurred when trying to create indexes: {}", errormsg);
+            throw new IllegalArgumentException(errormsg);
+        }
+        // The actual response string is ignored on purpose. The index creation does not give a response. Still,
+        // the input stream must be consumed.
+        log.info("Successfully created concept indexes.", IOUtils.toString(conn.getInputStream(), UTF_8));
     }
 
     @AfterSuite(groups = "integration-tests")

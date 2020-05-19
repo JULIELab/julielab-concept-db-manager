@@ -98,9 +98,8 @@ public class ServerPluginConceptInserter implements ConceptInserter {
                     e.printStackTrace();
                 }
             });
-            concept2json.run();
-//            httpPost.setEntity(new InputStreamEntity(entityStream));
-            httpPost.setEntity(new StringEntity(IOUtils.toString(entityStream, UTF_8)));
+            concept2json.start();
+            httpPost.setEntity(new InputStreamEntity(entityStream));
             String response = HttpConnectionService.getInstance().sendRequest(httpPost);
             if (log.isDebugEnabled())
                 log.debug("Server plugin response to concept insertion: {}", response);
@@ -113,9 +112,7 @@ public class ServerPluginConceptInserter implements ConceptInserter {
                 log.error("Subsequent error occurred when trying to print the internal JSON error: ", e1);
             }
             throw new ConceptInsertionException(e.getErrorResponse().getMessage());
-        } catch
-        (ConceptDatabaseConnectionException | JsonProcessingException | UnsupportedEncodingException
-                        e) {
+        } catch (ConceptDatabaseConnectionException | JsonProcessingException | UnsupportedEncodingException e) {
             throw new ConceptInsertionException(e);
         } catch (ConfigurationException e) {
             log.error("Configuration error occured with configuration {} {}", ConfigurationUtilities.LS, ConfigurationUtils.toString(importConfig));
