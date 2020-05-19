@@ -5,22 +5,23 @@ import de.julielab.concepts.db.core.services.ConceptInsertionService;
 import de.julielab.concepts.db.core.services.FileConnectionService;
 import de.julielab.concepts.db.creators.NCBIGeneConceptCreator;
 import de.julielab.java.utilities.ConfigurationUtilities;
-import de.julielab.neo4j.plugins.ConceptManager;
-import de.julielab.neo4j.plugins.ConceptManager.EdgeTypes;
 import de.julielab.neo4j.plugins.auxiliaries.NodeUtilities;
 import de.julielab.neo4j.plugins.auxiliaries.PropertyUtilities;
+import de.julielab.neo4j.plugins.concepts.ConceptEdgeTypes;
+import de.julielab.neo4j.plugins.concepts.ConceptLabel;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcept;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 import de.julielab.neo4j.plugins.datarepresentation.constants.ConceptConstants;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
-import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.apache.commons.io.FileUtils;
 import org.neo4j.graphdb.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,18 +29,13 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
-import static de.julielab.neo4j.plugins.auxiliaries.semedico.NodeUtilities.getAggregatingNodes;
-import static de.julielab.neo4j.plugins.auxiliaries.semedico.NodeUtilities.getElementNodes;
-import static de.julielab.neo4j.plugins.auxiliaries.semedico.NodeUtilities.getParentNodes;
-import static de.julielab.neo4j.plugins.datarepresentation.constants.ConceptConstants.PROP_PREF_NAME;
-import static de.julielab.neo4j.plugins.datarepresentation.constants.ConceptConstants.PROP_SRC_IDS;
-import static org.assertj.core.api.Assertions.*;
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
-import static de.julielab.neo4j.plugins.ConceptManager.ConceptLabel.AGGREGATE;
-import static de.julielab.neo4j.plugins.datarepresentation.constants.ConceptConstants.PROP_ORG_ID;
+import static de.julielab.neo4j.plugins.auxiliaries.semedico.NodeUtilities.*;
+import static de.julielab.neo4j.plugins.concepts.ConceptLabel.AGGREGATE;
+import static de.julielab.neo4j.plugins.datarepresentation.constants.ConceptConstants.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.testng.AssertJUnit.*;
 import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
 
@@ -152,7 +148,7 @@ public class NCBIGeneConceptCreatorTest {
         GraphDatabaseService graphdb = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
         Set<String> expectedGeneIds = new HashSet<>(Arrays.asList("11477", "172978", "24205"));
         try (Transaction tx = graphdb.beginTx()) {
-            for (Node n : graphdb.getAllNodes()) {
+            for (Node n : tx.getAllNodes()) {
                 if (n.hasProperty(PROP_ORG_ID) && !n.hasLabel(AGGREGATE)) {
                     expectedGeneIds.remove(n.getProperty(PROP_ORG_ID));
                 }
@@ -162,14 +158,14 @@ public class NCBIGeneConceptCreatorTest {
                 // itself but the gene_group node is identified by this ID nontheless.
                 if (n.hasProperty(PROP_ORG_ID) && n.getProperty(PROP_ORG_ID).equals("2475") && n.hasLabel(AGGREGATE)) {
                     Set<String> expectedOrthoGenes = new HashSet<>(Arrays.asList("56718", "56717"));
-                    for (Relationship rel : n.getRelationships(Direction.OUTGOING, EdgeTypes.HAS_ELEMENT)) {
+                    for (Relationship rel : n.getRelationships(Direction.OUTGOING, ConceptEdgeTypes.HAS_ELEMENT)) {
                         assertTrue(expectedOrthoGenes.remove(rel.getEndNode().getProperty(PROP_ORG_ID)));
                     }
                     assertTrue("The following gene IDs where not found in the MTOR orthologs aggregate: "
                             + expectedOrthoGenes, expectedOrthoGenes.isEmpty());
                 }
             }
-            tx.success();
+            tx.commit();
         }
         assertTrue("The following gene IDs where not found in the database: " + expectedGeneIds,
                 expectedGeneIds.isEmpty());
@@ -194,7 +190,7 @@ public class NCBIGeneConceptCreatorTest {
 
         GraphDatabaseService graphdb = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
         try (Transaction tx = graphdb.beginTx()) {
-            final List<Node> geneConcepts = graphdb.findNodes(ConceptManager.ConceptLabel.CONCEPT).stream().filter(c -> !c.hasLabel(ConceptManager.ConceptLabel.AGGREGATE) && c.hasProperty(ConceptConstants.PROP_ORG_ID) && ((String) c.getProperty(PROP_ORG_ID)).matches("g[0-9][0-9]?")).collect(Collectors.toList());
+            final List<Node> geneConcepts = tx.findNodes(ConceptLabel.CONCEPT).stream().filter(c -> !c.hasLabel(ConceptLabel.AGGREGATE) && c.hasProperty(ConceptConstants.PROP_ORG_ID) && ((String) c.getProperty(PROP_ORG_ID)).matches("g[0-9][0-9]?")).collect(Collectors.toList());
             for (Node n : geneConcepts) {
                 assertThat(getParentNodes(n)).isNotEmpty();
                 final Set<Node> geneOrthologAggregates = getParentNodes(n).stream().filter(p -> p.hasLabel(Label.label("AGGREGATE_GENEGROUP"))).collect(Collectors.toSet());
@@ -235,11 +231,11 @@ public class NCBIGeneConceptCreatorTest {
 
 
             // There should be 5 gene group/ortholog clusters
-            final List<Node> topOrthologyAggregates = graphdb.findNodes(Label.label("AGGREGATE_GENEGROUP")).stream().collect(Collectors.toList());
+            final List<Node> topOrthologyAggregates = tx.findNodes(Label.label("AGGREGATE_GENEGROUP")).stream().collect(Collectors.toList());
             assertThat(topOrthologyAggregates.size()).isEqualTo(5);
 
 
-            tx.success();
+            tx.commit();
         }
         FileConnectionService.getInstance().shutdown();
     }
