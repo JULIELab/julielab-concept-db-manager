@@ -1,11 +1,13 @@
 package de.julielab.concepts.db.core;
 
-import de.julielab.concepts.db.core.services.*;
+import de.julielab.concepts.db.core.services.BoltConnectionService;
+import de.julielab.concepts.db.core.services.DatabaseOperationService;
+import de.julielab.concepts.db.core.services.MappingInsertionService;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DatabaseOperationException;
 import de.julielab.java.utilities.ConfigurationUtilities;
-import de.julielab.neo4j.plugins.datarepresentation.*;
-import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
+import de.julielab.neo4j.plugins.concepts.ConceptManager;
+import de.julielab.neo4j.plugins.datarepresentation.ImportMapping;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
@@ -21,7 +23,6 @@ import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
@@ -50,7 +51,11 @@ public class DatabaseOperationIT {
         MappingInsertionService mappingInsertion = MappingInsertionService.getInstance(connectionConfig);
         DatabaseOperationService dbOperation = DatabaseOperationService.getInstance(connectionConfig);
 
-        mappingInsertion.insertMappings(Stream.of(importMapping));
+        // We need an import configuration to tell that we want to use an unmanaged server extension rather
+        // than a legacy plugin. We do this by not specifying the plugin name.
+        HierarchicalConfiguration<ImmutableNode> mappingImportConfig = ConfigurationUtilities.createEmptyConfiguration();
+        mappingImportConfig.setProperty(slash(SERVER_PLUGIN_INSERTER, PLUGIN_ENDPOINT), "/concepts/"+ ConceptManager.CM_REST_ENDPOINT+"/"+ConceptManager.INSERT_MAPPINGS);
+        mappingInsertion.insertMappings(mappingImportConfig, Stream.of(importMapping));
         dbOperation.operate(config.configurationAt(slash(OPERATIONS, OPERATION)));
 
         config.setProperty(slash(CONNECTION, URI), "bolt://localhost:" + ITTestsSetup.neo4j.getMappedPort(7687));

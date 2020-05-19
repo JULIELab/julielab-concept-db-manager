@@ -11,8 +11,7 @@
     <operations>
         <operation xmlns="http://www.julielab.de/conceptdb/operators/serverplugin">
             <operator>de.julielab.concepts.db.core.ServerPluginDatabaseOperator</operator>
-            <pluginname>ConceptManager</pluginname>
-            <pluginendpoint>build_aggregates_by_mappings</pluginendpoint>
+            <pluginendpoint>concepts/concept_aggregate_manager/build_aggregates_by_mappings</pluginendpoint>
             <configuration>
                 <parameters>
                     <parameter parametername="allowedMappingTypes" tojson="true">

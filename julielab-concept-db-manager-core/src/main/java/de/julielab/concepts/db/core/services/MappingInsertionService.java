@@ -3,7 +3,6 @@ package de.julielab.concepts.db.core.services;
 import de.julielab.concepts.db.core.spi.MappingInserter;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.MappingInsertionException;
-import de.julielab.jssf.commons.spi.ParameterExposing;
 import de.julielab.neo4j.plugins.datarepresentation.ImportMapping;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
@@ -45,14 +44,14 @@ public class MappingInsertionService {
         return serviceMap.computeIfAbsent(connectionConfiguration, MappingInsertionService::new);
     }
 
-    public void insertMappings(Stream<ImportMapping> mappings) throws MappingInsertionException {
+    public void insertMappings(HierarchicalConfiguration<ImmutableNode> importConfiguration, Stream<ImportMapping> mappings) throws MappingInsertionException {
         Iterator<MappingInserter> inserterIt = loader.iterator();
         boolean inserterFound = false;
         while (inserterIt.hasNext()) {
             MappingInserter inserter = inserterIt.next();
             try {
                 inserter.setConnection(connectionConfiguration);
-                inserter.insertMappings(mappings);
+                inserter.insertMappings(importConfiguration, mappings);
                 inserterFound = true;
             } catch (ConceptDatabaseConnectionException e) {
                 log.debug("Mapping inserter " + inserter.getClass().getCanonicalName() + " could not serve the connection configuration " + ConfigurationUtils.toString(connectionConfiguration) + ": " + e.getMessage());

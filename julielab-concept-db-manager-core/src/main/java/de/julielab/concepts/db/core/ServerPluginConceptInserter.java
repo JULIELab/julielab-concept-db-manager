@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import de.julielab.concepts.db.core.services.HttpConnectionService;
@@ -17,12 +16,10 @@ import de.julielab.java.utilities.ConfigurationUtilities;
 import de.julielab.neo4j.plugins.concepts.ConceptManager;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcept;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
-import de.julielab.neo4j.plugins.datarepresentation.ImportFacet;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.apache.commons.io.IOUtils;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
@@ -31,7 +28,10 @@ import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
-import java.io.*;
+import java.io.IOException;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +40,6 @@ import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.checkParameters;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static de.julielab.neo4j.plugins.datarepresentation.ImportConcepts.*;
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class ServerPluginConceptInserter implements ConceptInserter {
     public static final int CONCEPT_IMPORT_BATCH_SIZE = 1000;
@@ -57,10 +56,6 @@ public class ServerPluginConceptInserter implements ConceptInserter {
             jsonMapper.setSerializationInclusion(Include.NON_NULL);
             jsonMapper.setSerializationInclusion(Include.NON_EMPTY);
 
-            JsonFactory jf = new JsonFactory(jsonMapper);
-
-            PipedOutputStream jsonOut = new PipedOutputStream();
-            PipedInputStream entityStream = new PipedInputStream(jsonOut);
             String serverUri = connectionConfiguration.getString(URI);
             String pluginName = importConfig.getString(slash(SERVER_PLUGIN_INSERTER, PLUGIN_NAME));
             String pluginEndpoint = importConfig.getString(slash(SERVER_PLUGIN_INSERTER, PLUGIN_ENDPOINT));
@@ -77,6 +72,9 @@ public class ServerPluginConceptInserter implements ConceptInserter {
             httpPost.addHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON);
             httpPost.addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
+            PipedOutputStream jsonOut = new PipedOutputStream();
+            PipedInputStream entityStream = new PipedInputStream(jsonOut);
+            JsonFactory jf = new JsonFactory(jsonMapper);
             JsonGenerator g = jf.createGenerator(jsonOut);
             g.writeStartObject();
             g.writeObjectField(NAME_FACET, concepts.getFacet());
@@ -87,10 +85,8 @@ public class ServerPluginConceptInserter implements ConceptInserter {
                     List<ImportConcept> importConcepts = concepts.getConcepts();
                     g.writeFieldName(NAME_CONCEPTS);
                     g.writeStartArray();
-                    for (int i = 0; i < importConcepts.size(); i++) {
-                        ImportConcept importConcept = importConcepts.get(i);
-                        g.writeObject(importConcept);
-                    }
+                    for (ImportConcept concept : importConcepts)
+                        g.writeObject(concept);
                     g.writeEndArray();
                     g.writeEndObject();
                     g.close();

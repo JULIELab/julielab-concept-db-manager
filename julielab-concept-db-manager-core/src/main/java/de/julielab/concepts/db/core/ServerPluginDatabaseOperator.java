@@ -19,9 +19,9 @@ private final static Logger log = LoggerFactory.getLogger(ServerPluginDatabaseOp
     }
 
     @Override
-    public void operate(HierarchicalConfiguration<ImmutableNode> operationConfigration) throws DatabaseOperationException {
+    public void operate(HierarchicalConfiguration<ImmutableNode> operationConfiguration) throws DatabaseOperationException {
         try {
-            String response = callNeo4jServerPlugin(connectionConfiguration, operationConfigration);
+            String response = callNeo4jServerPlugin(connectionConfiguration, operationConfiguration);
             log.info("Response from Neo4j: {}", response);
         } catch (ConceptDatabaseConnectionException | MethodCallException e) {
             throw new DatabaseOperationException(e);

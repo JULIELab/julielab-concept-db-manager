@@ -1,9 +1,5 @@
 package de.julielab.concepts.db.core;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import de.julielab.concepts.db.core.services.FileConnectionService;
 import de.julielab.concepts.db.core.spi.MappingInserter;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
@@ -13,13 +9,11 @@ import de.julielab.neo4j.plugins.datarepresentation.ImportMapping;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.json.JSONException;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.stream.Stream;
 
 public class FileDatabaseMappingInserter extends JavaMethodCallBase implements MappingInserter {
@@ -32,7 +26,7 @@ public class FileDatabaseMappingInserter extends JavaMethodCallBase implements M
     }
 
     @Override
-    public void insertMappings(Stream<ImportMapping> mappings) throws MappingInsertionException {
+    public void insertMappings(HierarchicalConfiguration<ImmutableNode> importConfiguration, Stream<ImportMapping> mappings) throws MappingInsertionException {
         if (graphDb == null)
             throw new MappingInsertionException(
                     "No access to a file-based graph database. " +

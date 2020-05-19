@@ -5,7 +5,6 @@ import de.julielab.concepts.db.core.services.HttpConnectionService;
 import de.julielab.concepts.db.core.services.NetworkConnectionCredentials;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.MethodCallException;
-import de.julielab.java.utilities.ConfigurationUtilities;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
@@ -33,7 +32,7 @@ public abstract class ServerPluginCallBase extends FunctionCallBase {
             throws ConceptDatabaseConnectionException, MethodCallException {
         try {
             String baseUri = requirePresent(NetworkConnectionCredentials.CONFKEY_URI, key -> connectionConfig.getString(key));
-            String pluginName = requirePresent(slash(PLUGIN_NAME), key -> methodCallConfig.getString(key));
+            String pluginName = methodCallConfig.getString(PLUGIN_NAME);
             String pluginEndpoint = requirePresent(slash(PLUGIN_ENDPOINT), key -> methodCallConfig.getString(key));
             Map<String, Object> parameters = null;
             if (methodCallConfig.getKeys(slash(CONFIGURATION, PARAMETERS)).hasNext()) {
@@ -49,7 +48,13 @@ public abstract class ServerPluginCallBase extends FunctionCallBase {
             }
 
             HttpConnectionService httpService = HttpConnectionService.getInstance();
-            String completePluginEndpointUri = baseUri + String.format(SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint);
+            // Convention: Is the plugin name given, this is a legacy Server Plugin. Otherwise, it is an
+            // unmanaged extension.
+            String completePluginEndpointUri;
+            if (pluginName != null)
+                completePluginEndpointUri = baseUri + String.format(SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint);
+            else
+                completePluginEndpointUri = baseUri + (pluginEndpoint.startsWith("/") ? pluginEndpoint : "/" + pluginEndpoint);
             HttpPost request = httpService.getHttpPostRequest(connectionConfig, completePluginEndpointUri);
             Gson gson = new Gson();
             try {
