@@ -22,12 +22,15 @@ import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
 import java.io.*;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +40,7 @@ import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.checkParameters;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static de.julielab.neo4j.plugins.datarepresentation.ImportConcepts.*;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class ServerPluginConceptInserter implements ConceptInserter {
     public static final int CONCEPT_IMPORT_BATCH_SIZE = 1000;
@@ -47,7 +51,7 @@ public class ServerPluginConceptInserter implements ConceptInserter {
     public void insertConcepts(HierarchicalConfiguration<ImmutableNode> importConfig, ImportConcepts concepts)
             throws ConceptInsertionException {
         try {
-            checkParameters(importConfig, slash(SERVER_PLUGIN_INSERTER, PLUGIN_NAME), slash(SERVER_PLUGIN_INSERTER, PLUGIN_ENDPOINT));
+            checkParameters(importConfig, slash(SERVER_PLUGIN_INSERTER, PLUGIN_ENDPOINT));
 
             ObjectMapper jsonMapper = new ObjectMapper().registerModule(new Jdk8Module());
             jsonMapper.setSerializationInclusion(Include.NON_NULL);
@@ -57,14 +61,24 @@ public class ServerPluginConceptInserter implements ConceptInserter {
 
             PipedOutputStream jsonOut = new PipedOutputStream();
             PipedInputStream entityStream = new PipedInputStream(jsonOut);
-            JsonGenerator g = jf.createGenerator(jsonOut);
             String serverUri = connectionConfiguration.getString(URI);
             String pluginName = importConfig.getString(slash(SERVER_PLUGIN_INSERTER, PLUGIN_NAME));
             String pluginEndpoint = importConfig.getString(slash(SERVER_PLUGIN_INSERTER, PLUGIN_ENDPOINT));
             HttpConnectionService httpService = HttpConnectionService.getInstance();
-            HttpPost httpPost = httpService.getHttpPostRequest(connectionConfiguration, serverUri + String
-                    .format(ServerPluginConnectionConstants.SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint));
+            String uri;
+            // Convention: Is the plugin name given, this is a legacy Server Plugin. Otherwise, it is an
+            // unmanaged extension.
+            if (pluginName != null)
+                uri = serverUri + String
+                        .format(ServerPluginConnectionConstants.SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint);
+            else
+                uri = serverUri + (pluginEndpoint.startsWith("/") ? pluginEndpoint : "/" + pluginEndpoint);
+            HttpPost httpPost = httpService.getHttpPostRequest(connectionConfiguration, uri);
+            httpPost.addHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON);
+            httpPost.addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
+            JsonGenerator g = jf.createGenerator(jsonOut);
+            g.writeStartObject();
             g.writeObjectField(NAME_FACET, concepts.getFacet());
             g.writeObjectField(NAME_IMPORT_OPTIONS, concepts.getImportOptions());
 
@@ -78,16 +92,15 @@ public class ServerPluginConceptInserter implements ConceptInserter {
                         g.writeObject(importConcept);
                     }
                     g.writeEndArray();
-                    jsonOut.close();
-                    entityStream.close();
+                    g.writeEndObject();
+                    g.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             });
-            concept2json.start();
-
-            httpPost.setEntity(new InputStreamEntity(entityStream));
-
+            concept2json.run();
+//            httpPost.setEntity(new InputStreamEntity(entityStream));
+            httpPost.setEntity(new StringEntity(IOUtils.toString(entityStream, UTF_8)));
             String response = HttpConnectionService.getInstance().sendRequest(httpPost);
             if (log.isDebugEnabled())
                 log.debug("Server plugin response to concept insertion: {}", response);

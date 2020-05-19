@@ -37,6 +37,7 @@ import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 public class HttpConnectionService {
     private final static Logger log = LoggerFactory.getLogger(HttpConnectionService.class);
     private static HttpConnectionService service;
@@ -105,11 +106,13 @@ public class HttpConnectionService {
             // constants.
             if (response.getStatusLine().getStatusCode() < 300) {
                 return entity != null ? EntityUtils.toString(entity) : "<no response from Neo4j>";
-            }
+            } else if (response.getStatusLine().getStatusCode() == 404)
+                throw new IllegalArgumentException("Server returned status code HTTP " + response.getStatusLine().getStatusCode() + " Not Found: " + request.getMethod() + ": " + request.getURI().toString());
             responseString = EntityUtils.toString(entity);
-            ObjectMapper om = new ObjectMapper();
-            Neo4jServerErrorResponse errorResponse = om.readValue(responseString, Neo4jServerErrorResponse.class);
-            throw new InternalNeo4jException(errorResponse);
+            if (responseString != null && !responseString.isEmpty()) {
+                throw new ConceptDatabaseConnectionException(responseString);
+            }
+            throw new ConceptDatabaseConnectionException(response.getStatusLine().getStatusCode() + ": " + response.getStatusLine().getReasonPhrase());
         } catch (com.fasterxml.jackson.databind.exc.MismatchedInputException e) {
             log.error("Error when trying to deserialize the JSON error message. The original JSON is {}", responseString);
             throw new ConceptDatabaseConnectionException(e);

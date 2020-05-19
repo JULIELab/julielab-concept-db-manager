@@ -58,6 +58,7 @@ public class ConceptInsertionService {
 			ConceptInserter inserter = inserterIt.next();
 			try {
 				inserter.setConnection(connectionConfiguration); 
+				log.debug("Found {} to handle the concept insertion.", inserter.getClass().getCanonicalName());
 				inserter.insertConcepts(importConfiguration, concepts);
 				inserterFound = true;
 			} catch (ConceptDatabaseConnectionException e) {

@@ -2,6 +2,7 @@ package de.julielab.concepts.db.core;
 
 import de.julielab.concepts.db.core.services.BoltConnectionService;
 import de.julielab.concepts.db.core.services.ConceptInsertionService;
+import de.julielab.neo4j.plugins.concepts.ConceptManager;
 import de.julielab.neo4j.plugins.datarepresentation.*;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
 import org.apache.commons.configuration2.XMLConfiguration;
@@ -33,8 +34,7 @@ public class InserterIT {
         config.setExpressionEngine(new XPathExpressionEngine());
         // First, setup the configuration
         config.setProperty(slash(CONNECTION, URI), "http://localhost:" + ITTestsSetup.neo4j.getMappedPort(7474));
-        config.setProperty(slash(IMPORT, SERVER_PLUGIN_INSERTER, PLUGIN_NAME), "ConceptManager");
-        config.setProperty(slash(IMPORT, SERVER_PLUGIN_INSERTER, PLUGIN_ENDPOINT), "insert_concepts");
+        config.setProperty(slash(IMPORT, SERVER_PLUGIN_INSERTER, PLUGIN_ENDPOINT), "/concepts/"+ConceptManager.CM_REST_ENDPOINT+"/"+ConceptManager.INSERT_CONCEPTS);
 
         // Import the concepts
         ConceptInsertionService service = ConceptInsertionService.getInstance(config.configurationAt(CONNECTION));

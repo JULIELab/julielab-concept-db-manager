@@ -5,8 +5,8 @@
     <test name="order">
         <classes>
             <class name="de.julielab.concepts.db.core.ITTestsSetup" />
-            <class name="de.julielab.concepts.db.core.VersioningIT" />
-<!--            <class name="de.julielab.concepts.db.core.InserterIT" />-->
+<!--            <class name="de.julielab.concepts.db.core.VersioningIT" />-->
+            <class name="de.julielab.concepts.db.core.InserterIT" />
 <!--            <class name="de.julielab.concepts.db.core.DatabaseOperationIT"/>-->
 <!--            <class name="de.julielab.concepts.db.core.ExporterIT" />-->
         </classes>
