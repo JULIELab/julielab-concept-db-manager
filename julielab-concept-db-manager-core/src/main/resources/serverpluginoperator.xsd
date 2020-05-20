@@ -8,6 +8,16 @@
 
     <xs:element name="pluginname" type="xs:string"/>
     <xs:element name="pluginendpoint" type="xs:string"/>
+    <xs:element name="httpmethod">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="GET"/>
+                <xs:enumeration value="POST"/>
+                <xs:enumeration value="PUT"/>
+                <xs:enumeration value="DELETE"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
 
     <xs:element name="operation">
         <xs:complexType>
@@ -21,6 +31,7 @@
                 </xs:element>
                 <xs:element ref="pluginname" minOccurs="0"/>
                 <xs:element ref="pluginendpoint"/>
+                <xs:element ref="httpmethod"/>
                 <xs:element name="configuration" type="methodcallconfigtype"/>
             </xs:sequence>
             <xs:attribute name="name" type="xs:string">

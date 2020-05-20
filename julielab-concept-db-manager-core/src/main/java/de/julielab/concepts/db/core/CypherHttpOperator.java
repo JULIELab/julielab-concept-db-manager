@@ -13,6 +13,7 @@ import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.HttpMethod;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,14 +60,10 @@ public class CypherHttpOperator implements DatabaseOperator {
 
     @Override
     public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration) throws ConceptDatabaseConnectionException {
-        try {
-            httpService = HttpConnectionService.getInstance();
-            // Check if there will be an error thrown due to an invalid URI or something.
-            httpService.getHttpPostRequest(connectionConfiguration);
-            this.connectionConfiguration = connectionConfiguration;
-        } catch (ConceptDatabaseConnectionException e) {
-            throw new ConceptDatabaseConnectionException(e);
-        }
+        httpService = HttpConnectionService.getInstance();
+        // Check if there will be an error thrown due to an invalid URI or something.
+        httpService.getHttpRequest(connectionConfiguration, HttpMethod.GET);
+        this.connectionConfiguration = connectionConfiguration;
     }
 
     @Override

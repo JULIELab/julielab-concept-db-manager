@@ -7,6 +7,16 @@
 
     <xs:element name="pluginname" type="xs:string"/>
     <xs:element name="pluginendpoint" type="xs:string"/>
+    <xs:element name="httpmethod">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="GET"/>
+                <xs:enumeration value="POST"/>
+                <xs:enumeration value="PUT"/>
+                <xs:enumeration value="DELETE"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
 
     <xs:complexType name="serverpluginexportertype">
         <xs:complexContent>
@@ -22,6 +32,7 @@
                     </xs:element>
                     <xs:element ref="pluginname"/>
                     <xs:element ref="pluginendpoint"/>
+                    <xs:element ref="httpmethod"/>
                     <xs:element name="configuration" type="exportconfigurationtype"/>
                 </xs:sequence>
             </xs:extension>

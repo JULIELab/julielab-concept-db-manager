@@ -8,10 +8,13 @@ import de.julielab.concepts.util.MethodCallException;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.StringEntity;
 import org.slf4j.Logger;
 
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Map;
@@ -28,12 +31,13 @@ public abstract class ServerPluginCallBase extends FunctionCallBase {
         super(log);
     }
 
-    public String callNeo4jServerPlugin(HierarchicalConfiguration<ImmutableNode> connectionConfig, HierarchicalConfiguration<ImmutableNode> methodCallConfig)
+    public String callNeo4jServerPlugin(HierarchicalConfiguration<ImmutableNode> connectionConfig, HierarchicalConfiguration<ImmutableNode> methodCallConfig, String defaultHttpMethod)
             throws ConceptDatabaseConnectionException, MethodCallException {
         try {
             String baseUri = requirePresent(NetworkConnectionCredentials.CONFKEY_URI, key -> connectionConfig.getString(key));
             String pluginName = methodCallConfig.getString(PLUGIN_NAME);
             String pluginEndpoint = requirePresent(slash(PLUGIN_ENDPOINT), key -> methodCallConfig.getString(key));
+            String httpMethod = methodCallConfig.getString(HTTP_METHOD, defaultHttpMethod);
             Map<String, Object> parameters = null;
             if (methodCallConfig.getKeys(slash(CONFIGURATION, PARAMETERS)).hasNext()) {
                 try {
@@ -55,13 +59,14 @@ public abstract class ServerPluginCallBase extends FunctionCallBase {
                 completePluginEndpointUri = baseUri + String.format(SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint);
             else
                 completePluginEndpointUri = baseUri + (pluginEndpoint.startsWith("/") ? pluginEndpoint : "/" + pluginEndpoint);
-            HttpPost request = httpService.getHttpPostRequest(connectionConfig, completePluginEndpointUri);
+            HttpRequestBase request = httpService.getHttpRequest(connectionConfig, completePluginEndpointUri, httpMethod);
+            request.addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
             Gson gson = new Gson();
             try {
                 String parameterJson = null;
                 if (parameters != null) {
                     parameterJson = gson.toJson(parameters);
-                    request.setEntity(new StringEntity(parameterJson));
+                    ((HttpEntityEnclosingRequestBase) request).setEntity(new StringEntity(parameterJson));
                 }
                 log.info("Sending request {} to {}", parameterJson, completePluginEndpointUri);
                 return httpService.sendRequest(request);

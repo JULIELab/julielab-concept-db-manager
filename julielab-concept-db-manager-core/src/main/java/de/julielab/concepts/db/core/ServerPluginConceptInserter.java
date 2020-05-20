@@ -26,6 +26,7 @@ import org.apache.http.entity.StringEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
@@ -68,7 +69,7 @@ public class ServerPluginConceptInserter implements ConceptInserter {
                         .format(ServerPluginConnectionConstants.SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint);
             else
                 uri = serverUri + (pluginEndpoint.startsWith("/") ? pluginEndpoint : "/" + pluginEndpoint);
-            HttpPost httpPost = httpService.getHttpPostRequest(connectionConfiguration, uri);
+            HttpPost httpPost = (HttpPost) httpService.getHttpRequest(connectionConfiguration, uri, HttpMethod.POST);
             httpPost.addHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON);
             httpPost.addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
 
@@ -130,16 +131,11 @@ public class ServerPluginConceptInserter implements ConceptInserter {
     }
 
     @Override
-    public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
-            throws ConceptDatabaseConnectionException {
-        try {
-            HttpConnectionService httpService = HttpConnectionService.getInstance();
-            // Check if there will be an error thrown due to an invalid URI or something.
-            httpService.getHttpPostRequest(connectionConfiguration);
-            this.connectionConfiguration = connectionConfiguration;
-        } catch (ConceptDatabaseConnectionException e) {
-            throw new ConceptDatabaseConnectionException(e);
-        }
+    public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration) throws ConceptDatabaseConnectionException {
+        HttpConnectionService httpService = HttpConnectionService.getInstance();
+        // Check if there will be an error thrown due to an invalid URI or something.
+        httpService.getHttpRequest(connectionConfiguration, HttpMethod.GET);
+        this.connectionConfiguration = connectionConfiguration;
     }
 
 }

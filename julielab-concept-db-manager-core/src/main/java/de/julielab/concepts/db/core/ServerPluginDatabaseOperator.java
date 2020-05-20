@@ -10,6 +10,8 @@ import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.HttpMethod;
+
 public class ServerPluginDatabaseOperator extends ServerPluginCallBase implements DatabaseOperator{
 private final static Logger log = LoggerFactory.getLogger(ServerPluginDatabaseOperator.class);
     private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
@@ -21,7 +23,7 @@ private final static Logger log = LoggerFactory.getLogger(ServerPluginDatabaseOp
     @Override
     public void operate(HierarchicalConfiguration<ImmutableNode> operationConfiguration) throws DatabaseOperationException {
         try {
-            String response = callNeo4jServerPlugin(connectionConfiguration, operationConfiguration);
+            String response = callNeo4jServerPlugin(connectionConfiguration, operationConfiguration, "PUT");
             log.info("Response from Neo4j: {}", response);
         } catch (ConceptDatabaseConnectionException | MethodCallException e) {
             throw new DatabaseOperationException(e);
@@ -33,7 +35,7 @@ private final static Logger log = LoggerFactory.getLogger(ServerPluginDatabaseOp
         try {
             HttpConnectionService httpService = HttpConnectionService.getInstance();
             // Check if there will be an error thrown due to an invalid URI or something.
-            httpService.getHttpPostRequest(connectionConfiguration);
+            httpService.getHttpRequest(connectionConfiguration, HttpMethod.GET);
             this.connectionConfiguration = connectionConfiguration;
         } catch (ConceptDatabaseConnectionException e) {
             throw new ConceptDatabaseConnectionException(e);

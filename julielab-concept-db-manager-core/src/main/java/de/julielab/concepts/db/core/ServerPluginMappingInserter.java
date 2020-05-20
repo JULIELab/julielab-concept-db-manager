@@ -19,6 +19,7 @@ import org.apache.http.entity.InputStreamEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.HttpMethod;
 import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
@@ -52,7 +53,7 @@ public class ServerPluginMappingInserter implements MappingInserter {
                         .format(ServerPluginConnectionConstants.SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint);
             else
                 uri = serverUri + (pluginEndpoint.startsWith("/") ? pluginEndpoint : "/" + pluginEndpoint);
-            HttpPost httpPost = httpService.getHttpPostRequest(connectionConfiguration, uri);
+            HttpPost httpPost = (HttpPost) httpService.getHttpRequest(connectionConfiguration, uri, HttpMethod.POST);
 
             PipedOutputStream jsonOut = new PipedOutputStream();
             PipedInputStream entityStream = new PipedInputStream(jsonOut);
@@ -83,15 +84,10 @@ public class ServerPluginMappingInserter implements MappingInserter {
     }
 
     @Override
-    public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
-            throws ConceptDatabaseConnectionException {
-        try {
-            HttpConnectionService httpService = HttpConnectionService.getInstance();
-            // Check if there will be an error thrown due to an invalid URI or something.
-            httpService.getHttpPostRequest(connectionConfiguration);
-            this.connectionConfiguration = connectionConfiguration;
-        } catch (ConceptDatabaseConnectionException e) {
-            throw new ConceptDatabaseConnectionException(e);
-        }
+    public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration) throws ConceptDatabaseConnectionException {
+        HttpConnectionService httpService = HttpConnectionService.getInstance();
+        // Check if there will be an error thrown due to an invalid URI or something.
+        httpService.getHttpRequest(connectionConfiguration, HttpMethod.GET);
+        this.connectionConfiguration = connectionConfiguration;
     }
 }

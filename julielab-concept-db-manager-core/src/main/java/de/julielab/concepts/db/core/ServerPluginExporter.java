@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.HttpMethod;
 import java.io.File;
 import java.io.IOException;
 
@@ -53,7 +54,7 @@ public class ServerPluginExporter extends ServerPluginCallBase implements DataEx
                 try {
                     String outputPath = ConfigurationUtilities.requirePresent(slash(CONFIGURATION, OUTPUT_FILE), exportConfig::getString);
                     File outputFile = new File(outputPath);
-                    response = callNeo4jServerPlugin(connectionConfiguration, exportConfig);
+                    response = callNeo4jServerPlugin(connectionConfiguration, exportConfig, "GET");
                     log.info("Writing file {}", outputFile);
                     String decodedResponse = decode(response, exportConfig.configurationAt(slash(CONFIGURATION, DECODING)));
                     writeData(outputFile, getResourceHeader(connectionConfiguration),decodedResponse);
@@ -82,16 +83,11 @@ public class ServerPluginExporter extends ServerPluginCallBase implements DataEx
     }
 
     @Override
-    public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
-            throws ConceptDatabaseConnectionException {
-        try {
-            HttpConnectionService httpService = HttpConnectionService.getInstance();
-            // Check if there will be an error thrown due to an invalid URI or something.
-            httpService.getHttpPostRequest(connectionConfiguration);
-            this.connectionConfiguration = connectionConfiguration;
-        } catch (ConceptDatabaseConnectionException e) {
-            throw new ConceptDatabaseConnectionException(e);
-        }
+    public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration) throws ConceptDatabaseConnectionException {
+        HttpConnectionService httpService = HttpConnectionService.getInstance();
+        // Check if there will be an error thrown due to an invalid URI or something.
+        httpService.getHttpRequest(connectionConfiguration, HttpMethod.GET);
+        this.connectionConfiguration = connectionConfiguration;
     }
 
     @Override

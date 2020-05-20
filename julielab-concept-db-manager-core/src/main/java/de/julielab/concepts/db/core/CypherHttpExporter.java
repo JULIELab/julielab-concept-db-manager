@@ -3,11 +3,8 @@ package de.julielab.concepts.db.core;
 import de.julielab.concepts.db.core.http.*;
 import de.julielab.concepts.db.core.services.HttpConnectionService;
 import de.julielab.concepts.db.core.services.NetworkConnectionCredentials;
-import de.julielab.concepts.db.core.spi.DataExporter;
-import de.julielab.concepts.db.core.spi.DatabaseOperator;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DataExportException;
-import de.julielab.concepts.util.DatabaseOperationException;
 import de.julielab.concepts.util.VersionRetrievalException;
 import de.julielab.java.utilities.ConfigurationUtilities;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
@@ -16,11 +13,11 @@ import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.HttpMethod;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
@@ -37,14 +34,10 @@ public class CypherHttpExporter extends DataExporterImpl {
 
     @Override
     public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration) throws ConceptDatabaseConnectionException {
-        try {
-            httpService = HttpConnectionService.getInstance();
-            // Check if there will be an error thrown due to an invalid URI or something.
-            httpService.getHttpPostRequest(connectionConfiguration);
-            this.connectionConfiguration = connectionConfiguration;
-        } catch (ConceptDatabaseConnectionException e) {
-            throw new ConceptDatabaseConnectionException(e);
-        }
+        httpService = HttpConnectionService.getInstance();
+        // Check if there will be an error thrown due to an invalid URI or something.
+        httpService.getHttpRequest(connectionConfiguration, HttpMethod.GET);
+        this.connectionConfiguration = connectionConfiguration;
     }
 
     @Override
@@ -60,7 +53,7 @@ public class CypherHttpExporter extends DataExporterImpl {
     }
 
     @Override
-    public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws ConceptDatabaseConnectionException, DataExportException {
+    public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws DataExportException {
         try {
             String cypherQuery = ConfigurationUtilities.requirePresent(slash(CONFIGURATION, CYPHER_QUERY), exportConfig::getString);
             String filepath = ConfigurationUtilities.requirePresent(slash(CONFIGURATION, OUTPUT_FILE), exportConfig::getString);
