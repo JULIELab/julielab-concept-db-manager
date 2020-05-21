@@ -12,10 +12,7 @@ import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.neo4j.driver.Driver;
-import org.neo4j.driver.Record;
-import org.neo4j.driver.Result;
-import org.neo4j.driver.Session;
+import org.neo4j.driver.*;
 import org.neo4j.driver.internal.types.InternalTypeSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +20,7 @@ import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
@@ -61,8 +59,8 @@ public class DatabaseOperationIT {
         config.setProperty(slash(CONNECTION, URI), "bolt://localhost:" + ITTestsSetup.neo4j.getMappedPort(7687));
         Driver driver = BoltConnectionService.getInstance().getBoltDriver(config.configurationAt(CONNECTION));
         try (Session session = driver.session()) {
-            Result result = session.readTransaction(tx -> tx.run("MATCH (a:MAPPING_AGGREGATE) RETURN COUNT(a) AS count"));
-            assertThat(result.single().asMap()).containsEntry("count", 1L);
+            Map<String, Object> responseMap = session.readTransaction(tx -> tx.run("MATCH (a:MAPPING_AGGREGATE) RETURN COUNT(a) AS count").single().asMap());
+            assertThat(responseMap).containsEntry("count", 1L);
         }
     }
 
@@ -74,19 +72,18 @@ public class DatabaseOperationIT {
         Driver driver = BoltConnectionService.getInstance().getBoltDriver(config.configurationAt(CONNECTION));
         driver.session().writeTransaction(tx -> tx.run("MATCH (c:CONCEPT) REMOVE c.testprop"));
         // Check that the property is indeed not set
-        String propQuery = "MATCH (c:CONCEPT) WHERE 'id1' IN c.sourceIds RETURN c.testprop";
-        Result result = driver.session().readTransaction(tx -> tx.run(propQuery));
-        assertThat(result.next().get(0).hasType(InternalTypeSystem.TYPE_SYSTEM.NULL()));
+        String propQuery = "MATCH (c:CONCEPT) WHERE c.sourceIds = 'id1' RETURN c.testprop";
+        Value result = driver.session().readTransaction(tx -> tx.run(propQuery).next().get(0));
+        assertThat(result.hasType(InternalTypeSystem.TYPE_SYSTEM.NULL()));
 
         // Apply the operation configuration
         DatabaseOperationService operationService = DatabaseOperationService.getInstance(config.configurationAt(CONNECTION));
         operationService.operate(config.configurationAt(slash(OPERATIONS, OPERATION)));
 
         // And now there should be a number
-        result = driver.session().readTransaction(tx -> tx.run(propQuery));
-        Record record = result.next();
-        assertThat(record.get(0).hasType(InternalTypeSystem.TYPE_SYSTEM.NUMBER()));
-        assertThat(record.get(0).asInt()).isEqualTo(42);
+        result = driver.session().readTransaction(tx -> tx.run(propQuery).next().get(0));
+        assertThat(result.hasType(InternalTypeSystem.TYPE_SYSTEM.NUMBER()));
+        assertThat(result.asInt()).isEqualTo(42);
     }
 
     public void testHttpCypherOperator() throws ConfigurationException, DatabaseOperationException, IOException, ConceptDatabaseConnectionException {

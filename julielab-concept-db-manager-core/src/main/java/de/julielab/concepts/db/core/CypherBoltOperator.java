@@ -36,8 +36,8 @@ public class CypherBoltOperator implements DatabaseOperator {
             String query = ConfigurationUtilities.requirePresent(slash(CONFIGURATION, CYPHER_QUERY), exportConfig::getString);
 
             log.info("Sending Cypher statement {} to Neo4j", query);
-            try (Session session = driver.session()) {
-                Result result = session.writeTransaction(tx -> tx.run(query));
+            try (Session session = driver.session(); Transaction tx = session.beginTransaction()) {
+                Result result = tx.run(query);
                 List<String> responseLines = new ArrayList<>();
                 while (result.hasNext()) {
                     Record record = result.next();
@@ -52,6 +52,7 @@ public class CypherBoltOperator implements DatabaseOperator {
                         else responseLines.add("<return value currently not supported>");
                     }
                 }
+                tx.commit();
                 log.info("Neo4j response: " + String.join("\t", responseLines));
             }
             log.info("Done.");

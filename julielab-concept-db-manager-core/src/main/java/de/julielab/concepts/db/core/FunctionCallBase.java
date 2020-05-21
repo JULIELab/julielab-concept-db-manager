@@ -5,12 +5,9 @@ import de.julielab.concepts.util.MethodCallException;
 import de.julielab.jssf.commons.spi.ParameterExposing;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
@@ -53,7 +50,7 @@ public abstract class FunctionCallBase implements ParameterExposing {
                 parameter.setName(name);
                 if (type != null)
                     parameter.setType(Class.forName(type));
-                parameter.setConvertToJson(tojson);
+//                parameter.setConvertToJson(tojson);
                 if (elementtype != null)
                     parameter.setElementType(Class.forName(elementtype));
                 parameter.setIsList(islist);

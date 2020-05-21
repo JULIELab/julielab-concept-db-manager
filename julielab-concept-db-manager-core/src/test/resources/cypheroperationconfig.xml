@@ -16,7 +16,7 @@
         <operation xmlns="http://www.julielab.de/conceptdb/operators/cypher">
             <operator>CypherOperator</operator>
             <configuration>
-                <cypherquery>MATCH (c:CONCEPT) where "id1" in c.sourceIds SET c.testprop=42 RETURN c.testprop</cypherquery>
+                <cypherquery>MATCH (c:CONCEPT) where c.sourceIds = "id1" SET c.testprop=42 RETURN c.testprop</cypherquery>
             </configuration>
         </operation>
     </operations>
