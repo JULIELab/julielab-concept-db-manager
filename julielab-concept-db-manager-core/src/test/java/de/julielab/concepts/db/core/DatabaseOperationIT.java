@@ -12,7 +12,9 @@ import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.neo4j.driver.*;
+import org.neo4j.driver.Driver;
+import org.neo4j.driver.Session;
+import org.neo4j.driver.Value;
 import org.neo4j.driver.internal.types.InternalTypeSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,8 +96,8 @@ public class DatabaseOperationIT {
         driver.session().writeTransaction(tx -> tx.run("MATCH (c:CONCEPT) REMOVE c.testprop"));
         // Check that the property is indeed not set
         String propQuery = "MATCH (c:CONCEPT) WHERE 'id1' IN c.sourceIds RETURN c.testprop";
-        Result result = driver.session().readTransaction(tx -> tx.run(propQuery));
-        assertThat(result.next().get(0).hasType(InternalTypeSystem.TYPE_SYSTEM.NULL()));
+        Value value = driver.session().readTransaction(tx -> tx.run(propQuery).next().get(0));
+        assertThat(value.hasType(InternalTypeSystem.TYPE_SYSTEM.NULL()));
 
         // Now switch to the HTTP connection for the actual test
         config.setProperty(slash(CONNECTION, URI), "http://localhost:" + ITTestsSetup.neo4j.getMappedPort(7474));
@@ -104,9 +106,8 @@ public class DatabaseOperationIT {
         operationService.operate(config.configurationAt(slash(OPERATIONS, OPERATION)));
 
         // And now there should be a number
-        result = driver.session().readTransaction(tx -> tx.run(propQuery));
-        Record record = result.next();
-        assertThat(record.get(0).hasType(InternalTypeSystem.TYPE_SYSTEM.NUMBER()));
-        assertThat(record.get(0).asInt()).isEqualTo(42);
+        value = driver.session().readTransaction(tx -> tx.run(propQuery).next().get(0));
+        assertThat(value.hasType(InternalTypeSystem.TYPE_SYSTEM.NUMBER()));
+        assertThat(value.asInt()).isEqualTo(42);
     }
 }

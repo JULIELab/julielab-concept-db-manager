@@ -43,8 +43,8 @@ public class CypherBoltExporter extends DataExporterImpl {
             File outputFile = new File(ConfigurationUtilities.<String>requirePresent(slash(CONFIGURATION, OUTPUT_FILE), exportConfig::getString));
 
             log.info("Sending Cypher query {} to Neo4j and writing the results to {}", query, outputFile);
-            try (Session session = driver.session()) {
-                Result result = session.readTransaction(tx -> tx.run(query));
+            try (Session session = driver.session(); Transaction tx = session.beginTransaction()) {
+                Result result = tx.run(query);
                 List<String> fieldValues = new ArrayList<>();
                 while (result.hasNext()) {
                     Record record = result.next();

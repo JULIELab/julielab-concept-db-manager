@@ -13,9 +13,11 @@ import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.StringEntity;
 import org.slf4j.Logger;
 
+import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,7 +36,7 @@ public abstract class ServerPluginCallBase extends FunctionCallBase {
     public String callNeo4jServerPlugin(HierarchicalConfiguration<ImmutableNode> connectionConfig, HierarchicalConfiguration<ImmutableNode> methodCallConfig, String defaultHttpMethod)
             throws ConceptDatabaseConnectionException, MethodCallException {
         try {
-            String baseUri = requirePresent(NetworkConnectionCredentials.CONFKEY_URI, key -> connectionConfig.getString(key));
+            java.net.URI baseUri = java.net.URI.create(requirePresent(NetworkConnectionCredentials.CONFKEY_URI, key -> connectionConfig.getString(key)));
             String pluginName = methodCallConfig.getString(PLUGIN_NAME);
             String pluginEndpoint = requirePresent(slash(PLUGIN_ENDPOINT), key -> methodCallConfig.getString(key));
             String httpMethod = methodCallConfig.getString(HTTP_METHOD, defaultHttpMethod);
@@ -54,19 +56,24 @@ public abstract class ServerPluginCallBase extends FunctionCallBase {
             HttpConnectionService httpService = HttpConnectionService.getInstance();
             // Convention: Is the plugin name given, this is a legacy Server Plugin. Otherwise, it is an
             // unmanaged extension.
-            String completePluginEndpointUri;
+            java.net.URI completePluginEndpointUri;
             if (pluginName != null)
-                completePluginEndpointUri = baseUri + String.format(SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint);
-            else
-                completePluginEndpointUri = baseUri + (pluginEndpoint.startsWith("/") ? pluginEndpoint : "/" + pluginEndpoint);
-            HttpRequestBase request = httpService.getHttpRequest(connectionConfig, completePluginEndpointUri, httpMethod);
+                completePluginEndpointUri = new java.net.URI(baseUri.getScheme(), null, baseUri.getHost(), baseUri.getPort(),  String.format(SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint), null, null);
+            else {
+                completePluginEndpointUri = new java.net.URI(baseUri.getScheme(), null, baseUri.getHost(), baseUri.getPort(), pluginEndpoint.startsWith("/") ? pluginEndpoint : "/" + pluginEndpoint, null, null);
+            }
+            HttpRequestBase request = httpService.getHttpRequest(connectionConfig, completePluginEndpointUri.toString(), httpMethod);
             request.addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
             Gson gson = new Gson();
             try {
                 String parameterJson = null;
-                if (parameters != null) {
+                if (parameters != null && !httpMethod.equals(HttpMethod.GET)) {
                     parameterJson = gson.toJson(parameters);
                     ((HttpEntityEnclosingRequestBase) request).setEntity(new StringEntity(parameterJson));
+                } else {
+                    String query = parameters.entrySet().stream().map(e -> e.getKey() + "=" + e.getValue()).collect(Collectors.joining("&"));
+                    java.net.URI uriWithQueryParams = new java.net.URI(completePluginEndpointUri.getScheme(), completePluginEndpointUri.getAuthority(), completePluginEndpointUri.getPath(), query, null);
+                    request.setURI(uriWithQueryParams);
                 }
                 log.info("Sending request {} to {}", parameterJson, completePluginEndpointUri);
                 return httpService.sendRequest(request);
@@ -79,6 +86,9 @@ public abstract class ServerPluginCallBase extends FunctionCallBase {
             }
         } catch (ConfigurationException e) {
             throw new ConceptDatabaseConnectionException(e);
+        } catch (URISyntaxException e) {
+            log.error("Could not construct correct request URI.", e);
+            throw new IllegalArgumentException(e);
         }
     }
 

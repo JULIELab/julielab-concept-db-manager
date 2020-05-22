@@ -11,12 +11,9 @@
     <exports>
         <export xmlns="http://www.julielab.de/conceptdb/exporters/serverplugin">
             <exporter>ServerPluginExporter</exporter>
-                <pluginname>
-                    Export
-                </pluginname>
-                <pluginendpoint>
-                    lingpipe_dictionary
-                </pluginendpoint>
+            <pluginendpoint>
+                /concepts/export/lingpipe_dictionary
+            </pluginendpoint>
             <configuration>
                 <outputfile>
                     src/test/resources/output/serverplugindict.txt
@@ -28,9 +25,7 @@
                 </decoding>
                 <parameters>
                     <parameter parametername="label">CONCEPT</parameter>
-                    <parameter parametername="id_property">
-                        <property>sourceIds</property>
-                    </parameter>
+                    <parameter parametername="id_property">sourceIds</parameter>
                 </parameters>
             </configuration>
         </export>
