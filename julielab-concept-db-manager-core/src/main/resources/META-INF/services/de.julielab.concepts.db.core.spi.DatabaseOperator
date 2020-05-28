@@ -1,5 +1,5 @@
 de.julielab.concepts.db.core.CypherBoltOperator
 de.julielab.concepts.db.core.CypherHttpOperator
 de.julielab.concepts.db.core.CypherFileDBOperator
-de.julielab.concepts.db.core.ServerPluginDatabaseOperator
+de.julielab.concepts.db.core.RestDatabaseOperator
 de.julielab.concepts.db.core.JavaClassFileDBOperator

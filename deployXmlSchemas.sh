@@ -11,11 +11,11 @@ if [ ! -z $version ]; then
 	schema1_source=julielab-concept-db-manager-core/src/main/resources/conceptdb.xsd
 	schema2_source=julielab-concept-db-manager-core/src/main/resources/defaultfacet.xsd
 	schema3_source=julielab-concept-db-manager-core/src/main/resources/methodcallbase.xsd
-	schema4_source=julielab-concept-db-manager-core/src/main/resources/serverpluginoperator.xsd
+	schema4_source=julielab-concept-db-manager-core/src/main/resources/restoperator.xsd
 	schema5_source=julielab-concept-db-manager-core/src/main/resources/cypheroperator.xsd
 	schema6_source=julielab-concept-db-manager-core/src/main/resources/javaclassfiledboperator.xsd
 	schema7_source=julielab-concept-db-manager-core/src/main/resources/exporterbase.xsd
-	schema8_source=julielab-concept-db-manager-core/src/main/resources/serverpluginexporter.xsd
+	schema8_source=julielab-concept-db-manager-core/src/main/resources/restexporter.xsd
 	schema9_source=julielab-concept-db-manager-core/src/main/resources/javaclassfiledbexporter.xsd
 	schema10_source=julielab-concept-db-manager-core/src/main/resources/cypherexporter.xsd
 	schema11_source=julielab-concept-creation-ncbi-gene/src/main/resources/ncbigeneconcepts.xsd
@@ -29,11 +29,11 @@ if [ ! -z $version ]; then
 	schema1_target=$julielabgitpagedir/conceptdb/conceptdb-$version.xsd
 	schema2_target=$julielabgitpagedir/conceptdb/facets/defaultfacet-$version.xsd
 	schema3_target=$julielabgitpagedir/conceptdb/methodcallbase-$version.xsd
-	schema4_target=$julielabgitpagedir/conceptdb/operators/serverpluginoperator-$version.xsd
+	schema4_target=$julielabgitpagedir/conceptdb/operators/restoperator-$version.xsd
 	schema5_target=$julielabgitpagedir/conceptdb/operators/cypheroperator-$version.xsd
 	schema6_target=$julielabgitpagedir/conceptdb/operators/javaclassfiledboperator-$version.xsd
 	schema7_target=$julielabgitpagedir/conceptdb/exporters/exporterbase-$version.xsd
-	schema8_target=$julielabgitpagedir/conceptdb/exporters/serverpluginexporter-$version.xsd
+	schema8_target=$julielabgitpagedir/conceptdb/exporters/restexporter-$version.xsd
 	schema9_target=$julielabgitpagedir/conceptdb/exporters/javaclassfiledbexporter-$version.xsd
 	schema10_target=$julielabgitpagedir/conceptdb/exporters/cypherexporter-$version.xsd
 	schema11_target=$julielabgitpagedir/conceptdb/concepts/ncbigeneconcepts-$version.xsd

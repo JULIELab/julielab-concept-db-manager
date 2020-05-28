@@ -25,7 +25,7 @@
                 <xs:element name="operator">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
-                            <xs:enumeration value="de.julielab.concepts.db.core.ServerPluginDatabaseOperator"/>
+                            <xs:enumeration value="de.julielab.concepts.db.core.RestDatabaseOperator"/>
                             <xs:enumeration value="ServerPluginDatabaseOperator"/>
                         </xs:restriction>
                     </xs:simpleType>

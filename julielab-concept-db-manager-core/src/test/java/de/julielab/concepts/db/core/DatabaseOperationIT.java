@@ -54,7 +54,7 @@ public class DatabaseOperationIT {
         // We need an import configuration to tell that we want to use an unmanaged server extension rather
         // than a legacy plugin. We do this by not specifying the plugin name.
         HierarchicalConfiguration<ImmutableNode> mappingImportConfig = ConfigurationUtilities.createEmptyConfiguration();
-        mappingImportConfig.setProperty(slash(SERVER_PLUGIN_INSERTER, PLUGIN_ENDPOINT), "/concepts/"+ ConceptManager.CM_REST_ENDPOINT+"/"+ConceptManager.INSERT_MAPPINGS);
+        mappingImportConfig.setProperty(slash(REST, REST_ENDPOINT), "/concepts/"+ ConceptManager.CM_REST_ENDPOINT+"/"+ConceptManager.INSERT_MAPPINGS);
         mappingInsertion.insertMappings(mappingImportConfig, Stream.of(importMapping));
         dbOperation.operate(config.configurationAt(slash(OPERATIONS, OPERATION)));
 

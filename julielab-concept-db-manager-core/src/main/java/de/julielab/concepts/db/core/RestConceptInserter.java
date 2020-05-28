@@ -13,7 +13,6 @@ import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.ConceptInsertionException;
 import de.julielab.concepts.util.InternalNeo4jException;
 import de.julielab.java.utilities.ConfigurationUtilities;
-import de.julielab.neo4j.plugins.concepts.ConceptManager;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcept;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 import org.apache.commons.configuration2.ConfigurationUtils;
@@ -22,7 +21,6 @@ import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.InputStreamEntity;
-import org.apache.http.entity.StringEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,42 +31,33 @@ import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.checkParameters;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static de.julielab.neo4j.plugins.datarepresentation.ImportConcepts.*;
 
-public class ServerPluginConceptInserter implements ConceptInserter {
+public class RestConceptInserter implements ConceptInserter {
     public static final int CONCEPT_IMPORT_BATCH_SIZE = 1000;
-    private static final Logger log = LoggerFactory.getLogger(ServerPluginConceptInserter.class);
+    private static final Logger log = LoggerFactory.getLogger(RestConceptInserter.class);
     private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
 
     @Override
     public void insertConcepts(HierarchicalConfiguration<ImmutableNode> importConfig, ImportConcepts concepts)
             throws ConceptInsertionException {
         try {
-            checkParameters(importConfig, slash(SERVER_PLUGIN_INSERTER, PLUGIN_ENDPOINT));
+            checkParameters(importConfig, slash(REST, REST_ENDPOINT));
 
             ObjectMapper jsonMapper = new ObjectMapper().registerModule(new Jdk8Module());
             jsonMapper.setSerializationInclusion(Include.NON_NULL);
             jsonMapper.setSerializationInclusion(Include.NON_EMPTY);
 
             String serverUri = connectionConfiguration.getString(URI);
-            String pluginName = importConfig.getString(slash(SERVER_PLUGIN_INSERTER, PLUGIN_NAME));
-            String pluginEndpoint = importConfig.getString(slash(SERVER_PLUGIN_INSERTER, PLUGIN_ENDPOINT));
+            String pluginEndpoint = importConfig.getString(slash(REST, REST_ENDPOINT));
             HttpConnectionService httpService = HttpConnectionService.getInstance();
-            String uri;
-            // Convention: Is the plugin name given, this is a legacy Server Plugin. Otherwise, it is an
-            // unmanaged extension.
-            if (pluginName != null)
-                uri = serverUri + String
-                        .format(ServerPluginConnectionConstants.SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint);
-            else
-                uri = serverUri + (pluginEndpoint.startsWith("/") ? pluginEndpoint : "/" + pluginEndpoint);
+
+            String uri = serverUri + (pluginEndpoint.startsWith("/") ? pluginEndpoint : "/" + pluginEndpoint);
             HttpPost httpPost = (HttpPost) httpService.getHttpRequest(connectionConfiguration, uri, HttpMethod.POST);
             httpPost.addHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON);
             httpPost.addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
@@ -118,16 +107,6 @@ public class ServerPluginConceptInserter implements ConceptInserter {
             log.error("Could not convert (parts of) ImportConcepts to JSON", e);
             throw new ConceptInsertionException(e);
         }
-    }
-
-    private String createFacet(ImportConcepts concepts, ObjectMapper jsonMapper, HttpPost httpPost) throws ConceptDatabaseConnectionException, IOException {
-        Map<String, String> facetDataMap = new HashMap<>();
-        facetDataMap.put(ConceptManager.KEY_FACET, jsonMapper.writeValueAsString(concepts.getFacet()));
-        httpPost.setEntity(new StringEntity(jsonMapper.writeValueAsString(facetDataMap)));
-        String facetCreationResponse = HttpConnectionService.getInstance().sendRequest(httpPost);
-        log.debug("Server plugin response to facet creation: {}", facetCreationResponse);
-        Map<?, ?> response = jsonMapper.readValue(facetCreationResponse, Map.class);
-        return (String) response.get(ConceptManager.KEY_FACET_ID);
     }
 
     @Override

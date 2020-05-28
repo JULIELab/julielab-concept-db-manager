@@ -34,7 +34,7 @@ public class InserterIT {
         config.setExpressionEngine(new XPathExpressionEngine());
         // First, setup the configuration
         config.setProperty(slash(CONNECTION, URI), "http://localhost:" + ITTestsSetup.neo4j.getMappedPort(7474));
-        config.setProperty(slash(IMPORT, SERVER_PLUGIN_INSERTER, PLUGIN_ENDPOINT), "/concepts/"+ConceptManager.CM_REST_ENDPOINT+"/"+ConceptManager.INSERT_CONCEPTS);
+        config.setProperty(slash(IMPORT, REST, REST_ENDPOINT), "/concepts/"+ConceptManager.CM_REST_ENDPOINT+"/"+ConceptManager.INSERT_CONCEPTS);
 
         // Import the concepts
         ConceptInsertionService service = ConceptInsertionService.getInstance(config.configurationAt(CONNECTION));

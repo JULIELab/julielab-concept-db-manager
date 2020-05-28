@@ -25,7 +25,7 @@
                     <xs:element name="exporter">
                         <xs:simpleType>
                             <xs:restriction base="xs:string">
-                                <xs:enumeration value="de.julielab.concepts.db.core.ServerPluginExporter"/>
+                                <xs:enumeration value="de.julielab.concepts.db.core.RestExporter"/>
                                 <xs:enumeration value="ServerPluginExporter"/>
                             </xs:restriction>
                         </xs:simpleType>

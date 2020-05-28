@@ -12,11 +12,11 @@ import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.HttpMethod;
 
-public class ServerPluginDatabaseOperator extends ServerPluginCallBase implements DatabaseOperator{
-private final static Logger log = LoggerFactory.getLogger(ServerPluginDatabaseOperator.class);
+public class RestDatabaseOperator extends RestCallBase implements DatabaseOperator{
+private final static Logger log = LoggerFactory.getLogger(RestDatabaseOperator.class);
     private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
 
-    public ServerPluginDatabaseOperator() {
+    public RestDatabaseOperator() {
         super(log);
     }
 

@@ -23,13 +23,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.concepts.db.core.ServerPluginConnectionConstants.SERVER_PLUGIN_PATH_FMT;
 import static de.julielab.java.utilities.ConfigurationUtilities.*;
 
-public abstract class ServerPluginCallBase extends FunctionCallBase {
+public abstract class RestCallBase extends FunctionCallBase {
 
 
-    public ServerPluginCallBase(Logger log) {
+    public RestCallBase(Logger log) {
         super(log);
     }
 
@@ -37,8 +36,7 @@ public abstract class ServerPluginCallBase extends FunctionCallBase {
             throws ConceptDatabaseConnectionException, MethodCallException {
         try {
             java.net.URI baseUri = java.net.URI.create(requirePresent(NetworkConnectionCredentials.CONFKEY_URI, key -> connectionConfig.getString(key)));
-            String pluginName = methodCallConfig.getString(PLUGIN_NAME);
-            String pluginEndpoint = requirePresent(slash(PLUGIN_ENDPOINT), key -> methodCallConfig.getString(key));
+            String endpoint = requirePresent(slash(REST, REST_ENDPOINT), key -> methodCallConfig.getString(key));
             String httpMethod = methodCallConfig.getString(HTTP_METHOD, defaultHttpMethod);
             Map<String, Object> parameters = null;
             if (methodCallConfig.getKeys(slash(CONFIGURATION, PARAMETERS)).hasNext()) {
@@ -56,12 +54,7 @@ public abstract class ServerPluginCallBase extends FunctionCallBase {
             HttpConnectionService httpService = HttpConnectionService.getInstance();
             // Convention: Is the plugin name given, this is a legacy Server Plugin. Otherwise, it is an
             // unmanaged extension.
-            java.net.URI completePluginEndpointUri;
-            if (pluginName != null)
-                completePluginEndpointUri = new java.net.URI(baseUri.getScheme(), null, baseUri.getHost(), baseUri.getPort(),  String.format(SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint), null, null);
-            else {
-                completePluginEndpointUri = new java.net.URI(baseUri.getScheme(), null, baseUri.getHost(), baseUri.getPort(), pluginEndpoint.startsWith("/") ? pluginEndpoint : "/" + pluginEndpoint, null, null);
-            }
+            java.net.URI completePluginEndpointUri = new java.net.URI(baseUri.getScheme(), null, baseUri.getHost(), baseUri.getPort(), endpoint.startsWith("/") ? endpoint : "/" + endpoint, null, null);
             HttpRequestBase request = httpService.getHttpRequest(connectionConfig, completePluginEndpointUri.toString(), httpMethod);
             request.addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
             Gson gson = new Gson();
@@ -80,8 +73,7 @@ public abstract class ServerPluginCallBase extends FunctionCallBase {
             } catch (UnsupportedEncodingException e) {
                 throw new ConceptDatabaseConnectionException(e);
             } catch (ConceptDatabaseConnectionException e) {
-                log.error("Connection error when posting parameters {} to plugin {}, endpoint {}", parameters, pluginName,
-                        pluginEndpoint);
+                log.error("Connection error when posting parameters {} to endpoint {}", parameters, endpoint);
                 throw e;
             }
         } catch (ConfigurationException e) {
@@ -94,8 +86,7 @@ public abstract class ServerPluginCallBase extends FunctionCallBase {
 
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
-        template.addProperty(slash(basePath, PLUGIN_NAME), "");
-        template.addProperty(slash(basePath, PLUGIN_ENDPOINT), "");
+        template.addProperty(slash(basePath, REST_ENDPOINT), "");
         template.addProperty(slash(basePath, CONFIGURATION, PARAMETERS, "parametername"), "value");
         template.addProperty(ws(slash(basePath, CONFIGURATION, PARAMETERS, "parametername"), "@parametername"), "optional: parameter name");
         template.addProperty(slash(basePath, CONFIGURATION, PARAMETERS, "arrayparameter", "arrayitem"), Arrays.asList("value1", "value2"));

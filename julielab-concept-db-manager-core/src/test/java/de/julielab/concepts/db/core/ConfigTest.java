@@ -20,7 +20,7 @@ public class ConfigTest {
         XMLConfiguration config = ConfigurationUtilities.loadXmlConfiguration(new File("src/test/resources/functioncalltestconfig.xml"));
         config.setExpressionEngine(new XPathExpressionEngine());
         assertThat(config).extracting(
-                c -> c.getString(slash(EXPORTS, EXPORT, CONFIGURATION, PLUGIN_ENDPOINT)),
+                c -> c.getString(slash(EXPORTS, EXPORT, CONFIGURATION, REST_ENDPOINT)),
                 c -> c.getString(slash(EXPORTS, EXPORT, CONFIGURATION, PARAMETERS, "conceptlabel")),
                 c -> c.getString(slash(EXPORTS, EXPORT, CONFIGURATION, PARAMETERS, "facetlabels", "facetlabel[1]")),
                 c -> c.getString(slash(EXPORTS, EXPORT, CONFIGURATION, PARAMETERS, "facetlabels", "facetlabel[2]")))

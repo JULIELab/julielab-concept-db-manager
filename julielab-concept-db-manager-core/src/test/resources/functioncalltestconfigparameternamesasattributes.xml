@@ -3,7 +3,7 @@
 <conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns="http://www.julielab.de/conceptdb"
                  xsi:schemaLocation="http://www.julielab.de/conceptdb http://www.julielab.de/conceptdb/conceptdb-1.0.0.xsd
-					http://www.julielab.de/conceptdb/exporters/serverplugin http://www.julielab.de/conceptdb/exporters/serverpluginexporter-1.0.0.xsd">
+					http://www.julielab.de/conceptdb/exporters/serverplugin restexporter.xsd">
     <versioning>
         <version>1.0-test</version>
     </versioning>

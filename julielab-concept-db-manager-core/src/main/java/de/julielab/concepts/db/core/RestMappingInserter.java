@@ -26,11 +26,12 @@ import java.io.PipedOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.stream.Stream;
 
-import static de.julielab.concepts.db.core.ConfigurationConstants.*;
+import static de.julielab.concepts.db.core.ConfigurationConstants.REST;
+import static de.julielab.concepts.db.core.ConfigurationConstants.REST_ENDPOINT;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
-public class ServerPluginMappingInserter implements MappingInserter {
-    private final static Logger log = LoggerFactory.getLogger(ServerPluginMappingInserter.class);
+public class RestMappingInserter implements MappingInserter {
+    private final static Logger log = LoggerFactory.getLogger(RestMappingInserter.class);
     private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
 
 
@@ -42,17 +43,10 @@ public class ServerPluginMappingInserter implements MappingInserter {
             jsonMapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
 
             String serverUri = connectionConfiguration.getString(NetworkConnectionCredentials.CONFKEY_URI);
-            String pluginName = importConfiguration.getString(slash(SERVER_PLUGIN_INSERTER, PLUGIN_NAME));
-            String pluginEndpoint = importConfiguration.getString(slash(SERVER_PLUGIN_INSERTER, PLUGIN_ENDPOINT));
+            String restEndpoint = importConfiguration.getString(slash(REST, REST_ENDPOINT));
             HttpConnectionService httpService = HttpConnectionService.getInstance();
-            String uri;
-            // Convention: Is the plugin name given, this is a legacy Server Plugin. Otherwise, it is an
-            // unmanaged extension.
-            if (pluginName != null)
-                uri = serverUri + String
-                        .format(ServerPluginConnectionConstants.SERVER_PLUGIN_PATH_FMT, pluginName, pluginEndpoint);
-            else
-                uri = serverUri + (pluginEndpoint.startsWith("/") ? pluginEndpoint : "/" + pluginEndpoint);
+
+            String uri = serverUri + (restEndpoint.startsWith("/") ? restEndpoint : "/" + restEndpoint);
             HttpPost httpPost = (HttpPost) httpService.getHttpRequest(connectionConfiguration, uri, HttpMethod.POST);
 
             PipedOutputStream jsonOut = new PipedOutputStream();

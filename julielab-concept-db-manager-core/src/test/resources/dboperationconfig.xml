@@ -1,7 +1,7 @@
 <conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns="http://www.julielab.de/conceptdb"
                  xsi:schemaLocation="http://www.julielab.de/conceptdb http://www.julielab.de/conceptdb/conceptdb-1.0.0.xsd
-					http://www.julielab.de/conceptdb/operators/serverplugin http://www.julielab.de/conceptdb/operators/serverpluginoperator-1.0.0.xsd">
+					http://www.julielab.de/conceptdb/operators/serverplugin restoperator.xsd">
     <versioning>
         <version>1.0-test</version>
     </versioning>
@@ -10,7 +10,7 @@
     </connection>
     <operations>
         <operation xmlns="http://www.julielab.de/conceptdb/operators/serverplugin">
-            <operator>de.julielab.concepts.db.core.ServerPluginDatabaseOperator</operator>
+            <operator>de.julielab.concepts.db.core.RestDatabaseOperator</operator>
             <pluginendpoint>concepts/concept_aggregate_manager/build_aggregates_by_mappings</pluginendpoint>
             <configuration>
                 <parameters>

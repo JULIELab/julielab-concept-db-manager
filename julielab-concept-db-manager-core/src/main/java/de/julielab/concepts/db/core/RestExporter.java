@@ -22,14 +22,14 @@ import java.io.IOException;
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
-public class ServerPluginExporter extends ServerPluginCallBase implements DataExporter  {
+public class RestExporter extends RestCallBase implements DataExporter  {
 
-    private static final Logger log = LoggerFactory.getLogger(ServerPluginExporter.class);
+    private static final Logger log = LoggerFactory.getLogger(RestExporter.class);
 
     private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
     private final DataExporter exporter;
 
-    public ServerPluginExporter() {
+    public RestExporter() {
         super(log);
         exporter = new DataExporterImpl(log) {
             @Override

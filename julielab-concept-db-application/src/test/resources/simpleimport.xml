@@ -2,8 +2,7 @@
                  xmlns="http://www.julielab.de/conceptdb"
                  xsi:schemaLocation="http://www.julielab.de/conceptdb http://www.julielab.de/conceptdb-1.0.0.xsd
                  http://www.julielab.de/conceptdb/concepts/bioportal http://www.julielab.de/conceptdb/concepts/bioportalconcepts-1.0.0.xsd
-                 http://www.julielab.de/conceptdb/facets/bioportal http://www.julielab.de/conceptdb/facets/bioportalfacets-1.0.0.xsd
-                 http://www.julielab.de/conceptdb/exporters/serverplugin http://www.julielab.de/conceptdb/exporters/serverpluginexporter-1.0.0.xsd">
+                 http://www.julielab.de/conceptdb/facets/bioportal http://www.julielab.de/conceptdb/facets/bioportalfacets-1.0.0.xsd">
     <versioning>
         <version>1.0</version>
     </versioning>
