@@ -3,9 +3,7 @@ package de.julielab.concepts.db.core.services;
 import de.julielab.concepts.db.core.spi.DataExporter;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DataExportException;
-import de.julielab.java.utilities.ConfigurationUtilities;
 import de.julielab.jssf.commons.spi.ParameterExposing;
-import org.apache.commons.configuration2.Configuration;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
@@ -69,11 +67,11 @@ public class DataExportService implements ParameterExposing {
                 exporterFound = true;
                 try {
                     exporter.setConnection(connectionConfiguration);
+                    exporter.exportData(exportConfig);
                 } catch (ConceptDatabaseConnectionException e) {
                     log.debug("The exporter {} does not support the given connection. Continue search for a compatible exporter.", exporter.getClass().getCanonicalName());
                     continue;
                 }
-                exporter.exportData(exportConfig);
                 exporterExecuted = true;
             }
         }

@@ -30,9 +30,9 @@
                             </xs:restriction>
                         </xs:simpleType>
                     </xs:element>
-                    <xs:element ref="pluginname"/>
+                    <xs:element ref="pluginname" minOccurs="0"/>
                     <xs:element ref="pluginendpoint"/>
-                    <xs:element ref="httpmethod"/>
+                    <xs:element ref="httpmethod" minOccurs="0"/>
                     <xs:element name="configuration" type="exportconfigurationtype"/>
                 </xs:sequence>
             </xs:extension>

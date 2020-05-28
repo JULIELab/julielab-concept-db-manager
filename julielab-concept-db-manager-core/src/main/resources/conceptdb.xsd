@@ -125,9 +125,9 @@
     <xs:element name="serverplugininserter">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="pluginname"/>
+                <xs:element ref="pluginname" minOccurs="0"/>
                 <xs:element ref="pluginendpoint"/>
-                <xs:element ref="httpmethod"/>
+                <xs:element ref="httpmethod" minOccurs="0"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

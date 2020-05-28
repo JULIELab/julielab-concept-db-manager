@@ -13,6 +13,7 @@
                         <xs:simpleType>
                             <xs:restriction base="xs:string">
                                 <xs:enumeration value="de.julielab.concepts.db.core.JavaClassFileDBExporter"/>
+                                <xs:enumeration value="JavaClassFileDBExporter"/>
                             </xs:restriction>
                         </xs:simpleType>
                     </xs:element>
