@@ -1,0 +1,17 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://www.julielab.de/conceptdb"
+           version="1.0.0"
+           targetNamespace="http://www.julielab.de/conceptdb"
+           elementFormDefault="qualified">
+
+    <xs:include schemaLocation="methodcallbase.xsd"/>
+
+    <xs:element name="operation">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="rest" minOccurs="0" maxOccurs="1"/>
+                <xs:element ref="configuration" minOccurs="0" maxOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

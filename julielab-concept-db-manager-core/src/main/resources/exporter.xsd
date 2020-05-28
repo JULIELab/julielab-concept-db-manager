@@ -1,12 +1,23 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns="http://www.julielab.de/conceptdb/exporters/exporterbase"
+           xmlns="http://www.julielab.de/conceptdb"
            version="1.0.0"
-           targetNamespace="http://www.julielab.de/conceptdb/exporters/exporterbase"
+           targetNamespace="http://www.julielab.de/conceptdb"
            elementFormDefault="qualified">
 
-    <xs:include schemaLocation="http://www.julielab.de/conceptdb/methodcallbase-1.0.0.xsd"/>
+    <xs:include schemaLocation="methodcallbase.xsd"/>
 
     <xs:element name="outputfile" type="xs:string"/>
+
+    <xs:element name="export">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="rest" minOccurs="0"/>
+                <xs:element ref="configuration" minOccurs="0"/>
+                <xs:element ref="outputfile"/>
+                <xs:element ref="decoding" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
     <!-- Decoding possibilities -->
     <xs:element name="json2bytearray" type="xs:boolean">
@@ -59,44 +70,4 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-
-    <xs:complexType name="exportcypherquerytype">
-        <xs:complexContent>
-            <xs:extension base="cypherquerytype">
-                <xs:sequence>
-                    <xs:element ref="outputfile"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <!-- This extends the methodcallconfigtype with decoding of retrieved data and a file to write the output to -->
-    <xs:complexType name="exportconfigurationtype">
-        <xs:complexContent>
-            <xs:extension base="methodcallconfigtype">
-                <xs:sequence>
-                    <xs:element ref="decoding"/>
-                    <xs:element name="outputfile" type="xs:string"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <xs:complexType name="exportertype">
-        <xs:sequence>
-            <xs:element name="configuration" type="exportconfigurationtype"/>
-        </xs:sequence>
-        <xs:attribute name="name" type="xs:string">
-            <xs:annotation>
-                <xs:documentation xml:lang="en">
-                    The optional name element can be given to all concept creators, operators and exporters.
-                    When calling the Concept DB Application, the application mode parameters can be given
-                    an optional list of names. Only the inserters, operators or exporters on the list will be
-                    executed.
-                </xs:documentation>
-            </xs:annotation>
-        </xs:attribute>
-        <xs:attribute name="type" type="xs:string"/>
-    </xs:complexType>
-
 </xs:schema>

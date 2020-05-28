@@ -5,6 +5,8 @@
            xmlns="http://www.julielab.de/conceptdb"
            elementFormDefault="qualified">
 
+    <xs:include schemaLocation="exporter.xsd"/>
+    <xs:include schemaLocation="operation.xsd"/>
 
     <xs:annotation>
         <xs:documentation xml:lang="en">
@@ -17,8 +19,7 @@
         </xs:documentation>
     </xs:annotation>
 
-    <xs:element name="pluginname" type="xs:string"/>
-    <xs:element name="pluginendpoint" type="xs:string"/>
+    <xs:element name="restendpoint" type="xs:string"/>
     <xs:element name="httpmethod">
         <xs:simpleType>
             <xs:restriction base="xs:string">
@@ -96,7 +97,7 @@
     <xs:element name="import">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="serverplugininserter" minOccurs="0"/>
+                <xs:element ref="rest" minOccurs="0"/>
                 <xs:element ref="concepts" minOccurs="0"/>
                 <xs:element ref="facet" minOccurs="0"/>
                 <xs:element ref="mappings" minOccurs="0"/>
@@ -122,15 +123,6 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="serverplugininserter">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="pluginname" minOccurs="0"/>
-                <xs:element ref="pluginendpoint"/>
-                <xs:element ref="httpmethod" minOccurs="0"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
     <!-- End imports -->
 
 
@@ -139,8 +131,7 @@
     <xs:element name="operations">
         <xs:complexType>
             <xs:sequence>
-                <!-- Extension point for individual exporters -->
-                <xs:any maxOccurs="unbounded"/>
+                <xs:element ref="operation" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -150,12 +141,10 @@
 
     <!-- Data export -->
 
-
     <xs:element name="exports">
         <xs:complexType>
             <xs:sequence>
-                <!-- Extension point for individual exporters -->
-                <xs:any maxOccurs="unbounded"/>
+                <xs:element ref="export" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

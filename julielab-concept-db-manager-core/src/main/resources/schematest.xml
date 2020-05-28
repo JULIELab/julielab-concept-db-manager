@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.julielab.de/conceptdb"
+                 xsi:schemaLocation="http://www.julielab.de/conceptdb conceptdb.xsd">
+    <versioning>
+        <version>1.0</version>
+    </versioning>
+    <connection>
+        <uri>http://huhuhu</uri>
+    </connection>
+    <imports>
+        <import>
+            <rest>
+                <restendpoint>/muh/maeh</restendpoint>
+                <httpmethod>POST</httpmethod>
+            </rest>
+        </import>
+    </imports>
+    <operations>
+        <operation>
+            <configuration>
+                <parameters>
+                    <parameter >
+                        <input>huhu</input>
+                    </parameter>
+                </parameters>
+            </configuration>
+        </operation>
+    </operations>
+</conceptdatabase>
