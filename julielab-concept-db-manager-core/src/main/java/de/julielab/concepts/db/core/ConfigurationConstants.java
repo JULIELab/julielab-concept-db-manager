@@ -39,6 +39,9 @@ public class ConfigurationConstants {
     public static final String CYPHER_QUERY = "cypherquery";
     public static final String VERSIONING = "versioning";
     public static final String VERSION = "version";
+    public static final String JAVA_TYPE = "javatype";
+    public static final String ELEMENT_TYPE = "elementtype";
+    public static final String TO_JSON = "tojson";
 
     private ConfigurationConstants() {
     }

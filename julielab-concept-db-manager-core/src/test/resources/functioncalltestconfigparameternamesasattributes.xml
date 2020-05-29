@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xmlns="http://www.julielab.de/conceptdb"
-                 xsi:schemaLocation="http://www.julielab.de/conceptdb http://www.julielab.de/conceptdb/conceptdb-1.0.0.xsd
-					http://www.julielab.de/conceptdb/exporters/serverplugin restexporter.xsd">
+<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.julielab.de/conceptdb"
+                 xsi:schemaLocation="http://www.julielab.de/conceptdb conceptdb.xsd">
     <versioning>
         <version>1.0-test</version>
     </versioning>
@@ -11,17 +9,19 @@
         <uri>http://sonstwas.muh</uri>
     </connection>
     <exports>
-        <export xmlns="http://www.julielab.de/conceptdb/exporters/serverplugin">
-            <exporter>ServerPluginExporter</exporter>
+        <export>
             <configuration>
-                <pluginendpoint>
-                    /db/data/ext/Export/graphdb/hypernyms
-                </pluginendpoint>
+                <rest>
+                    <restendpoint>
+                        /db/data/ext/Export/graphdb/hypernyms
+                    </restendpoint>
+                    <httpmethod>GET</httpmethod>
+                </rest>
                 <parameters>
-                    <parameter parametername="conceptlabel" parametertype="java.lang.String">
+                    <parameter name="conceptlabel" javatype="java.lang.String">
                         ID_MAP_NCBI_GENES
                     </parameter>
-                    <parameter parametername="facetlabels" tojson="true" elementtype="java.lang.String">
+                    <parameter name="facetlabels" tojson="true" elementtype="java.lang.String">
                         <arrayitem>FACET</arrayitem>
                         <arrayitem>BIO_PORTAL</arrayitem>
                     </parameter>

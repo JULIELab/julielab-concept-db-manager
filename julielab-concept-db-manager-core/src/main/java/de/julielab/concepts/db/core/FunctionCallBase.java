@@ -36,12 +36,12 @@ public abstract class FunctionCallBase implements ParameterExposing {
         try {
             for (ImmutableNode parameterNode : configTree.getChildren()) {
                 Map<String, Object> attributes = parameterNode.getAttributes();
-                String name = (String) attributes.get("parametername");
+                String name = (String) attributes.get(NAME);
                 if (name == null)
                     name = parameterNode.getNodeName();
-                String type = (String) attributes.get("parametertype");
-                Boolean tojson = Boolean.parseBoolean(Optional.ofNullable((String) attributes.get("tojson")).orElse("false"));
-                String elementtype = (String) attributes.get("elementtype");
+                String type = (String) attributes.get(JAVA_TYPE);
+                Boolean tojson = Boolean.parseBoolean(Optional.ofNullable((String) attributes.get(TO_JSON)).orElse("false"));
+                String elementtype = (String) attributes.get(ELEMENT_TYPE);
                 boolean islist = !parameterNode.getChildren().isEmpty();
                 // Will be null for array-valued parameters
                 Object value = parameterNode.getValue();
@@ -50,11 +50,11 @@ public abstract class FunctionCallBase implements ParameterExposing {
                 parameter.setName(name);
                 if (type != null)
                     parameter.setType(Class.forName(type));
-//                parameter.setConvertToJson(tojson);
                 if (elementtype != null)
                     parameter.setElementType(Class.forName(elementtype));
                 parameter.setIsList(islist);
                 parameter.setValue(value);
+                parameter.setConvertToJson(tojson);
 
                 List<Object> arrayitems = new ArrayList<>();
                 for (ImmutableNode listitem : parameterNode.getChildren()) {
