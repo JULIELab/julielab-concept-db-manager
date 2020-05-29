@@ -9,17 +9,19 @@ import de.julielab.neo4j.plugins.datarepresentation.ImportMapping;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.dbms.api.DatabaseManagementService;
 import org.neo4j.graphdb.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.stream.Stream;
 
+import static org.neo4j.configuration.GraphDatabaseSettings.DEFAULT_DATABASE_NAME;
+
 public class FileDatabaseMappingInserter extends JavaMethodCallBase implements MappingInserter {
 
     private final static Logger log = LoggerFactory.getLogger(FileDatabaseMappingInserter.class);
-    private GraphDatabaseService graphDb;
+    private DatabaseManagementService dbms;
 
     public FileDatabaseMappingInserter() {
         super(log);
@@ -27,14 +29,14 @@ public class FileDatabaseMappingInserter extends JavaMethodCallBase implements M
 
     @Override
     public void insertMappings(HierarchicalConfiguration<ImmutableNode> importConfiguration, Stream<ImportMapping> mappings) throws MappingInsertionException {
-        if (graphDb == null)
+        if (dbms == null)
             throw new MappingInsertionException(
                     "No access to a file-based graph database. " +
                             "The FileDatabaseMappingInserter has not been initialized properly. " +
                             "Call setConfiguration() and check for thrown exceptions before calling this method.");
         if (log.isInfoEnabled())
             log.info("Inserting mappings into file based Neo4j database");
-        try (Transaction tx = graphDb.beginTx()) {
+        try (Transaction tx = dbms.database(DEFAULT_DATABASE_NAME).beginTx()) {
             ConceptInsertion.insertMappings(tx, mappings.iterator());
         }
 
@@ -43,8 +45,8 @@ public class FileDatabaseMappingInserter extends JavaMethodCallBase implements M
     @Override
     public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
             throws ConceptDatabaseConnectionException {
-        graphDb = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
-        if (graphDb == null)
+        dbms = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
+        if (dbms == null)
             throw new ConceptDatabaseConnectionException("Could not create a file database for connection "
                     + ConfigurationUtils.toString(connectionConfiguration));
     }

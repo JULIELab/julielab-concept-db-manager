@@ -8,6 +8,7 @@ public class ConfigurationConstants {
     public static final String URI = "uri";
     public static final String USER = "user";
     public static final String PASSWORD = "password";
+    public static final String PREPARATION = "preparation";
     public static final String IMPORTS = "imports";
     public static final String IMPORT = "import";
     public final static String EXPORTS = "exports";
@@ -23,6 +24,7 @@ public class ConfigurationConstants {
     public static final String CREATOR = "creator";
     public static final String NAME = "name";
     public static final String REQUEST = "request";
+    public static final String CONFIGURATION = "configuration";
     public static final String PARAMETERS = "parameters";
     public static final String PARAMETER = "parameter";
     public static final String REST_ENDPOINT = "restendpoint";

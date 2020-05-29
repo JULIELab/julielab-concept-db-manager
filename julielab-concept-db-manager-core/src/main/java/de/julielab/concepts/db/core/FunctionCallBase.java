@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import java.util.*;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 /**
  * This class contains the {@link Parameter} type and methods to parse parameters from the configuration
@@ -19,9 +18,6 @@ import static de.julielab.java.utilities.ConfigurationUtilities.slash;
  */
 public abstract class FunctionCallBase implements ParameterExposing {
 
-    public static final String CONFKEY_PARAMETERS = slash(REQUEST, PARAMETERS);
-    public static final String CONFKEY_CLASS_NAME = slash(REQUEST, CLASS);
-    public static final String CONFKEY_METHOD_NAME = slash(REQUEST, METHOD);
     protected Logger log;
 
     public FunctionCallBase(Logger log) {

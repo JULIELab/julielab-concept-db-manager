@@ -9,7 +9,7 @@
         <xs:simpleType>
             <xs:restriction base="xs:string">
                 <xs:enumeration value="MeshConceptCreator"/>
-                <xs:enumeration value="de.julielab.concepts.db.creators.mesh.XmlConceptCreator"/>
+                <xs:enumeration value="de.julielab.concepts.db.creators.mesh.MeshXmlConceptCreator"/>
             </xs:restriction>
         </xs:simpleType>
     </xs:element>

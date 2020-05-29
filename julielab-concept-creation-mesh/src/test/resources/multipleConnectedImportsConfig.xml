@@ -13,7 +13,7 @@
         <import>
             <concepts>
                 <creator xmlns="http://www.julielab.de/conceptdb/concepts/xml">
-                    <name>de.julielab.concepts.db.creators.mesh.XmlConceptCreator</name>
+                    <name>de.julielab.concepts.db.creators.mesh.MeshXmlConceptCreator</name>
                     <configuration>
                         <input>
                             <xmlfile>src/test/resources/europiumDescriptor.xml</xmlfile>

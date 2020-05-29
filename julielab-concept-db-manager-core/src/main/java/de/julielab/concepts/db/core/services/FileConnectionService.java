@@ -5,7 +5,6 @@ import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.neo4j.dbms.api.DatabaseManagementService;
 import org.neo4j.dbms.api.DatabaseManagementServiceBuilder;
-import org.neo4j.graphdb.GraphDatabaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,8 +14,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.neo4j.configuration.GraphDatabaseSettings.DEFAULT_DATABASE_NAME;
 
 public class FileConnectionService {
 
@@ -39,7 +36,7 @@ public class FileConnectionService {
 		return service;
 	}
 
-	public GraphDatabaseService getDatabase(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
+	public DatabaseManagementService getDatabase(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
 			throws ConceptDatabaseConnectionException {
 		String uriString;
 		if ((uriString = connectionConfiguration.getString(CONFKEY_URI)) == null)
@@ -54,7 +51,7 @@ public class FileConnectionService {
 			File dbFile = dbUri.isAbsolute() ? new File(dbUri) : new File(dbUri.getRawSchemeSpecificPart());
 			log.debug("Accessing file database located at {}", dbFile);
 			return dbs.computeIfAbsent(dbFile.getCanonicalPath(),
-					k -> new DatabaseManagementServiceBuilder(dbFile).build()).database(DEFAULT_DATABASE_NAME);
+					k -> new DatabaseManagementServiceBuilder(dbFile).build());
 		} catch (IOException | URISyntaxException e) {
 			throw new ConceptDatabaseConnectionException(e);
 		}

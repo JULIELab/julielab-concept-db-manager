@@ -13,7 +13,7 @@ http://www.julielab.de/conceptdb/facets/simplexml http://www.julielab.de/concept
         <import>
             <concepts>
                 <creator xmlns="http://www.julielab.de/conceptdb/concepts/xml">
-                    <name>de.julielab.concepts.db.creators.mesh.XmlConceptCreator</name>
+                    <name>de.julielab.concepts.db.creators.mesh.MeshXmlConceptCreator</name>
                     <configuration>
                         <input>
                             <xmlfile>src/test/resources/leukocytes.xml</xmlfile>

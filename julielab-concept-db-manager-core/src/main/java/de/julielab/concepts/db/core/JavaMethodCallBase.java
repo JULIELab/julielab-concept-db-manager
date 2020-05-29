@@ -3,7 +3,7 @@ package de.julielab.concepts.db.core;
 import de.julielab.concepts.util.MethodCallException;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.dbms.api.DatabaseManagementService;
 import org.slf4j.Logger;
 
 import java.lang.reflect.InvocationTargetException;
@@ -29,28 +29,24 @@ public abstract class JavaMethodCallBase extends FunctionCallBase {
      *
      * @param <T>                    The return value of the called method.
      * @param parameterConfiguration The subconfiguration immediately containing the parameters.
-     * @param graphDb                The graph database to apply the method call on. The graph database must be the first argument of the method.
+     * @param dbms                The graph database to apply the method call on. The graph database must be the first argument of the method.
      * @return The return value of the called method.
      * @throws MethodCallException If any part of the processing of calling the method fails.
      */
-    protected <T> T callInstanceMethod(HierarchicalConfiguration<ImmutableNode> parameterConfiguration, GraphDatabaseService graphDb) throws MethodCallException {
-        String className = parameterConfiguration.getString(CONFKEY_CLASS_NAME);
-        String methodName = parameterConfiguration.getString(CONFKEY_METHOD_NAME);
+    protected <T> T callInstanceMethod(HierarchicalConfiguration<ImmutableNode> parameterConfiguration, DatabaseManagementService dbms) throws MethodCallException {
+        String className = parameterConfiguration.getString(CLASS);
+        String methodName = parameterConfiguration.getString(METHOD);
         try {
-            Map<String, Parameter> parsedParameters = parseParameters(parameterConfiguration.configurationAt(CONFKEY_PARAMETERS));
-            Object exporterInstance = Class.forName(className).newInstance();
+            Map<String, Parameter> parsedParameters = parseParameters(parameterConfiguration.configurationAt(PARAMETERS));
+            Object classInstance = Class.forName(className).getDeclaredConstructor(DatabaseManagementService.class).newInstance(dbms);
             Class<?>[] parameterTypes = parsedParameters.values().stream().map(Parameter::getType)
                     .toArray(i -> new Class<?>[i]);
             checkTypesForNull(parameterTypes, parsedParameters);
-            Method exporterMethod = exporterInstance.getClass().getDeclaredMethod(methodName, parameterTypes);
-            if (exporterMethod.getReturnType() != String.class)
-                throw new MethodCallException("The method " + methodName + " does return an object of type "
-                        + exporterMethod.getReturnType() + " but " + String.class.getCanonicalName() + " is requried.");
+            Method exporterMethod = classInstance.getClass().getDeclaredMethod(methodName, parameterTypes);
             Stream<Object> paramValueStream = parsedParameters.values().stream().map(Parameter::getValue);
-            // The database instance must be the first argument.
-            paramValueStream = Stream.concat(Stream.of(graphDb), paramValueStream);
             Object[] values = paramValueStream.toArray(i -> new Object[i]);
-            return (T) exporterMethod.invoke(exporterInstance, values);
+            T result = (T) exporterMethod.invoke(classInstance, values);
+            return result;
         } catch (InstantiationException | IllegalAccessException |
                 ClassNotFoundException | NoSuchMethodException | InvocationTargetException e) {
             throw new MethodCallException(e);

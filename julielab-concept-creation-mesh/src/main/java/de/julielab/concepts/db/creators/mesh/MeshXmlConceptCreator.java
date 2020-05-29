@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
-public class XmlConceptCreator implements ConceptCreator {
+public class MeshXmlConceptCreator implements ConceptCreator {
 
     public static final String INPUT = "input";
     public static final String XMLFILE = "xmlfile";
@@ -35,12 +35,12 @@ public class XmlConceptCreator implements ConceptCreator {
     public static final String SOURCE_NAME = "sourcename";
 
 
-    private final static Logger log = LoggerFactory.getLogger(XmlConceptCreator.class);
+    private final static Logger log = LoggerFactory.getLogger(MeshXmlConceptCreator.class);
     public static Set<String> FORMATS = new HashSet<>(Arrays.asList("MESH_XML", "MESH_SUPPLEMENTARY_XML", "SIMPLE_XML"));
 
     @Override
     public Stream<ImportConcepts> createConcepts(HierarchicalConfiguration<ImmutableNode> importConfig) throws ConceptCreationException, FacetCreationException {
-        String confPath = slash(CONCEPTS, CREATOR, REQUEST);
+        String confPath = slash(CONCEPTS, CREATOR, CONFIGURATION);
         Tree conceptTree;
         String facetGroupName;
         Map<String, List<ConceptSourceMatcher>> conceptSourceMatchers = new HashMap<>();

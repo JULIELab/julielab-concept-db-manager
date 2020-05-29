@@ -6,7 +6,7 @@ import de.julielab.concepts.util.*;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.json.JSONException;
-import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.dbms.api.DatabaseManagementService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +21,7 @@ public class JavaClassFileDBExporter extends JavaMethodCallBase implements DataE
     private final static Logger log = LoggerFactory.getLogger(JavaClassFileDBExporter.class);
 
 
-    private GraphDatabaseService graphDb;
+    private DatabaseManagementService dbms;
     private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
     private final DataExporter exporter;
 
@@ -43,14 +43,14 @@ public class JavaClassFileDBExporter extends JavaMethodCallBase implements DataE
 
             @Override
             public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration) throws ConceptDatabaseConnectionException {
-                graphDb = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
+                dbms = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
             }
 
             @Override
             public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws DataExportException {
                 String outputFile = exportConfig.getString(slash(REQUEST, OUTPUT_FILE));
                 try {
-                    String result = callInstanceMethod(exportConfig.configurationAt(REQUEST), graphDb);
+                    String result = callInstanceMethod(exportConfig.configurationAt(REQUEST), dbms);
                     String decodedResponse = decode(result, exportConfig.configurationAt(slash(REQUEST, DECODING)));
                     String resourceHeader = getResourceHeader(connectionConfiguration) + result;
                     writeData(new File(outputFile), resourceHeader, decodedResponse);
