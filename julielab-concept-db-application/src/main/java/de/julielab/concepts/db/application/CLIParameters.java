@@ -13,6 +13,9 @@ public class CLIParameters {
     @Option(name = "-nv", forbids = "-v", aliases = {"--no-versioning"}, usage = "Supresses the database versioning that happens by default after importing data and executing operators. Useful when applying multiple configurations onto the same database. Eventually, a database should almost always get a version for documentation purposes.")
     public boolean noVersioning;
 
+    @Option(name = "-p", aliases = {"--preparation"}, handler = OptionalStringArrayOptionHandler.class, usage = "Performs preparative operations like concept creation. The names of preparatory operations can optionally be given as whitespace separated arguments. Only these operations will be called.", metaVar = "[preparatory operation names]")
+    public List<String> doPreparation;
+
     @Option(name = "-i", aliases = {"--import"}, handler = OptionalStringArrayOptionHandler.class, usage = "Creates and import concepts into the database. The names of concept creators can optionally be given as whitespace separated arguments. Only these creators will be called.", metaVar = "[concept creator names]")
     public List<String> doImport;
 

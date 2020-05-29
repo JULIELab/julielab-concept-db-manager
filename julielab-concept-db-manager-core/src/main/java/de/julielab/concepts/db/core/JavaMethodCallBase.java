@@ -1,5 +1,6 @@
 package de.julielab.concepts.db.core;
 
+import de.julielab.concepts.util.IncompatibleActionHandlerConnectionException;
 import de.julielab.concepts.util.MethodCallException;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
@@ -33,9 +34,11 @@ public abstract class JavaMethodCallBase extends FunctionCallBase {
      * @return The return value of the called method.
      * @throws MethodCallException If any part of the processing of calling the method fails.
      */
-    protected <T> T callInstanceMethod(HierarchicalConfiguration<ImmutableNode> parameterConfiguration, DatabaseManagementService dbms) throws MethodCallException {
+    protected <T> T callInstanceMethod(HierarchicalConfiguration<ImmutableNode> parameterConfiguration, DatabaseManagementService dbms) throws MethodCallException, IncompatibleActionHandlerConnectionException {
         String className = parameterConfiguration.getString(CLASS);
         String methodName = parameterConfiguration.getString(METHOD);
+        if (className == null || methodName == null)
+            throw new IncompatibleActionHandlerConnectionException("No class and/or no method name for a Java method call given. Skipping.");
         try {
             Map<String, Parameter> parsedParameters = parseParameters(parameterConfiguration.configurationAt(PARAMETERS));
             Object classInstance = Class.forName(className).getDeclaredConstructor(DatabaseManagementService.class).newInstance(dbms);

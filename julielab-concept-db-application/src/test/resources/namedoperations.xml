@@ -1,6 +1,6 @@
 <conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns="http://www.julielab.de/conceptdb"
-                 xsi:schemaLocation="http://www.julielab.de/conceptdb http://www.julielab.de/conceptdb/conceptdb-1.0.0.xsd
+                 xsi:schemaLocation="http://www.julielab.de/conceptdb conceptdb.xsd
                  http://www.julielab.de/conceptdb/operators/cypher http://www.julielab.de/conceptdb/operators/cypheroperator-1.0.0.xsd">
     <versioning>
         <version>1.0</version>
@@ -9,17 +9,17 @@
         <uri>src/test/resources/graphdb</uri>
     </connection>
     <operations>
-        <operation name="antherwall" xmlns="http://www.julielab.de/conceptdb/operators/cypher">
-            <operator>CypherOperator</operator>
-            <configuration>
-                <cypherquery>MATCH (c:CONCEPT) WHERE "http://purl.obolibrary.org/obo/PO_0000002" IN c.sourceIds SET c.myprop="NEWVAL" RETURN c.myprop</cypherquery>
-            </configuration>
+        <operation name="antherwall">
+            <request>
+                <cypherquery>MATCH (c:CONCEPT) WHERE "http://purl.obolibrary.org/obo/PO_0000002" IN c.sourceIds SET
+                    c.myprop="NEWVAL" RETURN c.myprop
+                </cypherquery>
+            </request>
         </operation>
-        <operation  name="NOT_CALLED" xmlns="http://www.julielab.de/conceptdb/operators/cypher">
-            <operator>CypherOperator</operator>
-            <configuration>
+        <operation name="NOT_CALLED">
+            <request>
                 <cypherquery>totally invalid query which doesn't matter because this isn't called anyway</cypherquery>
-            </configuration>
+            </request>
         </operation>
     </operations>
 </conceptdatabase>

@@ -74,11 +74,14 @@ public class ConceptDatabaseApplication {
         HierarchicalConfiguration<ImmutableNode> connectionConfiguration = configuration
                 .configurationAt(CONNECTION);
 
+        if (parameters.doPreparation != null || parameters.doAll != null) {
+            doOperations(parameters, configuration, connectionConfiguration, PREPARATION);
+        }
         if (parameters.doImport != null || parameters.doAll != null) {
             doImports(parameters, configuration, connectionConfiguration);
         }
         if (parameters.doOperation != null || parameters.doAll != null) {
-            doOperations(parameters, configuration, connectionConfiguration);
+            doOperations(parameters, configuration, connectionConfiguration, OPERATIONS);
         }
         if (!parameters.noVersioning && (parameters.doVersioning || parameters.doAll != null)) {
             HierarchicalConfiguration<ImmutableNode> versioningConfig = configuration.configurationAt(VERSIONING);
@@ -117,7 +120,7 @@ public class ConceptDatabaseApplication {
         }
     }
 
-    private static void doOperations(CLIParameters parameters, XMLConfiguration configuration, HierarchicalConfiguration<ImmutableNode> connectionConfiguration) throws DatabaseOperationException {
+    private static void doOperations(CLIParameters parameters, XMLConfiguration configuration, HierarchicalConfiguration<ImmutableNode> connectionConfiguration, String baseElementName) throws DatabaseOperationException {
         DatabaseOperationService operationService = DatabaseOperationService.getInstance(connectionConfiguration);
         List<HierarchicalConfiguration<ImmutableNode>> applicableOperations = new ArrayList<>();
 
@@ -126,7 +129,7 @@ public class ConceptDatabaseApplication {
         if (!isUnspecified(selectedSteps)) {
             for (String importerName : selectedSteps) {
                 try {
-                    HierarchicalConfiguration<ImmutableNode> operationConfig = configuration.configurationAt(slash(OPERATIONS, OPERATION + "[@name='" + importerName + "']"));
+                    HierarchicalConfiguration<ImmutableNode> operationConfig = configuration.configurationAt(slash(baseElementName, OPERATION + "[@name='" + importerName + "']"));
                     applicableOperations.add(operationConfig);
                 } catch (ConfigurationRuntimeException e) {
                     // When doAll is active, we do not print the warning because it would activate all the time
@@ -139,7 +142,7 @@ public class ConceptDatabaseApplication {
             }
         } else {
             applicableOperations = configuration
-                    .configurationsAt(slash(OPERATIONS, OPERATION));
+                    .configurationsAt(slash(baseElementName, OPERATION));
         }
         for (HierarchicalConfiguration<ImmutableNode> operationConfig : applicableOperations) {
             operationService.operate(operationConfig);

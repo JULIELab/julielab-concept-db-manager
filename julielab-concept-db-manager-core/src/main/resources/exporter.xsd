@@ -15,6 +15,13 @@
                 <xs:element ref="outputfile"/>
                 <xs:element ref="decoding" minOccurs="0"/>
             </xs:sequence>
+            <xs:attribute name="name" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        Optional. Names this export for selective execution with concept DB application.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
         </xs:complexType>
     </xs:element>
 

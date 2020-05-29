@@ -47,7 +47,7 @@ public class JavaClassFileDBExporter extends JavaMethodCallBase implements DataE
             }
 
             @Override
-            public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws DataExportException {
+            public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws DataExportException, IncompatibleActionHandlerConnectionException {
                 String outputFile = exportConfig.getString(slash(REQUEST, OUTPUT_FILE));
                 try {
                     String result = callInstanceMethod(exportConfig.configurationAt(REQUEST), dbms);

@@ -11,6 +11,13 @@
             <xs:sequence>
                 <xs:element ref="request" minOccurs="0" maxOccurs="1"/>
             </xs:sequence>
+            <xs:attribute name="name" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        Optional. Names this operation for selective execution with concept DB application.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
         </xs:complexType>
     </xs:element>
 </xs:schema>

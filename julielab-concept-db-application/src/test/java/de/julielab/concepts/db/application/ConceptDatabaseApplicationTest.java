@@ -59,12 +59,12 @@ public class ConceptDatabaseApplicationTest {
 
 	@Test
 	public void testConceptImport() throws ConceptDatabaseConnectionException, DataExportException, VersioningException, CmdLineException {
-		ConceptDatabaseApplication.main(new String[] { "--import", "-c", SIMPLEIMPORT, "-nv"});
+		ConceptDatabaseApplication.main(new String[] { "--preparation", "--import", "-c", SIMPLEIMPORT, "-nv"});
 
 		// Check if the Plant Ontology has been imported as expected.
 		FileConnectionService databaseService = FileConnectionService.getInstance();
 		GraphDatabaseService graphdb = databaseService
-				.getDatabaseManagementService(configuration.configurationAt(CONNECTION));
+				.getDefaultGraphDatabase(configuration.configurationAt(CONNECTION));
 		try (Transaction tx = graphdb.beginTx()) {
 			List<Node> facets = tx.findNodes(FacetManager.FacetLabel.FACET).stream().collect(Collectors.toList());
 			assertEquals(1, facets.size());
@@ -80,7 +80,7 @@ public class ConceptDatabaseApplicationTest {
 	    // The configuration sets the property "myprop" on the concept "anther wall".
 
         // First, clear the property we add as a test.
-        GraphDatabaseService graphDb = FileConnectionService.getInstance().getDatabaseManagementService(configuration.configurationAt(CONNECTION));
+        GraphDatabaseService graphDb = FileConnectionService.getInstance().getDefaultGraphDatabase(configuration.configurationAt(CONNECTION));
         try (Transaction tx = graphDb.beginTx()) {
             tx.execute("MATCH (c:CONCEPT) REMOVE c.myprop");
             tx.commit();
@@ -101,7 +101,7 @@ public class ConceptDatabaseApplicationTest {
         // The same as testNamedOperations but with the --all option
 
         // First, clear the property we add as a test.
-        GraphDatabaseService graphDb = FileConnectionService.getInstance().getDatabaseManagementService(configuration.configurationAt(CONNECTION));
+        GraphDatabaseService graphDb = FileConnectionService.getInstance().getDefaultGraphDatabase(configuration.configurationAt(CONNECTION));
         try (Transaction tx = graphDb.beginTx()) {
             tx.execute("MATCH (c:CONCEPT) REMOVE c.myprop");
             tx.commit();
