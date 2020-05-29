@@ -43,7 +43,7 @@ public class JavaClassFileDBExporter extends JavaMethodCallBase implements DataE
 
             @Override
             public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration) throws ConceptDatabaseConnectionException {
-                dbms = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
+                dbms = FileConnectionService.getInstance().getDatabaseManagementService(connectionConfiguration);
             }
 
             @Override

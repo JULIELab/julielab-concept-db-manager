@@ -73,7 +73,7 @@ public class FileDatabaseConceptInserter implements ConceptInserter {
     public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
             throws ConceptDatabaseConnectionException {
         this.connectionConfiguration = connectionConfiguration;
-        dbms = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
+        dbms = FileConnectionService.getInstance().getDatabaseManagementService(connectionConfiguration);
         if (dbms == null)
             throw new ConceptDatabaseConnectionException("Could not create a file database for connection "
                     + ConfigurationUtils.toString(connectionConfiguration));

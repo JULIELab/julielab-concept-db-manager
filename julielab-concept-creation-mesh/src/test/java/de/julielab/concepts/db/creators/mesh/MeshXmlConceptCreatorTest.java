@@ -66,7 +66,7 @@ public class MeshXmlConceptCreatorTest {
         }
 
         FileConnectionService fileConnectionService = FileConnectionService.getInstance();
-        DatabaseManagementService dbms = fileConnectionService.getDatabase(connectionConfiguration);
+        DatabaseManagementService dbms = fileConnectionService.getDatabaseManagementService(connectionConfiguration);
         GraphDatabaseService graphDb = dbms.database(DEFAULT_DATABASE_NAME);
         // Tests for the Anatomy concepts in the test data
         try (Transaction tx = graphDb.beginTx()) {
@@ -126,7 +126,7 @@ public class MeshXmlConceptCreatorTest {
         }
 
         FileConnectionService fileConnectionService = FileConnectionService.getInstance();
-        DatabaseManagementService dbms = fileConnectionService.getDatabase(connectionConfiguration);
+        DatabaseManagementService dbms = fileConnectionService.getDatabaseManagementService(connectionConfiguration);
         try (Transaction tx = dbms.database(DEFAULT_DATABASE_NAME).beginTx()) {
             Node node = tx.findNode(CONCEPT, PROP_ORG_ID, "D007801");
             assertNotNull(node);
@@ -151,7 +151,7 @@ public class MeshXmlConceptCreatorTest {
         }
 
         FileConnectionService fileConnectionService = FileConnectionService.getInstance();
-        DatabaseManagementService dbms = fileConnectionService.getDatabase(connectionConfiguration);
+        DatabaseManagementService dbms = fileConnectionService.getDatabaseManagementService(connectionConfiguration);
         // Tests for the Anatomy concepts in the test data
         try (Transaction tx = dbms.database(DEFAULT_DATABASE_NAME).beginTx()) {
             // The snippet contains - amongst others - the concept for "body parts" and some of its subclasses

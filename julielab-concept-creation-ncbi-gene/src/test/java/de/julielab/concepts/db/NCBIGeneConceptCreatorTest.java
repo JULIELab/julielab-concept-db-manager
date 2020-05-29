@@ -2,6 +2,7 @@ package de.julielab.concepts.db;
 
 import de.julielab.concepts.db.core.services.ConceptCreationService;
 import de.julielab.concepts.db.core.services.ConceptInsertionService;
+import de.julielab.concepts.db.core.services.DatabaseOperationService;
 import de.julielab.concepts.db.core.services.FileConnectionService;
 import de.julielab.concepts.db.creators.NCBIGeneConceptCreator;
 import de.julielab.java.utilities.ConfigurationUtilities;
@@ -16,6 +17,7 @@ import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.apache.commons.io.FileUtils;
+import org.neo4j.dbms.api.DatabaseManagementService;
 import org.neo4j.graphdb.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +38,7 @@ import static de.julielab.neo4j.plugins.auxiliaries.semedico.NodeUtilities.*;
 import static de.julielab.neo4j.plugins.concepts.ConceptLabel.AGGREGATE;
 import static de.julielab.neo4j.plugins.datarepresentation.constants.ConceptConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.neo4j.configuration.GraphDatabaseSettings.DEFAULT_DATABASE_NAME;
 import static org.testng.AssertJUnit.*;
 import static org.testng.internal.junit.ArrayAsserts.assertArrayEquals;
 
@@ -138,16 +141,20 @@ public class NCBIGeneConceptCreatorTest {
         ConceptCreationService conceptCreationService = ConceptCreationService.getInstance();
         HierarchicalConfiguration<ImmutableNode> connectionConfiguration = configuration
                 .configurationAt(CONNECTION);
+
+        // Create the indices
+        DatabaseOperationService operationService = DatabaseOperationService.getInstance(connectionConfiguration);
+        HierarchicalConfiguration<ImmutableNode> prepOperationConfig = configuration.configurationAt(slash(PREPARATION, OPERATION));
+        operationService.operate(prepOperationConfig);
+
         ConceptInsertionService insertionService = ConceptInsertionService.getInstance(connectionConfiguration);
-
-
         HierarchicalConfiguration<ImmutableNode> importConfiguration = configuration.configurationAt(slash(IMPORTS, IMPORT));
         Stream<ImportConcepts> concepts = conceptCreationService.createConcepts(importConfiguration);
         insertionService.insertConcepts(importConfiguration, concepts);
 
-        GraphDatabaseService graphdb = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
+        DatabaseManagementService dbms = FileConnectionService.getInstance().getDatabaseManagementService(connectionConfiguration);
         Set<String> expectedGeneIds = new HashSet<>(Arrays.asList("11477", "172978", "24205"));
-        try (Transaction tx = graphdb.beginTx()) {
+        try (Transaction tx = dbms.database(DEFAULT_DATABASE_NAME).beginTx()) {
             for (Node n : tx.getAllNodes()) {
                 if (n.hasProperty(PROP_ORG_ID) && !n.hasLabel(AGGREGATE)) {
                     expectedGeneIds.remove(n.getProperty(PROP_ORG_ID));
@@ -181,14 +188,19 @@ public class NCBIGeneConceptCreatorTest {
         ConceptCreationService conceptCreationService = ConceptCreationService.getInstance();
         HierarchicalConfiguration<ImmutableNode> connectionConfiguration = configuration
                 .configurationAt(CONNECTION);
+
+        // Create the indices
+        DatabaseOperationService operationService = DatabaseOperationService.getInstance(connectionConfiguration);
+        HierarchicalConfiguration<ImmutableNode> prepOperationConfig = configuration.configurationAt(slash(PREPARATION, OPERATION));
+        operationService.operate(prepOperationConfig);
+
+
         ConceptInsertionService insertionService = ConceptInsertionService.getInstance(connectionConfiguration);
-
-
         HierarchicalConfiguration<ImmutableNode> importConfiguration = configuration.configurationAt(slash(IMPORTS, IMPORT));
         Stream<ImportConcepts> concepts = conceptCreationService.createConcepts(importConfiguration);
         insertionService.insertConcepts(importConfiguration, concepts);
 
-        GraphDatabaseService graphdb = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
+        GraphDatabaseService graphdb = FileConnectionService.getInstance().getDefaultGraphDatabase(connectionConfiguration);
         try (Transaction tx = graphdb.beginTx()) {
             final List<Node> geneConcepts = tx.findNodes(ConceptLabel.CONCEPT).stream().filter(c -> !c.hasLabel(ConceptLabel.AGGREGATE) && c.hasProperty(ConceptConstants.PROP_ORG_ID) && ((String) c.getProperty(PROP_ORG_ID)).matches("g[0-9][0-9]?")).collect(Collectors.toList());
             for (Node n : geneConcepts) {
@@ -220,7 +232,7 @@ public class NCBIGeneConceptCreatorTest {
                     if (!orthologAggregate.getProperty(PROP_ORG_ID).equals("g11")) {
                         assertThat(aggregatingNodes.size()).isEqualTo(1);
                         final Node aggregateOfOrthologAggregate = aggregatingNodes.stream().findAny().get();
-                        final String aggregateSourceId = ((String[]) aggregateOfOrthologAggregate.getProperty(PROP_SRC_IDS))[0];
+                        final String aggregateSourceId = (String) aggregateOfOrthologAggregate.getProperty(PROP_SRC_IDS);
                         assertThat(aggregateSourceId).overridingErrorMessage("Expecting the node with properties <%s> to be element of the aggregate <%s> but was <%s> instead", PropertyUtilities.getNodePropertiesAsString(orthologAggregate), NCBIGeneConceptCreator.TOP_ORTHOLOGY_PREFIX + 0, aggregateSourceId).isEqualTo(NCBIGeneConceptCreator.TOP_ORTHOLOGY_PREFIX + 0);
                     } else {
                         // this is orthology cluster g11, there shouldn't be any governing aggregate

@@ -45,7 +45,7 @@ public class FileDatabaseMappingInserter extends JavaMethodCallBase implements M
     @Override
     public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
             throws ConceptDatabaseConnectionException {
-        dbms = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
+        dbms = FileConnectionService.getInstance().getDatabaseManagementService(connectionConfiguration);
         if (dbms == null)
             throw new ConceptDatabaseConnectionException("Could not create a file database for connection "
                     + ConfigurationUtils.toString(connectionConfiguration));

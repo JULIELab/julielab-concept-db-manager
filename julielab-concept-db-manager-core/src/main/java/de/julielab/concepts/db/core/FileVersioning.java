@@ -61,7 +61,7 @@ public class FileVersioning implements Versioning {
 	@Override
 	public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
 			throws ConceptDatabaseConnectionException {
-		dmbs = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
+		dmbs = FileConnectionService.getInstance().getDatabaseManagementService(connectionConfiguration);
 		if (dmbs == null)
 			throw new ConceptDatabaseConnectionException("Could not create a file database for connection "
 					+ ConfigurationUtils.toString(connectionConfiguration));

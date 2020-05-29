@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
-<conceptdatabase xmlns="http://www.julielab.de/conceptdb"
-                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xsi:schemaLocation="http://www.julielab.de/conceptdb http://www.julielab.de/conceptdb-1.0.0.xsd
+<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.julielab.de/conceptdb"
+                 xsi:schemaLocation="http://www.julielab.de/conceptdb conceptdb.xsd
                  http://www.julielab.de/conceptdb/concepts/ncbigene http://www.julielab.de/conceptdb/concepts/ncbigeneconceptcreator-1.0.0.xsd
                  http://www.julielab.de/conceptdb/facets/default http://www.julielab.de/conceptdb/facets/defaultfacetcreator-1.0.0.xsd">
     <versioning>
@@ -10,6 +9,17 @@
     <connection>
         <uri>src/test/resources/graph.db</uri>
     </connection>
+    <preparation>
+        <operation>
+            <request>
+                <class>de.julielab.neo4j.plugins.Indexes</class>
+                <method>createIndexes</method>
+                <parameters>
+                    <parameter name="db_name" javatype="java.lang.String">neo4j</parameter>
+                </parameters>
+            </request>
+        </operation>
+    </preparation>
     <imports>
         <import>
             <concepts>

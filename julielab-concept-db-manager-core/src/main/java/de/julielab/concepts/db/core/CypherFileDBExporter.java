@@ -37,7 +37,7 @@ public class CypherFileDBExporter extends DataExporterImpl {
     @Override
     public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration) throws ConceptDatabaseConnectionException {
         this.connectionConfiguration = connectionConfiguration;
-        dbms = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
+        dbms = FileConnectionService.getInstance().getDatabaseManagementService(connectionConfiguration);
     }
 
     @Override
