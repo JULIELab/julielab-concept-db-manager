@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xmlns="http://www.julielab.de/conceptdb"
-                 xsi:schemaLocation="http://www.julielab.de/conceptdb http://www.julielab.de/conceptdb/conceptdb-1.0.0.xsd
-					http://www.julielab.de/conceptdb/exporters/cypher http://www.julielab.de/conceptdb/exporters/cypherexporter-1.0.0.xsd">
+<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.julielab.de/conceptdb"
+                 xsi:schemaLocation="http://www.julielab.de/conceptdb conceptdb.xsd">
     <versioning>
         <version>1.0-test</version>
     </versioning>
@@ -13,12 +10,11 @@
         <password></password>
     </connection>
     <exports>
-        <export xmlns="http://www.julielab.de/conceptdb/exporters/cypher">
-            <exporter>CypherExporter</exporter>
-            <configuration>
+        <export>
+            <request>
                 <cypherquery>MATCH (c:CONCEPT) return c.id,c.preferredName</cypherquery>
-                <outputfile>src/test/resources/output/boltexport.txt</outputfile>
-            </configuration>
+            </request>
+            <outputfile>src/test/resources/output/boltexport.txt</outputfile>
         </export>
     </exports>
 </conceptdatabase>

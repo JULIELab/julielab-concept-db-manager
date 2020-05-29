@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import de.julielab.concepts.db.core.services.HttpConnectionService;
 import de.julielab.concepts.db.core.services.NetworkConnectionCredentials;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
+import de.julielab.concepts.util.IncompatibleActionHandlerConnectionException;
 import de.julielab.concepts.util.MethodCallException;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
@@ -32,16 +33,16 @@ public abstract class RestCallBase extends FunctionCallBase {
         super(log);
     }
 
-    public String callNeo4jServerPlugin(HierarchicalConfiguration<ImmutableNode> connectionConfig, HierarchicalConfiguration<ImmutableNode> methodCallConfig, String defaultHttpMethod)
-            throws ConceptDatabaseConnectionException, MethodCallException {
+    public String callNeo4jRestEndpoint(HierarchicalConfiguration<ImmutableNode> connectionConfig, HierarchicalConfiguration<ImmutableNode> methodCallConfig, String defaultHttpMethod)
+            throws ConceptDatabaseConnectionException, MethodCallException, IncompatibleActionHandlerConnectionException {
         try {
             java.net.URI baseUri = java.net.URI.create(requirePresent(NetworkConnectionCredentials.CONFKEY_URI, key -> connectionConfig.getString(key)));
-            String endpoint = requirePresent(slash(REST, REST_ENDPOINT), key -> methodCallConfig.getString(key));
-            String httpMethod = methodCallConfig.getString(HTTP_METHOD, defaultHttpMethod);
+            String endpoint = requirePresent(slash(REQUEST, REST, REST_ENDPOINT), key -> methodCallConfig.getString(key));
+            String httpMethod = methodCallConfig.getString(slash(REQUEST, REST, HTTP_METHOD), defaultHttpMethod);
             Map<String, Object> parameters = null;
-            if (methodCallConfig.getKeys(slash(CONFIGURATION, PARAMETERS)).hasNext()) {
+            if (methodCallConfig.getKeys(slash(REQUEST, PARAMETERS)).hasNext()) {
                 try {
-                    HierarchicalConfiguration<ImmutableNode> parameterConfiguration = methodCallConfig.configurationAt(slash(CONFIGURATION, PARAMETERS));
+                    HierarchicalConfiguration<ImmutableNode> parameterConfiguration = methodCallConfig.configurationAt(slash(REQUEST, PARAMETERS));
                     Map<String, Parameter> parameterMap;
                     parameterMap = parseParameters(parameterConfiguration);
                     parameters = parameterMap.values().stream()
@@ -77,7 +78,7 @@ public abstract class RestCallBase extends FunctionCallBase {
                 throw e;
             }
         } catch (ConfigurationException e) {
-            throw new ConceptDatabaseConnectionException(e);
+            throw new IncompatibleActionHandlerConnectionException(e);
         } catch (URISyntaxException e) {
             log.error("Could not construct correct request URI.", e);
             throw new IllegalArgumentException(e);
@@ -87,9 +88,9 @@ public abstract class RestCallBase extends FunctionCallBase {
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
         template.addProperty(slash(basePath, REST_ENDPOINT), "");
-        template.addProperty(slash(basePath, CONFIGURATION, PARAMETERS, "parametername"), "value");
-        template.addProperty(ws(slash(basePath, CONFIGURATION, PARAMETERS, "parametername"), "@parametername"), "optional: parameter name");
-        template.addProperty(slash(basePath, CONFIGURATION, PARAMETERS, "arrayparameter", "arrayitem"), Arrays.asList("value1", "value2"));
-        template.addProperty(ws(slash(basePath, CONFIGURATION, PARAMETERS, "arrayparameter"), "@tojson"), "optional: should the parameter be extra JSON encoded and sent as a simple string");
+        template.addProperty(slash(basePath, REQUEST, PARAMETERS, "parametername"), "value");
+        template.addProperty(ws(slash(basePath, REQUEST, PARAMETERS, "parametername"), "@parametername"), "optional: parameter name");
+        template.addProperty(slash(basePath, REQUEST, PARAMETERS, "arrayparameter", "arrayitem"), Arrays.asList("value1", "value2"));
+        template.addProperty(ws(slash(basePath, REQUEST, PARAMETERS, "arrayparameter"), "@tojson"), "optional: should the parameter be extra JSON encoded and sent as a simple string");
     }
 }

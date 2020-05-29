@@ -3,6 +3,7 @@ package de.julielab.concepts.db.core.services;
 import de.julielab.concepts.db.core.spi.DataExporter;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DataExportException;
+import de.julielab.concepts.util.IncompatibleActionHandlerConnectionException;
 import de.julielab.jssf.commons.spi.ParameterExposing;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
@@ -56,8 +57,11 @@ public class DataExportService implements ParameterExposing {
             } catch (ConceptDatabaseConnectionException e) {
                 log.trace("The exporter {} does not support the given connection. Continue search for a compatible exporter.", exporter.getClass().getCanonicalName());
                 continue;
+            } catch (IncompatibleActionHandlerConnectionException e) {
+                log.trace("The exporter {} does not support the given export configuration. Continue search for a compatible exporter.", exporter.getClass().getCanonicalName());
+                continue;
             }
-            log.debug("Database export {} was run for export configuration {} ", exporter.getClass().getCanonicalName(), ConfigurationUtils.toString(exportConfig));
+            log.debug("Database exporter {} was run for export configuration {} ", exporter.getClass().getCanonicalName(), ConfigurationUtils.toString(exportConfig));
         }
         if (!exporterExecuted)
             throw new DataExportException("No available data exporter was compatible with export configuration " + ConfigurationUtils.toString(exportConfig) + " and connection configuration " + ConfigurationUtils.toString(connectionConfiguration));

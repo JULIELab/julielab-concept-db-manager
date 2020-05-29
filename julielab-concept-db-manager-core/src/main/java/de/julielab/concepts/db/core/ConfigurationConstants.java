@@ -22,7 +22,7 @@ public class ConfigurationConstants {
     public static final String FACET_GROUP = "facetgroup";
     public static final String CREATOR = "creator";
     public static final String NAME = "name";
-    public static final String CONFIGURATION = "configuration";
+    public static final String REQUEST = "request";
     public static final String PARAMETERS = "parameters";
     public static final String PARAMETER = "parameter";
     public static final String REST_ENDPOINT = "restendpoint";
@@ -41,7 +41,7 @@ public class ConfigurationConstants {
     public static final String VERSION = "version";
     public static final String JAVA_TYPE = "javatype";
     public static final String ELEMENT_TYPE = "elementtype";
-    public static final String TO_JSON = "tojson";
+    public static final String TO_ESCAPED_JSON = "toescapedjson";
 
     private ConfigurationConstants() {
     }

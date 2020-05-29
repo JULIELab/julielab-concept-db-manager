@@ -10,7 +10,7 @@
     </connection>
     <exports>
         <export>
-            <configuration>
+            <request>
                 <rest>
                     <restendpoint>
                         /db/data/ext/Export/graphdb/hypernyms
@@ -21,12 +21,12 @@
                     <parameter name="conceptlabel" javatype="java.lang.String">
                         ID_MAP_NCBI_GENES
                     </parameter>
-                    <parameter name="facetlabels" tojson="true" elementtype="java.lang.String">
+                    <parameter name="facetlabels" toescapedjson="true" elementtype="java.lang.String">
                         <arrayitem>FACET</arrayitem>
                         <arrayitem>BIO_PORTAL</arrayitem>
                     </parameter>
                 </parameters>
-            </configuration>
+            </request>
         </export>
     </exports>
 </conceptdatabase>

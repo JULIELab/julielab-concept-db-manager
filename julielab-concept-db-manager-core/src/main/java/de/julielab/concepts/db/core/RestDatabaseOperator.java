@@ -4,6 +4,7 @@ import de.julielab.concepts.db.core.services.HttpConnectionService;
 import de.julielab.concepts.db.core.spi.DatabaseOperator;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DatabaseOperationException;
+import de.julielab.concepts.util.IncompatibleActionHandlerConnectionException;
 import de.julielab.concepts.util.MethodCallException;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
@@ -21,9 +22,9 @@ private final static Logger log = LoggerFactory.getLogger(RestDatabaseOperator.c
     }
 
     @Override
-    public void operate(HierarchicalConfiguration<ImmutableNode> operationConfiguration) throws DatabaseOperationException {
+    public void operate(HierarchicalConfiguration<ImmutableNode> operationConfiguration) throws DatabaseOperationException, IncompatibleActionHandlerConnectionException {
         try {
-            String response = callNeo4jServerPlugin(connectionConfiguration, operationConfiguration, "PUT");
+            String response = callNeo4jRestEndpoint(connectionConfiguration, operationConfiguration, "PUT");
             log.info("Response from Neo4j: {}", response);
         } catch (ConceptDatabaseConnectionException | MethodCallException e) {
             throw new DatabaseOperationException(e);

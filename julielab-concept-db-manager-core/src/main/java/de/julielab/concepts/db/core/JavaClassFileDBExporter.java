@@ -2,10 +2,7 @@ package de.julielab.concepts.db.core;
 
 import de.julielab.concepts.db.core.services.FileConnectionService;
 import de.julielab.concepts.db.core.spi.DataExporter;
-import de.julielab.concepts.util.ConceptDatabaseConnectionException;
-import de.julielab.concepts.util.DataExportException;
-import de.julielab.concepts.util.MethodCallException;
-import de.julielab.concepts.util.VersionRetrievalException;
+import de.julielab.concepts.util.*;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.json.JSONException;
@@ -51,15 +48,13 @@ public class JavaClassFileDBExporter extends JavaMethodCallBase implements DataE
 
             @Override
             public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws DataExportException {
-                String outputFile = exportConfig.getString(slash(CONFIGURATION, OUTPUT_FILE));
+                String outputFile = exportConfig.getString(slash(REQUEST, OUTPUT_FILE));
                 try {
-                    String result = callInstanceMethod(exportConfig.configurationAt(CONFIGURATION), graphDb);
-                    String decodedResponse = decode(result, exportConfig.configurationAt(slash(CONFIGURATION, DECODING)));
+                    String result = callInstanceMethod(exportConfig.configurationAt(REQUEST), graphDb);
+                    String decodedResponse = decode(result, exportConfig.configurationAt(slash(REQUEST, DECODING)));
                     String resourceHeader = getResourceHeader(connectionConfiguration) + result;
                     writeData(new File(outputFile), resourceHeader, decodedResponse);
-                } catch (MethodCallException | VersionRetrievalException | IOException e) {
-                    throw new DataExportException(e);
-                } catch (JSONException e) {
+                } catch (MethodCallException | VersionRetrievalException | IOException | JSONException e) {
                     throw new DataExportException(e);
                 }
             }
@@ -68,7 +63,7 @@ public class JavaClassFileDBExporter extends JavaMethodCallBase implements DataE
 
     @Override
     public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig)
-            throws DataExportException {
+            throws DataExportException, IncompatibleActionHandlerConnectionException {
         try {
             exporter.exportData(exportConfig);
         } catch (ConceptDatabaseConnectionException e) {
@@ -93,9 +88,9 @@ public class JavaClassFileDBExporter extends JavaMethodCallBase implements DataE
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
         super.exposeParameters(basePath, template);
-        template.addProperty(slash(basePath, CONFIGURATION, DECODING, JSON2BYTEARRAY), "false");
-        template.addProperty(slash(basePath, CONFIGURATION, DECODING, BASE64), "true");
-        template.addProperty(slash(basePath, CONFIGURATION, DECODING, GZIP), "true");
-        template.addProperty(slash(basePath, CONFIGURATION, OUTPUT_FILE), "");
+        template.addProperty(slash(basePath, REQUEST, DECODING, JSON2BYTEARRAY), "false");
+        template.addProperty(slash(basePath, REQUEST, DECODING, BASE64), "true");
+        template.addProperty(slash(basePath, REQUEST, DECODING, GZIP), "true");
+        template.addProperty(slash(basePath, REQUEST, OUTPUT_FILE), "");
     }
 }

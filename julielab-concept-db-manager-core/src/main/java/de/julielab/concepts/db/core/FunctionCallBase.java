@@ -19,9 +19,9 @@ import static de.julielab.java.utilities.ConfigurationUtilities.slash;
  */
 public abstract class FunctionCallBase implements ParameterExposing {
 
-    public static final String CONFKEY_PARAMETERS = slash(CONFIGURATION, PARAMETERS);
-    public static final String CONFKEY_CLASS_NAME = slash(CONFIGURATION, CLASS);
-    public static final String CONFKEY_METHOD_NAME = slash(CONFIGURATION, METHOD);
+    public static final String CONFKEY_PARAMETERS = slash(REQUEST, PARAMETERS);
+    public static final String CONFKEY_CLASS_NAME = slash(REQUEST, CLASS);
+    public static final String CONFKEY_METHOD_NAME = slash(REQUEST, METHOD);
     protected Logger log;
 
     public FunctionCallBase(Logger log) {
@@ -40,7 +40,7 @@ public abstract class FunctionCallBase implements ParameterExposing {
                 if (name == null)
                     name = parameterNode.getNodeName();
                 String type = (String) attributes.get(JAVA_TYPE);
-                Boolean tojson = Boolean.parseBoolean(Optional.ofNullable((String) attributes.get(TO_JSON)).orElse("false"));
+                Boolean tojson = Boolean.parseBoolean(Optional.ofNullable((String) attributes.get(TO_ESCAPED_JSON)).orElse("false"));
                 String elementtype = (String) attributes.get(ELEMENT_TYPE);
                 boolean islist = !parameterNode.getChildren().isEmpty();
                 // Will be null for array-valued parameters

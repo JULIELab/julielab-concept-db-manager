@@ -19,10 +19,10 @@ public class ConfigTest {
         XMLConfiguration config = ConfigurationUtilities.loadXmlConfiguration(new File("src/test/resources/functioncalltestconfig.xml"));
         config.setExpressionEngine(new XPathExpressionEngine());
         assertThat(config).extracting(
-                c -> c.getString(slash(EXPORTS, EXPORT, CONFIGURATION, REST, REST_ENDPOINT)),
-                c -> c.getString(slash(EXPORTS, EXPORT, CONFIGURATION, PARAMETERS, elementEqPred(PARAMETER, "name", "label"))),
-                c -> c.getString(slash(EXPORTS, EXPORT, CONFIGURATION, PARAMETERS, elementEqPred(PARAMETER, "name", "labels"), "arrayitem[1]")),
-                c -> c.getString(slash(EXPORTS, EXPORT, CONFIGURATION, PARAMETERS, elementEqPred(PARAMETER, "name", "labels"), "arrayitem[2]")))
+                c -> c.getString(slash(EXPORTS, EXPORT, REQUEST, REST, REST_ENDPOINT)),
+                c -> c.getString(slash(EXPORTS, EXPORT, REQUEST, PARAMETERS, elementEqPred(PARAMETER, "name", "label"))),
+                c -> c.getString(slash(EXPORTS, EXPORT, REQUEST, PARAMETERS, elementEqPred(PARAMETER, "name", "labels"), "arrayitem[1]")),
+                c -> c.getString(slash(EXPORTS, EXPORT, REQUEST, PARAMETERS, elementEqPred(PARAMETER, "name", "labels"), "arrayitem[2]")))
                 .contains("/db/data/ext/Export/graphdb/hypernyms", "ID_MAP_NCBI_GENES");
     }
 }

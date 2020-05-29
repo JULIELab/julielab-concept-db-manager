@@ -31,9 +31,9 @@ public class CypherBoltOperator implements DatabaseOperator {
     private Driver driver;
 
     @Override
-    public void operate(HierarchicalConfiguration<ImmutableNode> exportConfig) throws DatabaseOperationException {
+    public void operate(HierarchicalConfiguration<ImmutableNode> operationConfiguration) throws DatabaseOperationException {
         try {
-            String query = ConfigurationUtilities.requirePresent(slash(CONFIGURATION, CYPHER_QUERY), exportConfig::getString);
+            String query = ConfigurationUtilities.requirePresent(slash(REQUEST, CYPHER_QUERY), operationConfiguration::getString);
 
             log.info("Sending Cypher statement {} to Neo4j", query);
             try (Session session = driver.session(); Transaction tx = session.beginTransaction()) {
@@ -78,6 +78,6 @@ public class CypherBoltOperator implements DatabaseOperator {
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
         template.addProperty(slash(basePath, OPERATOR), getName());
-        template.addProperty(slash(basePath, CONFIGURATION, CYPHER_QUERY), "");
+        template.addProperty(slash(basePath, REQUEST, CYPHER_QUERY), "");
     }
 }

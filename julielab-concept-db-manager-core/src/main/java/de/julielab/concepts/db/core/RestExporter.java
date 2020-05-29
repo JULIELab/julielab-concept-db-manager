@@ -2,10 +2,7 @@ package de.julielab.concepts.db.core;
 
 import de.julielab.concepts.db.core.services.HttpConnectionService;
 import de.julielab.concepts.db.core.spi.DataExporter;
-import de.julielab.concepts.util.ConceptDatabaseConnectionException;
-import de.julielab.concepts.util.DataExportException;
-import de.julielab.concepts.util.MethodCallException;
-import de.julielab.concepts.util.VersionRetrievalException;
+import de.julielab.concepts.util.*;
 import de.julielab.java.utilities.ConfigurationUtilities;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
@@ -49,27 +46,25 @@ public class RestExporter extends RestCallBase implements DataExporter  {
             }
 
             @Override
-            public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws ConceptDatabaseConnectionException, DataExportException {
+            public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws ConceptDatabaseConnectionException, DataExportException, IncompatibleActionHandlerConnectionException {
                 String response = null;
                 try {
-                    String outputPath = ConfigurationUtilities.requirePresent(slash(CONFIGURATION, OUTPUT_FILE), exportConfig::getString);
+                    String outputPath = ConfigurationUtilities.requirePresent(slash(OUTPUT_FILE), exportConfig::getString);
                     File outputFile = new File(outputPath);
-                    response = callNeo4jServerPlugin(connectionConfiguration, exportConfig, "GET");
+                    response = callNeo4jRestEndpoint(connectionConfiguration, exportConfig, "GET");
                     log.info("Writing file {}", outputFile);
-                    String decodedResponse = decode(response, exportConfig.configurationAt(slash(CONFIGURATION, DECODING)));
+                    String decodedResponse = decode(response, exportConfig.configurationAt(slash(DECODING)));
                     writeData(outputFile, getResourceHeader(connectionConfiguration),decodedResponse);
                     log.info("Done.");
                 }  catch (IOException e) {
                     throw new DataExportException("Decoding the retrieved data failed. Decoding configuration is "
-                            + ConfigurationUtils.toString(exportConfig.configurationAt(slash(CONFIGURATION, DECODING))), e);
+                            + ConfigurationUtils.toString(exportConfig.configurationAt(slash(DECODING))), e);
                 } catch (JSONException e) {
                     log.error("Converting the retrieved data into a JSON structure failed. The data was {}", response, e);
-                } catch (MethodCallException e) {
+                } catch (MethodCallException | VersionRetrievalException e) {
                     throw new DataExportException(e);
                 } catch (ConfigurationException e) {
                     log.error("Configuration problem with export configuration {}", ConfigurationUtils.toString(exportConfig));
-                    throw new DataExportException(e);
-                } catch (VersionRetrievalException e) {
                     throw new DataExportException(e);
                 }
             }
@@ -78,7 +73,7 @@ public class RestExporter extends RestCallBase implements DataExporter  {
 
     @Override
     public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig)
-            throws ConceptDatabaseConnectionException, DataExportException {
+            throws ConceptDatabaseConnectionException, DataExportException, IncompatibleActionHandlerConnectionException {
        exporter.exportData(exportConfig);
     }
 
@@ -98,10 +93,10 @@ public class RestExporter extends RestCallBase implements DataExporter  {
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
         super.exposeParameters(basePath, template);
-        template.addProperty(slash(basePath, CONFIGURATION, DECODING, JSON2BYTEARRAY), "false");
-        template.addProperty(slash(basePath, CONFIGURATION, DECODING, BASE64), "true");
-        template.addProperty(slash(basePath, CONFIGURATION, DECODING, GZIP), "true");
-        template.addProperty(slash(basePath, CONFIGURATION, OUTPUT_FILE), "");
+        template.addProperty(slash(basePath, REQUEST, DECODING, JSON2BYTEARRAY), "false");
+        template.addProperty(slash(basePath, REQUEST, DECODING, BASE64), "true");
+        template.addProperty(slash(basePath, REQUEST, DECODING, GZIP), "true");
+        template.addProperty(slash(basePath, REQUEST, OUTPUT_FILE), "");
     }
 
 }

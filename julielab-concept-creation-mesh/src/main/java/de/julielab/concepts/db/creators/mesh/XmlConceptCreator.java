@@ -22,7 +22,6 @@ import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
-import static java.util.stream.Collectors.toMap;
 
 public class XmlConceptCreator implements ConceptCreator {
 
@@ -41,7 +40,7 @@ public class XmlConceptCreator implements ConceptCreator {
 
     @Override
     public Stream<ImportConcepts> createConcepts(HierarchicalConfiguration<ImmutableNode> importConfig) throws ConceptCreationException, FacetCreationException {
-        String confPath = slash(CONCEPTS, CREATOR, CONFIGURATION);
+        String confPath = slash(CONCEPTS, CREATOR, REQUEST);
         Tree conceptTree;
         String facetGroupName;
         Map<String, List<ConceptSourceMatcher>> conceptSourceMatchers = new HashMap<>();
@@ -232,7 +231,7 @@ public class XmlConceptCreator implements ConceptCreator {
 
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
-        String confPath = slash(basePath, CONCEPTS, CREATOR, CONFIGURATION);
+        String confPath = slash(basePath, CONCEPTS, CREATOR, REQUEST);
         template.addProperty(slash(basePath, CONCEPTS, CREATOR, NAME), getName());
         template.addProperty(slash(confPath, FACETGROUP), "");
         template.addProperty(slash(confPath, INPUT, XMLFILE), "");

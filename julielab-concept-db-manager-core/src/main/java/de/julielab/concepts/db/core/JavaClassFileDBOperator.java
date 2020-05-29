@@ -11,7 +11,7 @@ import org.neo4j.graphdb.GraphDatabaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static de.julielab.concepts.db.core.ConfigurationConstants.*;
+import static de.julielab.concepts.db.core.ConfigurationConstants.REQUEST;
 
 public class JavaClassFileDBOperator extends JavaMethodCallBase implements DatabaseOperator {
     private final static Logger log = LoggerFactory.getLogger(JavaClassFileDBOperator.class);
@@ -25,7 +25,7 @@ public class JavaClassFileDBOperator extends JavaMethodCallBase implements Datab
     @Override
     public void operate(HierarchicalConfiguration<ImmutableNode> operationConfiguration) throws DatabaseOperationException {
         try {
-            callInstanceMethod(operationConfiguration.configurationAt(CONFIGURATION), graphDb);
+            callInstanceMethod(operationConfiguration.configurationAt(REQUEST), graphDb);
         } catch (MethodCallException e) {
             throw new DatabaseOperationException(e);
         }

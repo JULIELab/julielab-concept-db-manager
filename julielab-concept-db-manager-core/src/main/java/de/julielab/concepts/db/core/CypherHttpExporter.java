@@ -5,6 +5,7 @@ import de.julielab.concepts.db.core.services.HttpConnectionService;
 import de.julielab.concepts.db.core.services.NetworkConnectionCredentials;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DataExportException;
+import de.julielab.concepts.util.IncompatibleActionHandlerConnectionException;
 import de.julielab.concepts.util.VersionRetrievalException;
 import de.julielab.java.utilities.ConfigurationUtilities;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
@@ -48,15 +49,15 @@ public class CypherHttpExporter extends DataExporterImpl {
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
         template.addProperty(slash(basePath, EXPORTER), getName());
-        template.addProperty(slash(basePath, CONFIGURATION, CYPHER_QUERY), "");
-        template.addProperty(slash(basePath, CONFIGURATION, OUTPUT_FILE), "");
+        template.addProperty(slash(basePath, REQUEST, CYPHER_QUERY), "");
+        template.addProperty(slash(basePath, REQUEST, OUTPUT_FILE), "");
     }
 
     @Override
-    public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws DataExportException {
+    public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws DataExportException, IncompatibleActionHandlerConnectionException {
         try {
-            String cypherQuery = ConfigurationUtilities.requirePresent(slash(CONFIGURATION, CYPHER_QUERY), exportConfig::getString);
-            String filepath = ConfigurationUtilities.requirePresent(slash(CONFIGURATION, OUTPUT_FILE), exportConfig::getString);
+            String cypherQuery = ConfigurationUtilities.requirePresent(slash(REQUEST, CYPHER_QUERY), exportConfig::getString);
+            String filepath = ConfigurationUtilities.requirePresent(slash(OUTPUT_FILE), exportConfig::getString);
             log.info("Sending Cypher query {} to Neo4j via HTTP", cypherQuery);
             Statements statements = new Statements(
                     new Statement(cypherQuery));
@@ -83,7 +84,7 @@ public class CypherHttpExporter extends DataExporterImpl {
 
             log.info("Done.");
         } catch (ConfigurationException e) {
-            throw new DataExportException(e);
+            throw new IncompatibleActionHandlerConnectionException(e);
         }
     }
 }

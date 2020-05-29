@@ -47,15 +47,15 @@ public class CypherFileDBExporter extends DataExporterImpl {
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
         template.addProperty(slash(basePath, EXPORTER), getName());
-        template.addProperty(slash(basePath, CONFIGURATION, CYPHER_QUERY), "");
-        template.addProperty(slash(basePath, CONFIGURATION, OUTPUT_FILE), "");
+        template.addProperty(slash(basePath, REQUEST, CYPHER_QUERY), "");
+        template.addProperty(slash(basePath, REQUEST, OUTPUT_FILE), "");
     }
 
     @Override
     public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws DataExportException {
         try {
-            String cypherQuery = ConfigurationUtilities.requirePresent(slash(CONFIGURATION, CYPHER_QUERY), exportConfig::getString);
-            String outputPath = ConfigurationUtilities.requirePresent(slash(CONFIGURATION, OUTPUT_FILE), exportConfig::getString);
+            String cypherQuery = ConfigurationUtilities.requirePresent(slash(REQUEST, CYPHER_QUERY), exportConfig::getString);
+            String outputPath = ConfigurationUtilities.requirePresent(slash(REQUEST, OUTPUT_FILE), exportConfig::getString);
             log.info("Sending Cypher query {} to Neo4j embedded database", cypherQuery);
             List<String> outputLines = new ArrayList<>();
             try (Transaction tx = graphDb.beginTx()) {

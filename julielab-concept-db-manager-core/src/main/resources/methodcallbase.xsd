@@ -60,7 +60,7 @@
                     </xs:documentation>
                 </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="tojson" type="xs:boolean">
+            <xs:attribute name="toescapedjson" type="xs:boolean">
                 <xs:annotation>
                     <xs:documentation xml:lang="en">
                         Optional. Specifies if the parameter value should be JSON-encoded. This is often used for
@@ -111,7 +111,7 @@
 
     <!-- For data export and data operations we call server plugins or plain Java methods. Here we can define parameters
           for these calls -->
-    <xs:element name="configuration">
+    <xs:element name="request">
         <xs:complexType>
             <xs:sequence>
                 <xs:sequence>

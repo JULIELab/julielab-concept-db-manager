@@ -11,7 +11,7 @@
     <xs:element name="export">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="configuration" minOccurs="0"/>
+                <xs:element ref="request" minOccurs="0"/>
                 <xs:element ref="outputfile"/>
                 <xs:element ref="decoding" minOccurs="0"/>
             </xs:sequence>

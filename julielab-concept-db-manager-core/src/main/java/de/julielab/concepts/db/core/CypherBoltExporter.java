@@ -39,8 +39,8 @@ public class CypherBoltExporter extends DataExporterImpl {
     @Override
     public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws ConceptDatabaseConnectionException, DataExportException {
         try {
-            String query = ConfigurationUtilities.requirePresent(slash(CONFIGURATION, CYPHER_QUERY), exportConfig::getString);
-            File outputFile = new File(ConfigurationUtilities.<String>requirePresent(slash(CONFIGURATION, OUTPUT_FILE), exportConfig::getString));
+            String query = ConfigurationUtilities.requirePresent(slash(REQUEST, CYPHER_QUERY), exportConfig::getString);
+            File outputFile = new File(ConfigurationUtilities.<String>requirePresent(slash(OUTPUT_FILE), exportConfig::getString));
 
             log.info("Sending Cypher query {} to Neo4j and writing the results to {}", query, outputFile);
             try (Session session = driver.session(); Transaction tx = session.beginTransaction()) {
@@ -96,7 +96,7 @@ public class CypherBoltExporter extends DataExporterImpl {
 
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
-        template.addProperty(slash(basePath, CONFIGURATION, CYPHER_QUERY), "");
-        template.addProperty(slash(basePath, CONFIGURATION, OUTPUT_FILE), "");
+        template.addProperty(slash(basePath, REQUEST, CYPHER_QUERY), "");
+        template.addProperty(slash(basePath, REQUEST, OUTPUT_FILE), "");
     }
 }

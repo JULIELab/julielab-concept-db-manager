@@ -31,7 +31,6 @@ import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
-import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 public class
 JulielabBioPortalToolsMappingCreator implements MappingCreator {
@@ -42,18 +41,18 @@ JulielabBioPortalToolsMappingCreator implements MappingCreator {
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
         template.addProperty(slash(basePath, MAPPINGS, CREATOR, NAME), getName());
-        template.addProperty(slash(basePath, MAPPINGS, CREATOR, CONFIGURATION, PATH), "");
-        template.addProperty(slash(basePath, MAPPINGS, CREATOR, CONFIGURATION, ALLOWED_ACRONYMS), "");
+        template.addProperty(slash(basePath, MAPPINGS, CREATOR, REQUEST, PATH), "");
+        template.addProperty(slash(basePath, MAPPINGS, CREATOR, REQUEST, ALLOWED_ACRONYMS), "");
     }
 
     @Override
     public Stream<ImportMapping> createMappings(HierarchicalConfiguration<ImmutableNode> importConfig) throws MappingCreationException {
 
         try {
-            ConfigurationUtilities.checkParameters(importConfig, slash(MAPPINGS, CREATOR, CONFIGURATION, PATH), slash(MAPPINGS, CREATOR, CONFIGURATION, ALLOWED_ACRONYMS));
-            ConfigurationUtilities.checkFilesExist(importConfig, slash(MAPPINGS, CREATOR, CONFIGURATION, PATH));
-            String pathToMappings = importConfig.getString(slash(MAPPINGS, CREATOR, CONFIGURATION, PATH));
-            final Set<Object> allowedAcronyms = new HashSet<>(importConfig.getList(slash(MAPPINGS, CREATOR, CONFIGURATION, ALLOWED_ACRONYMS)));
+            ConfigurationUtilities.checkParameters(importConfig, slash(MAPPINGS, CREATOR, REQUEST, PATH), slash(MAPPINGS, CREATOR, REQUEST, ALLOWED_ACRONYMS));
+            ConfigurationUtilities.checkFilesExist(importConfig, slash(MAPPINGS, CREATOR, REQUEST, PATH));
+            String pathToMappings = importConfig.getString(slash(MAPPINGS, CREATOR, REQUEST, PATH));
+            final Set<Object> allowedAcronyms = new HashSet<>(importConfig.getList(slash(MAPPINGS, CREATOR, REQUEST, ALLOWED_ACRONYMS)));
             log.info("Importing mappings from {}{}", pathToMappings, allowedAcronyms != null && !allowedAcronyms.isEmpty() ? " for acronyms " + allowedAcronyms : "");
             File file = new File(pathToMappings);
             Stream<ImportMapping> mappings = Stream.empty();

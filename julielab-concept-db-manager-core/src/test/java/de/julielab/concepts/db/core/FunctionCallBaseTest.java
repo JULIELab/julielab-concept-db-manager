@@ -28,7 +28,7 @@ public class FunctionCallBaseTest {
 
         Method method = FunctionCallBase.class.getDeclaredMethod("parseParameters", HierarchicalConfiguration.class);
         method.setAccessible(true);
-        Map<String, Parameter> parsedParameters = (Map<String, Parameter>) method.invoke(new RestExporter(), config.configurationAt(slash(EXPORTS, EXPORT, CONFIGURATION, PARAMETERS)));
+        Map<String, Parameter> parsedParameters = (Map<String, Parameter>) method.invoke(new RestExporter(), config.configurationAt(slash(EXPORTS, EXPORT, REQUEST, PARAMETERS)));
         assertEquals(2, parsedParameters.size());
         List<Parameter> parametersList = new ArrayList<>(parsedParameters.values());
         assertNotNull(parametersList.get(0).getName());
@@ -60,7 +60,7 @@ public class FunctionCallBaseTest {
 
         Method method = FunctionCallBase.class.getDeclaredMethod("parseParameters", HierarchicalConfiguration.class);
         method.setAccessible(true);
-        Map<String, Parameter> parsedParameters = (Map<String, Parameter>) method.invoke(new RestExporter(), config.configurationAt(slash(EXPORTS, EXPORT, CONFIGURATION, PARAMETERS)));
+        Map<String, Parameter> parsedParameters = (Map<String, Parameter>) method.invoke(new RestExporter(), config.configurationAt(slash(EXPORTS, EXPORT, REQUEST, PARAMETERS)));
         assertEquals(2, parsedParameters.size());
         List<Parameter> parametersList = new ArrayList<>(parsedParameters.values());
         assertNotNull(parametersList.get(0).getName());

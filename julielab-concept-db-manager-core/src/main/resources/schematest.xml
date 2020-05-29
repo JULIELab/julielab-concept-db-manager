@@ -1,35 +1,20 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.julielab.de/conceptdb"
                  xsi:schemaLocation="http://www.julielab.de/conceptdb conceptdb.xsd">
     <versioning>
-        <version>1.0</version>
+        <version>1.0-test</version>
     </versioning>
     <connection>
-        <uri>http://huhuhu</uri>
+        <uri>to be filled by the test</uri>
+        <user></user>
+        <password></password>
     </connection>
-    <imports>
-        <import>
-            <rest>
-                <restendpoint>/muh/maeh</restendpoint>
-                <httpmethod>POST</httpmethod>
-            </rest>
-        </import>
-    </imports>
-    <operations>
-        <operation>
-            <configuration>
-                <parameters></parameters>
-            </configuration>
-        </operation>
-    </operations>
     <exports>
         <export>
-            <configuration>
-                <parameters>
-                    <parameter></parameter>
-                </parameters>
-            </configuration>
-            <outputfile>output</outputfile>
+            <request>
+                <cypherquery>MATCH (c:CONCEPT) return c.id,c.preferredName</cypherquery>
+            </request>
+            <outputfile>src/test/resources/output/boltexport.txt</outputfile>
         </export>
     </exports>
 </conceptdatabase>

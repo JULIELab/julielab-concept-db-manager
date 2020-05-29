@@ -3,6 +3,7 @@ package de.julielab.concepts.db.core.services;
 import de.julielab.concepts.db.core.spi.DatabaseOperator;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DatabaseOperationException;
+import de.julielab.concepts.util.IncompatibleActionHandlerConnectionException;
 import de.julielab.jssf.commons.spi.ParameterExposing;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
@@ -54,19 +55,23 @@ public class DatabaseOperationService implements ParameterExposing {
                 operator.operate(operationConfiguration);
                 operatorExecuted = true;
             } catch (ConceptDatabaseConnectionException e) {
-                log.trace("Database operator " + operator.getClass().getCanonicalName() + " is skipped because it could not serve the connection configuration " + ConfigurationUtils.toString(connectionConfiguration) + ": " + e.getMessage() + ". Looking for another compatible operator.");
+                if (log.isTraceEnabled())
+                    log.trace("Database operator {} is skipped because it could not serve the connection configuration {} ({}). Looking for another compatible operator.", operator.getClass().getCanonicalName(), ConfigurationUtils.toString(connectionConfiguration), e.getMessage());
+                continue;
+            } catch (IncompatibleActionHandlerConnectionException e) {
+                if (log.isTraceEnabled())
+                    log.trace("Database operator {} is skipped because it is not compatible to the operation configuration configuration {} ({}). Looking for another compatible operator.", operator.getClass().getCanonicalName(), ConfigurationUtils.toString(operationConfiguration), e.getMessage());
                 continue;
             }
             log.debug("Database operator {} was run for operation {}", operator.getClass().getCanonicalName(), ConfigurationUtils.toString(operationConfiguration));
         }
         if (!operatorExecuted)
-            throw new DatabaseOperationException("No available data operator was compatible with operation configuration " + ConfigurationUtils.toString(operationConfiguration) + " and connection configuration " + ConfigurationUtils.toString(connectionConfiguration));
+            throw new DatabaseOperationException("No available data operator was compatible with operation configuration " + System.getProperty("line.separator") + ConfigurationUtils.toString(operationConfiguration) + " and connection configuration " + ConfigurationUtils.toString(connectionConfiguration));
     }
 
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
-        for (Iterator<DatabaseOperator> operatorIterator = loader.iterator(); operatorIterator.hasNext(); ) {
-            DatabaseOperator operator = operatorIterator.next();
+        for (DatabaseOperator operator : loader) {
             // this creates a new operations/operation path
             template.addProperty(basePath, "");
             operator.exposeParameters(last(basePath), template);

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xmlns="http://www.julielab.de/conceptdb"
-                 xsi:schemaLocation="http://www.julielab.de/conceptdb http://www.julielab.de/conceptdb/conceptdb-1.0.0.xsd
-					http://www.julielab.de/conceptdb/operators/cypher http://www.julielab.de/conceptdb/operators/cypheroperator-1.0.0.xsd">
+<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.julielab.de/conceptdb"
+                 xsi:schemaLocation="http://www.julielab.de/conceptdb conceptdb.xsd">
     <versioning>
         <version>1.0-test</version>
     </versioning>
@@ -13,11 +10,10 @@
         <password></password>
     </connection>
     <operations>
-        <operation xmlns="http://www.julielab.de/conceptdb/operators/cypher">
-            <operator>CypherOperator</operator>
-            <configuration>
+        <operation>
+            <request>
                 <cypherquery>MATCH (c:CONCEPT) where c.sourceIds = "id1" SET c.testprop=42 RETURN c.testprop</cypherquery>
-            </configuration>
+            </request>
         </operation>
     </operations>
 </conceptdatabase>

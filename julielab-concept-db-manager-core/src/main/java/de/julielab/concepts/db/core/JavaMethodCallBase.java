@@ -1,12 +1,10 @@
 package de.julielab.concepts.db.core;
 
 import de.julielab.concepts.util.MethodCallException;
-import de.julielab.jssf.commons.spi.ParameterExposing;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.slf4j.Logger;
-import scala.Function;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -16,8 +14,6 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.concepts.db.core.ConfigurationConstants.CONFIGURATION;
-import static de.julielab.concepts.db.core.ConfigurationConstants.PARAMETERS;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static de.julielab.java.utilities.ConfigurationUtilities.ws;
 
@@ -75,12 +71,12 @@ public abstract class JavaMethodCallBase extends FunctionCallBase {
 
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
-        template.addProperty(slash(basePath, CONFIGURATION, CLASS), "");
-        template.addProperty(slash(basePath, CONFIGURATION, METHOD), "");
-        template.addProperty(slash(basePath, CONFIGURATION, PARAMETERS, "parametername"), "value");
-        template.addProperty(ws(slash(basePath, CONFIGURATION, PARAMETERS, "parametername"), "@parametername"), "optional: parameter name");
-        template.addProperty(ws(slash(basePath, CONFIGURATION, PARAMETERS, "parametername"), "@paramertype"), "mandatory: parameter type");
-        template.addProperty(slash(basePath, CONFIGURATION, PARAMETERS, "arrayparameter", "arrayitem"), Arrays.asList("value1", "value2"));
-        template.addProperty(ws(slash(basePath, CONFIGURATION, PARAMETERS, "arrayparameter"), "@elementtype"), "mandatory: array element type");
+        template.addProperty(slash(basePath, REQUEST, CLASS), "");
+        template.addProperty(slash(basePath, REQUEST, METHOD), "");
+        template.addProperty(slash(basePath, REQUEST, PARAMETERS, "parametername"), "value");
+        template.addProperty(ws(slash(basePath, REQUEST, PARAMETERS, "parametername"), "@parametername"), "optional: parameter name");
+        template.addProperty(ws(slash(basePath, REQUEST, PARAMETERS, "parametername"), "@paramertype"), "mandatory: parameter type");
+        template.addProperty(slash(basePath, REQUEST, PARAMETERS, "arrayparameter", "arrayitem"), Arrays.asList("value1", "value2"));
+        template.addProperty(ws(slash(basePath, REQUEST, PARAMETERS, "arrayparameter"), "@elementtype"), "mandatory: array element type");
     }
 }
