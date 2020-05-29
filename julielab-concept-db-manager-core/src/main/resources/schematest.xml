@@ -18,12 +18,18 @@
     <operations>
         <operation>
             <configuration>
-                <parameters>
-                    <parameter >
-                        <input>huhu</input>
-                    </parameter>
-                </parameters>
+                <parameters></parameters>
             </configuration>
         </operation>
     </operations>
+    <exports>
+        <export>
+            <configuration>
+                <parameters>
+                    <parameter></parameter>
+                </parameters>
+            </configuration>
+            <outputfile>output</outputfile>
+        </export>
+    </exports>
 </conceptdatabase>

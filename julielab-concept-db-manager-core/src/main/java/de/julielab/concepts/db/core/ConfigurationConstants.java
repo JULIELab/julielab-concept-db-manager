@@ -24,6 +24,7 @@ public class ConfigurationConstants {
     public static final String NAME = "name";
     public static final String CONFIGURATION = "configuration";
     public static final String PARAMETERS = "parameters";
+    public static final String PARAMETER = "parameter";
     public static final String REST_ENDPOINT = "restendpoint";
     public static final String HTTP_METHOD = "httpmethod";
     public static final String REST = "rest";
