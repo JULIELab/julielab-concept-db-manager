@@ -89,6 +89,7 @@ public class RestConceptInserter implements ConceptInserter {
             String response = HttpConnectionService.getInstance().sendRequest(httpPost);
             if (log.isDebugEnabled())
                 log.debug("Server plugin response to concept insertion: {}", response);
+            log.info("Done with concept import.");
         } catch (InternalNeo4jException e) {
             final ObjectMapper om = new ObjectMapper();
             om.enable(SerializationFeature.INDENT_OUTPUT);

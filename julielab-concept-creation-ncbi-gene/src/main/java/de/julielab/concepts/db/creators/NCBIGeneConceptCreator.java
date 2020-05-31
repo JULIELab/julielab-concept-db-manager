@@ -42,7 +42,6 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
     public static final String GENEDESCRIPTIONS = "genedescriptions";
     public static final String ORGANISMLIST = "organismlist";
     public static final String ORGANISMNAMES = "organismnames";
-    public static final String HOMOLOGENE = "homologene";
     public static final String GENE_GROUP = "gene_group";
     public static final String HOMOLOGENE_PREFIX = "homologene";
     /**
@@ -64,6 +63,10 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         resetCounters();
     }
 
+    public static ConceptCoordinates getGeneCoordinates(String originalId) {
+        return new ConceptCoordinates(originalId, NCBI_GENE_SOURCE, originalId, NCBI_GENE_SOURCE);
+    }
+
     private void resetCounters() {
         this.homologeneAggregateCounter = 0;
         this.orthologAggregateCounter = 0;
@@ -73,22 +76,16 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 
     /**
      * @param termsByGeneId
-     * @param homologene
      * @param geneGroup     see https://ncbiinsights.ncbi.nlm.nih.gov/2018/02/27/gene_orthologs-file-gene-ftp/
      * @throws IOException
      */
-    private void createHomologyAggregates(Map<ConceptCoordinates, ImportConcept> termsByGeneId, File homologene,
-                                          File geneGroup) throws IOException {
+    private void createHomologyAggregates(Map<ConceptCoordinates, ImportConcept> termsByGeneId, File geneGroup) throws IOException {
         Multimap<String, ConceptCoordinates> genes2Aggregate = HashMultimap.create();
 
         List<String> aggregateCopyProperties = Arrays.asList(ConceptConstants.PROP_PREF_NAME,
                 ConceptConstants.PROP_SYNONYMS, ConceptConstants.PROP_WRITING_VARIANTS,
                 ConceptConstants.PROP_DESCRIPTIONS, ConceptConstants.PROP_FACETS);
 
-        checkfornullparentcoords(termsByGeneId);
-        // Homologene is not updated any more and deprecated in favor of the gene groups
-        //createHomologeneAggregates(genes2Aggregate, homologene, termsByGeneId, aggregateCopyProperties);
-        //System.out.println("After homologene aggs");
         checkfornullparentcoords(termsByGeneId);
         createGeneOrthologyAggregates(genes2Aggregate, geneGroup, termsByGeneId, aggregateCopyProperties);
         System.out.println("After ortho aggs");
@@ -100,7 +97,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 
     }
 
-    private void checkfornullparentcoords(Map<ConceptCoordinates,ImportConcept> termsByGeneId) {
+    private void checkfornullparentcoords(Map<ConceptCoordinates, ImportConcept> termsByGeneId) {
         for (ImportConcept c : termsByGeneId.values()) {
             if (c.parentCoordinates == null)
                 throw new IllegalArgumentException(c.coordinates.toString());
@@ -158,7 +155,6 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         }
         return topHomologyConcept;
     }
-
 
     private void createGeneOrthologyAggregates(Multimap<String, ConceptCoordinates> genes2Aggregate, File geneGroup, Map<ConceptCoordinates, ImportConcept> termsByGeneId, List<String> aggregateCopyProperties) throws IOException {
         // add the orthology information from gene group to make gene group aggregates
@@ -544,10 +540,6 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 
     }
 
-    public static ConceptCoordinates getGeneCoordinates(String originalId) {
-        return new ConceptCoordinates(originalId, NCBI_GENE_SOURCE, originalId, NCBI_GENE_SOURCE);
-    }
-
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
         String base = slash(basePath, CONCEPTS, CREATOR, CONFIGURATION);
@@ -557,7 +549,6 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         template.addProperty(slash(base, GENEDESCRIPTIONS), "");
         template.addProperty(slash(base, ORGANISMLIST), "");
         template.addProperty(slash(base, ORGANISMNAMES), "");
-        template.addProperty(slash(base, HOMOLOGENE), "");
         template.addProperty(slash(base, GENE_GROUP), "");
         FacetCreationService.getInstance().exposeParameters(basePath, template);
         template.setProperty(slash(basePath, FACET, CREATOR, CONFIGURATION, FACET_GROUP, NAME), "Biology");
@@ -608,7 +599,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         String confPath = slash(CONCEPTS, CREATOR, CONFIGURATION);
         try {
             ConfigurationUtilities.checkParameters(importConfig, slash(confPath, GENE_INFO), slash(confPath, GENEDESCRIPTIONS), slash(confPath, ORGANISMLIST),
-                    slash(confPath, ORGANISMNAMES), slash(confPath, HOMOLOGENE), slash(confPath, GENE_GROUP));
+                    slash(confPath, ORGANISMNAMES),  slash(confPath, GENE_GROUP));
         } catch (ConfigurationException e) {
             throw new ConceptCreationException(e);
         }
@@ -618,10 +609,9 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         File geneDescriptions = resolvePath(basepath, importConfig.getString(slash(confPath, GENEDESCRIPTIONS)));
         File organisms = resolvePath(basepath, importConfig.getString(slash(confPath, ORGANISMLIST)));
         File ncbiTaxNames = resolvePath(basepath, importConfig.getString(slash(confPath, ORGANISMNAMES)));
-        File homologene = resolvePath(basepath, importConfig.getString(slash(confPath, HOMOLOGENE)));
         File geneGroup = resolvePath(basepath, importConfig.getString(slash(confPath, GENE_GROUP)));
         List<File> notFound = new ArrayList<>();
-        for (File f : Arrays.asList(geneInfo, geneDescriptions, organisms, ncbiTaxNames, homologene, geneGroup)) {
+        for (File f : Arrays.asList(geneInfo, geneDescriptions, organisms, ncbiTaxNames, geneGroup)) {
             if (!f.exists())
                 notFound.add(f);
         }
@@ -638,7 +628,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             setSpeciesQualifier(ncbiTaxNames, geneId2Tax, conceptsByGeneId.values());
             log.info("Got {} terms from source files..", conceptsByGeneId.values().size());
             log.info("Creating homology aggregates");
-            createHomologyAggregates(conceptsByGeneId, homologene, geneGroup);
+            createHomologyAggregates(conceptsByGeneId, geneGroup);
             log.info("Created {} homology aggregates", homologeneAggregateCounter);
             log.info("Created {} orthology aggregates", orthologAggregateCounter);
             log.info("Created {} top-homology aggregates, governing homologene and orthology aggregates",

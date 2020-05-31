@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.julielab.de/conceptdb"
-                 xsi:schemaLocation="http://www.julielab.de/conceptdb conceptdb.xsd
+<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="conceptdb-1.1.0.xsd"
+                 xsi:schemaLocation="conceptdb-1.1.0.xsd conceptdb-1.1.0.xsd
                  http://www.julielab.de/conceptdb/concepts/ncbigene http://www.julielab.de/conceptdb/concepts/ncbigeneconceptcreator-1.0.0.xsd
                  http://www.julielab.de/conceptdb/facets/default http://www.julielab.de/conceptdb/facets/defaultfacetcreator-1.0.0.xsd">
     <versioning>

@@ -56,24 +56,13 @@
             </xs:documentation>
         </xs:annotation>
     </xs:element>
-    <xs:element name="homologene" type="xs:string">
-        <xs:annotation>
-            <xs:documentation xml:lang="en">
-                The <em>homologene</em> database as downloaded from the NCBI. It is used to build homology clusters
-                while from gene_group, orthology clusters are built. These clusters are represented via nodes with the
-                label <em>AGGREGATE_HOMOLOGENE</em> in the database. In the case that a homologene cluster and a
-                gene_group cluster overlap in their associated genes, a top homology cluster is created in the form of
-                an extra node with label <em>TOP_HOMOLOGY</em>.
-            </xs:documentation>
-        </xs:annotation>
-    </xs:element>
     <xs:element name="gene_group" type="xs:string">
         <xs:annotation>
             <xs:documentation xml:lang="en">
                 The <em>gene_group</em> database mostly containing gene orthology information from the NCBI. It is used
-                to build orthology clusters while from homologene, homology clusters are built. These clusters are
-                represented via nodes with the label <em>AGGREGATE_GENEGROUP</em> in the database. In the case that a
-                homologene cluster and a gene_group cluster overlap in their associated genes, a top homology cluster is
+                to build orthology clusters. These clusters are
+                represented via nodes with the label <em>AGGREGATE_GENEGROUP</em> in the database. In the -- currently
+                not possible -- case that there are multiple clusters overlapping in their associated genes, a top homology cluster is
                 created in the form of an extra node with label <em>TOP_HOMOLOGY</em>.
             </xs:documentation>
         </xs:annotation>
@@ -88,7 +77,6 @@
                 <xs:element ref="genedescriptions"/>
                 <xs:element ref="organismlist"/>
                 <xs:element ref="organismnames"/>
-                <xs:element ref="homologene"/>
                 <xs:element ref="gene_group"/>
             </xs:all>
         </xs:complexType>
