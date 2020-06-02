@@ -35,26 +35,23 @@ public abstract class RestCallBase extends FunctionCallBase {
 
     public String callNeo4jRestEndpoint(HierarchicalConfiguration<ImmutableNode> connectionConfig, HierarchicalConfiguration<ImmutableNode> methodCallConfig, String defaultHttpMethod)
             throws ConceptDatabaseConnectionException, MethodCallException, IncompatibleActionHandlerConnectionException {
+        String state = "read_connection";
         try {
             java.net.URI baseUri = java.net.URI.create(requirePresent(NetworkConnectionCredentials.CONFKEY_URI, key -> connectionConfig.getString(key)));
+            state = "read_methodcallconfig";
             String endpoint = requirePresent(slash(REQUEST, REST, REST_ENDPOINT), key -> methodCallConfig.getString(key));
             String httpMethod = methodCallConfig.getString(slash(REQUEST, REST, HTTP_METHOD), defaultHttpMethod);
             Map<String, Object> parameters = null;
             if (methodCallConfig.getKeys(slash(REQUEST, PARAMETERS)).hasNext()) {
-                try {
-                    HierarchicalConfiguration<ImmutableNode> parameterConfiguration = methodCallConfig.configurationAt(slash(REQUEST, PARAMETERS));
-                    Map<String, Parameter> parameterMap;
-                    parameterMap = parseParameters(parameterConfiguration);
-                    parameters = parameterMap.values().stream()
-                            .collect(Collectors.toMap(Parameter::getName, Parameter::getRequestValue));
-                } catch (MethodCallException e) {
-                    throw new MethodCallException(e);
-                }
+                HierarchicalConfiguration<ImmutableNode> parameterConfiguration = methodCallConfig.configurationAt(slash(REQUEST, PARAMETERS));
+                Map<String, Parameter> parameterMap;
+                parameterMap = parseParameters(parameterConfiguration);
+                parameters = parameterMap.values().stream()
+                        .collect(Collectors.toMap(Parameter::getName, Parameter::getRequestValue));
             }
 
+            state = "prepare_request";
             HttpConnectionService httpService = HttpConnectionService.getInstance();
-            // Convention: Is the plugin name given, this is a legacy Server Plugin. Otherwise, it is an
-            // unmanaged extension.
             java.net.URI completePluginEndpointUri = new java.net.URI(baseUri.getScheme(), null, baseUri.getHost(), baseUri.getPort(), endpoint.startsWith("/") ? endpoint : "/" + endpoint, null, null);
             HttpRequestBase request = httpService.getHttpRequest(connectionConfig, completePluginEndpointUri.toString(), httpMethod);
             request.addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
@@ -69,6 +66,7 @@ public abstract class RestCallBase extends FunctionCallBase {
                     java.net.URI uriWithQueryParams = new java.net.URI(completePluginEndpointUri.getScheme(), completePluginEndpointUri.getAuthority(), completePluginEndpointUri.getPath(), query, null);
                     request.setURI(uriWithQueryParams);
                 }
+                state = "send_request";
                 log.info("Sending request {} to {}", parameterJson, completePluginEndpointUri);
                 return httpService.sendRequest(request);
             } catch (UnsupportedEncodingException e) {
@@ -78,6 +76,7 @@ public abstract class RestCallBase extends FunctionCallBase {
                 throw e;
             }
         } catch (ConfigurationException e) {
+            log.debug("{} is incompatible with the given configuration in state '{}' with message '{}'", RestCallBase.class.getSimpleName(), state, e.getMessage());
             throw new IncompatibleActionHandlerConnectionException(e);
         } catch (URISyntaxException e) {
             log.error("Could not construct correct request URI.", e);

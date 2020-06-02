@@ -8,7 +8,7 @@ public class ConfigurationConstants {
     public static final String URI = "uri";
     public static final String USER = "user";
     public static final String PASSWORD = "password";
-    public static final String PREPARATION = "preparation";
+    public static final String PREPARATIONS = "preparations";
     public static final String IMPORTS = "imports";
     public static final String IMPORT = "import";
     public final static String EXPORTS = "exports";

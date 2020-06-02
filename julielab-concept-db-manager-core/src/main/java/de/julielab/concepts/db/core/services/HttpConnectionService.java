@@ -104,8 +104,9 @@ public class HttpConnectionService {
 
     public String sendRequest(HttpUriRequest request) throws ConceptDatabaseConnectionException {
         String responseString = null;
+            HttpResponse response = null;
         try {
-            HttpResponse response = client.execute(request);
+            response = client.execute(request);
             HttpEntity entity = response.getEntity();
             // We take all 200 values with us, because 204 is not really an
             // error. To get specific return codes, see HttpStatus

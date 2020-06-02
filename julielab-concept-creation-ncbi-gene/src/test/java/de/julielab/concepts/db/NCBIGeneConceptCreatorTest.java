@@ -144,7 +144,7 @@ public class NCBIGeneConceptCreatorTest {
 
         // Create the indices
         DatabaseOperationService operationService = DatabaseOperationService.getInstance(connectionConfiguration);
-        HierarchicalConfiguration<ImmutableNode> prepOperationConfig = configuration.configurationAt(slash(PREPARATION, OPERATION));
+        HierarchicalConfiguration<ImmutableNode> prepOperationConfig = configuration.configurationAt(slash(PREPARATIONS, OPERATION));
         operationService.operate(prepOperationConfig);
 
         ConceptInsertionService insertionService = ConceptInsertionService.getInstance(connectionConfiguration);
@@ -191,7 +191,7 @@ public class NCBIGeneConceptCreatorTest {
 
         // Create the indices
         DatabaseOperationService operationService = DatabaseOperationService.getInstance(connectionConfiguration);
-        HierarchicalConfiguration<ImmutableNode> prepOperationConfig = configuration.configurationAt(slash(PREPARATION, OPERATION));
+        HierarchicalConfiguration<ImmutableNode> prepOperationConfig = configuration.configurationAt(slash(PREPARATIONS, OPERATION));
         operationService.operate(prepOperationConfig);
 
 

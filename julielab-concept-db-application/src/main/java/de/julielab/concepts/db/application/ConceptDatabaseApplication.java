@@ -75,7 +75,7 @@ public class ConceptDatabaseApplication {
                 .configurationAt(CONNECTION);
 
         if (parameters.doPreparation != null || parameters.doAll != null) {
-            doOperations(parameters, configuration, connectionConfiguration, PREPARATION);
+            doOperations(parameters, configuration, connectionConfiguration, PREPARATIONS);
         }
         if (parameters.doImport != null || parameters.doAll != null) {
             doImports(parameters, configuration, connectionConfiguration);

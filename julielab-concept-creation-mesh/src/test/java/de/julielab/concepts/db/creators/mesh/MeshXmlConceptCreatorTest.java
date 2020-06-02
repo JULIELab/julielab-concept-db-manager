@@ -54,7 +54,7 @@ public class MeshXmlConceptCreatorTest {
 
         // Create the indices
         DatabaseOperationService operationService = DatabaseOperationService.getInstance(connectionConfiguration);
-        HierarchicalConfiguration<ImmutableNode> prepOperationConfig = xmlConfiguration.configurationAt(slash(PREPARATION, OPERATION));
+        HierarchicalConfiguration<ImmutableNode> prepOperationConfig = xmlConfiguration.configurationAt(slash(PREPARATIONS, OPERATION));
         operationService.operate(prepOperationConfig);
 
         ConceptInsertionService insertionService = ConceptInsertionService.getInstance(connectionConfiguration);

@@ -86,6 +86,7 @@ public class RestConceptInserter implements ConceptInserter {
             });
             concept2json.start();
             httpPost.setEntity(new InputStreamEntity(entityStream));
+            log.info("Sending data to server");
             String response = HttpConnectionService.getInstance().sendRequest(httpPost);
             if (log.isDebugEnabled())
                 log.debug("Server plugin response to concept insertion: {}", response);

@@ -88,10 +88,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 
         checkfornullparentcoords(termsByGeneId);
         createGeneOrthologyAggregates(genes2Aggregate, geneGroup, termsByGeneId, aggregateCopyProperties);
-        System.out.println("After ortho aggs");
         checkfornullparentcoords(termsByGeneId);
         createTopHomologyAggregates(genes2Aggregate, termsByGeneId, aggregateCopyProperties);
-        System.out.println("After top-homologene aggs");
         checkfornullparentcoords(termsByGeneId);
 
 
@@ -450,9 +448,11 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             gene2Summary.put(geneId, summary);
         }
 
+//        int counter = 0;
         try (BufferedReader bw = FileUtilities.getReaderFromFile(geneInfo)) {
             Iterator<String> it = bw.lines().filter(record -> !record.startsWith("#")).iterator();
             while (it.hasNext()) {
+//                ++counter;
                 String record = it.next();
                 ImportConcept term = createGeneTerm(record, gene2Summary);
                 String[] split = record.split("\t", 2);
@@ -462,6 +462,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
                     termsByGeneId.put(term.coordinates,
                             term);
                 }
+//                if(counter != 1000)
+//                    break;
             }
         }
 

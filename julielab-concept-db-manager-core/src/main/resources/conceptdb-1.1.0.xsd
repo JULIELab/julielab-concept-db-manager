@@ -161,7 +161,7 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:element name="preparation">
+    <xs:element name="preparations">
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="operation" maxOccurs="unbounded"/>
@@ -174,7 +174,7 @@
             <xs:sequence>
                 <xs:element ref="versioning"/>
                 <xs:element ref="connection"/>
-                <xs:element ref="preparation" minOccurs="0"/>
+                <xs:element ref="preparations" minOccurs="0"/>
                 <xs:element ref="imports" minOccurs="0"/>
                 <xs:element ref="operations" minOccurs="0"/>
                 <xs:element ref="exports" minOccurs="0"/>
