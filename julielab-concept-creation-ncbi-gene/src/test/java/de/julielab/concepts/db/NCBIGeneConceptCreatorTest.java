@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -81,23 +82,23 @@ public class NCBIGeneConceptCreatorTest {
 
     @Test
     public void testConvertGeneInfoToTerms() throws Exception {
-        Method method = NCBIGeneConceptCreator.class.getDeclaredMethod("convertGeneInfoToTerms", File.class, File.class,
-                File.class, Map.class, Map.class);
+        Method method = NCBIGeneConceptCreator.class.getDeclaredMethod("convertGeneInfoToTerms", File.class, Set.class,
+                File.class);
         method.setAccessible(true);
         NCBIGeneConceptCreator geneImporter = new NCBIGeneConceptCreator();
-        Map<String, String> geneId2Tax = new HashMap<>();
-        Map<String, ImportConcept> termsByGeneId = new HashMap<>();
-        method.invoke(geneImporter, new File("src/test/resources/geneconcepts/gene_info_snippet"),
-                new File("src/test/resources/geneconcepts/organisms_snippet.taxid"),
-                new File("src/test/resources/geneconcepts/gene2Summary_snippet"), geneId2Tax, termsByGeneId);
-        assertTrue(geneId2Tax.size() > 0);
-        assertEquals("9606", geneId2Tax.get("3558"));
+        Stream<ImportConcept> conceptStream = (Stream<ImportConcept>) method.invoke(geneImporter, new File("src/test/resources/geneconcepts/gene_info_snippet"),
+                Set.of("9606", "10090", "9031"), new File("src/test/resources/geneconcepts/gene2Summary_snippet"));
+        assertNotNull(conceptStream);
+        List<ImportConcept> conceptList = conceptStream.collect(Collectors.toList());
+        assertThat(conceptList.indexOf(null)).isLessThan(0);
+        Map<String, ImportConcept> conceptsByGeneId = conceptList.stream().collect(Collectors.toMap(ic -> ic.coordinates.originalId, Function.identity()));
+        assertEquals("9606", conceptsByGeneId.get("3558").getAuxProperty("taxId"));
         // The keys are lowercased to avoid problems due to different casing.
-        ImportConcept term = termsByGeneId.get(NCBIGeneConceptCreator.getGeneCoordinates("3558"));
-        assertEquals("IL2", term.prefName);
-        assertEquals("3558", term.coordinates.originalId);
-        assertNotNull(term.descriptions);
-        assertEquals(1, term.descriptions.size());
+        ImportConcept concept = conceptsByGeneId.get("3558");
+        assertEquals("IL2", concept.prefName);
+        assertEquals("3558", concept.coordinates.originalId);
+        assertNotNull(concept.descriptions);
+        assertEquals(1, concept.descriptions.size());
         assertEquals(
                 "The protein encoded by this gene is a " + "secreted cytokine that is important for the "
                         + "proliferation of T and B lymphocytes. The receptor "
@@ -110,18 +111,18 @@ public class NCBIGeneConceptCreatorTest {
                         + "a similar gene in mice leads to ulcerative colitis-like "
                         + "disease, which suggests an essential role of this gene in "
                         + "the immune response to antigenic stimuli. [provided by RefSeq, Jul 2008]",
-                term.descriptions.get(0));
+                concept.descriptions.get(0));
 
         // the Acta1 rat gene is in our snippet of gene_info, however the rat was not
         // included in our organism file,
         // thus it should not exist in the map.
-        assertNull(geneId2Tax.get("29437"));
+        assertNull(conceptsByGeneId.get("29437"));
         // mouse
-        assertNotNull(geneId2Tax.get("11459"));
+        assertNotNull(conceptsByGeneId.get("11459"));
         // human
-        assertNotNull(geneId2Tax.get("58"));
+        assertNotNull(conceptsByGeneId.get("58"));
         // and chicken
-        assertNotNull(geneId2Tax.get("421534"));
+        assertNotNull(conceptsByGeneId.get("421534"));
     }
 
     @Test
