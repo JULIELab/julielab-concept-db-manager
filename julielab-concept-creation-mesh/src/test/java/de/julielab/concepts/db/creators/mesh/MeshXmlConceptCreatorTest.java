@@ -19,8 +19,7 @@ import org.neo4j.dbms.api.DatabaseManagementService;
 import org.neo4j.graphdb.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -41,10 +40,9 @@ public class MeshXmlConceptCreatorTest {
     private static final File TEST_DB = new File("src/test/resources/graph.db");
     private static Logger log = LoggerFactory.getLogger(MeshXmlConceptCreatorTest.class);
 
-    @AfterTest
-    @BeforeTest
-    public void afterTest() throws IOException {
-        FileUtils.deleteQuietly(TEST_DB);
+    @BeforeMethod
+    public void beforeMethod() throws IOException {
+        FileUtils.deleteDirectory(TEST_DB);
     }
 
     @Test
@@ -111,12 +109,19 @@ public class MeshXmlConceptCreatorTest {
 
             tx.commit();
         }
+        FileConnectionService.getInstance().shutdown();
     }
 
     @Test
     public void testSimpleXmlFormat() throws Exception {
         XMLConfiguration xmlConfiguration = ConfigurationUtilities.loadXmlConfiguration(new File("src/test/resources/simpleXmlImportConfig.xml"));
         HierarchicalConfiguration<ImmutableNode> connectionConfiguration = xmlConfiguration.configurationAt(CONNECTION);
+
+        // Create the indices
+        DatabaseOperationService operationService = DatabaseOperationService.getInstance(connectionConfiguration);
+        HierarchicalConfiguration<ImmutableNode> prepOperationConfig = xmlConfiguration.configurationAt(slash(PREPARATIONS, OPERATION));
+        operationService.operate(prepOperationConfig);
+
         ConceptInsertionService insertionService = ConceptInsertionService.getInstance(connectionConfiguration);
         MeshXmlConceptCreator meshXmlConceptCreator = new MeshXmlConceptCreator();
         HierarchicalConfiguration<ImmutableNode> importConfig = xmlConfiguration.configurationAt(slash(IMPORTS, IMPORT));
@@ -136,12 +141,19 @@ public class MeshXmlConceptCreatorTest {
 
             tx.commit();
         }
+        FileConnectionService.getInstance().shutdown();
     }
 
     @Test
     public void testMultipleConnectedImports() throws Exception {
         XMLConfiguration xmlConfiguration = ConfigurationUtilities.loadXmlConfiguration(new File("src/test/resources/multipleConnectedImportsConfig.xml"));
         HierarchicalConfiguration<ImmutableNode> connectionConfiguration = xmlConfiguration.configurationAt(CONNECTION);
+
+        // Create the indices
+        DatabaseOperationService operationService = DatabaseOperationService.getInstance(connectionConfiguration);
+        HierarchicalConfiguration<ImmutableNode> prepOperationConfig = xmlConfiguration.configurationAt(slash(PREPARATIONS, OPERATION));
+        operationService.operate(prepOperationConfig);
+
         ConceptInsertionService insertionService = ConceptInsertionService.getInstance(connectionConfiguration);
         MeshXmlConceptCreator meshXmlConceptCreator = new MeshXmlConceptCreator();
         HierarchicalConfiguration<ImmutableNode> importConfig = xmlConfiguration.configurationAt(slash(IMPORTS, IMPORT));
@@ -163,5 +175,6 @@ public class MeshXmlConceptCreatorTest {
 
             tx.commit();
         }
+        FileConnectionService.getInstance().shutdown();
     }
 }

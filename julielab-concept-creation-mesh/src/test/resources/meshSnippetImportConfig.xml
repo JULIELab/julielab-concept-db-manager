@@ -7,7 +7,7 @@
     <connection>
         <uri>src/test/resources/graph.db</uri>
     </connection>
-    <preparation>
+    <preparations>
         <operation>
             <request>
                 <class>de.julielab.neo4j.plugins.Indexes</class>
@@ -17,7 +17,7 @@
                 </parameters>
             </request>
         </operation>
-    </preparation>
+    </preparations>
     <imports>
         <import>
             <concepts>

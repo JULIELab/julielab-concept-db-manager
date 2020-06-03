@@ -9,6 +9,17 @@
     <connection>
         <uri>src/test/resources/graph.db</uri>
     </connection>
+    <preparations>
+        <operation>
+            <request>
+                <class>de.julielab.neo4j.plugins.Indexes</class>
+                <method>createIndexes</method>
+                <parameters>
+                    <parameter name="db_name" javatype="java.lang.String">neo4j</parameter>
+                </parameters>
+            </request>
+        </operation>
+    </preparations>
     <imports>
         <import>
             <concepts>

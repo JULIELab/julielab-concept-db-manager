@@ -105,8 +105,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         // top homology aggregate to the gene group and homology aggregates.
         Stream.Builder<ImportConcept> topHomologyStreamBuilder = Stream.builder();
         for (String geneId : genes2Aggregate.keySet()) {
-            Optional<Node> topHomologyAggregateOpt = geneHierarchy.getRoot(geneId);
-            if (!topHomologyAggregateOpt.isPresent() || topHomologyAggregateOpt.get().getId().startsWith(TOP_HOMOLOGY_PREFIX)) {
+            Optional<Node> topHomologyAggregateOpt = geneHierarchy.getRoots(getGeneCoordinates(geneId)).stream().filter(c -> c.getConcept() != null).filter(c -> c.getConcept().coordinates.sourceId.startsWith(TOP_HOMOLOGY_PREFIX)).findAny();
+            if (!topHomologyAggregateOpt.isPresent() || topHomologyAggregateOpt.get().getId().sourceId.startsWith(TOP_HOMOLOGY_PREFIX)) {
                 Set<ImportConcept> topAggregates = findTopOrthologsAndHomologyAggregates(geneId, geneHierarchy);
                 // Only if there is more then one aggregate for the current gene we need a new top aggregate to unite the existing aggregates
                 if (topAggregates.size() > 1) {
@@ -130,7 +130,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 
     private Set<ImportConcept> findTopOrthologsAndHomologyAggregates(String geneId, Forest geneHierarchy) {
         // Finds aggregates that are a gene orthology aggregate without a top orthology aggregate, are a top orthology aggregate or a homology aggregate
-        Set<Node> roots = geneHierarchy.getRoots(geneId);
+        Set<Node> roots = geneHierarchy.getRoots(getGeneCoordinates(geneId));
         return roots.stream().map(Node::getConcept).filter(Objects::nonNull).filter(c -> c.coordinates.sourceId.startsWith(GENE_GROUP_PREFIX)).collect(Collectors.toSet());
     }
 
@@ -213,15 +213,16 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 
                 for (String geneId : groupGeneIds) {
                     genes2OrthoAggregate.put(geneId, orthologyCluster);
+                    ConceptCoordinates clusterCoordinates = new ConceptCoordinates(orthologyCluster.coordinates.sourceId, orthologyCluster.coordinates.source, true);
                     genes2Aggregate.put(geneId,
-                            new ConceptCoordinates(orthologyCluster.coordinates.sourceId, orthologyCluster.coordinates.source, true));
-                    geneHierarchy.addNode(geneId, geneHierarchy.addNode(orthologyCluster));
+                            clusterCoordinates);
+                    geneHierarchy.addNode(getGeneCoordinates(geneId), geneHierarchy.addNode(clusterCoordinates));
                 }
             }
         }
 
         // Connect the genes to their orthology clusters
-        conceptStream.map(gene -> {
+       conceptStream = conceptStream.map(gene -> {
             Collection<ImportConcept> orthoAggregates = genes2OrthoAggregate.get(gene.coordinates.originalId);
             for (ImportConcept orthoAggregate : orthoAggregates) {
                 gene.addParent(orthoAggregate.coordinates);
@@ -269,7 +270,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
                         topOrthologyAggregate.elementCoordinates.add(clusterCoordinates);
                     orthoAgg2TopOrtho.put(clusterCoordinates, topOrthologyAggregate);
                     cluster.addParent(topOrthologyAggregate.coordinates);
-                    geneHierarchy.addNode(cluster.coordinates.originalId).addParent(geneHierarchy.addNode(topOrthologyAggregate.coordinates.originalId));
+                    geneHierarchy.addNode(cluster.coordinates).addParent(geneHierarchy.addNode(topOrthologyAggregate.coordinates));
                 }
             }
         }

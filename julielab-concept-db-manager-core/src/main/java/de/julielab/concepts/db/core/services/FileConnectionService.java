@@ -56,7 +56,7 @@ public class FileConnectionService {
 				throw new ConceptDatabaseConnectionException("The given URI \"" + dbUri
 						+ " is neither a relative file path without scheme nor an absolute file path with file: scheme.");
 			File dbFile = dbUri.isAbsolute() ? new File(dbUri) : new File(dbUri.getRawSchemeSpecificPart());
-			log.debug("Accessing file database located at {}", dbFile);
+			log.debug("Accessing file database located at {} that currently {}", dbFile.getAbsolutePath(), dbFile.exists() ? "exists" : "does not exist");
 			return dbs.computeIfAbsent(dbFile.getCanonicalPath(),
 					k -> new DatabaseManagementServiceBuilder(dbFile).build());
 		} catch (IOException | URISyntaxException e) {

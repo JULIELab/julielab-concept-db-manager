@@ -1,5 +1,6 @@
 package de.julielab.concepts.db.creators;
 
+import de.julielab.neo4j.plugins.datarepresentation.ConceptCoordinates;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcept;
 
 import java.util.HashSet;
@@ -8,10 +9,10 @@ import java.util.Set;
 public class Node {
     private Set<Node> parents;
     private ImportConcept concept;
-    private String id;
+    private ConceptCoordinates id;
 
 
-    public Node(String id) {
+    public Node(ConceptCoordinates id) {
         this.id = id;
     }
 
@@ -37,11 +38,11 @@ public class Node {
         this.concept = concept;
     }
 
-    public String getId() {
+    public ConceptCoordinates getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(ConceptCoordinates id) {
         this.id = id;
     }
 }
