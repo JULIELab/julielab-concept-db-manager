@@ -4,15 +4,12 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class StreamingResponse implements Response {
     private InputStream responseStream;
@@ -38,7 +35,6 @@ public class StreamingResponse implements Response {
         ObjectMapper om = new ObjectMapper();
         try {
             JsonParser parser = new JsonFactory(om).createParser(responseStream);
-            System.out.println("Creating iterator");
             Iterator<Result> it = new Iterator<>() {
                 String currentField = null;
                 Iterator<Result> it;
@@ -48,7 +44,6 @@ public class StreamingResponse implements Response {
                     boolean hasNext = false;
                     try {
                         while ((it == null || !it.hasNext()) && parser.nextToken() != null) {
-                            System.out.println("while");
                             JsonToken currentToken = parser.getCurrentToken();
                             if (currentToken == JsonToken.FIELD_NAME) {
                                 currentField = parser.getCurrentName();
@@ -66,21 +61,17 @@ public class StreamingResponse implements Response {
                         }
                         hasNext = it != null ? it.hasNext() : false;
                         if (!hasNext) {
-                            System.out.println("close");
-                            System.out.println(IOUtils.toString(responseStream, UTF_8));
                             parser.close();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    System.out.println(hasNext);
                     return hasNext;
                 }
 
                 @Override
                 public Result next() {
                     hasNext();
-                    System.out.println("return next");
                     return it != null ? it.next() : null;
                 }
             };

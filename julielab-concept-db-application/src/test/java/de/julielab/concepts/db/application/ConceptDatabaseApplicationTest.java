@@ -88,7 +88,6 @@ public class ConceptDatabaseApplicationTest {
 
 		ConceptDatabaseApplication.main(new String[] { "--operation", "antherwall", "non-existent", "-c", NAMEDOPERATIONS, "-nv"});
 
-        XMLConfiguration configuration = ConfigurationUtilities.loadXmlConfiguration(new File(NAMEDOPERATIONS));
         try (Transaction tx = graphDb.beginTx()) {
             Result result = tx.execute("MATCH (c:CONCEPT) WHERE c.myprop IS NOT NULL return COUNT(c) as count");
             assertThat(result.hasNext()).isTrue();

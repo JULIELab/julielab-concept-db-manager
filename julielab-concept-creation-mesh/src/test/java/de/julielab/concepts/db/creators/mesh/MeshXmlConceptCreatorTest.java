@@ -74,7 +74,7 @@ public class MeshXmlConceptCreatorTest {
             assertNotNull(bodyRegions);
             Iterable<Relationship> relationships = bodyRegions.getRelationships(Direction.OUTGOING, ConceptEdgeTypes.IS_BROADER_THAN);
             assertThat(relationships).extracting(r -> r.getEndNode()).extracting(n -> n.getProperty(PROP_ORG_ID)).containsExactlyInAnyOrder("D005121", "D006257", "D009333");
-            assertThat(relationships).extracting(r -> r.getEndNode()).extracting(n -> n.getProperty(PROP_SOURCES)).flatExtracting(a -> Arrays.asList(a)).containsExactlyInAnyOrder("MeSH XML", "MeSH XML", "MeSH XML");
+            assertThat(relationships).extracting(r -> r.getEndNode()).extracting(n -> n.getProperty(PROP_SOURCES+0)).flatExtracting(a -> Arrays.asList(a)).containsExactlyInAnyOrder("MeSH XML", "MeSH XML", "MeSH XML");
             assertThat(relationships).extracting(r -> r.getEndNode()).extracting(n -> n.getProperty(ConceptConstants.PROP_ORG_SRC)).containsExactlyInAnyOrder("MeSH XML", "MeSH XML", "MeSH XML");
 
             Node facet = bodyRegions.getSingleRelationship(ConceptEdgeTypes.HAS_ROOT_CONCEPT, Direction.INCOMING).getStartNode();
@@ -137,7 +137,7 @@ public class MeshXmlConceptCreatorTest {
             assertNotNull(node);
             // Check that the original source regular expression detection works
             assertThat(node.getProperty(PROP_ORG_SRC)).isEqualTo("MeSH XML");
-            assertThat((String[])node.getProperty(PROP_SOURCES)).containsExactly("Immunology Concepts");
+            assertThat((String[])node.getProperty(PROP_SOURCES+0)).containsExactly("Immunology Concepts");
 
             tx.commit();
         }

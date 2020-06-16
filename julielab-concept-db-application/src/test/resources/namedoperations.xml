@@ -1,7 +1,6 @@
 <conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns="conceptdb-1.1.0.xsd"
-                 xsi:schemaLocation="conceptdb-1.1.0.xsd conceptdb-1.1.0.xsd
-                 http://www.julielab.de/conceptdb/operators/cypher http://www.julielab.de/conceptdb/operators/cypheroperator-1.0.0.xsd">
+                 xsi:schemaLocation="conceptdb-1.1.0.xsd conceptdb-1.1.0.xsd">
     <versioning>
         <version>1.0</version>
     </versioning>
@@ -11,7 +10,7 @@
     <operations>
         <operation name="antherwall">
             <request>
-                <cypherquery>MATCH (c:CONCEPT) WHERE "http://purl.obolibrary.org/obo/PO_0000002" IN c.sourceIds SET
+                <cypherquery>MATCH (c:CONCEPT) WHERE "http://purl.obolibrary.org/obo/PO_0000002" IN c.sourceIds0 SET
                     c.myprop="NEWVAL" RETURN c.myprop
                 </cypherquery>
             </request>

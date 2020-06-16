@@ -233,7 +233,7 @@ public class NCBIGeneConceptCreatorTest {
                     if (!orthologAggregate.getProperty(PROP_ORG_ID).equals("g11")) {
                         assertThat(aggregatingNodes.size()).isEqualTo(1);
                         final Node aggregateOfOrthologAggregate = aggregatingNodes.stream().findAny().get();
-                        final String aggregateSourceId = (String) aggregateOfOrthologAggregate.getProperty(PROP_SRC_IDS);
+                        final String aggregateSourceId = (String) aggregateOfOrthologAggregate.getProperty(PROP_SRC_IDS+0);
                         assertThat(aggregateSourceId).overridingErrorMessage("Expecting the node with properties <%s> to be element of the aggregate <%s> but was <%s> instead", PropertyUtilities.getNodePropertiesAsString(orthologAggregate), NCBIGeneConceptCreator.TOP_ORTHOLOGY_PREFIX + 0, aggregateSourceId).isEqualTo(NCBIGeneConceptCreator.TOP_ORTHOLOGY_PREFIX + 0);
                     } else {
                         // this is orthology cluster g11, there shouldn't be any governing aggregate
