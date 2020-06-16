@@ -42,6 +42,7 @@ public class MeshXmlConceptCreatorTest {
 
     @BeforeMethod
     public void beforeMethod() throws IOException {
+        FileConnectionService.getInstance().shutdown();
         FileUtils.deleteDirectory(TEST_DB);
     }
 
@@ -109,7 +110,6 @@ public class MeshXmlConceptCreatorTest {
 
             tx.commit();
         }
-        FileConnectionService.getInstance().shutdown();
     }
 
     @Test
@@ -141,7 +141,6 @@ public class MeshXmlConceptCreatorTest {
 
             tx.commit();
         }
-        FileConnectionService.getInstance().shutdown();
     }
 
     @Test
@@ -175,6 +174,5 @@ public class MeshXmlConceptCreatorTest {
 
             tx.commit();
         }
-        FileConnectionService.getInstance().shutdown();
     }
 }

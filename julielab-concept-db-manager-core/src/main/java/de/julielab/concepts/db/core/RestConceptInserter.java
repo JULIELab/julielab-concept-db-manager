@@ -13,12 +13,14 @@ import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.ConceptInsertionException;
 import de.julielab.concepts.util.InternalNeo4jException;
 import de.julielab.java.utilities.ConfigurationUtilities;
+import de.julielab.java.utilities.ProgressBar;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcept;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.InputStreamEntity;
 import org.slf4j.Logger;
@@ -31,12 +33,13 @@ import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.List;
+import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.checkParameters;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static de.julielab.neo4j.plugins.datarepresentation.ImportConcepts.*;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class RestConceptInserter implements ConceptInserter {
     public static final int CONCEPT_IMPORT_BATCH_SIZE = 1000;
@@ -72,11 +75,14 @@ public class RestConceptInserter implements ConceptInserter {
 
             Thread concept2json = new Thread(() -> {
                 try {
-                    List<ImportConcept> importConcepts = concepts.getConcepts();
+                    ProgressBar progressBar = new ProgressBar(concepts.getNumConcepts());
+                    Stream<ImportConcept> importConcepts = concepts.getConcepts();
                     g.writeFieldName(NAME_CONCEPTS);
                     g.writeStartArray();
-                    for (ImportConcept concept : importConcepts)
+                    for (ImportConcept concept : (Iterable<ImportConcept>) importConcepts::iterator) {
                         g.writeObject(concept);
+                        progressBar.incrementDone(true);
+                    }
                     g.writeEndArray();
                     g.writeEndObject();
                     g.close();
@@ -87,7 +93,7 @@ public class RestConceptInserter implements ConceptInserter {
             concept2json.start();
             httpPost.setEntity(new InputStreamEntity(entityStream));
             log.info("Sending data to server");
-            String response = HttpConnectionService.getInstance().sendRequest(httpPost);
+            String response = IOUtils.toString(HttpConnectionService.getInstance().sendRequest(httpPost), UTF_8);
             if (log.isDebugEnabled())
                 log.debug("Server plugin response to concept insertion: {}", response);
             log.info("Done with concept import.");

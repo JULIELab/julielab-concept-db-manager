@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -33,7 +34,7 @@ public abstract class RestCallBase extends FunctionCallBase {
         super(log);
     }
 
-    public String callNeo4jRestEndpoint(HierarchicalConfiguration<ImmutableNode> connectionConfig, HierarchicalConfiguration<ImmutableNode> methodCallConfig, String defaultHttpMethod)
+    public InputStream callNeo4jRestEndpoint(HierarchicalConfiguration<ImmutableNode> connectionConfig, HierarchicalConfiguration<ImmutableNode> methodCallConfig, String defaultHttpMethod)
             throws ConceptDatabaseConnectionException, MethodCallException, IncompatibleActionHandlerConnectionException {
         String state = "read_connection";
         try {
@@ -61,13 +62,13 @@ public abstract class RestCallBase extends FunctionCallBase {
                 if (parameters != null && !httpMethod.equals(HttpMethod.GET)) {
                     parameterJson = gson.toJson(parameters);
                     ((HttpEntityEnclosingRequestBase) request).setEntity(new StringEntity(parameterJson));
-                } else {
-                    String query = parameters.entrySet().stream().map(e -> e.getKey() + "=" + e.getValue()).collect(Collectors.joining("&"));
+                } else if (parameters != null) {
+                    String query = parameters.entrySet().stream().map(e -> toQueryParam(e, gson)).collect(Collectors.joining("&"));
                     java.net.URI uriWithQueryParams = new java.net.URI(completePluginEndpointUri.getScheme(), completePluginEndpointUri.getAuthority(), completePluginEndpointUri.getPath(), query, null);
                     request.setURI(uriWithQueryParams);
                 }
                 state = "send_request";
-                log.info("Sending request {} to {}", parameterJson, completePluginEndpointUri);
+                log.info("Sending request {} to {}", parameterJson, request.getURI());
                 return httpService.sendRequest(request);
             } catch (UnsupportedEncodingException e) {
                 throw new ConceptDatabaseConnectionException(e);
@@ -82,6 +83,13 @@ public abstract class RestCallBase extends FunctionCallBase {
             log.error("Could not construct correct request URI.", e);
             throw new IllegalArgumentException(e);
         }
+    }
+
+    private String toQueryParam(Map.Entry<String, Object> parameter, Gson gson) {
+        Object value = parameter.getValue();
+        if (value instanceof Iterable || value.getClass().isArray())
+            value = gson.toJson(value);
+        return parameter.getKey() + "=" + value;
     }
 
     @Override

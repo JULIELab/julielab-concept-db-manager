@@ -12,6 +12,7 @@ import org.neo4j.driver.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.neo4j.driver.internal.types.InternalTypeSystem.TYPE_SYSTEM;
 
 /**
@@ -67,7 +69,7 @@ public class CypherBoltExporter extends DataExporterImpl {
                 }
                 writeData(outputFile,
                         getResourceHeader(connectionConfiguration),
-                        fieldValues.stream().collect(Collectors.joining(System.getProperty("line.separator"))));
+                        new ByteArrayInputStream(fieldValues.stream().collect(Collectors.joining(System.getProperty("line.separator"))).getBytes(UTF_8)));
             } catch (IOException e) {
                 throw new DataExportException(e);
             } catch (VersionRetrievalException e) {

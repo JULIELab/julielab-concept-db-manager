@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.julielab.concepts.db.core.http.Response;
 import de.julielab.concepts.db.core.http.Statements;
+import de.julielab.concepts.db.core.http.StreamingResponse;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.configuration2.ConfigurationUtils;
@@ -22,11 +23,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.HttpMethod;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 
 import static de.julielab.concepts.db.core.services.NetworkConnectionCredentials.*;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 
 public class HttpConnectionService {
@@ -102,9 +106,9 @@ public class HttpConnectionService {
         }
     }
 
-    public String sendRequest(HttpUriRequest request) throws ConceptDatabaseConnectionException {
+    public InputStream sendRequest(HttpUriRequest request) throws ConceptDatabaseConnectionException {
         String responseString = null;
-            HttpResponse response = null;
+        HttpResponse response = null;
         try {
             response = client.execute(request);
             HttpEntity entity = response.getEntity();
@@ -112,12 +116,14 @@ public class HttpConnectionService {
             // error. To get specific return codes, see HttpStatus
             // constants.
             if (response.getStatusLine().getStatusCode() < 300) {
-                return entity != null ? EntityUtils.toString(entity) : "<no response from Neo4j>";
+                if (entity != null)
+                    return entity.getContent();
+                return new ByteArrayInputStream("<no response from Neo4j>".getBytes(UTF_8));
             } else if (response.getStatusLine().getStatusCode() == 404)
                 throw new IllegalArgumentException("Server returned status code HTTP " + response.getStatusLine().getStatusCode() + " Not Found: " + request.getMethod() + ": " + request.getURI().toString());
             responseString = EntityUtils.toString(entity);
             if (responseString != null && !responseString.isEmpty()) {
-                throw new ConceptDatabaseConnectionException(responseString);
+                throw new IllegalArgumentException(responseString);
             }
             throw new ConceptDatabaseConnectionException(response.getStatusLine().getStatusCode() + ": " + response.getStatusLine().getReasonPhrase());
         } catch (com.fasterxml.jackson.databind.exc.MismatchedInputException e) {
@@ -143,7 +149,7 @@ public class HttpConnectionService {
         httpPost.addHeader("Content-Type", "application/json");
         String jsonStatements = jsonMapper.writeValueAsString(statements);
         httpPost.setEntity(new StringEntity(jsonStatements));
-        String responseString = httpService.sendRequest(httpPost);
-        return jsonMapper.readValue(responseString, Response.class);
+        InputStream responseStream = httpService.sendRequest(httpPost);
+        return new StreamingResponse(responseStream);
     }
 }

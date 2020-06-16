@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -67,9 +66,12 @@ public class VersioningIT {
                 .configurationAt(CONNECTION);
         HierarchicalConfiguration<ImmutableNode> versioningConfig = configuration.configurationAt(VERSIONING);
         VersioningService instance = VersioningService.getInstance(connectionConfiguration);
+        System.out.println("set version");
         instance.setVersion(versioningConfig);
+        System.out.println("version successfully set");
 
         assertEquals("1.0-http", instance.getVersion());
+        System.out.println("Test finished");
     }
 
     public void testBolt() throws ConfigurationException, VersioningException {

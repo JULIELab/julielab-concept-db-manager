@@ -1,36 +1,12 @@
 package de.julielab.concepts.db.core.http;
 
 import java.util.List;
+import java.util.stream.Stream;
 
-public class Response {
-	private List<Result> results;
-	private List<Object> errors;
-	public List<Object> getErrors() {
-		return errors;
-	}
+public interface Response extends AutoCloseable {
+    Stream<Result> getResults();
 
-	public void setErrors(List<Object> errors) {
-		this.errors = errors;
-	}
+    Result getSingleResult();
 
-	@Override
-	public String toString() {
-		return "Response [results=" + results + ", errors=" + errors + "]";
-	}
-
-	public List<Result> getResults() {
-		return results;
-	}
-
-	public void setResults(List<Result> results) {
-		this.results = results;
-	}
-
-	public Result getSingleResult() {
-		if (results.isEmpty())
-			throw new IllegalStateException("There are no results.");
-		if (results.size() > 1)
-			throw new IllegalStateException("There is more than a single result.");
-		return results.get(0);
-	}
+    List<Object> getErrors();
 }

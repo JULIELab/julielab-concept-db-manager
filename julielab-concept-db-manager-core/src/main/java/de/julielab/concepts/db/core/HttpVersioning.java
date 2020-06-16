@@ -36,21 +36,21 @@ public class HttpVersioning implements Versioning {
 				new Statement(CREATE_VERSION, VERSION, version));
 		String baseUri = connectionConfiguration.getString(NetworkConnectionCredentials.CONFKEY_URI);
 		String transactionalUri = baseUri + Constants.TRANSACTION_ENDPOINT;
-		try {
-			Response response = httpService.sendStatements(statements, transactionalUri, connectionConfiguration);
+		try (Response response = httpService.sendStatements(statements, transactionalUri, connectionConfiguration)){
 			if (!response.getErrors().isEmpty())
 				throw new VersioningException(
 						"Error happened when trying to create a version node: " + response.getErrors());
 			log.info("Created database version node for version {}", version);
 			statements = new Statements(
 					new Statement(VersioningConstants.CREATE_UNIQUE_CONSTRAINT));
-			response = httpService.sendStatements(statements, transactionalUri, connectionConfiguration);
-			if (!response.getErrors().isEmpty())
-				throw new VersioningException(
-						"Error happened when trying to create the unique constraint on VERSION.version: "
-								+ response.getErrors());
+			try (Response response2 = httpService.sendStatements(statements, transactionalUri, connectionConfiguration)) {
+				if (!response2.getErrors().isEmpty())
+					throw new VersioningException(
+							"Error happened when trying to create the unique constraint on VERSION.version: "
+									+ response.getErrors());
+			}
 			log.info("Created UNIQUE constraint on the version node.");
-		} catch (ConceptDatabaseConnectionException | IOException e) {
+		} catch (Exception e) {
 			throw new VersioningException(e);
 		}
 	}

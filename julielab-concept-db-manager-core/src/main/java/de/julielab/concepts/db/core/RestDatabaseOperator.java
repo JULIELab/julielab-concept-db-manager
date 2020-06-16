@@ -8,10 +8,14 @@ import de.julielab.concepts.util.IncompatibleActionHandlerConnectionException;
 import de.julielab.concepts.util.MethodCallException;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.HttpMethod;
+import java.io.IOException;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class RestDatabaseOperator extends RestCallBase implements DatabaseOperator{
 private final static Logger log = LoggerFactory.getLogger(RestDatabaseOperator.class);
@@ -24,9 +28,9 @@ private final static Logger log = LoggerFactory.getLogger(RestDatabaseOperator.c
     @Override
     public void operate(HierarchicalConfiguration<ImmutableNode> operationConfiguration) throws DatabaseOperationException, IncompatibleActionHandlerConnectionException {
         try {
-            String response = callNeo4jRestEndpoint(connectionConfiguration, operationConfiguration, "PUT");
+            String response = IOUtils.toString(callNeo4jRestEndpoint(connectionConfiguration, operationConfiguration, "PUT"), UTF_8);
             log.info("Response from Neo4j: {}", response);
-        } catch (ConceptDatabaseConnectionException | MethodCallException e) {
+        } catch (IOException | ConceptDatabaseConnectionException | MethodCallException e) {
             throw new DatabaseOperationException(e);
         }
     }

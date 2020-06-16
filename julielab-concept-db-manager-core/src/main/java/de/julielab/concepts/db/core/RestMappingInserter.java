@@ -14,6 +14,7 @@ import de.julielab.concepts.util.MappingInsertionException;
 import de.julielab.neo4j.plugins.datarepresentation.ImportMapping;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.InputStreamEntity;
 import org.slf4j.Logger;
@@ -29,6 +30,7 @@ import java.util.stream.Stream;
 import static de.julielab.concepts.db.core.ConfigurationConstants.REST;
 import static de.julielab.concepts.db.core.ConfigurationConstants.REST_ENDPOINT;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class RestMappingInserter implements MappingInserter {
     private final static Logger log = LoggerFactory.getLogger(RestMappingInserter.class);
@@ -66,7 +68,7 @@ public class RestMappingInserter implements MappingInserter {
             });
             mapping2json.start();
             httpPost.setEntity(new InputStreamEntity(entityStream));
-            String response = HttpConnectionService.getInstance().sendRequest(httpPost);
+            String response = IOUtils.toString(HttpConnectionService.getInstance().sendRequest(httpPost), UTF_8);
             log.debug("Server plugin response to mapping insertion: {}", response);
         } catch (ConceptDatabaseConnectionException | JsonProcessingException | UnsupportedEncodingException
                 e) {

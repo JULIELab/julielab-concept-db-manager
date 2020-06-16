@@ -14,6 +14,7 @@ import org.neo4j.graphdb.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.neo4j.configuration.GraphDatabaseSettings.DEFAULT_DATABASE_NAME;
 
 public class CypherFileDBExporter extends DataExporterImpl {
@@ -68,7 +70,7 @@ public class CypherFileDBExporter extends DataExporterImpl {
             }
             writeData(new File(outputPath),
                     getResourceHeader(connectionConfiguration),
-                    outputLines.stream().collect(Collectors.joining(System.getProperty("line.separator"))));
+                    new ByteArrayInputStream(outputLines.stream().collect(Collectors.joining(System.getProperty("line.separator"))).getBytes(UTF_8)));
             log.info("Done.");
         } catch (ConfigurationException | VersionRetrievalException | IOException e) {
             throw new DataExportException(e);

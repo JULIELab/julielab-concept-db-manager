@@ -85,9 +85,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         Multimap<String, ConceptCoordinates> genes2Aggregate = HashMultimap.create();
         Forest geneHierarchy = new Forest();
 
-        List<String> aggregateCopyProperties = Arrays.asList(ConceptConstants.PROP_PREF_NAME,
-                ConceptConstants.PROP_SYNONYMS, ConceptConstants.PROP_WRITING_VARIANTS,
-                ConceptConstants.PROP_DESCRIPTIONS, ConceptConstants.PROP_FACETS);
+        List<String> aggregateCopyProperties = Arrays.asList(ConceptConstants.PROP_PREF_NAME, ConceptConstants.PROP_FACETS);
 
         Stream<ImportConcept> processedConceptStream = createGeneOrthologyAggregates(conceptStream, totalGeneIds, genes2Aggregate, geneHierarchy, geneGroup, termsByGeneId, aggregateCopyProperties);
         return createTopHomologyAggregates(processedConceptStream, geneHierarchy, genes2Aggregate, aggregateCopyProperties);
@@ -568,12 +566,15 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 
         try {
             log.info("Beginning import of NCBI Genes.");
+            log.info("Reading the set of organisms to import genes of from {}.", organisms);
             Set<String> organismSet = FileUtilities.getReaderFromFile(organisms).lines().map(String::intern).collect(Collectors.toSet());
+            log.info("Retrieved {} taxonomy IDs.", organismSet.size());
+            log.info("Reading the set of valid gene IDs from {}.", geneInfo);
             Set<String> totalGeneIds = getTotalGeneIds(geneInfo, organismSet);
-            log.info("Got {} genes from source files.", totalGeneIds.size());
+            log.info("Got {} gene IDs.", totalGeneIds.size());
             Map<String, String> geneId2Tax = new HashMap<>();
             Map<ConceptCoordinates, ImportConcept> conceptsByGeneId = new HashMap<>();
-            log.info("Converting NCBI Gene source files into nodes for the concept graph.");
+            log.info("Creating a stream converting NCBI Gene's gene_info file into nodes for the concept graph.");
             Stream<ImportConcept> conceptStream = convertGeneInfoToTerms(geneInfo, organismSet, geneDescriptions);
             conceptStream = setSpeciesQualifier(conceptStream, ncbiTaxNames, geneId2Tax, conceptsByGeneId.values());
             log.info("Creating homology aggregates");
@@ -582,14 +583,14 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             log.info("Created {} orthology aggregates", orthologAggregateCounter);
             log.info("Created {} top-homology aggregates, governing homologene and orthology aggregates",
                     topHomologyAggregateCounter);
-            log.info("Got {} terms overall (genes and homology aggregates)", conceptsByGeneId.size());
 
             ImportFacet facet = FacetCreationService.getInstance().createFacet(importConfig);
             ImportOptions options = new ImportOptions();
             options.createHollowAggregateElements = true;
-            options.doNotCreateHollowParents = true;
+            // This was "true" in the past. Hopefully we can make it work anyway.
+            options.doNotCreateHollowParents = false;
             ImportConcepts importConcepts = new ImportConcepts(conceptStream, facet);
-            importConcepts.setNumConcepts(totalGeneIds.size());
+            importConcepts.setNumConcepts(totalGeneIds.size() + homologeneAggregateCounter + orthologAggregateCounter + topHomologyAggregateCounter);
             importConcepts.setImportOptions(options);
             return Stream.of(importConcepts);
         } catch (IOException e) {

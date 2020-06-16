@@ -51,12 +51,9 @@ public class FileDatabaseConceptInserter implements ConceptInserter {
             try {
                 log.debug("Inserting the concepts of facet {} (customId: {}) into the Neo4j database", facet.getName(),
                         facet.getCustomId());
-                try (Transaction tx = graphDb.beginTx()) {
-                    Map<String, Object> response = new HashMap<>();
-                    ConceptInsertion.insertConcepts(tx, concepts, response);
-                    log.debug("Successfully inserted the given concepts: {}", response);
-                    tx.commit();
-                }
+                Map<String, Object> response = new HashMap<>();
+                ConceptInsertion.insertConcepts(graphDb, concepts, response);
+                log.debug("Successfully inserted the given concepts: {}", response);
             } catch (de.julielab.neo4j.plugins.util.ConceptInsertionException e) {
                 throw new ConceptInsertionException(
                         "The JSON format specifying the ontology class names or - but less probable - the facet JSON format does not fit the requirements of the employed version of the julielab-neo4j-plugin-concepts dependency. There might be a compatibility issue between the julielab-bioportal-tools and the plugin-concepts libraries.",

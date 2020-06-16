@@ -10,11 +10,14 @@ import org.neo4j.dbms.api.DatabaseManagementService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class JavaClassFileDBExporter extends JavaMethodCallBase implements DataExporter {
 
@@ -51,7 +54,7 @@ public class JavaClassFileDBExporter extends JavaMethodCallBase implements DataE
                 String outputFile = exportConfig.getString(slash(REQUEST, OUTPUT_FILE));
                 try {
                     String result = callInstanceMethod(exportConfig.configurationAt(REQUEST), dbms);
-                    String decodedResponse = decode(result, exportConfig.configurationAt(slash(REQUEST, DECODING)));
+                    InputStream decodedResponse = decode(new ByteArrayInputStream(result.getBytes(UTF_8)), exportConfig.configurationAt(slash(REQUEST, DECODING)));
                     String resourceHeader = getResourceHeader(connectionConfiguration) + result;
                     writeData(new File(outputFile), resourceHeader, decodedResponse);
                 } catch (MethodCallException | VersionRetrievalException | IOException | JSONException e) {

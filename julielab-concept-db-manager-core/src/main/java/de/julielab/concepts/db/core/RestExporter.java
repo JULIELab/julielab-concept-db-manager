@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import javax.ws.rs.HttpMethod;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
@@ -47,13 +48,13 @@ public class RestExporter extends RestCallBase implements DataExporter  {
 
             @Override
             public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws ConceptDatabaseConnectionException, DataExportException, IncompatibleActionHandlerConnectionException {
-                String response = null;
+                InputStream response = null;
                 try {
                     String outputPath = ConfigurationUtilities.requirePresent(slash(OUTPUT_FILE), exportConfig::getString);
                     File outputFile = new File(outputPath);
                     response = callNeo4jRestEndpoint(connectionConfiguration, exportConfig, "GET");
                     log.info("Writing file {}", outputFile);
-                    String decodedResponse = decode(response, exportConfig.configurationAt(slash(DECODING)));
+                    InputStream decodedResponse = exportConfig.containsKey(DECODING) ? decode(response, exportConfig.configurationAt(DECODING)) : response;
                     writeData(outputFile, getResourceHeader(connectionConfiguration),decodedResponse);
                     log.info("Done.");
                 }  catch (IOException e) {
