@@ -59,7 +59,7 @@ public class StreamingResponse implements Response {
                                 }
                             }
                         }
-                        hasNext = it != null ? it.hasNext() : false;
+                        hasNext = it != null ? it.hasNext() && parser.currentToken() != JsonToken.END_ARRAY: false;
                         if (!hasNext) {
                             parser.close();
                         }
