@@ -127,6 +127,10 @@
             <artifactId>julielab-neo4j-plugins-concepts</artifactId>
         </dependency>
         <dependency>
+            <groupId>de.julielab</groupId>
+            <artifactId>julielab-java-utilities</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpmime</artifactId>
             <version>4.3.5</version>
