@@ -17,7 +17,6 @@ import java.util.ServiceLoader;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
-import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 public class FacetCreationService implements ParameterExposing {
 
@@ -75,7 +74,7 @@ public class FacetCreationService implements ParameterExposing {
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
         template.addProperty(slash(basePath, FACET, CREATOR, NAME), DefaultFacetCreator.class.getSimpleName());
-        String configPath = slash(basePath, FACET, CREATOR, CONFIGURATION);
+        String configPath = slash(basePath, FACET, CREATOR, REQUEST);
         template.addProperty(slash(configPath, FACET_GROUP, NAME), "");
         template.addProperty(slash(configPath, NAME), "");
         template.addProperty(slash(configPath, DefaultFacetCreator.SOURCE_TYPE), "");

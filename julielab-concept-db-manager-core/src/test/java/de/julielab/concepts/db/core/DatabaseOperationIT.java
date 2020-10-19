@@ -1,24 +1,28 @@
 package de.julielab.concepts.db.core;
 
-import de.julielab.concepts.db.core.services.*;
+import de.julielab.concepts.db.core.services.BoltConnectionService;
+import de.julielab.concepts.db.core.services.DatabaseOperationService;
+import de.julielab.concepts.db.core.services.MappingInsertionService;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DatabaseOperationException;
 import de.julielab.java.utilities.ConfigurationUtilities;
-import de.julielab.neo4j.plugins.datarepresentation.*;
-import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
+import de.julielab.neo4j.plugins.concepts.ConceptManager;
+import de.julielab.neo4j.plugins.datarepresentation.ImportMapping;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.neo4j.driver.Driver;
+import org.neo4j.driver.Session;
+import org.neo4j.driver.Value;
 import org.neo4j.driver.internal.types.InternalTypeSystem;
-import org.neo4j.driver.v1.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
@@ -47,14 +51,18 @@ public class DatabaseOperationIT {
         MappingInsertionService mappingInsertion = MappingInsertionService.getInstance(connectionConfig);
         DatabaseOperationService dbOperation = DatabaseOperationService.getInstance(connectionConfig);
 
-        mappingInsertion.insertMappings(Stream.of(importMapping));
+        // We need an import configuration to tell that we want to use an unmanaged server extension rather
+        // than a legacy plugin. We do this by not specifying the plugin name.
+        HierarchicalConfiguration<ImmutableNode> mappingImportConfig = ConfigurationUtilities.createEmptyConfiguration();
+        mappingImportConfig.setProperty(slash(REST, REST_ENDPOINT), "/concepts/"+ ConceptManager.CM_REST_ENDPOINT+"/"+ConceptManager.INSERT_MAPPINGS);
+        mappingInsertion.insertMappings(mappingImportConfig, Stream.of(importMapping));
         dbOperation.operate(config.configurationAt(slash(OPERATIONS, OPERATION)));
 
         config.setProperty(slash(CONNECTION, URI), "bolt://localhost:" + ITTestsSetup.neo4j.getMappedPort(7687));
         Driver driver = BoltConnectionService.getInstance().getBoltDriver(config.configurationAt(CONNECTION));
         try (Session session = driver.session()) {
-            StatementResult result = session.readTransaction(tx -> tx.run("MATCH (a:MAPPING_AGGREGATE) RETURN COUNT(a) AS count"));
-            assertThat(result.single().asMap()).containsEntry("count", 1L);
+            Map<String, Object> responseMap = session.readTransaction(tx -> tx.run("MATCH (a:MAPPING_AGGREGATE) RETURN COUNT(a) AS count").single().asMap());
+            assertThat(responseMap).containsEntry("count", 1L);
         }
     }
 
@@ -66,19 +74,18 @@ public class DatabaseOperationIT {
         Driver driver = BoltConnectionService.getInstance().getBoltDriver(config.configurationAt(CONNECTION));
         driver.session().writeTransaction(tx -> tx.run("MATCH (c:CONCEPT) REMOVE c.testprop"));
         // Check that the property is indeed not set
-        String propQuery = "MATCH (c:CONCEPT) WHERE 'id1' IN c.sourceIds RETURN c.testprop";
-        StatementResult result = driver.session().readTransaction(tx -> tx.run(propQuery));
-        assertThat(result.next().get(0).hasType(InternalTypeSystem.TYPE_SYSTEM.NULL()));
+        String propQuery = "MATCH (c:CONCEPT) WHERE c.sourceIds = 'id1' RETURN c.testprop";
+        Value result = driver.session().readTransaction(tx -> tx.run(propQuery).next().get(0));
+        assertThat(result.hasType(InternalTypeSystem.TYPE_SYSTEM.NULL()));
 
         // Apply the operation configuration
         DatabaseOperationService operationService = DatabaseOperationService.getInstance(config.configurationAt(CONNECTION));
         operationService.operate(config.configurationAt(slash(OPERATIONS, OPERATION)));
 
         // And now there should be a number
-        result = driver.session().readTransaction(tx -> tx.run(propQuery));
-        Record record = result.next();
-        assertThat(record.get(0).hasType(InternalTypeSystem.TYPE_SYSTEM.NUMBER()));
-        assertThat(record.get(0).asInt()).isEqualTo(42);
+        result = driver.session().readTransaction(tx -> tx.run(propQuery).next().get(0));
+        assertThat(result.hasType(InternalTypeSystem.TYPE_SYSTEM.NUMBER()));
+        assertThat(result.asInt()).isEqualTo(42);
     }
 
     public void testHttpCypherOperator() throws ConfigurationException, DatabaseOperationException, IOException, ConceptDatabaseConnectionException {
@@ -89,8 +96,8 @@ public class DatabaseOperationIT {
         driver.session().writeTransaction(tx -> tx.run("MATCH (c:CONCEPT) REMOVE c.testprop"));
         // Check that the property is indeed not set
         String propQuery = "MATCH (c:CONCEPT) WHERE 'id1' IN c.sourceIds RETURN c.testprop";
-        StatementResult result = driver.session().readTransaction(tx -> tx.run(propQuery));
-        assertThat(result.next().get(0).hasType(InternalTypeSystem.TYPE_SYSTEM.NULL()));
+        Value value = driver.session().readTransaction(tx -> tx.run(propQuery).next().get(0));
+        assertThat(value.hasType(InternalTypeSystem.TYPE_SYSTEM.NULL()));
 
         // Now switch to the HTTP connection for the actual test
         config.setProperty(slash(CONNECTION, URI), "http://localhost:" + ITTestsSetup.neo4j.getMappedPort(7474));
@@ -99,9 +106,8 @@ public class DatabaseOperationIT {
         operationService.operate(config.configurationAt(slash(OPERATIONS, OPERATION)));
 
         // And now there should be a number
-        result = driver.session().readTransaction(tx -> tx.run(propQuery));
-        Record record = result.next();
-        assertThat(record.get(0).hasType(InternalTypeSystem.TYPE_SYSTEM.NUMBER()));
-        assertThat(record.get(0).asInt()).isEqualTo(42);
+        value = driver.session().readTransaction(tx -> tx.run(propQuery).next().get(0));
+        assertThat(value.hasType(InternalTypeSystem.TYPE_SYSTEM.NUMBER()));
+        assertThat(value.asInt()).isEqualTo(42);
     }
 }

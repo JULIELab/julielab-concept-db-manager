@@ -1,15 +1,25 @@
 <conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xmlns="http://www.julielab.de/conceptdb"
-                 xsi:schemaLocation="http://www.julielab.de/conceptdb http://www.julielab.de/conceptdb-1.0.0.xsd
-                 http://www.julielab.de/conceptdb/concepts/bioportal http://www.julielab.de/conceptdb/concepts/bioportalconcepts-1.0.0.xsd
-                 http://www.julielab.de/conceptdb/facets/bioportal http://www.julielab.de/conceptdb/facets/bioportalfacets-1.0.0.xsd
-                 http://www.julielab.de/conceptdb/exporters/serverplugin http://www.julielab.de/conceptdb/exporters/serverpluginexporter-1.0.0.xsd">
+                 xmlns="conceptdb-1.1.0.xsd"
+                 xsi:schemaLocation="conceptdb-1.1.0.xsd conceptdb-1.1.0.xsd
+                 http://www.julielab.de/conceptdb/concepts/bioportal bioportalconcepts-1.1.0.xsd
+                 http://www.julielab.de/conceptdb/facets/bioportal http://www.julielab.de/conceptdb/facets/bioportalfacets-1.0.0.xsd">
     <versioning>
         <version>1.0</version>
     </versioning>
     <connection>
         <uri>src/test/resources/graphdb</uri>
     </connection>
+    <preparations>
+        <operation>
+            <request>
+                <class>de.julielab.neo4j.plugins.Indexes</class>
+                <method>createIndexes</method>
+                <parameters>
+                    <parameter name="db_name" javatype="java.lang.String">neo4j</parameter>
+                </parameters>
+            </request>
+        </operation>
+    </preparations>
     <imports>
         <import>
             <concepts>

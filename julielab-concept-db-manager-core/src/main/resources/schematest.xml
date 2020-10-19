@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="conceptdb-1.1.0.xsd"
+                 xsi:schemaLocation="conceptdb-1.1.0.xsd conceptdb-1.1.0.xsd">
+    <versioning>
+        <version>1.0-test</version>
+    </versioning>
+    <connection>
+        <uri>to be filled by the test</uri>
+        <user></user>
+        <password></password>
+    </connection>
+    <exports>
+        <export>
+            <request>
+                <cypherquery>MATCH (c:CONCEPT) return c.id,c.preferredName</cypherquery>
+            </request>
+            <outputfile>src/test/resources/output/boltexport.txt</outputfile>
+        </export>
+    </exports>
+</conceptdatabase>

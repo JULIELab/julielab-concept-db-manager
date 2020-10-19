@@ -1,19 +1,28 @@
-<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xmlns="http://www.julielab.de/conceptdb"
-                 xsi:schemaLocation="http://www.julielab.de/conceptdb http://www.julielab.de/conceptdb/conceptdb-1.0.0.xsd
-        http://www.julielab.de/conceptdb/concepts/xml http://www.julielab.de/conceptdb/concepts/xmlconcepts-1.0.0.xsd
-        http://www.julielab.de/conceptdb/facets/mesh http://www.julielab.de/conceptdb/facets/meshfacet-1.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="conceptdb-1.1.0.xsd"
+                 xsi:schemaLocation="conceptdb-1.1.0.xsd conceptdb-1.1.0.xsd http://www.julielab.de/conceptdb/concepts/xml xmlconcepts-1.1.0.xsd http://www.julielab.de/conceptdb/facets/mesh meshfacet-1.1.0.xsd">
     <versioning>
         <version>1.0-test</version>
     </versioning>
     <connection>
         <uri>src/test/resources/graph.db</uri>
     </connection>
+    <preparations>
+        <operation>
+            <request>
+                <class>de.julielab.neo4j.plugins.Indexes</class>
+                <method>createIndexes</method>
+                <parameters>
+                    <parameter name="db_name" javatype="java.lang.String">neo4j</parameter>
+                </parameters>
+            </request>
+        </operation>
+    </preparations>
     <imports>
         <import>
             <concepts>
                 <creator xmlns="http://www.julielab.de/conceptdb/concepts/xml">
-                    <name>de.julielab.concepts.db.creators.mesh.XmlConceptCreator</name>
+                    <name>de.julielab.concepts.db.creators.mesh.MeshXmlConceptCreator</name>
                     <configuration>
                         <input>
                             <xmlfile>src/test/resources/mesh2017_snippet.xml</xmlfile>

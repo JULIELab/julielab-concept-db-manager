@@ -7,7 +7,8 @@ import de.julielab.concepts.util.VersionRetrievalException;
 import de.julielab.concepts.util.VersioningException;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.neo4j.driver.v1.*;
+import org.neo4j.driver.*;
+import org.neo4j.kernel.api.Statement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,16 +31,16 @@ public class BoltVersioning implements Versioning {
 			throw new VersioningException("The database already has a version: " + existingVersion);
 		try (Session session = driver.session()) {
 			try (Transaction tx = session.beginTransaction()) {
-				tx.run(new Statement(VersioningConstants.CREATE_VERSION,
-						Collections.singletonMap(VERSION, version)));
+				tx.run(VersioningConstants.CREATE_VERSION,
+						Collections.singletonMap(VERSION, version));
 				log.info("Created database version node for version {}", version);
-				tx.success();
+				tx.commit();
 			}
 			// Schema and data manipulation transactions must be separated.
 			try (Transaction tx = session.beginTransaction()) {
-				tx.run(new Statement(VersioningConstants.CREATE_UNIQUE_CONSTRAINT));
+				tx.run(VersioningConstants.CREATE_UNIQUE_CONSTRAINT);
 				log.info("Created UNIQUE constraint on the version node.");
-				tx.success();
+				tx.commit();
 			}
 		}
 	}
@@ -47,7 +48,7 @@ public class BoltVersioning implements Versioning {
 	@Override
 	public String getVersion() {
 		try (Session session = driver.session(); Transaction tx = session.beginTransaction()) {
-			StatementResult result = tx.run(new Statement(GET_VERSION));
+			Result result = tx.run(GET_VERSION);
 			if (result.hasNext()) {
 				Record record = result.single();
 				return record.get(VERSION).asString();

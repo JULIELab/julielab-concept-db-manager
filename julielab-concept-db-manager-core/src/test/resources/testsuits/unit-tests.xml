@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="unit-tests">
+
+    <test name="order">
+        <classes>
+            <class name="de.julielab.concepts.db.core.ConfigTest" />
+            <class name="de.julielab.concepts.db.core.FileExporterTest" />
+            <class name="de.julielab.concepts.db.core.FunctionCallBaseTest" />
+            <class name="de.julielab.concepts.db.core.VersioningServiceTest" />
+        </classes>
+    </test>
+
+</suite>

@@ -111,9 +111,9 @@ public class JulielabBioPortalToolsConceptCreator implements ConceptCreator {
                 // won't.
                 ImportFacet facet = new ImportFacet(fg, acronym, acronym, acronym,
                         FacetConstants.SRC_TYPE_HIERARCHICAL);
-                boolean noFacet = config.getBoolean(slash(FACET, CREATOR, CONFIGURATION, DefaultFacetCreator.NO_FACET), false);
+                boolean noFacet = config.getBoolean(slash(FACET, CREATOR, REQUEST, DefaultFacetCreator.NO_FACET), false);
                 facet.setNoFacet(noFacet);
-                String[] labels = config.getStringArray(slash(FACET, CREATOR, CONFIGURATION, DefaultFacetCreator.LABELS));
+                String[] labels = config.getStringArray(slash(FACET, CREATOR, REQUEST, DefaultFacetCreator.LABELS));
                 if (labels != null && labels.length > 0)
                     facet.setLabels(Arrays.asList(labels));
                 return new ImportConcepts(conceptStream, facet);
@@ -127,9 +127,9 @@ public class JulielabBioPortalToolsConceptCreator implements ConceptCreator {
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
         template.addProperty(slash(basePath, CONCEPTS, CREATOR, NAME), getName());
-        template.addProperty(slash(basePath, CONCEPTS, CREATOR, CONFIGURATION, PATH), "");
-        template.setProperty(slash(basePath, FACET, CREATOR, CONFIGURATION, FACET_GROUP, NAME), "Ontologies");
-        template.setProperty(slash(basePath, FACET, CREATOR, CONFIGURATION, DefaultFacetCreator.LABELS), "");
+        template.addProperty(slash(basePath, CONCEPTS, CREATOR, REQUEST, PATH), "");
+        template.setProperty(slash(basePath, FACET, CREATOR, REQUEST, FACET_GROUP, NAME), "Ontologies");
+        template.setProperty(slash(basePath, FACET, CREATOR, REQUEST, DefaultFacetCreator.LABELS), "");
     }
 
     @Override

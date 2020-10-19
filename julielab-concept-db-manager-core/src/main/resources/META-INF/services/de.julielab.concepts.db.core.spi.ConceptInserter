@@ -1,2 +1,2 @@
 de.julielab.concepts.db.core.FileDatabaseConceptInserter
-de.julielab.concepts.db.core.ServerPluginConceptInserter
+de.julielab.concepts.db.core.RestConceptInserter

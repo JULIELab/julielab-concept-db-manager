@@ -6,6 +6,7 @@ import de.julielab.concepts.db.core.services.NetworkConnectionCredentials;
 import de.julielab.concepts.db.core.spi.DatabaseOperator;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DatabaseOperationException;
+import de.julielab.concepts.util.IncompatibleActionHandlerConnectionException;
 import de.julielab.java.utilities.ConfigurationUtilities;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
@@ -13,8 +14,10 @@ import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.HttpMethod;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
@@ -27,9 +30,9 @@ public class CypherHttpOperator implements DatabaseOperator {
     private HttpConnectionService httpService;
 
     @Override
-    public void operate(HierarchicalConfiguration<ImmutableNode> operationConfigration) throws DatabaseOperationException {
+    public void operate(HierarchicalConfiguration<ImmutableNode> operationConfiguration) throws DatabaseOperationException, IncompatibleActionHandlerConnectionException {
         try {
-            String cypherQuery = ConfigurationUtilities.requirePresent(slash(CONFIGURATION, CYPHER_QUERY), operationConfigration::getString);
+            String cypherQuery = ConfigurationUtilities.requirePresent(slash(REQUEST, CYPHER_QUERY), operationConfiguration::getString);
             log.info("Sending Cypher query {} to Neo4j via HTTP", cypherQuery);
             Statements statements = new Statements(
                     new Statement(cypherQuery));
@@ -41,7 +44,9 @@ public class CypherHttpOperator implements DatabaseOperator {
                     throw new DatabaseOperationException(
                             "Error happened when trying perform operation: " + response.getErrors());
                 List<String> responseLines = new ArrayList<>();
-                for (Result result : response.getResults()) {
+                Iterator<Result> resIt = response.getResults().iterator();
+                while (resIt.hasNext()) {
+                    Result result = resIt.next();
                     for (Data data : result.getData()) {
                         responseLines.add(data.getRow().stream().map(Object::toString).collect(joining("\t")));
                     }
@@ -53,20 +58,16 @@ public class CypherHttpOperator implements DatabaseOperator {
 
             log.info("Done.");
         } catch (ConfigurationException e) {
-            throw new DatabaseOperationException(e);
+            throw new IncompatibleActionHandlerConnectionException(e);
         }
     }
 
     @Override
     public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration) throws ConceptDatabaseConnectionException {
-        try {
-            httpService = HttpConnectionService.getInstance();
-            // Check if there will be an error thrown due to an invalid URI or something.
-            httpService.getHttpPostRequest(connectionConfiguration);
-            this.connectionConfiguration = connectionConfiguration;
-        } catch (ConceptDatabaseConnectionException e) {
-            throw new ConceptDatabaseConnectionException(e);
-        }
+        httpService = HttpConnectionService.getInstance();
+        // Check if there will be an error thrown due to an invalid URI or something.
+        httpService.getHttpRequest(connectionConfiguration, HttpMethod.GET);
+        this.connectionConfiguration = connectionConfiguration;
     }
 
     @Override
@@ -77,6 +78,6 @@ public class CypherHttpOperator implements DatabaseOperator {
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
         template.addProperty(slash(basePath, OPERATOR, OPERATOR), "de.julielab.concepts.db.core.CypherHttpOperator");
-        template.addProperty(slash(basePath, OPERATOR, CONFIGURATION, CYPHER_QUERY), "");
+        template.addProperty(slash(basePath, OPERATOR, REQUEST, CYPHER_QUERY), "");
     }
 }

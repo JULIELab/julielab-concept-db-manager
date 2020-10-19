@@ -1,15 +1,25 @@
 <?xml version="1.0"?>
-<conceptdatabase xmlns="http://www.julielab.de/conceptdb"
-                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xsi:schemaLocation="http://www.julielab.de/conceptdb http://www.julielab.de/conceptdb-1.0.0.xsd
-                 http://www.julielab.de/conceptdb/concepts/ncbigene http://www.julielab.de/conceptdb/concepts/ncbigeneconceptcreator-1.0.0.xsd
-                 http://www.julielab.de/conceptdb/facets/default http://www.julielab.de/conceptdb/facets/defaultfacetcreator-1.0.0.xsd">
+<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.julielab.de/conceptdb"
+                 xsi:schemaLocation="http://www.julielab.de/conceptdb http://www.julielab.de/conceptdb/concepts/conceptdb-1.1.0.xsd
+                 http://www.julielab.de/conceptdb/concepts/ncbigene http://www.julielab.de/conceptdb/concepts/ncbigeneconcepts-1.1.0.xsd
+                 http://www.julielab.de/conceptdb/facets/default http://www.julielab.de/conceptdb/facets/defaultfacet-1.1.0.xsd">
     <versioning>
         <version>1.0-test-gene-db</version>
     </versioning>
     <connection>
         <uri>src/test/resources/graph.db</uri>
     </connection>
+    <preparations>
+        <operation>
+            <request>
+                <class>de.julielab.neo4j.plugins.Indexes</class>
+                <method>createIndexes</method>
+                <parameters>
+                    <parameter name="db_name" javatype="java.lang.String">neo4j</parameter>
+                </parameters>
+            </request>
+        </operation>
+    </preparations>
     <imports>
         <import>
             <concepts>
@@ -21,7 +31,6 @@
                         <genedescriptions>gene2summary_empty</genedescriptions>
                         <organismlist>organisms.taxid</organismlist>
                         <organismnames>names.dmp</organismnames>
-                        <homologene>homologene.data</homologene>
                         <gene_group>gene_orthologs</gene_group>
                     </configuration>
                 </creator>

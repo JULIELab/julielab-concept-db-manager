@@ -1,19 +1,17 @@
 package de.julielab.concepts.db.core;
 
-import java.util.List;
-
-import org.apache.commons.configuration2.HierarchicalConfiguration;
-import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.apache.commons.lang3.StringUtils;
-
 import de.julielab.concepts.db.core.spi.FacetCreator;
 import de.julielab.concepts.util.FacetCreationException;
 import de.julielab.neo4j.plugins.datarepresentation.ImportFacet;
 import de.julielab.neo4j.plugins.datarepresentation.ImportFacetGroup;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.tree.ImmutableNode;
 
-import static de.julielab.concepts.db.core.ConfigurationConstants.CONFIGURATION;
+import java.util.List;
+
 import static de.julielab.concepts.db.core.ConfigurationConstants.CREATOR;
+import static de.julielab.concepts.db.core.ConfigurationConstants.REQUEST;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 public class DefaultFacetCreator implements FacetCreator {
@@ -29,7 +27,7 @@ public class DefaultFacetCreator implements FacetCreator {
 	@Override
 	public ImportFacet createFacet(HierarchicalConfiguration<ImmutableNode> facetConfiguration, Object facetData)
 			throws FacetCreationException {
-		String configPath = slash(CREATOR, CONFIGURATION);
+		String configPath = slash(CREATOR, REQUEST);
 		String facetGroupName = facetConfiguration.getString(slash(configPath, FACET_GROUP_NAME), "Default Facet Group");
 		String name = facetConfiguration.getString(slash(configPath, NAME), "Default Facet");
 		String shortName = facetConfiguration.getString(slash(configPath, SHORT_NAME), "Default");

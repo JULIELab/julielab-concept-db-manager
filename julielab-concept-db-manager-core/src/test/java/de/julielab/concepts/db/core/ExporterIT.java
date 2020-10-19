@@ -1,18 +1,12 @@
 package de.julielab.concepts.db.core;
 
-import de.julielab.concepts.db.core.services.BoltConnectionService;
 import de.julielab.concepts.db.core.services.DataExportService;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DataExportException;
 import de.julielab.java.utilities.ConfigurationUtilities;
 import de.julielab.java.utilities.FileUtilities;
 import org.apache.commons.configuration2.XMLConfiguration;
-import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
-import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.ex.ConfigurationException;
-import org.neo4j.driver.v1.Driver;
-import org.neo4j.driver.v1.Session;
-import org.neo4j.driver.v1.StatementResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
@@ -20,7 +14,6 @@ import org.testng.annotations.Test;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
@@ -39,7 +32,7 @@ public class ExporterIT {
         DataExportService exportService = DataExportService.getInstance(conf.configurationAt("connection"));
         exportService.exportData(conf.configurationAt(slash(EXPORTS, EXPORT)));
 
-        try (BufferedReader br = FileUtilities.getReaderFromFile(new File("src/test/resources/output/dict.txt"))) {
+        try (BufferedReader br = FileUtilities.getReaderFromFile(new File("src/test/resources/output/serverplugindict.txt"))) {
             long nonCommentLines = br.lines().filter(l -> !l.startsWith("#")).count();
             assertThat(nonCommentLines).isEqualTo(3);
         }

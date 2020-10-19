@@ -1,20 +1,18 @@
 package de.julielab.concepts.db.core;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import de.julielab.concepts.db.core.services.FileConnectionService;
 import de.julielab.concepts.db.core.spi.ConceptInserter;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.ConceptInsertionException;
-import de.julielab.neo4j.plugins.ConceptManager;
 import de.julielab.neo4j.plugins.FacetManager.FacetLabel;
+import de.julielab.neo4j.plugins.concepts.ConceptInsertion;
 import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 import de.julielab.neo4j.plugins.datarepresentation.ImportFacet;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.neo4j.dbms.api.DatabaseManagementService;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.Node;
@@ -22,41 +20,41 @@ import org.neo4j.graphdb.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.neo4j.configuration.GraphDatabaseSettings.DEFAULT_DATABASE_NAME;
 
 public class FileDatabaseConceptInserter implements ConceptInserter {
 
     private static final Logger log = LoggerFactory.getLogger(FileDatabaseConceptInserter.class);
-    private GraphDatabaseService graphDb;
+    private DatabaseManagementService dbms;
     private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
 
     @Override
     public void insertConcepts(HierarchicalConfiguration<ImmutableNode> importConfiguration, ImportConcepts concepts) throws ConceptInsertionException {
-        if (graphDb == null)
+        if (dbms == null)
             throw new ConceptInsertionException(
                     "No access to a file-based graph database. The FileDatabaseConceptInserter has not been initialized properly. Call setConfiguration() and check its return value before calling this method.");
-        ConceptManager cm = new ConceptManager();
         log.info("Inserting concepts into embedded Neo4j database at {}.", connectionConfiguration.getString("uri"));
         ImportFacet facet = concepts.getFacet();
         if (facet == null)
             throw new ConceptInsertionException("The facet of the import concepts is null.");
         String customId = facet.getCustomId();
-        ObjectMapper jsonMapper = new ObjectMapper().registerModule(new Jdk8Module());
-        jsonMapper.setSerializationInclusion(Include.NON_NULL);
-        jsonMapper.setSerializationInclusion(Include.NON_EMPTY);
         boolean alreadyExists;
+        GraphDatabaseService graphDb = dbms.database(DEFAULT_DATABASE_NAME);
         try (Transaction tx = graphDb.beginTx()) {
-            Node facetNode = graphDb.findNode(FacetLabel.FACET, FacetConstants.PROP_CUSTOM_ID, customId);
+            Node facetNode = tx.findNode(FacetLabel.FACET, FacetConstants.PROP_CUSTOM_ID, customId);
             alreadyExists = facetNode != null;
-            tx.success();
         }
         if (!alreadyExists) {
             try {
                 log.debug("Inserting the concepts of facet {} (customId: {}) into the Neo4j database", facet.getName(),
                         facet.getCustomId());
-                String conceptsJson = jsonMapper.writeValueAsString(concepts);
-                cm.insertConcepts(graphDb, conceptsJson);
-            } catch (de.julielab.neo4j.plugins.util.ConceptInsertionException | IOException e) {
+                Map<String, Object> response = new HashMap<>();
+                ConceptInsertion.insertConcepts(graphDb, concepts, response);
+                log.debug("Successfully inserted the given concepts: {}", response);
+            } catch (de.julielab.neo4j.plugins.util.ConceptInsertionException e) {
                 throw new ConceptInsertionException(
                         "The JSON format specifying the ontology class names or - but less probable - the facet JSON format does not fit the requirements of the employed version of the julielab-neo4j-plugin-concepts dependency. There might be a compatibility issue between the julielab-bioportal-tools and the plugin-concepts libraries.",
                         e);
@@ -72,8 +70,8 @@ public class FileDatabaseConceptInserter implements ConceptInserter {
     public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
             throws ConceptDatabaseConnectionException {
         this.connectionConfiguration = connectionConfiguration;
-        graphDb = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
-        if (graphDb == null)
+        dbms = FileConnectionService.getInstance().getDatabaseManagementService(connectionConfiguration);
+        if (dbms == null)
             throw new ConceptDatabaseConnectionException("Could not create a file database for connection "
                     + ConfigurationUtils.toString(connectionConfiguration));
     }

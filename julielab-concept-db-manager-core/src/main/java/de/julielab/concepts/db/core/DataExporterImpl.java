@@ -2,18 +2,17 @@ package de.julielab.concepts.db.core;
 
 import de.julielab.concepts.db.core.services.VersioningService;
 import de.julielab.concepts.db.core.spi.DataExporter;
-import de.julielab.concepts.util.DataExportException;
 import de.julielab.concepts.util.VersionRetrievalException;
 import de.julielab.java.utilities.FileUtilities;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.json.JSONArray;
 import org.slf4j.Logger;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.zip.GZIPInputStream;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public abstract class DataExporterImpl implements DataExporter {
 
@@ -71,56 +70,35 @@ public abstract class DataExporterImpl implements DataExporter {
      * @return
      * @throws IOException
      */
-    protected String decode(String inputData, HierarchicalConfiguration<ImmutableNode> decodingConfig)
+    protected InputStream decode(InputStream inputData, HierarchicalConfiguration<ImmutableNode> decodingConfig)
             throws IOException {
-        Object currentDataState = inputData;
+        InputStream currentDataState = inputData;
         for (String key : (Iterable<String>) decodingConfig::getKeys) {
             if (key.equalsIgnoreCase("base64") && decodingConfig.getBoolean(key)) {
                 log.debug("Decoding input data via Base64.");
-                String currentDataString = toString(currentDataState);
-                try {
-                    currentDataState = Base64.getDecoder().decode(currentDataString);
-                } catch (IllegalArgumentException e) {
-                    // There are quotes we don't want
-                    if (e.getMessage().contains("Illegal base64 character 22"))
-                        currentDataState = Base64.getDecoder().decode(currentDataString.substring(1, currentDataString.length() - 1));
-                }
+                currentDataState = Base64.getDecoder().wrap(currentDataState);
             }
             if (key.equalsIgnoreCase("gzip") && decodingConfig.getBoolean(key)) {
                 log.debug("Decoding input data via GZIP.");
-                InputStream is = new ByteArrayInputStream(
-                        currentDataState instanceof String ? ((String) currentDataState).getBytes()
-                                : (byte[]) currentDataState);
-                is = new GZIPInputStream(is);
-                try (BufferedInputStream bw = new BufferedInputStream(is);
-                     ByteArrayOutputStream baos = new ByteArrayOutputStream();) {
-                    byte[] buffer = new byte[2048];
-                    int numread = 0;
-                    while ((numread = bw.read(buffer)) != -1) {
-                        baos.write(buffer, 0, numread);
-                    }
-                    currentDataState = baos.toByteArray();
-                }
+                currentDataState = new GZIPInputStream(currentDataState);
             }
             if (key.equalsIgnoreCase("json2bytearray") && decodingConfig.getBoolean(key)) {
-                log.debug("Decoding input data by converting a JSON array of byte values into a byte array.");
-                JSONArray jsonArray = new JSONArray(toString(currentDataState));
-                byte[] bytes = new byte[jsonArray.length()];
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    bytes[i] = (byte) jsonArray.getInt(i);
-                }
-                currentDataState = bytes;
+                throw new IllegalArgumentException("The json2bytearray decoding option is not supported any more.");
             }
         }
-        return toString(currentDataState);
+        return currentDataState;
     }
 
-    protected void writeData(File outputFile, String resourceHeader, String decodedResponse) throws IOException, DataExportException {
+    protected void writeData(File outputFile, String resourceHeader, InputStream decodedResponse) throws IOException {
         if (!outputFile.getAbsoluteFile().getParentFile().exists())
             outputFile.getAbsoluteFile().getParentFile().mkdirs();
-        try (BufferedWriter bw = FileUtilities.getWriterToFile(outputFile)) {
-            bw.write(resourceHeader);
-            bw.write(decodedResponse);
+        try (OutputStream os = FileUtilities.getOutputStreamToFile(outputFile)) {
+            os.write(resourceHeader.getBytes(UTF_8));
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = decodedResponse.read(buffer)) != -1) {
+                os.write(buffer, 0, bytesRead);
+            }
         }
     }
 
@@ -129,7 +107,7 @@ public abstract class DataExporterImpl implements DataExporter {
         if (o instanceof String)
             return (String) o;
         else if (o instanceof byte[]) {
-            return new String((byte[]) o, StandardCharsets.UTF_8);
+            return new String((byte[]) o, UTF_8);
         } else
             throw new IllegalArgumentException("The passed object is neither a string nor a byte[]: " + o);
     }

@@ -8,10 +8,11 @@ import de.julielab.java.utilities.ConfigurationUtilities;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.neo4j.driver.v1.*;
+import org.neo4j.driver.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.neo4j.driver.internal.types.InternalTypeSystem.TYPE_SYSTEM;
 
 /**
@@ -39,12 +41,12 @@ public class CypherBoltExporter extends DataExporterImpl {
     @Override
     public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws ConceptDatabaseConnectionException, DataExportException {
         try {
-            String query = ConfigurationUtilities.requirePresent(slash(CONFIGURATION, CYPHER_QUERY), exportConfig::getString);
-            File outputFile = new File(ConfigurationUtilities.<String>requirePresent(slash(CONFIGURATION, OUTPUT_FILE), exportConfig::getString));
+            String query = ConfigurationUtilities.requirePresent(slash(REQUEST, CYPHER_QUERY), exportConfig::getString);
+            File outputFile = new File(ConfigurationUtilities.<String>requirePresent(slash(OUTPUT_FILE), exportConfig::getString));
 
             log.info("Sending Cypher query {} to Neo4j and writing the results to {}", query, outputFile);
-            try (Session session = driver.session()) {
-                StatementResult result = session.readTransaction(tx -> tx.run(query));
+            try (Session session = driver.session(); Transaction tx = session.beginTransaction()) {
+                Result result = tx.run(query);
                 List<String> fieldValues = new ArrayList<>();
                 while (result.hasNext()) {
                     Record record = result.next();
@@ -67,7 +69,7 @@ public class CypherBoltExporter extends DataExporterImpl {
                 }
                 writeData(outputFile,
                         getResourceHeader(connectionConfiguration),
-                        fieldValues.stream().collect(Collectors.joining(System.getProperty("line.separator"))));
+                        new ByteArrayInputStream(fieldValues.stream().collect(Collectors.joining(System.getProperty("line.separator"))).getBytes(UTF_8)));
             } catch (IOException e) {
                 throw new DataExportException(e);
             } catch (VersionRetrievalException e) {
@@ -96,7 +98,7 @@ public class CypherBoltExporter extends DataExporterImpl {
 
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
-        template.addProperty(slash(basePath, CONFIGURATION, CYPHER_QUERY), "");
-        template.addProperty(slash(basePath, CONFIGURATION, OUTPUT_FILE), "");
+        template.addProperty(slash(basePath, REQUEST, CYPHER_QUERY), "");
+        template.addProperty(slash(basePath, REQUEST, OUTPUT_FILE), "");
     }
 }

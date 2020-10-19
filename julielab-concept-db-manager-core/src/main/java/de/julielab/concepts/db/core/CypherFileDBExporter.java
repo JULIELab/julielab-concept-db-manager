@@ -8,12 +8,13 @@ import de.julielab.java.utilities.ConfigurationUtilities;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.dbms.api.DatabaseManagementService;
 import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,10 +24,12 @@ import java.util.stream.Collectors;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.neo4j.configuration.GraphDatabaseSettings.DEFAULT_DATABASE_NAME;
 
 public class CypherFileDBExporter extends DataExporterImpl {
     private final static Logger log = LoggerFactory.getLogger(CypherFileDBExporter.class);
-    private GraphDatabaseService graphDb;
+    private DatabaseManagementService dbms;
     private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
 
     public CypherFileDBExporter() {
@@ -36,7 +39,7 @@ public class CypherFileDBExporter extends DataExporterImpl {
     @Override
     public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration) throws ConceptDatabaseConnectionException {
         this.connectionConfiguration = connectionConfiguration;
-        graphDb = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
+        dbms = FileConnectionService.getInstance().getDatabaseManagementService(connectionConfiguration);
     }
 
     @Override
@@ -47,28 +50,27 @@ public class CypherFileDBExporter extends DataExporterImpl {
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
         template.addProperty(slash(basePath, EXPORTER), getName());
-        template.addProperty(slash(basePath, CONFIGURATION, CYPHER_QUERY), "");
-        template.addProperty(slash(basePath, CONFIGURATION, OUTPUT_FILE), "");
+        template.addProperty(slash(basePath, REQUEST, CYPHER_QUERY), "");
+        template.addProperty(slash(basePath, REQUEST, OUTPUT_FILE), "");
     }
 
     @Override
     public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws DataExportException {
         try {
-            String cypherQuery = ConfigurationUtilities.requirePresent(slash(CONFIGURATION, CYPHER_QUERY), exportConfig::getString);
-            String outputPath = ConfigurationUtilities.requirePresent(slash(CONFIGURATION, OUTPUT_FILE), exportConfig::getString);
+            String cypherQuery = ConfigurationUtilities.requirePresent(slash(REQUEST, CYPHER_QUERY), exportConfig::getString);
+            String outputPath = ConfigurationUtilities.requirePresent(slash(REQUEST, OUTPUT_FILE), exportConfig::getString);
             log.info("Sending Cypher query {} to Neo4j embedded database", cypherQuery);
             List<String> outputLines = new ArrayList<>();
-            try (Transaction tx = graphDb.beginTx()) {
-                Result result = graphDb.execute(cypherQuery);
+            try (Transaction tx = dbms.database(DEFAULT_DATABASE_NAME).beginTx()) {
+                Result result = tx.execute(cypherQuery);
                 while (result.hasNext()) {
                     Map<String, Object> resultMap = result.next();
                     outputLines.add(resultMap.values().stream().map(Object::toString).collect(Collectors.joining("\t")));
                 }
-                tx.success();
             }
             writeData(new File(outputPath),
                     getResourceHeader(connectionConfiguration),
-                    outputLines.stream().collect(Collectors.joining(System.getProperty("line.separator"))));
+                    new ByteArrayInputStream(outputLines.stream().collect(Collectors.joining(System.getProperty("line.separator"))).getBytes(UTF_8)));
             log.info("Done.");
         } catch (ConfigurationException | VersionRetrievalException | IOException e) {
             throw new DataExportException(e);

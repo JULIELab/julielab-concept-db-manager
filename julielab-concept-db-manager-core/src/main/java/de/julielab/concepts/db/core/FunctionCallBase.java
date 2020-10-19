@@ -5,15 +5,11 @@ import de.julielab.concepts.util.MethodCallException;
 import de.julielab.jssf.commons.spi.ParameterExposing;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
-import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 /**
  * This class contains the {@link Parameter} type and methods to parse parameters from the configuration
@@ -22,9 +18,6 @@ import static de.julielab.java.utilities.ConfigurationUtilities.slash;
  */
 public abstract class FunctionCallBase implements ParameterExposing {
 
-    public static final String CONFKEY_PARAMETERS = slash(CONFIGURATION, PARAMETERS);
-    public static final String CONFKEY_CLASS_NAME = slash(CONFIGURATION, CLASS);
-    public static final String CONFKEY_METHOD_NAME = slash(CONFIGURATION, METHOD);
     protected Logger log;
 
     public FunctionCallBase(Logger log) {
@@ -39,12 +32,12 @@ public abstract class FunctionCallBase implements ParameterExposing {
         try {
             for (ImmutableNode parameterNode : configTree.getChildren()) {
                 Map<String, Object> attributes = parameterNode.getAttributes();
-                String name = (String) attributes.get("parametername");
+                String name = (String) attributes.get(NAME);
                 if (name == null)
                     name = parameterNode.getNodeName();
-                String type = (String) attributes.get("parametertype");
-                Boolean tojson = Boolean.parseBoolean(Optional.ofNullable((String) attributes.get("tojson")).orElse("false"));
-                String elementtype = (String) attributes.get("elementtype");
+                String type = (String) attributes.get(JAVA_TYPE);
+                Boolean tojson = Boolean.parseBoolean(Optional.ofNullable((String) attributes.get(TO_ESCAPED_JSON)).orElse("false"));
+                String elementtype = (String) attributes.get(ELEMENT_TYPE);
                 boolean islist = !parameterNode.getChildren().isEmpty();
                 // Will be null for array-valued parameters
                 Object value = parameterNode.getValue();
@@ -53,11 +46,11 @@ public abstract class FunctionCallBase implements ParameterExposing {
                 parameter.setName(name);
                 if (type != null)
                     parameter.setType(Class.forName(type));
-                parameter.setConvertToJson(tojson);
                 if (elementtype != null)
                     parameter.setElementType(Class.forName(elementtype));
                 parameter.setIsList(islist);
                 parameter.setValue(value);
+                parameter.setConvertToJson(tojson);
 
                 List<Object> arrayitems = new ArrayList<>();
                 for (ImmutableNode listitem : parameterNode.getChildren()) {

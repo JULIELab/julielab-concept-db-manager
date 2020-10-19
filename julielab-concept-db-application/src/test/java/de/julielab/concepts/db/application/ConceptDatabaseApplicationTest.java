@@ -5,8 +5,8 @@ import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DataExportException;
 import de.julielab.concepts.util.VersioningException;
 import de.julielab.java.utilities.ConfigurationUtilities;
-import de.julielab.neo4j.plugins.ConceptManager;
 import de.julielab.neo4j.plugins.FacetManager;
+import de.julielab.neo4j.plugins.concepts.ConceptLabel;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
@@ -59,18 +59,18 @@ public class ConceptDatabaseApplicationTest {
 
 	@Test
 	public void testConceptImport() throws ConceptDatabaseConnectionException, DataExportException, VersioningException, CmdLineException {
-		ConceptDatabaseApplication.main(new String[] { "--import", "-c", SIMPLEIMPORT, "-nv"});
+		ConceptDatabaseApplication.main(new String[] { "--preparation", "--import", "-c", SIMPLEIMPORT, "-nv"});
 
 		// Check if the Plant Ontology has been imported as expected.
 		FileConnectionService databaseService = FileConnectionService.getInstance();
 		GraphDatabaseService graphdb = databaseService
-				.getDatabase(configuration.configurationAt(CONNECTION));
+				.getDefaultGraphDatabase(configuration.configurationAt(CONNECTION));
 		try (Transaction tx = graphdb.beginTx()) {
-			List<Node> facets = graphdb.findNodes(FacetManager.FacetLabel.FACET).stream().collect(Collectors.toList());
+			List<Node> facets = tx.findNodes(FacetManager.FacetLabel.FACET).stream().collect(Collectors.toList());
 			assertEquals(1, facets.size());
 			Node po = facets.get(0);
 			assertEquals("PO", po.getProperty(FacetConstants.PROP_NAME));
-			long numConcepts = graphdb.findNodes(ConceptManager.ConceptLabel.CONCEPT).stream().count();
+			long numConcepts = tx.findNodes(ConceptLabel.CONCEPT).stream().count();
 			assertTrue(numConcepts > 0);
 		}
 	}
@@ -80,17 +80,16 @@ public class ConceptDatabaseApplicationTest {
 	    // The configuration sets the property "myprop" on the concept "anther wall".
 
         // First, clear the property we add as a test.
-        GraphDatabaseService graphDb = FileConnectionService.getInstance().getDatabase(configuration.configurationAt(CONNECTION));
+        GraphDatabaseService graphDb = FileConnectionService.getInstance().getDefaultGraphDatabase(configuration.configurationAt(CONNECTION));
         try (Transaction tx = graphDb.beginTx()) {
-            graphDb.execute("MATCH (c:CONCEPT) REMOVE c.myprop");
-            tx.success();
+            tx.execute("MATCH (c:CONCEPT) REMOVE c.myprop");
+            tx.commit();
         }
 
 		ConceptDatabaseApplication.main(new String[] { "--operation", "antherwall", "non-existent", "-c", NAMEDOPERATIONS, "-nv"});
 
-        XMLConfiguration configuration = ConfigurationUtilities.loadXmlConfiguration(new File(NAMEDOPERATIONS));
         try (Transaction tx = graphDb.beginTx()) {
-            Result result = graphDb.execute("MATCH (c:CONCEPT) WHERE c.myprop IS NOT NULL return COUNT(c) as count");
+            Result result = tx.execute("MATCH (c:CONCEPT) WHERE c.myprop IS NOT NULL return COUNT(c) as count");
             assertThat(result.hasNext()).isTrue();
             assertThat((long) result.next().get("count")).isEqualTo(1);
         }
@@ -101,17 +100,17 @@ public class ConceptDatabaseApplicationTest {
         // The same as testNamedOperations but with the --all option
 
         // First, clear the property we add as a test.
-        GraphDatabaseService graphDb = FileConnectionService.getInstance().getDatabase(configuration.configurationAt(CONNECTION));
+        GraphDatabaseService graphDb = FileConnectionService.getInstance().getDefaultGraphDatabase(configuration.configurationAt(CONNECTION));
         try (Transaction tx = graphDb.beginTx()) {
-            graphDb.execute("MATCH (c:CONCEPT) REMOVE c.myprop");
-            tx.success();
+            tx.execute("MATCH (c:CONCEPT) REMOVE c.myprop");
+            tx.commit();
         }
 
         ConceptDatabaseApplication.main(new String[] { "--all", "antherwall", "non-existent", "-c", NAMEDOPERATIONS, "-nv"});
 
         XMLConfiguration configuration = ConfigurationUtilities.loadXmlConfiguration(new File(NAMEDOPERATIONS));
         try (Transaction tx = graphDb.beginTx()) {
-            Result result = graphDb.execute("MATCH (c:CONCEPT) WHERE c.myprop IS NOT NULL return COUNT(c) as count");
+            Result result = tx.execute("MATCH (c:CONCEPT) WHERE c.myprop IS NOT NULL return COUNT(c) as count");
             assertThat(result.hasNext()).isTrue();
             assertThat((long) result.next().get("count")).isEqualTo(1);
         }

@@ -1,41 +1,37 @@
 package de.julielab.concepts.db.core.services;
 
-import static de.julielab.concepts.db.core.services.NetworkConnectionCredentials.CONFKEY_PASSW;
-import static de.julielab.concepts.db.core.services.NetworkConnectionCredentials.CONFKEY_URI;
-import static de.julielab.concepts.db.core.services.NetworkConnectionCredentials.CONFKEY_USER;
-
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import com.google.gson.Gson;
-import de.julielab.concepts.util.InternalNeo4jException;
-import de.julielab.concepts.util.Neo4jServerErrorResponse;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import de.julielab.concepts.db.core.http.Response;
+import de.julielab.concepts.db.core.http.Statements;
+import de.julielab.concepts.db.core.http.StreamingResponse;
+import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
-
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import de.julielab.concepts.db.core.http.Response;
-import de.julielab.concepts.db.core.http.Statements;
-import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.ws.rs.HttpMethod;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import static de.julielab.concepts.db.core.services.NetworkConnectionCredentials.*;
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 
 public class HttpConnectionService {
     private final static Logger log = LoggerFactory.getLogger(HttpConnectionService.class);
@@ -53,7 +49,7 @@ public class HttpConnectionService {
         return service;
     }
 
-    public HttpPost getHttpPostRequest(HierarchicalConfiguration<ImmutableNode> connectionConfiguration, String httpUri)
+    public HttpRequestBase getHttpRequest(HierarchicalConfiguration<ImmutableNode> connectionConfiguration, String httpUri, String method)
             throws ConceptDatabaseConnectionException {
         try {
             String uri = connectionConfiguration.getString(CONFKEY_URI);
@@ -70,18 +66,33 @@ public class HttpConnectionService {
             String authorizationToken = user != null && password != null
                     ? "Basic " + Base64.encodeBase64URLSafeString((user + ":" + password).getBytes())
                     : null;
-            HttpPost httpPost = new HttpPost(uri);
+            HttpRequestBase request;
+            switch (method) {
+                case HttpMethod.GET:
+                    request = new HttpGet(uri);
+                    break;
+                case HttpMethod.POST:
+                    request = new HttpPost(uri);
+                    break;
+                case HttpMethod.PUT:
+                    request = new HttpPut(uri);
+                    break;
+                case HttpMethod.DELETE:
+                    request = new HttpDelete(uri);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown HTTP method: " + method);
+            }
             if (authorizationToken != null)
-                httpPost.addHeader("Authorization", authorizationToken);
-            return httpPost;
+                request.addHeader("Authorization", authorizationToken);
+            return request;
         } catch (IllegalArgumentException e) {
             throw new ConceptDatabaseConnectionException(e);
         }
     }
 
-    public HttpPost getHttpPostRequest(HierarchicalConfiguration<ImmutableNode> connectionConfiguration)
-            throws ConceptDatabaseConnectionException {
-        return getHttpPostRequest(connectionConfiguration, null);
+    public HttpRequestBase getHttpRequest(HierarchicalConfiguration<ImmutableNode> connectionConfiguration, String method) throws ConceptDatabaseConnectionException {
+        return getHttpRequest(connectionConfiguration, null, method);
     }
 
     private void checkForHttpScheme(String httpUri) throws ConceptDatabaseConnectionException {
@@ -95,21 +106,26 @@ public class HttpConnectionService {
         }
     }
 
-    public String sendRequest(HttpUriRequest request) throws ConceptDatabaseConnectionException {
+    public InputStream sendRequest(HttpUriRequest request) throws ConceptDatabaseConnectionException {
         String responseString = null;
+        HttpResponse response = null;
         try {
-            HttpResponse response = client.execute(request);
+            response = client.execute(request);
             HttpEntity entity = response.getEntity();
             // We take all 200 values with us, because 204 is not really an
             // error. To get specific return codes, see HttpStatus
             // constants.
             if (response.getStatusLine().getStatusCode() < 300) {
-                return entity != null ? EntityUtils.toString(entity) : "<no response from Neo4j>";
-            }
+                if (entity != null)
+                    return entity.getContent();
+                return new ByteArrayInputStream("<no response from Neo4j>".getBytes(UTF_8));
+            } else if (response.getStatusLine().getStatusCode() == 404)
+                throw new IllegalArgumentException("Server returned status code HTTP " + response.getStatusLine().getStatusCode() + " Not Found: " + request.getMethod() + ": " + request.getURI().toString());
             responseString = EntityUtils.toString(entity);
-            ObjectMapper om = new ObjectMapper();
-            Neo4jServerErrorResponse errorResponse = om.readValue(responseString, Neo4jServerErrorResponse.class);
-            throw new InternalNeo4jException(errorResponse);
+            if (responseString != null && !responseString.isEmpty()) {
+                throw new IllegalArgumentException(responseString);
+            }
+            throw new ConceptDatabaseConnectionException(response.getStatusLine().getStatusCode() + ": " + response.getStatusLine().getReasonPhrase());
         } catch (com.fasterxml.jackson.databind.exc.MismatchedInputException e) {
             log.error("Error when trying to deserialize the JSON error message. The original JSON is {}", responseString);
             throw new ConceptDatabaseConnectionException(e);
@@ -126,14 +142,14 @@ public class HttpConnectionService {
         jsonMapper.setSerializationInclusion(Include.NON_EMPTY);
 
         HttpConnectionService httpService = HttpConnectionService.getInstance();
-        HttpPost httpPost = httpService.getHttpPostRequest(connectionConfiguration, transactionalUri);
+        HttpPost httpPost = (HttpPost) httpService.getHttpRequest(connectionConfiguration, transactionalUri, "POST");
         // taken from
         // https://neo4j.com/docs/developer-manual/3.3/http-api/#http-api-transactional
         httpPost.addHeader("Accept", "application/json; charset=UTF-8");
         httpPost.addHeader("Content-Type", "application/json");
         String jsonStatements = jsonMapper.writeValueAsString(statements);
         httpPost.setEntity(new StringEntity(jsonStatements));
-        String responseString = httpService.sendRequest(httpPost);
-        return jsonMapper.readValue(responseString, Response.class);
+        InputStream responseStream = httpService.sendRequest(httpPost);
+        return new StreamingResponse(responseStream);
     }
 }

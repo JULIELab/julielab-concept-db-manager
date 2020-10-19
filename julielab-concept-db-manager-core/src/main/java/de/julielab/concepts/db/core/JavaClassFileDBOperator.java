@@ -4,18 +4,19 @@ import de.julielab.concepts.db.core.services.FileConnectionService;
 import de.julielab.concepts.db.core.spi.DatabaseOperator;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DatabaseOperationException;
+import de.julielab.concepts.util.IncompatibleActionHandlerConnectionException;
 import de.julielab.concepts.util.MethodCallException;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.dbms.api.DatabaseManagementService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static de.julielab.concepts.db.core.ConfigurationConstants.*;
+import static de.julielab.concepts.db.core.ConfigurationConstants.REQUEST;
 
 public class JavaClassFileDBOperator extends JavaMethodCallBase implements DatabaseOperator {
     private final static Logger log = LoggerFactory.getLogger(JavaClassFileDBOperator.class);
-    private GraphDatabaseService graphDb;
+    private DatabaseManagementService dbms;
 
     public JavaClassFileDBOperator() {
         super(log);
@@ -23,9 +24,9 @@ public class JavaClassFileDBOperator extends JavaMethodCallBase implements Datab
 
 
     @Override
-    public void operate(HierarchicalConfiguration<ImmutableNode> operationConfiguration) throws DatabaseOperationException {
+    public void operate(HierarchicalConfiguration<ImmutableNode> operationConfiguration) throws DatabaseOperationException, IncompatibleActionHandlerConnectionException {
         try {
-            callInstanceMethod(operationConfiguration.configurationAt(CONFIGURATION), graphDb);
+            callInstanceMethod(operationConfiguration.configurationAt(REQUEST), dbms);
         } catch (MethodCallException e) {
             throw new DatabaseOperationException(e);
         }
@@ -33,7 +34,7 @@ public class JavaClassFileDBOperator extends JavaMethodCallBase implements Datab
 
     @Override
     public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration) throws ConceptDatabaseConnectionException {
-        graphDb = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
+        dbms = FileConnectionService.getInstance().getDatabaseManagementService(connectionConfiguration);
     }
 
     @Override

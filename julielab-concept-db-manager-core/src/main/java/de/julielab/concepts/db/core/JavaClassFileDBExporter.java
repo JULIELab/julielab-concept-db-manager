@@ -2,29 +2,29 @@ package de.julielab.concepts.db.core;
 
 import de.julielab.concepts.db.core.services.FileConnectionService;
 import de.julielab.concepts.db.core.spi.DataExporter;
-import de.julielab.concepts.util.ConceptDatabaseConnectionException;
-import de.julielab.concepts.util.DataExportException;
-import de.julielab.concepts.util.MethodCallException;
-import de.julielab.concepts.util.VersionRetrievalException;
+import de.julielab.concepts.util.*;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.json.JSONException;
-import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.dbms.api.DatabaseManagementService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class JavaClassFileDBExporter extends JavaMethodCallBase implements DataExporter {
 
     private final static Logger log = LoggerFactory.getLogger(JavaClassFileDBExporter.class);
 
 
-    private GraphDatabaseService graphDb;
+    private DatabaseManagementService dbms;
     private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
     private final DataExporter exporter;
 
@@ -46,20 +46,18 @@ public class JavaClassFileDBExporter extends JavaMethodCallBase implements DataE
 
             @Override
             public void setConnection(HierarchicalConfiguration<ImmutableNode> connectionConfiguration) throws ConceptDatabaseConnectionException {
-                graphDb = FileConnectionService.getInstance().getDatabase(connectionConfiguration);
+                dbms = FileConnectionService.getInstance().getDatabaseManagementService(connectionConfiguration);
             }
 
             @Override
-            public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws DataExportException {
-                String outputFile = exportConfig.getString(slash(CONFIGURATION, OUTPUT_FILE));
+            public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws DataExportException, IncompatibleActionHandlerConnectionException {
+                String outputFile = exportConfig.getString(slash(REQUEST, OUTPUT_FILE));
                 try {
-                    String result = callInstanceMethod(exportConfig.configurationAt(CONFIGURATION), graphDb);
-                    String decodedResponse = decode(result, exportConfig.configurationAt(slash(CONFIGURATION, DECODING)));
+                    String result = callInstanceMethod(exportConfig.configurationAt(REQUEST), dbms);
+                    InputStream decodedResponse = decode(new ByteArrayInputStream(result.getBytes(UTF_8)), exportConfig.configurationAt(slash(REQUEST, DECODING)));
                     String resourceHeader = getResourceHeader(connectionConfiguration) + result;
                     writeData(new File(outputFile), resourceHeader, decodedResponse);
-                } catch (MethodCallException | VersionRetrievalException | IOException e) {
-                    throw new DataExportException(e);
-                } catch (JSONException e) {
+                } catch (MethodCallException | VersionRetrievalException | IOException | JSONException e) {
                     throw new DataExportException(e);
                 }
             }
@@ -68,7 +66,7 @@ public class JavaClassFileDBExporter extends JavaMethodCallBase implements DataE
 
     @Override
     public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig)
-            throws DataExportException {
+            throws DataExportException, IncompatibleActionHandlerConnectionException {
         try {
             exporter.exportData(exportConfig);
         } catch (ConceptDatabaseConnectionException e) {
@@ -93,9 +91,9 @@ public class JavaClassFileDBExporter extends JavaMethodCallBase implements DataE
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
         super.exposeParameters(basePath, template);
-        template.addProperty(slash(basePath, CONFIGURATION, DECODING, JSON2BYTEARRAY), "false");
-        template.addProperty(slash(basePath, CONFIGURATION, DECODING, BASE64), "true");
-        template.addProperty(slash(basePath, CONFIGURATION, DECODING, GZIP), "true");
-        template.addProperty(slash(basePath, CONFIGURATION, OUTPUT_FILE), "");
+        template.addProperty(slash(basePath, REQUEST, DECODING, JSON2BYTEARRAY), "false");
+        template.addProperty(slash(basePath, REQUEST, DECODING, BASE64), "true");
+        template.addProperty(slash(basePath, REQUEST, DECODING, GZIP), "true");
+        template.addProperty(slash(basePath, REQUEST, OUTPUT_FILE), "");
     }
 }

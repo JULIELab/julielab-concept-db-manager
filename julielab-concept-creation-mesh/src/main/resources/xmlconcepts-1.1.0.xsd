@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://www.julielab.de/conceptdb/concepts/xml"
+           targetNamespace="http://www.julielab.de/conceptdb/concepts/xml"
+           elementFormDefault="qualified">
+
+    <!-- The name of the NCBI Gene Concept Creator provider. Only names determining the respective class are allowed. -->
+    <xs:element name="name">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="MeshConceptCreator"/>
+                <xs:enumeration value="de.julielab.concepts.db.creators.mesh.MeshXmlConceptCreator"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <!-- Configuration elements -->
+    <xs:element name="input">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Subconfiguration of one XML concepts input file.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:all>
+                <xs:element ref="xmlfile"/>
+                <xs:element ref="format"/>
+                <xs:element ref="sourcename"/>
+                <xs:element ref="originalsources" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="xmlfile" type="xs:string">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Path to the MeSH XML file.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="format">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                The XML concept creator is able to read different XML formats. This type
+                defines which valid format names can be specified.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="MESH_XML"/>
+                <xs:enumeration value="MESH_SUPPLEMENTARY_XML"/>
+                <xs:enumeration value="SIMPLE_XML"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="sourcename" type="xs:string">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                The name of the current source from which the concepts are read. E.g. 'MeSH' or 'Anatomy MeSH Subset
+                with
+                custom concepts'. The source name is used to distinguish between concepts from different sources that
+                have the same ID (might happen when using concepts from different databases). To have the system
+                recognize that two concepts are actually the same concept despite coming from different sources,
+                the original source is used. Refer to the 'originalidregex' and 'originalsource' elements.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="originalsources">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+               An array of 'source' elements. Each element may given the 'idregex' attribute. If given, the
+                attribute will be used to match against concept IDs. In case of a mach, the respective source
+                will be assigned to the concept as its original source.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+           <xs:sequence>
+               <xs:element ref="source" maxOccurs="unbounded"/>
+           </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="source">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                The original source given to concepts that match the regular expression specified by the 'idregex'
+                attribute. If this attribute is not given, all concepts that have not been matched by another
+                idregex will obtain this original ID. It is important to note that an arbitrary number of
+                'originalsource' elements may be given. They will be applied to the source ID of each concept
+                in the order they are defined in the XML configuration file. If a match happens - or not regular
+                expression is provided - all remaining originalsource elements will be discarded. Thus,
+                an element without the 'idregex' attribute delivers a default value and should be listed last.
+                Also note that no originalsource element is required.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="xs:string">
+                    <xs:attribute name="idregex" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">
+                                If given, provides the regular expression that a concept ID must have in the source data
+                                to be assigned the original source name provided by this element.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- The provider configuration -->
+    <xs:element name="configuration">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="input" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- The root concept creator element -->
+    <xs:element name="creator">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="name"/>
+                <xs:element ref="configuration"/>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        The optional name element can be given to all concept creators, operators and exporters.
+                        When calling the Concept DB Application, the application mode parameters can be given
+                        an optional list of names. Only the inserters, operators or exporters on the list will be
+                        executed.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

@@ -8,6 +8,7 @@ public class ConfigurationConstants {
     public static final String URI = "uri";
     public static final String USER = "user";
     public static final String PASSWORD = "password";
+    public static final String PREPARATIONS = "preparations";
     public static final String IMPORTS = "imports";
     public static final String IMPORT = "import";
     public final static String EXPORTS = "exports";
@@ -22,11 +23,13 @@ public class ConfigurationConstants {
     public static final String FACET_GROUP = "facetgroup";
     public static final String CREATOR = "creator";
     public static final String NAME = "name";
+    public static final String REQUEST = "request";
     public static final String CONFIGURATION = "configuration";
     public static final String PARAMETERS = "parameters";
-    public static final String PLUGIN_NAME = "pluginname";
-    public static final String PLUGIN_ENDPOINT = "pluginendpoint";
-    public static final String SERVER_PLUGIN_INSERTER = "serverplugininserter";
+    public static final String PARAMETER = "parameter";
+    public static final String REST_ENDPOINT = "restendpoint";
+    public static final String HTTP_METHOD = "httpmethod";
+    public static final String REST = "rest";
     public static final String CLASS = "class";
     public static final String METHOD = "method";
     public static final String PATH = "path";
@@ -38,6 +41,9 @@ public class ConfigurationConstants {
     public static final String CYPHER_QUERY = "cypherquery";
     public static final String VERSIONING = "versioning";
     public static final String VERSION = "version";
+    public static final String JAVA_TYPE = "javatype";
+    public static final String ELEMENT_TYPE = "elementtype";
+    public static final String TO_ESCAPED_JSON = "toescapedjson";
 
     private ConfigurationConstants() {
     }

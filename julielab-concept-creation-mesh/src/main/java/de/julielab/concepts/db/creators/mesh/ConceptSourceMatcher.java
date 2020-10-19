@@ -1,12 +1,9 @@
 package de.julielab.concepts.db.creators.mesh;
 
 import de.julielab.java.utilities.ConfigurationUtilities;
-import org.apache.commons.configuration2.ConfigurationUtils;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-
-import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 /**
  * A helper class to check if a given ID is an original ID and if so, what it original source was. This is configured
@@ -19,7 +16,7 @@ public class ConceptSourceMatcher {
     public ConceptSourceMatcher(HierarchicalConfiguration<ImmutableNode> inputConfig) {
         try {
             orgSource = ConfigurationUtilities.requirePresent("", inputConfig::getString);
-            orgRegex = inputConfig.getString("@" + XmlConceptCreator.REGEX);
+            orgRegex = inputConfig.getString("@" + MeshXmlConceptCreator.REGEX);
         } catch (ConfigurationException e) {
             throw new IllegalArgumentException(e);
         }

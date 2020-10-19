@@ -1,20 +1,12 @@
 package de.julielab.concepts.db.core.spi;
 
-import de.julielab.concepts.db.core.services.VersioningService;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DataExportException;
-import de.julielab.concepts.util.VersionRetrievalException;
-import de.julielab.java.utilities.FileUtilities;
+import de.julielab.concepts.util.IncompatibleActionHandlerConnectionException;
 import de.julielab.jssf.commons.spi.ExtensionPoint;
 import de.julielab.jssf.commons.spi.ParameterExposing;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.json.JSONArray;
-
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.zip.GZIPInputStream;
 
 /**
  * <p>
@@ -38,9 +30,9 @@ public interface DataExporter extends ExtensionPoint, DatabaseConnected, Paramet
 	 * 
 	 * @param exportConfig
 	 *            Export subconfiguration.
-	 * @throws ConceptDatabaseConnectionException
-	 * @throws DataExportException
+	 * @throws ConceptDatabaseConnectionException When this exporter cannot connect to the database.
+	 * @throws DataExportException When the implementing exporter can not serve the provided export configuration.
 	 */
 	void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig)
-			throws ConceptDatabaseConnectionException, DataExportException;
+            throws ConceptDatabaseConnectionException, DataExportException, IncompatibleActionHandlerConnectionException;
 }

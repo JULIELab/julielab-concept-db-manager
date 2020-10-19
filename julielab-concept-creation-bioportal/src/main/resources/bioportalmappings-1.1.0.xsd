@@ -1,0 +1,47 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://www.julielab.de/conceptdb/mappings/bioportal"
+           targetNamespace="http://www.julielab.de/conceptdb/mappings/bioportal"
+           version="1.0.0"
+           elementFormDefault="qualified">
+
+    <xs:element name="name">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="de.julielab.concepts.db.creators.JulielabBioPortalToolsMappingCreator"/>
+                <xs:enumeration value="JulielabBioPortalToolsMappingCreator"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="allowedacronyms">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                An optional list of BioPortal ontology acronyms. If given, only the mappings of the specified
+                acronyms will be imported into the database.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="acronym" type="xs:string" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="configuration">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="path" type="xs:string"/>
+                <xs:element ref="allowedacronyms" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="creator">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="name"/>
+                <xs:element ref="configuration"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

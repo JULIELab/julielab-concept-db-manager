@@ -4,8 +4,6 @@ import de.julielab.concepts.db.core.FunctionCallBase.Parameter;
 import de.julielab.java.utilities.ConfigurationUtilities;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.XMLConfiguration;
-import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
-import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.json.JSONArray;
 import org.testng.annotations.Test;
 
@@ -18,9 +16,7 @@ import java.util.Map;
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static org.testng.Assert.assertTrue;
-import static org.testng.AssertJUnit.assertEquals;
-import static org.testng.AssertJUnit.assertFalse;
-import static org.testng.AssertJUnit.assertNotNull;
+import static org.testng.AssertJUnit.*;
 
 public class FunctionCallBaseTest {
     @SuppressWarnings("unchecked")
@@ -32,7 +28,7 @@ public class FunctionCallBaseTest {
 
         Method method = FunctionCallBase.class.getDeclaredMethod("parseParameters", HierarchicalConfiguration.class);
         method.setAccessible(true);
-        Map<String, Parameter> parsedParameters = (Map<String, Parameter>) method.invoke(new ServerPluginExporter(), config.configurationAt(slash(EXPORTS, EXPORT, CONFIGURATION, PARAMETERS)));
+        Map<String, Parameter> parsedParameters = (Map<String, Parameter>) method.invoke(new RestExporter(), config.configurationAt(slash(EXPORTS, EXPORT, REQUEST, PARAMETERS)));
         assertEquals(2, parsedParameters.size());
         List<Parameter> parametersList = new ArrayList<>(parsedParameters.values());
         assertNotNull(parametersList.get(0).getName());
@@ -64,7 +60,7 @@ public class FunctionCallBaseTest {
 
         Method method = FunctionCallBase.class.getDeclaredMethod("parseParameters", HierarchicalConfiguration.class);
         method.setAccessible(true);
-        Map<String, Parameter> parsedParameters = (Map<String, Parameter>) method.invoke(new ServerPluginExporter(), config.configurationAt(slash(EXPORTS, EXPORT, CONFIGURATION, PARAMETERS)));
+        Map<String, Parameter> parsedParameters = (Map<String, Parameter>) method.invoke(new RestExporter(), config.configurationAt(slash(EXPORTS, EXPORT, REQUEST, PARAMETERS)));
         assertEquals(2, parsedParameters.size());
         List<Parameter> parametersList = new ArrayList<>(parsedParameters.values());
         assertNotNull(parametersList.get(0).getName());
