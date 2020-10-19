@@ -32,7 +32,7 @@ public class ExporterIT {
         DataExportService exportService = DataExportService.getInstance(conf.configurationAt("connection"));
         exportService.exportData(conf.configurationAt(slash(EXPORTS, EXPORT)));
 
-        try (BufferedReader br = FileUtilities.getReaderFromFile(new File("src/test/resources/output/dict.txt"))) {
+        try (BufferedReader br = FileUtilities.getReaderFromFile(new File("src/test/resources/output/serverplugindict.txt"))) {
             long nonCommentLines = br.lines().filter(l -> !l.startsWith("#")).count();
             assertThat(nonCommentLines).isEqualTo(3);
         }
