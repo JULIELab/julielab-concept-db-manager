@@ -1,5 +1,5 @@
-<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="conceptdb-1.1.0.xsd"
-                 xsi:schemaLocation="conceptdb-1.1.0.xsd conceptdb-1.1.0.xsd">
+<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.julielab.de/conceptdb"
+                 xsi:schemaLocation="http://www.julielab.de/conceptdb  http://www.julielab.de/conceptdb/conceptdb-1.1.0.xsd">
     <versioning>
         <version>1.0-test</version>
     </versioning>
@@ -18,14 +18,13 @@
                     <parameter name="id_property">sourceIds</parameter>
                 </parameters>
             </request>
-            <decoding>
-                <json2bytearray>false</json2bytearray>
-                <base64>true</base64>
-                <gzip>true</gzip>
-            </decoding>
             <outputfile>
                 src/test/resources/output/serverplugindict.txt
             </outputfile>
+            <decoding>
+                <base64>true</base64>
+                <gzip>true</gzip>
+            </decoding>
         </export>
     </exports>
 </conceptdatabase>
