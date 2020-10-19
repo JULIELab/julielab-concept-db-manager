@@ -12,7 +12,6 @@ import de.julielab.java.utilities.FileUtilities;
 import de.julielab.neo4j.plugins.datarepresentation.*;
 import de.julielab.neo4j.plugins.datarepresentation.constants.ConceptConstants;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
-import de.julielab.semedico.resources.ResourceTermLabels;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
@@ -33,7 +32,6 @@ import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
 public class NCBIGeneConceptCreator implements ConceptCreator {
-
     public static final String SEMEDICO_RESOURCE_MANAGEMENT_SOURCE = "Semedico Resource Management";
     public static final String NCBI_GENE_SOURCE = "NCBI Gene";
     public static final String BASEPATH = "basepath";
@@ -57,7 +55,6 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
     private int topOrthologAggregateCounter;
     private int topHomologyAggregateCounter;
     private Logger log = LoggerFactory.getLogger(NCBIGeneConceptCreator.class);
-
     public NCBIGeneConceptCreator() {
         resetCounters();
     }
@@ -131,7 +128,6 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         Set<Node> roots = geneHierarchy.getRoots(getGeneCoordinates(geneId));
         return roots.stream().map(Node::getConcept).filter(Objects::nonNull).filter(c -> c.coordinates.sourceId.startsWith(GENE_GROUP_PREFIX)).collect(Collectors.toSet());
     }
-
 
     private Stream<ImportConcept> createGeneOrthologyAggregates(Stream<ImportConcept> conceptStream, Set<String> totalGeneIds, Multimap<String, ConceptCoordinates> genes2Aggregate, Forest geneHierarchy, File geneGroup, Map<ConceptCoordinates, ImportConcept> termsByGeneId, List<String> aggregateCopyProperties) throws IOException {
         // add the orthology information from gene group to make gene group aggregates
@@ -220,7 +216,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         }
 
         // Connect the genes to their orthology clusters
-       conceptStream = conceptStream.map(gene -> {
+        conceptStream = conceptStream.map(gene -> {
             Collection<ImportConcept> orthoAggregates = genes2OrthoAggregate.get(gene.coordinates.originalId);
             for (ImportConcept orthoAggregate : orthoAggregates) {
                 gene.addParent(orthoAggregate.coordinates);
@@ -228,8 +224,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
                 // elements should disappear behind the aggregate and as such
                 // should not be present in the query dictionary or suggestions.
                 if (orthoAggregates.size() > 1)
-                    gene.addGeneralLabel(ResourceTermLabels.Gazetteer.NO_QUERY_DICTIONARY.name(),
-                            ResourceTermLabels.Suggestions.NO_SUGGESTIONS.name());
+                    gene.addGeneralLabel(ConceptLabels.NO_QUERY_DICTIONARY.name(),
+                            ConceptLabels.NO_SUGGESTIONS.name());
             }
             return gene;
         });
@@ -300,8 +296,6 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         }
         return topOrtholog;
     }
-
-
 
     /**
      * Gives genes species-related qualifier / display name in the form the NCBI
@@ -478,8 +472,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
          * Gene IDs are given by a Gene Normalization component like GeNo. Thus, genes
          * are not supposed to be additionally tagged by a gazetteer.
          */
-        geneTerm.addGeneralLabel(ResourceTermLabels.Gazetteer.NO_PROCESSING_GAZETTEER.toString(),
-                ResourceTermLabels.IdMapping.ID_MAP_NCBI_GENES.toString());
+        geneTerm.addGeneralLabel(ConceptLabels.NO_PROCESSING_GAZETTEER.toString(),
+                ConceptLabels.ID_MAP_NCBI_GENES.toString());
 
         return geneTerm;
 
@@ -622,6 +616,10 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
     public String getName() {
         return "NCBIGeneConceptCreator";
     }
+
+    // These constants were used to be imported from import de.julielab.semedico.resources.ResourceTermLabels
+    // This connection was loosened for less cumbersome dependencies.
+    private enum ConceptLabels {NO_PROCESSING_GAZETTEER, NO_SUGGESTIONS, NO_QUERY_DICTIONARY, ID_MAP_NCBI_GENES}
 
     private class TaxonomyRecord {
         @SuppressWarnings("unused")
