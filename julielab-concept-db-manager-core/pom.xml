@@ -4,7 +4,7 @@
     <parent>
         <groupId>de.julielab</groupId>
         <artifactId>julielab-concept-db-manager</artifactId>
-        <version>1.1.0-SNAPSHOT</version>
+        <version>1.1.0</version>
     </parent>
     <artifactId>julielab-concept-db-manager-core</artifactId>
     <name>JULIE Lab Concept Database Manager Core</name>
@@ -43,6 +43,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
                 <configuration>
                     <suiteXmlFiles>
                         <suiteXmlFile>src/test/resources/testsuits/unit-tests.xml</suiteXmlFile>
@@ -148,7 +149,7 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers</artifactId>
-            <version>1.12.0</version>
+            <version>1.14.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>
