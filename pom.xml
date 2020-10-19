@@ -67,7 +67,7 @@
         </dependencies>
     </dependencyManagement>
     <properties>
-        <julielab-neo4j-plugins-version>3.0.0-SNAPSHOT</julielab-neo4j-plugins-version>
+        <julielab-neo4j-plugins-version>3.0.0</julielab-neo4j-plugins-version>
         <neo4j-version>4.0.4</neo4j-version>
     </properties>
 </project>
