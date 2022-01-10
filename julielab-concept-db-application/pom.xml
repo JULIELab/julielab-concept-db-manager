@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>de.julielab</groupId>
 		<artifactId>julielab-concept-db-manager</artifactId>
-		<version>1.1.0</version>
+		<version>1.1.1</version>
 	</parent>
 	<artifactId>julielab-concept-db-application</artifactId>
 	<name>JULIE Lab Concept DB Manager Application</name>

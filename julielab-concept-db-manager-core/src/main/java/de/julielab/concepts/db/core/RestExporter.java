@@ -54,7 +54,7 @@ public class RestExporter extends RestCallBase implements DataExporter  {
                     File outputFile = new File(outputPath);
                     response = callNeo4jRestEndpoint(connectionConfiguration, exportConfig, "GET");
                     log.info("Writing file {}", outputFile);
-                    HierarchicalConfiguration<ImmutableNode> decodingConfiguration = exportConfig.configurationAt(DECODING);
+                    HierarchicalConfiguration<ImmutableNode> decodingConfiguration = exportConfig.configurationsAt(DECODING).size() > 0 ? exportConfig.configurationAt(DECODING) : null;
                     InputStream decodedResponse = decodingConfiguration != null ? decode(response, decodingConfiguration) : response;
                     writeData(outputFile, getResourceHeader(connectionConfiguration),decodedResponse);
                     log.info("Done.");

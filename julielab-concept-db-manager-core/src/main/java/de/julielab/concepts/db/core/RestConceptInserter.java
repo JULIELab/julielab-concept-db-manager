@@ -72,6 +72,7 @@ public class RestConceptInserter implements ConceptInserter {
             g.writeStartObject();
             g.writeObjectField(NAME_FACET, concepts.getFacet());
             g.writeObjectField(NAME_IMPORT_OPTIONS, concepts.getImportOptions());
+            g.writeNumberField(NAME_NUM_CONCEPTS, concepts.getNumConcepts());
 
             Thread concept2json = new Thread(() -> {
                 try {
@@ -87,7 +88,8 @@ public class RestConceptInserter implements ConceptInserter {
                     g.writeEndObject();
                     g.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.error("An error occurred while writing concepts into the output stream.", e);
+                    throw new IllegalStateException(new ConceptInsertionException(e));
                 }
             });
             concept2json.start();

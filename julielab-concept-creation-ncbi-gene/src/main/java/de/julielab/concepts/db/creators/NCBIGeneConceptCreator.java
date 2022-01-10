@@ -375,12 +375,15 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         Iterator<String> it = bw.lines().filter(record -> !record.startsWith("#")).iterator();
         Iterator<ImportConcept> geneIterator = new Iterator<>() {
 
+            private boolean closed = false;
+
             @Override
             public boolean hasNext() {
-                boolean hasNext = it.hasNext();
+                boolean hasNext = closed ? false : it.hasNext();
                 if (!hasNext) {
                     try {
                         bw.close();
+                        closed = true;
                     } catch (IOException e) {
                         throw new IllegalStateException(e);
                     }
@@ -585,6 +588,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             options.doNotCreateHollowParents = false;
             ImportConcepts importConcepts = new ImportConcepts(conceptStream, facet);
             importConcepts.setNumConcepts(totalGeneIds.size() + homologeneAggregateCounter + orthologAggregateCounter + topHomologyAggregateCounter);
+            log.info("Created a total of {} concepts.", importConcepts.getNumConcepts());
             importConcepts.setImportOptions(options);
             return Stream.of(importConcepts);
         } catch (IOException e) {
