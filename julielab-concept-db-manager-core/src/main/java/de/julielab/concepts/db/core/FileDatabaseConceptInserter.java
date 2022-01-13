@@ -17,6 +17,10 @@ import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Label;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Transaction;
+import org.neo4j.logging.Level;
+import org.neo4j.logging.Log;
+import org.neo4j.logging.log4j.Log4jLogProvider;
+import org.neo4j.logging.log4j.LogConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,12 +28,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.neo4j.configuration.GraphDatabaseSettings.DEFAULT_DATABASE_NAME;
+import static org.neo4j.logging.FormattedLogFormat.PLAIN;
 
 public class FileDatabaseConceptInserter implements ConceptInserter {
 
     private static final Logger log = LoggerFactory.getLogger(FileDatabaseConceptInserter.class);
+    private final Log ciLog;
     private DatabaseManagementService dbms;
     private HierarchicalConfiguration<ImmutableNode> connectionConfiguration;
+
+    public FileDatabaseConceptInserter() {
+        Log4jLogProvider log4jLogProvider = new Log4jLogProvider(LogConfig.createBuilder(System.out, Level.INFO)
+                .withFormat(PLAIN)
+                .withCategory(false)
+                .build());
+        ciLog = log4jLogProvider.getLog(ConceptInsertion.class);
+    }
 
     @Override
     public void insertConcepts(HierarchicalConfiguration<ImmutableNode> importConfiguration, ImportConcepts concepts) throws ConceptInsertionException {
@@ -52,7 +66,7 @@ public class FileDatabaseConceptInserter implements ConceptInserter {
                 log.debug("Inserting the concepts of facet {} (customId: {}) into the Neo4j database", facet.getName(),
                         facet.getCustomId());
                 Map<String, Object> response = new HashMap<>();
-                ConceptInsertion.insertConcepts(graphDb, concepts, response);
+                ConceptInsertion.insertConcepts(graphDb, ciLog, concepts, response);
                 log.debug("Successfully inserted the given concepts: {}", response);
             } catch (de.julielab.neo4j.plugins.util.ConceptInsertionException e) {
                 throw new ConceptInsertionException(

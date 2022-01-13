@@ -18,28 +18,22 @@
  */
 package de.julielab.concepts.db.creators.mesh.descriptorAttachment;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import org.apache.commons.lang.StringUtils;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
-
 import de.julielab.concepts.db.creators.mesh.Tree;
 import de.julielab.concepts.db.creators.mesh.TreeFilter;
 import de.julielab.concepts.db.creators.mesh.components.Descriptor;
 import de.julielab.concepts.db.creators.mesh.components.TreeVertex;
 import de.julielab.concepts.db.creators.mesh.exchange.Parser4Mesh;
+import org.apache.commons.lang3.StringUtils;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <p>
