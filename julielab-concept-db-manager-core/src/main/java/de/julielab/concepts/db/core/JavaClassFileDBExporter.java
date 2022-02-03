@@ -10,10 +10,8 @@ import org.neo4j.dbms.api.DatabaseManagementService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import javax.ws.rs.core.StreamingOutput;
+import java.io.*;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
@@ -51,10 +49,20 @@ public class JavaClassFileDBExporter extends JavaMethodCallBase implements DataE
 
             @Override
             public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws DataExportException, IncompatibleActionHandlerConnectionException {
-                String outputFile = exportConfig.getString(slash(REQUEST, OUTPUT_FILE));
+                String outputFile = exportConfig.getString(slash(OUTPUT_FILE));
                 try {
-                    String result = callInstanceMethod(exportConfig.configurationAt(REQUEST), dbms);
-                    InputStream decodedResponse = decode(new ByteArrayInputStream(result.getBytes(UTF_8)), exportConfig.configurationAt(slash(REQUEST, DECODING)));
+                    byte[] resultData;
+                    Object result = callInstanceMethod(exportConfig.configurationAt(REQUEST), dbms);
+                    if (result instanceof StreamingOutput) {
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        ((StreamingOutput)result).write(baos);
+                        resultData = baos.toByteArray();
+                    } else if (result instanceof String) {
+                        resultData = ((String) result).getBytes(UTF_8);
+                    } else throw new IllegalStateException("Unsupported return typpe '" + result.getClass().getCanonicalName() + "'.");
+                    boolean hasDecodingConfig = exportConfig.getKeys(DECODING).hasNext();
+                    InputStream inputStream = new ByteArrayInputStream(resultData);
+                    InputStream decodedResponse = hasDecodingConfig ? decode(inputStream, exportConfig.configurationAt(DECODING)) : inputStream;
                     String resourceHeader = getResourceHeader(connectionConfiguration) + result;
                     writeData(new File(outputFile), resourceHeader, decodedResponse);
                 } catch (MethodCallException | VersionRetrievalException | IOException | JSONException e) {

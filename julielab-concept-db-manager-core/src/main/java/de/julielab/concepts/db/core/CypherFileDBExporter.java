@@ -3,6 +3,7 @@ package de.julielab.concepts.db.core;
 import de.julielab.concepts.db.core.services.FileConnectionService;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import de.julielab.concepts.util.DataExportException;
+import de.julielab.concepts.util.IncompatibleActionHandlerConnectionException;
 import de.julielab.concepts.util.VersionRetrievalException;
 import de.julielab.java.utilities.ConfigurationUtilities;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
@@ -49,16 +50,15 @@ public class CypherFileDBExporter extends DataExporterImpl {
 
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
-        template.addProperty(slash(basePath, EXPORTER), getName());
         template.addProperty(slash(basePath, REQUEST, CYPHER_QUERY), "");
-        template.addProperty(slash(basePath, REQUEST, OUTPUT_FILE), "");
+        template.addProperty(slash(basePath, OUTPUT_FILE), "");
     }
 
     @Override
-    public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws DataExportException {
+    public void exportData(HierarchicalConfiguration<ImmutableNode> exportConfig) throws DataExportException, IncompatibleActionHandlerConnectionException {
         try {
             String cypherQuery = ConfigurationUtilities.requirePresent(slash(REQUEST, CYPHER_QUERY), exportConfig::getString);
-            String outputPath = ConfigurationUtilities.requirePresent(slash(REQUEST, OUTPUT_FILE), exportConfig::getString);
+            String outputPath = ConfigurationUtilities.requirePresent(OUTPUT_FILE, exportConfig::getString);
             log.info("Sending Cypher query {} to Neo4j embedded database", cypherQuery);
             List<String> outputLines = new ArrayList<>();
             try (Transaction tx = dbms.database(DEFAULT_DATABASE_NAME).beginTx()) {
@@ -72,7 +72,9 @@ public class CypherFileDBExporter extends DataExporterImpl {
                     getResourceHeader(connectionConfiguration),
                     new ByteArrayInputStream(outputLines.stream().collect(Collectors.joining(System.getProperty("line.separator"))).getBytes(UTF_8)));
             log.info("Done.");
-        } catch (ConfigurationException | VersionRetrievalException | IOException e) {
+        } catch (ConfigurationException e) {
+            throw new IncompatibleActionHandlerConnectionException(e);
+        } catch (VersionRetrievalException | IOException e) {
             throw new DataExportException(e);
         }
     }

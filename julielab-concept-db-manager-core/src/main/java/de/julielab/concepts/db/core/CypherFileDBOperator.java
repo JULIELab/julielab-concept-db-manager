@@ -51,6 +51,6 @@ public class CypherFileDBOperator implements DatabaseOperator {
 
     @Override
     public void exposeParameters(String basePath, HierarchicalConfiguration<ImmutableNode> template) {
-        template.addProperty(slash(basePath, OPERATOR, REQUEST, CYPHER_QUERY), "");
+        template.addProperty(slash(basePath, OPERATION, REQUEST, CYPHER_QUERY), "");
     }
 }

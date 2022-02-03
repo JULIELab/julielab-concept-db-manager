@@ -3,6 +3,7 @@ package de.julielab.concepts.db.core;
 import de.julielab.concepts.util.IncompatibleActionHandlerConnectionException;
 import de.julielab.concepts.util.MethodCallException;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.ex.ConfigurationRuntimeException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.neo4j.dbms.api.DatabaseManagementService;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -40,7 +42,12 @@ public abstract class JavaMethodCallBase extends FunctionCallBase {
         if (className == null || methodName == null)
             throw new IncompatibleActionHandlerConnectionException("No class and/or no method name for a Java method call given. Skipping.");
         try {
-            Map<String, Parameter> parsedParameters = parseParameters(parameterConfiguration.configurationAt(PARAMETERS));
+            Map<String, Parameter> parsedParameters = Collections.emptyMap();
+            try {
+                parsedParameters = parseParameters(parameterConfiguration.configurationAt(PARAMETERS));
+            } catch (ConfigurationRuntimeException e) {
+                // there are no parameters specified which is perfectly legal
+            }
             Object classInstance = Class.forName(className).getDeclaredConstructor(DatabaseManagementService.class).newInstance(dbms);
             Class<?>[] parameterTypes = parsedParameters.values().stream().map(Parameter::getType)
                     .toArray(i -> new Class<?>[i]);
@@ -63,7 +70,7 @@ public abstract class JavaMethodCallBase extends FunctionCallBase {
             Class<?> parameterClass = parameterTypes[i];
             if (parameterClass == null)
                 throw new MethodCallException(
-                        "A multi-valued parameter did not specify its element type. The parameter is: "
+                        "A multi-valued parameter did not specify its Java type. The parameter is: "
                                 + parameter);
         }
     }

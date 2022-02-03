@@ -1,11 +1,15 @@
 package de.julielab.concepts.db.core.services;
 
+import apoc.periodic.Periodic;
 import de.julielab.concepts.util.ConceptDatabaseConnectionException;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.neo4j.dbms.api.DatabaseManagementService;
 import org.neo4j.dbms.api.DatabaseManagementServiceBuilder;
+import org.neo4j.exceptions.KernelException;
 import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.kernel.api.procedure.GlobalProcedures;
+import org.neo4j.kernel.internal.GraphDatabaseAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,8 +61,22 @@ public class FileConnectionService {
 						+ " is neither a relative file path without scheme nor an absolute file path with file: scheme.");
 			File dbFile = dbUri.isAbsolute() ? new File(dbUri) : new File(dbUri.getRawSchemeSpecificPart());
 			log.debug("Accessing file database located at {} that currently {}", dbFile.getAbsolutePath(), dbFile.exists() ? "exists" : "does not exist");
-			return dbs.computeIfAbsent(dbFile.getCanonicalPath(),
-					k -> new DatabaseManagementServiceBuilder(dbFile).build());
+			DatabaseManagementService dbms = dbs.computeIfAbsent(dbFile.getCanonicalPath(),
+					k -> new DatabaseManagementServiceBuilder(dbFile.toPath()).build());
+			GraphDatabaseService graphDb = dbms.database(DEFAULT_DATABASE_NAME);
+			// from https://github.com/neo4j-contrib/neo4j-apoc-procedures/blob/ebd1dd5efbd2ddd527625cbd71e719d0e1b63298/test-utils/src/main/java/apoc/util/TestUtil.java#L117
+			GlobalProcedures globalProcedures = ((GraphDatabaseAPI) graphDb).getDependencyResolver().resolveDependency(GlobalProcedures.class);
+			Class<?>[] procedures = {Periodic.class};
+			for (Class<?> procedure : procedures) {
+				try {
+					globalProcedures.registerProcedure(procedure, true);
+					globalProcedures.registerFunction(procedure, true);
+					globalProcedures.registerAggregationFunction(procedure, true);
+				} catch (KernelException e) {
+					throw new RuntimeException("while registering " + procedure, e);
+				}
+			}
+			return dbms;
 		} catch (IOException | URISyntaxException e) {
 			throw new ConceptDatabaseConnectionException(e);
 		}
