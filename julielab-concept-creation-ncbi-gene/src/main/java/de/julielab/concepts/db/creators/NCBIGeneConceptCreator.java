@@ -604,7 +604,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
     }
 
     /**
-     * Checks if <tt>filepath</tt> is an absolute path. If so, <tt>filepath</tt> is returned. Otherweise, <tt>basepath + filepath</tt> is returned.
+     * Checks if <tt>filepath</tt> is an absolute path. If so, <tt>filepath</tt> is returned. Otherwise, <tt>basepath + filepath</tt> is returned.
      *
      * @param basepath A base path to resolve the potentially relative <tt>filepath</tt> against.
      * @param filepath The - potentially relative to <tt>basepath</tt> - path to a file.
