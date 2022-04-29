@@ -29,6 +29,7 @@ public class FamPlexConceptCreator implements ConceptCreator {
     public static final String RELATIONSFILE = "relationsfile";
     public static final String GROUNDINGMAP = "groundingmap";
     public static final String NAMEEXTENSIONRECORDS = "nameextensionrecords";
+    public static final String LABEL_FAMPLEX = "FPLX";
     private final static Logger log = LoggerFactory.getLogger(FamPlexConceptCreator.class);
 
     @Override
@@ -48,9 +49,18 @@ public class FamPlexConceptCreator implements ConceptCreator {
             addConceptsFromFamplexRelationsFile(conceptsById, relationsFile);
             addConceptsFromFamplexGroundingMap(conceptsById, groundingMap);
         } catch (IOException e) {
-            throw new ConceptCreationException();
+            throw new ConceptCreationException(e);
         }
-        return null;
+
+        ImportFacet facet = FacetCreationService.getInstance().createFacet(importConfig);
+        ImportOptions options = new ImportOptions();
+        options.createHollowAggregateElements = true;
+        options.doNotCreateHollowParents = false;
+        ImportConcepts importConcepts = new ImportConcepts(conceptsById.values().stream(), facet);
+        importConcepts.setNumConcepts(conceptsById.size());
+        log.info("Created a total of {} concepts.", importConcepts.getNumConcepts());
+        importConcepts.setImportOptions(options);
+        return Stream.of(importConcepts);
     }
 
     /**
@@ -71,6 +81,7 @@ public class FamPlexConceptCreator implements ConceptCreator {
      * &lt;newline&gt;
      * </pre>
      * </p>
+     *
      * @param conceptsById
      * @param nameExtensionFile
      * @throws IOException
@@ -83,47 +94,62 @@ public class FamPlexConceptCreator implements ConceptCreator {
                 if (line.isBlank()) {
                     if (!currentRecord.isEmpty()) {
                         // newline; the old record is completely read, add enriched names to the ImportConcepts
-                        List<String> bases = null;
-                        List<String> inflections = Collections.emptyList();
-                        List<String> acronyms = Collections.emptyList();
-                        List<String> abbreviations = Collections.emptyList();
-                        Optional<String> famplexId = Optional.empty();
-                        for (String key : currentRecord.keySet()) {
-                            if (key.startsWith("bases"))
-                                bases = Arrays.stream(currentRecord.get(key).split(", ")).collect(Collectors.toList());
-                            else if (key.startsWith("inflections"))
-                                inflections = Arrays.stream(currentRecord.get(key).split(", ")).collect(Collectors.toList());
-                            else if (key.startsWith("acronyms"))
-                                acronyms = Arrays.stream(currentRecord.get(key).split(", ")).collect(Collectors.toList());
-                            else if (key.startsWith("abbreviations"))
-                                abbreviations = Arrays.stream(currentRecord.get(key).split(", ")).collect(Collectors.toList());
-                            else if (key.startsWith("externalids"))
-                                famplexId = Arrays.stream(currentRecord.get(key).split(", ")).filter(id -> id.startsWith("FPLX:")).findAny();
-                        }
-                        if (famplexId.isPresent()) {
-                            String id = famplexId.get().split(":")[1];
-                            ImportConcept famplexConcept = conceptsById.compute(id, (k, v) -> v != null ? v : new ImportConcept(new ConceptCoordinates(id, "FamPlex", CoordinateType.OSRC)));
-                            if (famplexConcept.prefName == null) {
-                                famplexConcept.prefName = bases.get(0);
-                                bases.remove(0);
-                            }
-                            if (famplexConcept.synonyms == null)
-                                famplexConcept.synonyms = new ArrayList<>();
-                            famplexConcept.synonyms.addAll(bases);
-                            famplexConcept.synonyms.addAll(acronyms);
-                            famplexConcept.synonyms.addAll(abbreviations);
-                            // there could be well some duplicates, make the entries distinct
-                            famplexConcept.synonyms = famplexConcept.synonyms.stream().distinct().collect(Collectors.toList());
-                            if (famplexConcept.writingVariants == null)
-                                famplexConcept.writingVariants = new ArrayList<>();
-                            famplexConcept.writingVariants.addAll(inflections);
-                        }
+                        addExtendedNamesToConcept(conceptsById, currentRecord);
                     }
                     currentRecord.clear();
                 }
                 String[] split = line.split("\t");
-                currentRecord.put(split[0], split[1]);
+                if (split.length > 1)
+                    currentRecord.put(split[0], split[1]);
             }
+            // In case there was no newline after the last record
+            if (!currentRecord.isEmpty())
+                addExtendedNamesToConcept(conceptsById, currentRecord);
+        }
+    }
+
+    private void addExtendedNamesToConcept(Map<String, ImportConcept> conceptsById, Map<String, String> currentRecord) {
+        List<String> bases = null;
+        List<String> inflections = Collections.emptyList();
+        List<String> acronyms = Collections.emptyList();
+        List<String> abbreviations = Collections.emptyList();
+        List<String> spellings = Collections.emptyList();
+        Optional<String> famplexId = Optional.empty();
+        for (String key : currentRecord.keySet()) {
+            if (key.startsWith("bases"))
+                bases = Arrays.stream(currentRecord.get(key).split(", ")).collect(Collectors.toList());
+            else if (key.startsWith("inflections"))
+                inflections = Arrays.stream(currentRecord.get(key).split(", ")).collect(Collectors.toList());
+            else if (key.startsWith("spellings"))
+                spellings = Arrays.stream(currentRecord.get(key).split(", ")).collect(Collectors.toList());
+            else if (key.startsWith("acronyms"))
+                acronyms = Arrays.stream(currentRecord.get(key).split(", ")).collect(Collectors.toList());
+            else if (key.startsWith("abbreviations"))
+                abbreviations = Arrays.stream(currentRecord.get(key).split(", ")).collect(Collectors.toList());
+            else if (key.startsWith("externalids"))
+                famplexId = Arrays.stream(currentRecord.get(key).split(", ")).filter(id -> id.startsWith("FPLX:")).findAny();
+        }
+        if (famplexId.isPresent()) {
+            String id = famplexId.get().split(":")[1];
+            ImportConcept famplexConcept = conceptsById.compute(id, (k, v) -> v != null ? v : new ImportConcept(new ConceptCoordinates(id, "FPLX", CoordinateType.OSRC)));
+            addNodeLabel(famplexConcept, LABEL_FAMPLEX);
+            if (famplexConcept.prefName == null) {
+                famplexConcept.prefName = bases.get(0);
+                bases.remove(0);
+            }
+            if (famplexConcept.synonyms.isEmpty())
+                famplexConcept.synonyms = new ArrayList<>();
+            famplexConcept.synonyms.addAll(bases);
+            famplexConcept.synonyms.addAll(acronyms);
+            famplexConcept.synonyms.addAll(abbreviations);
+            // there could be well some duplicates, make the entries distinct
+            famplexConcept.synonyms = famplexConcept.synonyms.stream().distinct().collect(Collectors.toList());
+            if (famplexConcept.writingVariants.isEmpty())
+                famplexConcept.writingVariants = new ArrayList<>();
+            famplexConcept.writingVariants.addAll(inflections);
+            famplexConcept.writingVariants.addAll(spellings);
+            // Remove duplicates in writingVariants
+            famplexConcept.writingVariants = famplexConcept.writingVariants.stream().distinct().collect(Collectors.toList());
         }
     }
 
@@ -164,8 +190,9 @@ public class FamPlexConceptCreator implements ConceptCreator {
                 String synonym = split[0];
                 String fplxId = split[2];
                 // Just in case this method is called after conceptsById has already been populated from other files, check if there is already an ImportConcept for this ID
-                ImportConcept famplexConcept = conceptsById.compute(fplxId, (k, v) -> v != null ? v : new ImportConcept(new ConceptCoordinates(fplxId, "FamPlex", CoordinateType.OSRC)));
-                if (famplexConcept.synonyms == null)
+                ImportConcept famplexConcept = conceptsById.compute(fplxId, (k, v) -> v != null ? v : new ImportConcept(new ConceptCoordinates(fplxId, "FPLX", CoordinateType.OSRC)));
+                addNodeLabel(famplexConcept, LABEL_FAMPLEX);
+                if (famplexConcept.synonyms.isEmpty())
                     famplexConcept.synonyms = new ArrayList<>();
                 famplexConcept.synonyms.add(synonym);
                 if (famplexConcept.prefName == null)
@@ -201,7 +228,8 @@ public class FamPlexConceptCreator implements ConceptCreator {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] split = line.split("\t");
-                String egId = split[1];
+                String sourceIdSource = split[0].equals("EG") ? "NCBI Gene" : split[0];
+                String sourceId = split[1];
                 String relation = split[2];
                 String fplxId = split[4];
                 if (!split[3].equals("FPLX")) {
@@ -209,15 +237,32 @@ public class FamPlexConceptCreator implements ConceptCreator {
                     continue;
                 }
 
-                ImportConcept geneConcept = new ImportConcept(new ConceptCoordinates(egId, "NCBI Gene", CoordinateType.OSRC));
-                conceptsById.put(egId, geneConcept);
+                // the "source concept" - meant is the left side of the relation - could either be from NCBI Gene (originally
+                // HGNC, but we expect the converted file version here) of from FamPlex itself.
+                ImportConcept sourceConcept = conceptsById.compute(sourceId, (k, v) -> v != null ? v : new ImportConcept(new ConceptCoordinates(sourceId, sourceIdSource, CoordinateType.OSRC)));
+                if (sourceIdSource.equals("FPLX"))
+                    addNodeLabel(sourceConcept, LABEL_FAMPLEX);
+
                 // Just in case this method is called after conceptsById has already been populated from other files, check if there is already an ImportConcept for this ID
-                ImportConcept famplexConcept = conceptsById.compute(fplxId, (k, v) -> v != null ? v : new ImportConcept(new ConceptCoordinates(fplxId, "FamPlex", CoordinateType.OSRC)));
+                ImportConcept famplexConcept = conceptsById.compute(fplxId, (k, v) -> v != null ? v : new ImportConcept(new ConceptCoordinates(fplxId, "FPLX", CoordinateType.OSRC)));
                 if (famplexConcept.prefName == null)
                     famplexConcept.prefName = fplxId;
-                geneConcept.addRelationship(new ImportConceptRelationship(famplexConcept.coordinates, relation.toUpperCase()));
+                // Add the FAMPLEX label to all the FamPlex entities so we can easily find them later in the DB.
+                addNodeLabel(famplexConcept, LABEL_FAMPLEX);
+
+                // The relationship is either "isa" or "partof". In the ConceptDB the parent-child relationship is
+                // "is broader than" to roughly denote a semantically "larger" and a "smaller" unit. This should hold
+                // here, so add the right relationship side as a parent.
+                sourceConcept.addParent(famplexConcept.coordinates);
+                // Also, add the exact relationship.
+                sourceConcept.addRelationship(new ImportConceptRelationship(famplexConcept.coordinates, relation));
             }
         }
+    }
+
+    private void addNodeLabel(ImportConcept famplexConcept, String label) {
+        if (famplexConcept.generalLabels == null || !famplexConcept.generalLabels.contains(LABEL_FAMPLEX))
+            famplexConcept.addGeneralLabel(LABEL_FAMPLEX);
     }
 
     @Override
@@ -233,8 +278,8 @@ public class FamPlexConceptCreator implements ConceptCreator {
         template.addProperty(slash(base, GROUNDINGMAP), "");
         template.addProperty(slash(base, NAMEEXTENSIONRECORDS), "");
         FacetCreationService.getInstance().exposeParameters(basePath, template);
-        template.setProperty(slash(basePath, FACET, CREATOR, CONFIGURATION, FACET_GROUP, NAME), "Biology");
-        template.setProperty(slash(basePath, FACET, CREATOR, CONFIGURATION, NAME), "Protein Complexes");
-        template.setProperty(slash(basePath, FACET, CREATOR, CONFIGURATION, DefaultFacetCreator.SOURCE_TYPE), FacetConstants.SRC_TYPE_HIERARCHICAL);
+        template.setProperty(slash(basePath, FACET, CREATOR, REQUEST, FACET_GROUP, NAME), "Biology");
+        template.setProperty(slash(basePath, FACET, CREATOR, REQUEST, NAME), "Protein Complexes");
+        template.setProperty(slash(basePath, FACET, CREATOR, REQUEST, DefaultFacetCreator.SOURCE_TYPE), FacetConstants.SRC_TYPE_HIERARCHICAL);
     }
 }
