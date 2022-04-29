@@ -10,8 +10,8 @@ import org.apache.commons.configuration2.tree.ImmutableNode;
 
 import java.util.List;
 
+import static de.julielab.concepts.db.core.ConfigurationConstants.CONFIGURATION;
 import static de.julielab.concepts.db.core.ConfigurationConstants.CREATOR;
-import static de.julielab.concepts.db.core.ConfigurationConstants.REQUEST;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 
 public class DefaultFacetCreator implements FacetCreator {
@@ -27,7 +27,7 @@ public class DefaultFacetCreator implements FacetCreator {
 	@Override
 	public ImportFacet createFacet(HierarchicalConfiguration<ImmutableNode> facetConfiguration, Object facetData)
 			throws FacetCreationException {
-		String configPath = slash(CREATOR, REQUEST);
+		String configPath = slash(CREATOR, CONFIGURATION);
 		String facetGroupName = facetConfiguration.getString(slash(configPath, FACET_GROUP_NAME), "Default Facet Group");
 		String name = facetConfiguration.getString(slash(configPath, NAME), "Default Facet");
 		String shortName = facetConfiguration.getString(slash(configPath, SHORT_NAME), "Default");

@@ -9,7 +9,7 @@ import de.julielab.neo4j.plugins.datarepresentation.ImportConcepts;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.tree.ImmutableNode;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -21,7 +21,7 @@ import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.concepts.db.core.DefaultFacetCreator.SOURCE_TYPE;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
 import static org.assertj.core.api.Assertions.assertThat;
-class FamPlexConceptCreatorTest {
+public class FamPlexConceptCreatorTest {
 
     @Test
     void createConcepts() throws Exception {
@@ -34,7 +34,7 @@ class FamPlexConceptCreatorTest {
         configuration.setProperty(slash(confPath, FamPlexConceptCreator.GROUNDINGMAP), Path.of(resourcesDir, "grounding_map_small.tsv").toString());
         configuration.setProperty(slash(confPath, FamPlexConceptCreator.NAMEEXTENSIONRECORDS), Path.of(resourcesDir, "expanded_small.dict").toString());
         // facet creation settings
-        String facetConfPath = slash(FACET, CREATOR, REQUEST);
+        String facetConfPath = slash(FACET, CREATOR, CONFIGURATION);
         configuration.addProperty(slash(FACET, CREATOR, NAME), DefaultFacetCreator.class.getSimpleName());
         configuration.setProperty(slash(facetConfPath, FACET_GROUP, NAME), "Biology");
         configuration.setProperty(slash(facetConfPath,  NAME), "Protein Complexes");
@@ -43,6 +43,7 @@ class FamPlexConceptCreatorTest {
 
         Optional<ImportConcepts> concepts = creator.createConcepts(configuration).findAny();
         assertThat(concepts).isPresent();
+        assertThat(concepts.get().getNumConcepts() > 0);
 
         // Check that the facet has been created as expected.
         assertThat(concepts.get().getFacet().getFacetGroup().name).isEqualTo("Biology");
@@ -104,6 +105,14 @@ class FamPlexConceptCreatorTest {
         Optional<ImportConcept> egInhibinOpt = nonFamplexConcepts.stream().filter(c -> c.coordinates.originalId.equals("3625")).findAny();
         assertThat(egInhibinOpt).isPresent();
         checkRelationShip(egInhibinOpt.get(), "partof", "FPLX", "Inhibin_B");
+
+        // Check that also double relations are correctly represented:
+        // EG	675	isa	FPLX	BRCA
+        // EG	675	isa	FPLX	FANC
+        Optional<ImportConcept> eg675Opt = nonFamplexConcepts.stream().filter(c -> c.coordinates.originalId.equals("675")).findAny();
+        assertThat(eg675Opt).isPresent();
+        checkRelationShip(eg675Opt.get(), "isa", "FPLX", "BRCA");
+        checkRelationShip(eg675Opt.get(), "isa", "FPLX", "FANC");
     }
 
     private void checkRelationShip(ImportConcept concept, String relationshipType, String targetSource, String targetId) {

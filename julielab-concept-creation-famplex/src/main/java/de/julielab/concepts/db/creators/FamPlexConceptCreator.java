@@ -280,8 +280,8 @@ public class FamPlexConceptCreator implements ConceptCreator {
         template.addProperty(slash(base, GROUNDINGMAP), "");
         template.addProperty(slash(base, NAMEEXTENSIONRECORDS), "");
         FacetCreationService.getInstance().exposeParameters(basePath, template);
-        template.setProperty(slash(basePath, FACET, CREATOR, REQUEST, FACET_GROUP, NAME), "Biology");
-        template.setProperty(slash(basePath, FACET, CREATOR, REQUEST, NAME), "Protein Complexes");
-        template.setProperty(slash(basePath, FACET, CREATOR, REQUEST, DefaultFacetCreator.SOURCE_TYPE), FacetConstants.SRC_TYPE_HIERARCHICAL);
+        template.setProperty(slash(basePath, FACET, CREATOR, CONFIGURATION, FACET_GROUP, NAME), "Biology");
+        template.setProperty(slash(basePath, FACET, CREATOR, CONFIGURATION, NAME), "Protein Complexes");
+        template.setProperty(slash(basePath, FACET, CREATOR, CONFIGURATION, DefaultFacetCreator.SOURCE_TYPE), FacetConstants.SRC_TYPE_HIERARCHICAL);
     }
 }
