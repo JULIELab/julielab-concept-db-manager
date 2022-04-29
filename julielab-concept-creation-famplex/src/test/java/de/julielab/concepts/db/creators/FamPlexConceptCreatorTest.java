@@ -50,6 +50,9 @@ class FamPlexConceptCreatorTest {
         assertThat(concepts.get().getFacet().getSourceType()).isEqualTo(FacetConstants.SRC_TYPE_HIERARCHICAL);
 
         List<ImportConcept> conceptList = concepts.get().getConcepts().collect(Collectors.toList());
+        // Concepts must specify a source and source ID
+        assertThat(conceptList).extracting("coordinates").extracting("source").doesNotContainNull();
+        assertThat(conceptList).extracting("coordinates").extracting("sourceId").doesNotContainNull();
 
         // Checks for FamPlex Concepts ------------------
         List<ImportConcept> famplexConcepts = conceptList.stream().filter(c -> c.coordinates.originalSource.equals("FPLX")).collect(Collectors.toList());

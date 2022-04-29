@@ -131,7 +131,7 @@ public class FamPlexConceptCreator implements ConceptCreator {
         }
         if (famplexId.isPresent()) {
             String id = famplexId.get().split(":")[1];
-            ImportConcept famplexConcept = conceptsById.compute(id, (k, v) -> v != null ? v : new ImportConcept(new ConceptCoordinates(id, "FPLX", CoordinateType.OSRC)));
+            ImportConcept famplexConcept = conceptsById.compute(id, (k, v) -> v != null ? v : new ImportConcept(new ConceptCoordinates(id, "FPLX", id, "FPLX")));
             addNodeLabel(famplexConcept, LABEL_FAMPLEX);
             if (famplexConcept.prefName == null) {
                 famplexConcept.prefName = bases.get(0);
@@ -185,12 +185,13 @@ public class FamPlexConceptCreator implements ConceptCreator {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] split = line.split("\t");
-                if (!split[1].equals("FPLX"))
+                String fplxSource = split[1];
+                if (!fplxSource.equals("FPLX"))
                     continue;
                 String synonym = split[0];
                 String fplxId = split[2];
                 // Just in case this method is called after conceptsById has already been populated from other files, check if there is already an ImportConcept for this ID
-                ImportConcept famplexConcept = conceptsById.compute(fplxId, (k, v) -> v != null ? v : new ImportConcept(new ConceptCoordinates(fplxId, "FPLX", CoordinateType.OSRC)));
+                ImportConcept famplexConcept = conceptsById.compute(fplxId, (k, v) -> v != null ? v : new ImportConcept(new ConceptCoordinates(fplxId, fplxSource, fplxId, fplxSource)));
                 addNodeLabel(famplexConcept, LABEL_FAMPLEX);
                 if (famplexConcept.synonyms.isEmpty())
                     famplexConcept.synonyms = new ArrayList<>();
@@ -231,20 +232,21 @@ public class FamPlexConceptCreator implements ConceptCreator {
                 String sourceIdSource = split[0].equals("EG") ? "NCBI Gene" : split[0];
                 String sourceId = split[1];
                 String relation = split[2];
+                String fplxSource = split[3];
                 String fplxId = split[4];
-                if (!split[3].equals("FPLX")) {
+                if (!fplxSource.equals("FPLX")) {
                     log.warn("Omitting non-FamPlex ID mapping target line {}", line);
                     continue;
                 }
 
                 // the "source concept" - meant is the left side of the relation - could either be from NCBI Gene (originally
                 // HGNC, but we expect the converted file version here) of from FamPlex itself.
-                ImportConcept sourceConcept = conceptsById.compute(sourceId, (k, v) -> v != null ? v : new ImportConcept(new ConceptCoordinates(sourceId, sourceIdSource, CoordinateType.OSRC)));
+                ImportConcept sourceConcept = conceptsById.compute(sourceId, (k, v) -> v != null ? v : new ImportConcept(new ConceptCoordinates(sourceId, sourceIdSource, sourceId, sourceIdSource)));
                 if (sourceIdSource.equals("FPLX"))
                     addNodeLabel(sourceConcept, LABEL_FAMPLEX);
 
                 // Just in case this method is called after conceptsById has already been populated from other files, check if there is already an ImportConcept for this ID
-                ImportConcept famplexConcept = conceptsById.compute(fplxId, (k, v) -> v != null ? v : new ImportConcept(new ConceptCoordinates(fplxId, "FPLX", CoordinateType.OSRC)));
+                ImportConcept famplexConcept = conceptsById.compute(fplxId, (k, v) -> v != null ? v : new ImportConcept(new ConceptCoordinates(fplxId, fplxSource, fplxId, fplxSource)));
                 if (famplexConcept.prefName == null)
                     famplexConcept.prefName = fplxId;
                 // Add the FAMPLEX label to all the FamPlex entities so we can easily find them later in the DB.
@@ -267,7 +269,7 @@ public class FamPlexConceptCreator implements ConceptCreator {
 
     @Override
     public String getName() {
-        return "FamPlexConceptCreator";
+        return FamPlexConceptCreator.class.getSimpleName();
     }
 
     @Override

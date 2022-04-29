@@ -16,21 +16,6 @@
             <artifactId>julielab-concept-db-manager-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>de.julielab</groupId>-->
-<!--            <artifactId>semedico-commons</artifactId>-->
-<!--            <version>2.3.1-SNAPSHOT</version>-->
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <groupId>org.apache.tapestry</groupId>-->
-<!--                    <artifactId>tapestry-core</artifactId>-->
-<!--                </exclusion>-->
-<!--                <exclusion>-->
-<!--                    <groupId>de.julielab</groupId>-->
-<!--                    <artifactId>julielab-neo4j-plugins-concepts-representation</artifactId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
