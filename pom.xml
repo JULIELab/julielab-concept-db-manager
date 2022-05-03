@@ -52,19 +52,9 @@
                 <version>${julielab-neo4j-plugins-version}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-configuration2</artifactId>
-                <version>2.2</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-beanutils</groupId>
-                <artifactId>commons-beanutils</artifactId>
-                <version>1.9.4</version>
-            </dependency>
-            <dependency>
                 <groupId>de.julielab</groupId>
                 <artifactId>julielab-java-utilities</artifactId>
-                <version>1.4.4</version>
+                <version>1.4.5</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
