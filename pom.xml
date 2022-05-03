@@ -35,6 +35,7 @@
         <module>julielab-concept-creation-bioportal</module>
         <module>julielab-concept-creation-ncbi-gene</module>
         <module>julielab-concept-creation-famplex</module>
+        <module>julielab-concept-creation-hgnc-groups</module>
     </modules>
     <dependencyManagement>
         <dependencies>
