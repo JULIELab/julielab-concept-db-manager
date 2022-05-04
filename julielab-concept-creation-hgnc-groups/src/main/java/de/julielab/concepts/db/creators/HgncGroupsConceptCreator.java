@@ -1,4 +1,4 @@
-package de.julieilab.concepts.db.creators;
+package de.julielab.concepts.db.creators;
 
 import de.julielab.concepts.db.core.DefaultFacetCreator;
 import de.julielab.concepts.db.core.services.FacetCreationService;
@@ -67,7 +67,7 @@ public class HgncGroupsConceptCreator implements ConceptCreator {
         options.createHollowAggregateElements = true;
         options.doNotCreateHollowParents = false;
         ImportConcepts importConcepts = new ImportConcepts(Stream.concat(id2groupconcept.values().stream(), id2geneconcept.values().stream()), facet);
-        importConcepts.setNumConcepts(id2groupconcept.size()+id2geneconcept.size());
+        importConcepts.setNumConcepts(id2groupconcept.size() + id2geneconcept.size());
         log.info("Created a total of {} concepts where {} concepts are gene groups and {} are genes identified by NCBI Gene ID.", importConcepts.getNumConcepts(), id2groupconcept.size(), id2geneconcept.size());
         importConcepts.setImportOptions(options);
         return Stream.of(importConcepts);
@@ -80,6 +80,7 @@ public class HgncGroupsConceptCreator implements ConceptCreator {
      * HGNC:5298	9177	172	9177
      * HGNC:24003	170572	172	170572
      * </pre>
+     *
      * @param geneToGroupMap
      * @param id2concept
      * @param id2geneconcept
@@ -92,18 +93,22 @@ public class HgncGroupsConceptCreator implements ConceptCreator {
                 final String hgncId = record.get("HGNC ID");
                 final String ncbiGeneIdFromNCBI = record.get("NCBI Gene ID(supplied by NCBI)");
                 final String ncbiGeneId = record.get("NCBI Gene ID");
-                final String geneGroupId = record.get("Gene group ID");
+                final String geneGroupIds = record.get("Gene group ID");
                 // sometimes one of the NCBI Gene fields is not given, this is why we use both
                 final String finalNcbiGeneId = ncbiGeneId.isBlank() ? ncbiGeneIdFromNCBI : ncbiGeneId;
-
-                final ImportConcept groupConcept = id2concept.get(geneGroupId);
-                if (groupConcept == null)
-                    throw new IllegalStateException("Inconsistent input data: the gene to group map file defines the group ID " + geneGroupId + " but this ID is not contained in the family file.");
-
+                // withdrawn HGNC symbols do not have a gene group mapping
+                if (geneGroupIds.isBlank() || finalNcbiGeneId.isBlank())
+                    continue;
                 final ImportConcept concept = new ImportConcept(new ConceptCoordinates(finalNcbiGeneId, "NCBI Gene", finalNcbiGeneId, "NCBI Gene"));
                 concept.additionalProperties = new HashMap<>();
                 concept.additionalProperties.put("hgnc_id", hgncId);
-                concept.addParent(groupConcept.coordinates);
+                for (String geneGroupId : geneGroupIds.split("\\|")) {
+                    final ImportConcept groupConcept = id2concept.get(geneGroupId);
+                    if (groupConcept == null)
+                        throw new IllegalStateException("Inconsistent input data: the gene to group map file defines the group ID " + geneGroupId + " but this ID is not contained in the family file.");
+
+                    concept.addParent(groupConcept.coordinates);
+                }
 
                 id2geneconcept.put(finalNcbiGeneId, concept);
             }

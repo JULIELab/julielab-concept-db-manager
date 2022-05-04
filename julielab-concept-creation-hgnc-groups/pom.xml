@@ -8,7 +8,7 @@
         <version>1.2.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <name>JULIE Lab Concept Creation HGNC Groups</name>
     <artifactId>julielab-concept-creation-hgnc-groups</artifactId>
     <dependencies>
         <dependency>

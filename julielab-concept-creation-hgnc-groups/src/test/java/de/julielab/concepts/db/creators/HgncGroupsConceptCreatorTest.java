@@ -1,4 +1,4 @@
-package de.julieilab.concepts.db.creators;
+package de.julielab.concepts.db.creators;
 
 import de.julielab.concepts.db.core.DefaultFacetCreator;
 import de.julielab.java.utilities.ConfigurationUtilities;
