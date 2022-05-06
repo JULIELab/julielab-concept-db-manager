@@ -213,9 +213,9 @@ public class HgncGroupsConceptCreator implements ConceptCreator {
                     concept.synonyms.add(groupName);
                 }
                 concept.descriptions = new ArrayList<>();
-                if (!externalNote.isBlank())
+                if (!externalNote.isBlank() && !"NULL".equalsIgnoreCase(externalNote))
                     concept.descriptions.add(externalNote);
-                if (!descComment.isBlank())
+                if (!descComment.isBlank() && !"NULL".equalsIgnoreCase(descComment))
                     concept.descriptions.add(descComment);
                 id2concept.put(groupId, concept);
             }
