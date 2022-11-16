@@ -15,6 +15,7 @@ import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.neo4j.graphdb.Label;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +41,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
     public static final String ORGANISMLIST = "organismlist";
     public static final String ORGANISMNAMES = "organismnames";
     public static final String GENE_GROUP = "gene_group";
+    public static final String GENE_ORTHOLOGS = "gene_orthologs";
     public static final String HOMOLOGENE_PREFIX = "homologene";
     /**
      * "gene_group" is the name of the file specifying the ortholog relationships
@@ -55,6 +57,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
     private int topOrthologAggregateCounter;
     private int topHomologyAggregateCounter;
     private Logger log = LoggerFactory.getLogger(NCBIGeneConceptCreator.class);
+
     public NCBIGeneConceptCreator() {
         resetCounters();
     }
@@ -103,7 +106,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             Optional<Node> topHomologyAggregateOpt = geneHierarchy.getRoots(getGeneCoordinates(geneId)).stream().filter(c -> c.getConcept() != null).filter(c -> c.getConcept().coordinates.sourceId.startsWith(TOP_HOMOLOGY_PREFIX)).findAny();
             if (!topHomologyAggregateOpt.isPresent() || topHomologyAggregateOpt.get().getId().sourceId.startsWith(TOP_HOMOLOGY_PREFIX)) {
                 Set<ImportConcept> topAggregates = findTopOrthologsAndHomologyAggregates(geneId, geneHierarchy);
-                // Only if there is more then one aggregate for the current gene we need a new top aggregate to unite the existing aggregates
+                // Only if there is more than one aggregate for the current gene we need a new top aggregate to unite the existing aggregates
                 if (topAggregates.size() > 1) {
                     ImportConcept topHomologyAggregate = new ImportConcept(topAggregates.stream().map(ic -> ic.coordinates).collect(toList()), aggregateCopyProperties);
                     topHomologyAggregate.coordinates = new ConceptCoordinates();
@@ -195,8 +198,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
                 ImportConcept orthologyCluster = new ImportConcept(groupGeneCoords, aggregateCopyProperties);
                 orthologyCluster.coordinates = new ConceptCoordinates();
                 orthologyCluster.coordinates.sourceId = (GENE_GROUP_PREFIX + geneGroupId).intern();
-                orthologyCluster.coordinates.source = "GeneOrthology";
-                orthologyCluster.coordinates.originalSource = "GeneOrthology";
+                orthologyCluster.coordinates.source = GENE_ORTHOLOGS;
+                orthologyCluster.coordinates.originalSource = GENE_ORTHOLOGS;
                 orthologyCluster.coordinates.originalId = geneGroupId;
                 orthologyCluster.aggregateIncludeInHierarchy = true;
                 orthologyCluster.generalLabels = Arrays.asList("AGGREGATE_GENEGROUP", "NO_PROCESSING_GAZETTEER");
@@ -237,7 +240,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             // If there is only one cluster associated with the current gene, we don't need to do anything here
             if (clusters.size() > 1) {
                 ImportConcept topOrthologyAggregate = null;
-                // Find an already existing top orthology cluster, if existing
+                // Find an already existing top orthology cluster, if possible
                 Set<ImportConcept> seenOrthologyClusters = new TreeSet<>(Comparator.comparingLong(System::identityHashCode));
                 for (ImportConcept cluster : clusters) {
                     topOrthologyAggregate = findTopOrtholog(cluster, seenOrthologyClusters, genes2OrthoAggregate, orthoAgg2TopOrtho);
@@ -360,15 +363,17 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         });
     }
 
-    protected Stream<ImportConcept> convertGeneInfoToTerms(File geneInfo, Set<String> organismSet, File geneDescriptions) throws IOException {
-        Iterator<String> lineIt = FileUtilities.getReaderFromFile(geneDescriptions).lines().iterator();
+    protected Stream<ImportConcept> convertGeneInfoToImportConcepts(File geneInfo, Set<String> organismSet, File geneDescriptions) throws IOException {
         Map<String, String> gene2Summary = new HashMap<>();
-        while (lineIt.hasNext()) {
-            String line = lineIt.next();
-            String[] split = line.split("\t");
-            String geneId = split[0].intern();
-            String summary = split[1].intern();
-            gene2Summary.put(geneId, summary);
+        if (geneDescriptions.exists()) {
+            Iterator<String> lineIt = FileUtilities.getReaderFromFile(geneDescriptions).lines().iterator();
+            while (lineIt.hasNext()) {
+                String line = lineIt.next();
+                String[] split = line.split("\t");
+                String geneId = split[0].intern();
+                String summary = split[1].intern();
+                gene2Summary.put(geneId, summary);
+            }
         }
 
         BufferedReader bw = FileUtilities.getReaderFromFile(geneInfo);
@@ -470,6 +475,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         }
         ImportConcept geneTerm = new ImportConcept(prefName, synonyms, description,
                 getGeneCoordinates(originalId));
+        geneTerm.additionalProperties = new HashMap<>();
+        geneTerm.additionalProperties.put("taxId", split[0]);
 
         /**
          * Gene IDs are given by a Gene Normalization component like GeNo. Thus, genes
@@ -553,7 +560,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         File ncbiTaxNames = resolvePath(basepath, importConfig.getString(slash(confPath, ORGANISMNAMES)));
         File geneGroup = resolvePath(basepath, importConfig.getString(slash(confPath, GENE_GROUP)));
         List<File> notFound = new ArrayList<>();
-        for (File f : Arrays.asList(geneInfo, geneDescriptions, organisms, ncbiTaxNames, geneGroup)) {
+        for (File f : Arrays.asList(geneInfo, organisms, ncbiTaxNames, geneGroup)) {
             if (!f.exists())
                 notFound.add(f);
         }
@@ -572,7 +579,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             Map<String, String> geneId2Tax = new HashMap<>();
             Map<ConceptCoordinates, ImportConcept> conceptsByGeneId = new HashMap<>();
             log.info("Creating a stream converting NCBI Gene's gene_info file into nodes for the concept graph.");
-            Stream<ImportConcept> conceptStream = convertGeneInfoToTerms(geneInfo, organismSet, geneDescriptions);
+            Stream<ImportConcept> conceptStream = convertGeneInfoToImportConcepts(geneInfo, organismSet, geneDescriptions);
             conceptStream = setSpeciesQualifier(conceptStream, ncbiTaxNames, geneId2Tax, conceptsByGeneId.values());
             log.info("Creating homology aggregates");
             conceptStream = createHomologyAggregates(conceptStream, totalGeneIds, conceptsByGeneId, geneGroup);
@@ -623,7 +630,9 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
 
     // These constants were used to be imported from import de.julielab.semedico.resources.ResourceTermLabels
     // This connection was loosened for less cumbersome dependencies.
-    private enum ConceptLabels {NO_PROCESSING_GAZETTEER, NO_SUGGESTIONS, NO_QUERY_DICTIONARY, ID_MAP_NCBI_GENES}
+    public enum ConceptLabels implements Label {NO_PROCESSING_GAZETTEER, NO_SUGGESTIONS, NO_QUERY_DICTIONARY, ID_MAP_NCBI_GENES}
+
+    ;
 
     private class TaxonomyRecord {
         @SuppressWarnings("unused")

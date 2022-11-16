@@ -63,13 +63,15 @@ public class NCBIGeneConceptCreatorTest {
         Map<String, String> gene2Summary = new HashMap<>();
         gene2Summary.put("3558", "This is a test summary.");
         NCBIGeneConceptCreator geneImporter = new NCBIGeneConceptCreator();
-        ImportConcept term = (ImportConcept) method.invoke(geneImporter, geneRecord, gene2Summary);
-        assertEquals("IL2", term.prefName);
-        assertEquals("3558", term.coordinates.originalId);
-        assertNotNull(term.descriptions);
-        assertEquals(1, term.descriptions.size());
-        assertEquals("This is a test summary.", term.descriptions.get(0));
-        log.debug("Actual synonyms: {}", term.synonyms);
+        ImportConcept concept = (ImportConcept) method.invoke(geneImporter, geneRecord, gene2Summary);
+        assertEquals("IL2", concept.prefName);
+        assertEquals("3558", concept.coordinates.originalId);
+        assertNotNull("Additional properties are null", concept.additionalProperties);
+        assertEquals("9606", concept.additionalProperties.get("taxId"));
+        assertNotNull(concept.descriptions);
+        assertEquals(1, concept.descriptions.size());
+        assertEquals("This is a test summary.", concept.descriptions.get(0));
+        log.debug("Actual synonyms: {}", concept.synonyms);
         // synonyms:
         // 1. official full name
         // 2. synonyms
@@ -77,12 +79,12 @@ public class NCBIGeneConceptCreatorTest {
         assertArrayEquals(
                 new String[]{"interleukin 2", "IL-2", "TCGF", "lymphokine", "T cell growth factor", "aldesleukin",
                         "interleukin-2", "involved in regulation of T-cell clonal expansion"},
-                term.synonyms.toArray());
+                concept.synonyms.toArray());
     }
 
     @Test
     public void testConvertGeneInfoToTerms() throws Exception {
-        Method method = NCBIGeneConceptCreator.class.getDeclaredMethod("convertGeneInfoToTerms", File.class, Set.class,
+        Method method = NCBIGeneConceptCreator.class.getDeclaredMethod("convertGeneInfoToImportConcepts", File.class, Set.class,
                 File.class);
         method.setAccessible(true);
         NCBIGeneConceptCreator geneImporter = new NCBIGeneConceptCreator();
@@ -166,11 +168,16 @@ public class NCBIGeneConceptCreatorTest {
                 // itself but the gene_group node is identified by this ID nontheless.
                 if (n.hasProperty(PROP_ORG_ID) && n.getProperty(PROP_ORG_ID).equals("2475") && n.hasLabel(AGGREGATE)) {
                     Set<String> expectedOrthoGenes = new HashSet<>(Arrays.asList("56718", "56717"));
+                    Function<Node, String> getName = x -> (String) (x.hasProperty(PROP_PREF_NAME) ? x.getProperty(PROP_PREF_NAME) : x.getProperty(PROP_NAME));
                     for (Relationship rel : n.getRelationships(Direction.OUTGOING, ConceptEdgeTypes.HAS_ELEMENT)) {
                         assertTrue(expectedOrthoGenes.remove(rel.getEndNode().getProperty(PROP_ORG_ID)));
                     }
                     assertTrue("The following gene IDs where not found in the MTOR orthologs aggregate: "
                             + expectedOrthoGenes, expectedOrthoGenes.isEmpty());
+                }
+                if (n.hasProperty(PROP_ORG_ID) && n.getProperty(PROP_ORG_ID).equals("2475") && n.hasLabel(NCBIGeneConceptCreator.ConceptLabels.ID_MAP_NCBI_GENES)) {
+                    assertTrue(n.hasProperty("taxId"));
+                    assertEquals("9606", n.getProperty("taxId"));
                 }
             }
             tx.commit();
@@ -244,9 +251,11 @@ public class NCBIGeneConceptCreatorTest {
 
 
             // There should be 5 gene group/ortholog clusters
-            final List<Node> topOrthologyAggregates = tx.findNodes(Label.label("AGGREGATE_GENEGROUP")).stream().collect(Collectors.toList());
-            assertThat(topOrthologyAggregates.size()).isEqualTo(5);
+            final List<Node> genegroupAggregates = tx.findNodes(Label.label("AGGREGATE_GENEGROUP")).stream().collect(Collectors.toList());
+            assertThat(genegroupAggregates.size()).isEqualTo(5);
 
+            final List<Node> topOrthologyAggregates = tx.findNodes(Label.label("AGGREGATE_TOP_ORTHOLOGY")).stream().collect(Collectors.toList());
+            assertThat(topOrthologyAggregates.size()).isEqualTo(1);
 
             tx.commit();
         }

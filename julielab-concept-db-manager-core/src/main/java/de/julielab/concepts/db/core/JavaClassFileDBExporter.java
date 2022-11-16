@@ -59,10 +59,10 @@ public class JavaClassFileDBExporter extends JavaMethodCallBase implements DataE
                         resultData = baos.toByteArray();
                     } else if (result instanceof String) {
                         resultData = ((String) result).getBytes(UTF_8);
-                    } else throw new IllegalStateException("Unsupported return typpe '" + result.getClass().getCanonicalName() + "'.");
-                    boolean hasDecodingConfig = exportConfig.getKeys(DECODING).hasNext();
+                    } else throw new IllegalStateException("Unsupported return type '" + result.getClass().getCanonicalName() + "'.");
+                    HierarchicalConfiguration<ImmutableNode> decodingConfiguration = exportConfig.configurationsAt(DECODING).size() > 0 ? exportConfig.configurationAt(DECODING) : null;
                     InputStream inputStream = new ByteArrayInputStream(resultData);
-                    InputStream decodedResponse = hasDecodingConfig ? decode(inputStream, exportConfig.configurationAt(DECODING)) : inputStream;
+                    InputStream decodedResponse = decodingConfiguration != null ? decode(inputStream, exportConfig.configurationAt(DECODING)) : inputStream;
                     String resourceHeader = getResourceHeader(connectionConfiguration) + result;
                     writeData(new File(outputFile), resourceHeader, decodedResponse);
                 } catch (MethodCallException | VersionRetrievalException | IOException | JSONException e) {
