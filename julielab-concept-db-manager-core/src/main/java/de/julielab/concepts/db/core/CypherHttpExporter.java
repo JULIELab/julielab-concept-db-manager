@@ -76,7 +76,7 @@ public class CypherHttpExporter extends DataExporterImpl {
                 while (resIt.hasNext()) {
                     Result result = resIt.next();
                     for (Data data : result.getData()) {
-                        responseLines.add(data.getRow().stream().map(Object::toString).collect(joining("\t")));
+                        responseLines.add(data.getRow().stream().map(o -> o != null ? o.toString(): "null").collect(joining("\t")));
                     }
                 }
                 log.info("Writing data to {}", filepath);

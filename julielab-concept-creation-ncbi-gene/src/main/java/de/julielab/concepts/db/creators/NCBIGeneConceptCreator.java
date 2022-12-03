@@ -9,27 +9,32 @@ import de.julielab.concepts.util.ConceptCreationException;
 import de.julielab.concepts.util.FacetCreationException;
 import de.julielab.java.utilities.ConfigurationUtilities;
 import de.julielab.java.utilities.FileUtilities;
+import de.julielab.java.utilities.index.IndexCreationException;
+import de.julielab.java.utilities.index.PersistentLuceneIndexStringArrayMapProvider;
 import de.julielab.neo4j.plugins.datarepresentation.*;
 import de.julielab.neo4j.plugins.datarepresentation.constants.ConceptConstants;
 import de.julielab.neo4j.plugins.datarepresentation.constants.FacetConstants;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.neo4j.graphdb.Label;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
-import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
 public class NCBIGeneConceptCreator implements ConceptCreator {
@@ -40,9 +45,10 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
     public static final String GENEDESCRIPTIONS = "genedescriptions";
     public static final String ORGANISMLIST = "organismlist";
     public static final String ORGANISMNAMES = "organismnames";
-    public static final String GENE_GROUP = "gene_group";
     public static final String GENE_ORTHOLOGS = "gene_orthologs";
-    public static final String HOMOLOGENE_PREFIX = "homologene";
+    public static final String UP_ID_MAPPING = "id_mapping";
+    public static final String GENE_2_GO = "gene2go";
+    public static final String CACHE_DIR = "cache_dir";
     /**
      * "gene_group" is the name of the file specifying the ortholog relationships
      * between genes. Also, NCBI Gene, searching for a specific ortholog group works
@@ -52,10 +58,13 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
     public static final String GENE_GROUP_PREFIX = "genegroup";
     public static final String TOP_ORTHOLOGY_PREFIX = "toporthology";
     public static final String TOP_HOMOLOGY_PREFIX = "tophomology";
+    private Path cacheDir = Path.of("concept-manager-caches", "ncbi-gene-concepts");
     private int homologeneAggregateCounter;
     private int orthologAggregateCounter;
     private int topOrthologAggregateCounter;
     private int topHomologyAggregateCounter;
+    private int uniProtConceptCounter;
+    private int goConceptCounter;
     private Logger log = LoggerFactory.getLogger(NCBIGeneConceptCreator.class);
 
     public NCBIGeneConceptCreator() {
@@ -71,6 +80,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         this.orthologAggregateCounter = 0;
         this.topOrthologAggregateCounter = 0;
         this.topHomologyAggregateCounter = 0;
+        this.uniProtConceptCounter = 0;
+        this.goConceptCounter = 0;
     }
 
     /**
@@ -315,57 +326,62 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
      */
     private Stream<ImportConcept> setSpeciesQualifier(Stream<ImportConcept> conceptStream, File ncbiTaxNames, @Deprecated Map<String, String> geneId2Tax,
                                                       @Deprecated Collection<ImportConcept> geneTerms) throws IOException {
-        Map<String, TaxonomyRecord> taxNameRecords = new HashMap<>();
-        Iterator<String> lineIt = FileUtilities.getReaderFromFile(ncbiTaxNames).lines().iterator();
-        while (lineIt.hasNext()) {
-            String recordString = lineIt.next();
-            // at the end of the line there is no more tab, thus we have
-            // actually
-            // two record seperators
-            String[] split = recordString.split("(\t\\|\t)|(\t\\|)");
-            String taxId = split[0].intern();
-            String name = split[1].intern();
-            String nameClass = split[3].intern();
+        if (ncbiTaxNames != null) {
+            log.info("Setting species qualifiers from file {}", ncbiTaxNames);
+            Map<String, TaxonomyRecord> taxNameRecords = new HashMap<>();
+            Iterator<String> lineIt = FileUtilities.getReaderFromFile(ncbiTaxNames).lines().iterator();
+            while (lineIt.hasNext()) {
+                String recordString = lineIt.next();
+                // at the end of the line there is no more tab, thus we have
+                // actually
+                // two record seperators
+                String[] split = recordString.split("(\t\\|\t)|(\t\\|)");
+                String taxId = split[0].intern();
+                String name = split[1].intern();
+                String nameClass = split[3].intern();
 
-            TaxonomyRecord record = taxNameRecords.get(taxId);
-            if (null == record) {
-                record = new TaxonomyRecord(taxId);
-                taxNameRecords.put(taxId, record);
+                TaxonomyRecord record = taxNameRecords.get(taxId);
+                if (null == record) {
+                    record = new TaxonomyRecord(taxId);
+                    taxNameRecords.put(taxId, record);
+                }
+                if (nameClass.equals("scientific name"))
+                    record.scientificName = name;
+                else if (nameClass.equals("genbank common name"))
+                    record.geneBankCommonName = name;
             }
-            if (nameClass.equals("scientific name"))
-                record.scientificName = name;
-            else if (nameClass.equals("genbank common name"))
-                record.geneBankCommonName = name;
+
+            return conceptStream.map(gene -> {
+                String taxId = (String) gene.getAuxProperty("taxId");
+                TaxonomyRecord taxonomyRecord = taxNameRecords.get(taxId);
+
+                if (null != taxonomyRecord) {
+                    // Set the species as a qualifier
+                    String speciesQualifier = taxonomyRecord.scientificName;
+                    if (null != taxonomyRecord.geneBankCommonName)
+                        speciesQualifier += (" (" + taxonomyRecord.geneBankCommonName + ")").intern();
+                    gene.addQualifier(speciesQualifier);
+
+                    // Set an NCBI Gene like species-related display name.
+                    gene.displayName = gene.prefName + " [" + taxonomyRecord.scientificName;
+                    if (null != taxonomyRecord.geneBankCommonName)
+                        gene.displayName += " (" + taxonomyRecord.geneBankCommonName + ")";
+                    gene.displayName += "]";
+                } else {
+                    log.warn("No NCBI Taxonomy name record was found for the taxonomy ID {}", taxId);
+
+                }
+
+                return gene;
+            });
         }
-
-        return conceptStream.map(gene -> {
-            String taxId = (String) gene.getAuxProperty("taxId");
-            TaxonomyRecord taxonomyRecord = taxNameRecords.get(taxId);
-
-            if (null != taxonomyRecord) {
-                // Set the species as a qualifier
-                String speciesQualifier = taxonomyRecord.scientificName;
-                if (null != taxonomyRecord.geneBankCommonName)
-                    speciesQualifier += (" (" + taxonomyRecord.geneBankCommonName + ")").intern();
-                gene.addQualifier(speciesQualifier);
-
-                // Set an NCBI Gene like species-related display name.
-                gene.displayName = gene.prefName + " [" + taxonomyRecord.scientificName;
-                if (null != taxonomyRecord.geneBankCommonName)
-                    gene.displayName += " (" + taxonomyRecord.geneBankCommonName + ")";
-                gene.displayName += "]";
-            } else {
-                log.warn("No NCBI Taxonomy name record was found for the taxonomy ID {}", taxId);
-
-            }
-
-            return gene;
-        });
+        return conceptStream;
     }
 
     protected Stream<ImportConcept> convertGeneInfoToImportConcepts(File geneInfo, Set<String> organismSet, File geneDescriptions) throws IOException {
         Map<String, String> gene2Summary = new HashMap<>();
-        if (geneDescriptions.exists()) {
+        if (geneDescriptions != null) {
+            log.info("Reading gene descriptions from {}", geneDescriptions);
             Iterator<String> lineIt = FileUtilities.getReaderFromFile(geneDescriptions).lines().iterator();
             while (lineIt.hasNext()) {
                 String line = lineIt.next();
@@ -400,7 +416,7 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             public ImportConcept next() {
                 if (hasNext()) {
                     String record = it.next();
-                    ImportConcept geneconcept = createGeneTerm(record, gene2Summary);
+                    ImportConcept geneconcept = createGeneConcept(record, gene2Summary);
                     String[] split = record.split("\t", 2);
                     String taxId = split[0].intern();
                     if (organismSet.contains(taxId) || organismSet.isEmpty()) {
@@ -411,10 +427,11 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
                 return null;
             }
         };
+        log.info("Returning stream for gene concept creation.");
         return StreamSupport.stream(Spliterators.spliteratorUnknownSize(geneIterator, 0), false).filter(Objects::nonNull);
     }
 
-    private ImportConcept createGeneTerm(String record, Map<String, String> gene2Summary) {
+    private ImportConcept createGeneConcept(String record, Map<String, String> gene2Summary) {
         // 0: tax_id
         // 1: GeneID
         // 2: Symbol
@@ -477,6 +494,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
                 getGeneCoordinates(originalId));
         geneTerm.additionalProperties = new HashMap<>();
         geneTerm.additionalProperties.put("taxId", split[0]);
+        // TODO don't actually write those as properties but as mapping to separate nodes
+        geneTerm.additionalProperties.put("dbXrefs", split[5]);
 
         /**
          * Gene IDs are given by a Gene Normalization component like GeNo. Thus, genes
@@ -498,7 +517,9 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         template.addProperty(slash(base, GENEDESCRIPTIONS), "");
         template.addProperty(slash(base, ORGANISMLIST), "");
         template.addProperty(slash(base, ORGANISMNAMES), "");
-        template.addProperty(slash(base, GENE_GROUP), "");
+        template.addProperty(slash(base, GENE_ORTHOLOGS), "");
+        template.addProperty(slash(base, UP_ID_MAPPING), "");
+        template.addProperty(slash(base, GENE_2_GO), "");
         FacetCreationService.getInstance().exposeParameters(basePath, template);
         template.setProperty(slash(basePath, FACET, CREATOR, CONFIGURATION, FACET_GROUP, NAME), "Biology");
         template.setProperty(slash(basePath, FACET, CREATOR, CONFIGURATION, NAME), "Genes");
@@ -547,8 +568,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         resetCounters();
         String confPath = slash(CONCEPTS, CREATOR, CONFIGURATION);
         try {
-            ConfigurationUtilities.checkParameters(importConfig, slash(confPath, GENE_INFO), slash(confPath, GENEDESCRIPTIONS), slash(confPath, ORGANISMLIST),
-                    slash(confPath, ORGANISMNAMES), slash(confPath, GENE_GROUP));
+            ConfigurationUtilities.checkParameters(importConfig, slash(confPath, GENE_INFO), slash(confPath, ORGANISMLIST),
+                    slash(confPath, GENE_ORTHOLOGS));
         } catch (ConfigurationException e) {
             throw new ConceptCreationException(e);
         }
@@ -558,21 +579,27 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
         File geneDescriptions = resolvePath(basepath, importConfig.getString(slash(confPath, GENEDESCRIPTIONS)));
         File organisms = resolvePath(basepath, importConfig.getString(slash(confPath, ORGANISMLIST)));
         File ncbiTaxNames = resolvePath(basepath, importConfig.getString(slash(confPath, ORGANISMNAMES)));
-        File geneGroup = resolvePath(basepath, importConfig.getString(slash(confPath, GENE_GROUP)));
-        List<File> notFound = new ArrayList<>();
-        for (File f : Arrays.asList(geneInfo, organisms, ncbiTaxNames, geneGroup)) {
-            if (!f.exists())
-                notFound.add(f);
-        }
-        if (!notFound.isEmpty())
-            throw new ConceptCreationException("The following files do not exist: " + notFound.stream()
-                    .map(File::getAbsolutePath).collect(joining(System.getProperty("line.separator"))));
+        File geneOrthologs = resolvePath(basepath, importConfig.getString(slash(confPath, GENE_ORTHOLOGS)));
+        File uniprotIdMapping = resolvePath(basepath, importConfig.getString(slash(confPath, UP_ID_MAPPING)));
+        File gene2go = resolvePath(basepath, importConfig.getString(slash(confPath, GENE_2_GO)));
+        File cacheDirFile = resolvePath(basepath, importConfig.getString(slash(confPath, CACHE_DIR)));
+
 
         try {
+            if (cacheDirFile != null) {
+                log.info("Setting cache directory to {}", cacheDirFile);
+                cacheDir = cacheDirFile.toPath();
+                if (!Files.exists(cacheDir))
+                    Files.createDirectories(cacheDir);
+            }
             log.info("Beginning import of NCBI Genes.");
-            log.info("Reading the set of organisms to import genes of from {}.", organisms);
-            Set<String> organismSet = FileUtilities.getReaderFromFile(organisms).lines().map(String::intern).collect(Collectors.toSet());
-            log.info("Retrieved {} taxonomy IDs.", organismSet.size());
+            if (organisms != null)
+                log.info("Reading the set of organisms to import genes of from {}.", organisms);
+            Set<String> organismSet = organisms != null ? FileUtilities.getReaderFromFile(organisms).lines().map(String::intern).collect(Collectors.toSet()) : Collections.emptySet();
+            if (!organismSet.isEmpty())
+                log.info("Retrieved {} taxonomy IDs.", organismSet.size());
+            else
+                log.info("Retrieved {} taxonomy IDs. No restrictions on species is imposed.", organismSet.size());
             log.info("Reading the set of valid gene IDs from {}.", geneInfo);
             Set<String> totalGeneIds = getTotalGeneIds(geneInfo, organismSet);
             log.info("Got {} gene IDs.", totalGeneIds.size());
@@ -581,8 +608,10 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             log.info("Creating a stream converting NCBI Gene's gene_info file into nodes for the concept graph.");
             Stream<ImportConcept> conceptStream = convertGeneInfoToImportConcepts(geneInfo, organismSet, geneDescriptions);
             conceptStream = setSpeciesQualifier(conceptStream, ncbiTaxNames, geneId2Tax, conceptsByGeneId.values());
+
+            conceptStream = createUniProtIdMappings(conceptStream, uniprotIdMapping, totalGeneIds);
             log.info("Creating homology aggregates");
-            conceptStream = createHomologyAggregates(conceptStream, totalGeneIds, conceptsByGeneId, geneGroup);
+            conceptStream = createHomologyAggregates(conceptStream, totalGeneIds, conceptsByGeneId, geneOrthologs);
             log.info("Created {} homology aggregates", homologeneAggregateCounter);
             log.info("Created {} orthology aggregates", orthologAggregateCounter);
             log.info("Created {} top-homology aggregates, governing homologene and orthology aggregates",
@@ -594,20 +623,143 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
             // This was "true" in the past. Hopefully we can make it work anyway.
             options.doNotCreateHollowParents = false;
             ImportConcepts importConcepts = new ImportConcepts(conceptStream, facet);
-            importConcepts.setNumConcepts(totalGeneIds.size() + homologeneAggregateCounter + orthologAggregateCounter + topHomologyAggregateCounter);
+            importConcepts.setNumConcepts(totalGeneIds.size() + uniProtConceptCounter + homologeneAggregateCounter + orthologAggregateCounter + topHomologyAggregateCounter);
             log.info("Created a total of {} concepts.", importConcepts.getNumConcepts());
             importConcepts.setImportOptions(options);
             return Stream.of(importConcepts);
-        } catch (IOException e) {
+        } catch (IOException | IndexCreationException e) {
             throw new ConceptCreationException(e);
         }
 
     }
 
-    private Set<String> getTotalGeneIds(File geneInfo, Set<String> organismSet) throws IOException {
-        try (BufferedReader bw = FileUtilities.getReaderFromFile(geneInfo)) {
-            return bw.lines().filter(record -> !record.startsWith("#")).map(record -> record.split("\t", 3)).filter(split -> organismSet.contains(split[0]) || organismSet.isEmpty()).map(split -> split[1].intern()).collect(Collectors.toSet());
+    private Stream<ImportConcept> createUniProtIdMappings(Stream<ImportConcept> conceptStream, File uniprotIdMappingFile, Set<String> totalGeneIds) throws IOException, IndexCreationException {
+        if (uniprotIdMappingFile != null) {
+            log.info("Creating index for UniProt ID mapping file {} to save memory.", uniprotIdMappingFile);
+            final PersistentLuceneIndexStringArrayMapProvider mappingIndex = new PersistentLuceneIndexStringArrayMapProvider();
+            mappingIndex.setIndexDirectoryPath(cacheDir);
+            mappingIndex.setEligibleKeys(totalGeneIds);
+            // in the UniProt mapping file, gene IDs appear in the third column
+            mappingIndex.setKeyIndices(2);
+            // the first column is the UP Accession, the second the mnemonic
+            mappingIndex.setValueIndices(0, 1);
+            mappingIndex.load(uniprotIdMappingFile.toURI());
+//            log.info("Reading UniProt idMapping file {}", uniprotIdMappingFile);
+//            try (final BufferedReader br = FileUtilities.getReaderFromFile(uniprotIdMappingFile)) {
+//                // from https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/README:
+////                    //1. UniProtKB-AC
+////                    //2. UniProtKB-ID
+////                    //3. GeneID (EntrezGene)
+////                    //4. RefSeq
+////                    //5. GI
+////                    //6. PDB
+////                    //7. GO
+////                    //8. UniRef100
+////                    //9. UniRef90
+////                    //10. UniRef50
+////                    //11. UniParc
+////                    //12. PIR
+////                    //13. NCBI-taxon
+////                    //14. MIM
+////                    //15. UniGene
+////                    //16. PubMed
+////                    //17. EMBL
+////                    //18. EMBL-CDS
+////                    //19. Ensembl
+////                    //20. Ensembl_TRS
+////                    //21. Ensembl_PRO
+////                    //22. Additional PubMed
+//                final Iterator<String> lineIt = br.lines().iterator();
+//                int lineNr = 0;
+//                while (lineIt.hasNext()) {
+//                    String record = lineIt.next();
+//                    String[] line = record.split("\t", 3);
+//                    String upAc = line[0];
+//                    String upId = line[1];
+//                    String[] geneIds = line.length > 2 ? line[2].split(";") : null;
+//                    // not all UniProt entries map to an NCBI gene entry
+//                    if (geneIds != null && geneIds.length > 0) {
+//                        String upAcIntern = upAc.intern();
+//                        String upIdIntern = upId.intern();
+//                        ++uniProtConceptCounter;
+//                        for (String geneId : geneIds) {
+//                            String geneIdIntern = geneId.trim().intern();
+//                            index.put(geneIdIntern, new String[]{upAcIntern, upIdIntern});
+//                        }
+//                    }
+//                    ++lineNr;
+//                    if (lineNr % 2000000 == 0)
+//                        log.info("Read {} lines.", lineNr);
+//                }
+//            }
+
+            final Map<String, String[]> indexMap = mappingIndex.getMap();
+            uniProtConceptCounter += indexMap.size();
+            Set<String> seenUpAcs = new HashSet<>();
+            log.info("Creating updated gene concept stream with additional IDs.");
+            return conceptStream.flatMap(concept -> {
+                List<ImportConcept> returnedConcepts = new ArrayList<>();
+                returnedConcepts.add(concept);
+                // Not every gene ID corresponds to some UniProt entry
+                final String[] upIds = indexMap.get(concept.coordinates.originalId);
+                if (upIds != null) {
+                    if (upIds.length % 2 == 1)
+                        throw new IllegalStateException("An uneven number of UniProt ACs/IDs was returned but there should be pairs of ACs and IDs.");
+
+                    for (int i = 1; i < upIds.length; i++) {
+                        String upAc = upIds[i];
+                        if (seenUpAcs.add(upAc)) {
+                            String upId = upIds[i - 1];
+                            final ImportConcept upConcept = new ImportConcept(new ConceptCoordinates(upAc, "UniProtKB-AC", upAc, "UniProtKB-AC"));
+                            upConcept.addGeneralLabel("UNIPROT");
+                            upConcept.eligibleForFacetRoot = false;
+                            upConcept.addAdditionalCoordinates(new ConceptCoordinates("UniProtKB-ID", upId, CoordinateType.SRC));
+                            upConcept.addAdditionalProperty("UniProtKB-ID", upId);
+                            upConcept.addRelationship(new ImportConceptRelationship(concept.coordinates, "IS_MAPPED_TO"));
+                            returnedConcepts.add(upConcept);
+                        }
+                    }
+                }
+
+                return returnedConcepts.stream();
+            });
+        } else {
+            log.info("UniProt ID mapping file not specified or not found, skipping UniProt ID mappings.");
         }
+        return conceptStream;
+    }
+
+    private Set<String> getTotalGeneIds(File geneInfo, Set<String> organismSet) throws IOException {
+        Set<String> geneIdSet = Collections.emptySet();
+        Path genesetCacheFile = Path.of(cacheDir.toString(), "totalGeneIds.ser.gz");
+        boolean geneInfoNewerThanCache = Files.exists(genesetCacheFile) && geneInfo.lastModified() > Files.getLastModifiedTime(genesetCacheFile).toMillis();
+        if (geneInfoNewerThanCache) {
+            log.info("gene_info file at {} is newer than cache at {}. Clearing cache and reading gene_info file from scratch.", geneInfoNewerThanCache, genesetCacheFile);
+            FileUtils.deleteQuietly(genesetCacheFile.toFile());
+        }
+        boolean readFromCache = Files.exists(genesetCacheFile) && !geneInfoNewerThanCache;
+        if (readFromCache) {
+            log.info("Loading set of gene IDs in gene_info from cache at {}", genesetCacheFile);
+            try (final ObjectInputStream ois = new ObjectInputStream(new GZIPInputStream(FileUtilities.getInputStreamFromFile(genesetCacheFile.toFile())))) {
+                geneIdSet = (Set<String>) ois.readObject();
+                log.info("Obtained {} gene IDs in the cache.", geneIdSet);
+            } catch (ClassNotFoundException e) {
+                // this should really not happen with Java built-in classes
+                log.error("Unexpected error when trying to read gene ID set cache from {}. Perhaps the cache is corrupt. Trying to delete it and start again.");
+                FileUtils.deleteQuietly(genesetCacheFile.toFile());
+                readFromCache = true;
+            }
+        }
+        if (!readFromCache) {
+            try (BufferedReader bw = FileUtilities.getReaderFromFile(geneInfo)) {
+                geneIdSet = bw.lines().filter(record -> !record.startsWith("#")).map(record -> record.split("\t", 3)).filter(split -> organismSet.contains(split[0]) || organismSet.isEmpty()).map(split -> split[1].intern()).collect(Collectors.toSet());
+            }
+            try (final ObjectOutputStream oos = new ObjectOutputStream(new GZIPOutputStream(FileUtilities.getOutputStreamToFile(genesetCacheFile.toFile())))) {
+                log.info("Caching geneId set read from {} at {}", geneInfo, genesetCacheFile);
+                oos.writeObject(geneIdSet);
+            }
+        }
+        return geneIdSet;
     }
 
     /**
@@ -618,6 +770,8 @@ public class NCBIGeneConceptCreator implements ConceptCreator {
      * @return The complete path to the file pointed to by <tt>filepath</tt>.
      */
     private File resolvePath(String basepath, String filepath) {
+        if (StringUtils.isBlank(filepath))
+            return null;
         String delimiter = !basepath.endsWith(File.separator) && !filepath.startsWith(File.separator) ? File.separator : "";
         String path = new File(filepath).isAbsolute() ? filepath : basepath + delimiter + filepath;
         return new File(path);

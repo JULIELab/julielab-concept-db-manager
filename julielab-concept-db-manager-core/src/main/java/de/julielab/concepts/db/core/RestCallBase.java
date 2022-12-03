@@ -59,7 +59,7 @@ public abstract class RestCallBase extends FunctionCallBase {
             Gson gson = new Gson();
             try {
                 String parameterJson = null;
-                if (parameters != null && !httpMethod.equals(HttpMethod.GET)) {
+                if (parameters != null && !httpMethod.equals(HttpMethod.GET) && !httpMethod.equals(HttpMethod.DELETE)) {
                     parameterJson = gson.toJson(parameters);
                     ((HttpEntityEnclosingRequestBase) request).setEntity(new StringEntity(parameterJson));
                 } else if (parameters != null) {
