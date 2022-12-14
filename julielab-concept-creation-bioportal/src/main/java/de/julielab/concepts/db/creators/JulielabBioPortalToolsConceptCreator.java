@@ -99,8 +99,12 @@ public class JulielabBioPortalToolsConceptCreator implements ConceptCreator {
                         parentCoordinates = c.parents.parents.stream()
                                 .map(p -> new ConceptCoordinates(p, acronym, true)).collect(Collectors.toList());
                     // Now create the actual concepts that can be imported into the database.
-                    return new ImportConcept(c.prefLabel, c.synonym.synonyms, c.definition,
-                            new ConceptCoordinates(c.id, acronym, true), parentCoordinates);
+                    final ConceptCoordinates coordinates = new ConceptCoordinates(c.id, acronym, true);
+                    tryAssignOriginalCoordinates(coordinates);
+                    final ImportConcept importConcept = new ImportConcept(c.prefLabel, c.synonym.synonyms, c.definition,
+                            coordinates, parentCoordinates);
+                    importConcept.addGeneralLabel(acronym.toUpperCase());
+                    return importConcept;
                 });
                 // Note: Facet groups are unique by name in the database (the
                 // ConceptManager that does the concept insertion makes sure of it).
@@ -121,6 +125,45 @@ public class JulielabBioPortalToolsConceptCreator implements ConceptCreator {
                 throw new ConceptDBManagerRuntimeException(new ConceptCreationException(e));
             }
         });
+    }
+
+    /**
+     * Assigns the original ID and source of known ontologies. To be extended as needed.
+     *
+     * @param coordinates The coordinates with the source ID set to the ontology acronym.
+     */
+    private void tryAssignOriginalCoordinates(ConceptCoordinates coordinates) {
+        String acronym = coordinates.source;
+        String originalId = null;
+        String originalSource = null;
+
+        String sourceId = coordinates.sourceId;
+        // the source ID is always a URL with the actual ID as the last element; the ID might still be wrong, e.g. : is replaced by _ because URLs cannot contain :
+        int lastSlashIndex = sourceId.lastIndexOf('/');
+        if (lastSlashIndex != -1) {
+            originalId = sourceId.substring(lastSlashIndex + 1);
+        }
+        switch (acronym) {
+            case "GO":
+            case "gene_ontology":
+            case "Gene Ontology":
+                originalId = originalId.replace("_", ":");
+                originalSource = "GO";
+                break;
+            case "MESH":
+            case "MeSH":
+            case "mesh":
+                originalSource = "MESH";
+                break;
+            case "MEDDRA":
+            case "medra":
+                originalSource = "MEDDRA";
+                break;
+        }
+        if (originalId != null && originalSource != null) {
+            coordinates.originalId = originalId;
+            coordinates.originalSource = originalSource;
+        }
     }
 
 
