@@ -14,7 +14,9 @@
                     <httpmethod>GET</httpmethod>
                 </rest>
                 <parameters>
-                    <parameter name="label">CONCEPT</parameter>
+                    <parameter name="labels">
+                        <arrayitem>CONCEPT</arrayitem>
+                    </parameter>
                     <parameter name="id_property">sourceIds</parameter>
                 </parameters>
             </request>

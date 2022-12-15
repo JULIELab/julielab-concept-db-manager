@@ -23,9 +23,9 @@ public class ITTestsSetup {
     private final static Logger log = LoggerFactory.getLogger(ITTestsSetup.class);
 
     public static GenericContainer neo4j = new GenericContainer(
-            new ImageFromDockerfile("cdbm-1.1.0-test", true)
+            new ImageFromDockerfile("cdbm-1.2.0-test", true)
                     .withFileFromClasspath("Dockerfile", "dockercontext/Dockerfile")
-                    .withFileFromClasspath("julielab-neo4j-plugins-concepts-3.0.0-SNAPSHOT-assembly.jar", "dockercontext/julielab-neo4j-plugins-concepts-3.0.0-SNAPSHOT-assembly.jar")
+                    .withFileFromClasspath("julielab-neo4j-plugins-concepts-3.1.0-assembly.jar", "dockercontext/julielab-neo4j-plugins-concepts-3.1.0-assembly.jar")
                     .withFileFromClasspath("neo4j.conf", "dockercontext/neo4j.conf"))
             .withExposedPorts(7474, 7687)
             .withEnv("NEO4J_AUTH", "none");

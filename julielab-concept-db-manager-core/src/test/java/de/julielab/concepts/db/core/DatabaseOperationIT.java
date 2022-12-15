@@ -74,7 +74,7 @@ public class DatabaseOperationIT {
         Driver driver = BoltConnectionService.getInstance().getBoltDriver(config.configurationAt(CONNECTION));
         driver.session().writeTransaction(tx -> tx.run("MATCH (c:CONCEPT) REMOVE c.testprop"));
         // Check that the property is indeed not set
-        String propQuery = "MATCH (c:CONCEPT) WHERE c.sourceIds = 'id1' RETURN c.testprop";
+        String propQuery = "MATCH (c:CONCEPT) WHERE c.sourceIds0 = 'id1' RETURN c.testprop";
         Value result = driver.session().readTransaction(tx -> tx.run(propQuery).next().get(0));
         assertThat(result.hasType(InternalTypeSystem.TYPE_SYSTEM.NULL()));
 
@@ -95,7 +95,7 @@ public class DatabaseOperationIT {
         Driver driver = BoltConnectionService.getInstance().getBoltDriver(config.configurationAt(CONNECTION));
         driver.session().writeTransaction(tx -> tx.run("MATCH (c:CONCEPT) REMOVE c.testprop"));
         // Check that the property is indeed not set
-        String propQuery = "MATCH (c:CONCEPT) WHERE 'id1' IN c.sourceIds RETURN c.testprop";
+        String propQuery = "MATCH (c:CONCEPT) WHERE 'id1' IN c.sourceIds0 RETURN c.testprop";
         Value value = driver.session().readTransaction(tx -> tx.run(propQuery).next().get(0));
         assertThat(value.hasType(InternalTypeSystem.TYPE_SYSTEM.NULL()));
 

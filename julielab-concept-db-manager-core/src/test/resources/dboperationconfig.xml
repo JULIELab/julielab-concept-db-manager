@@ -17,7 +17,7 @@
                     <parameter name="allowedMappingTypes">
                         <arrayitem>EQUAL</arrayitem>
                     </parameter>
-                    <parameter name="aggregatedLabel">MAPPING_AGGREGATE</parameter>
+                    <parameter name="aggregated_label">MAPPING_AGGREGATE</parameter>
                 </parameters>
             </request>
         </operation>

@@ -12,7 +12,7 @@
     <operations>
         <operation>
             <request>
-                <cypherquery>MATCH (c:CONCEPT) where c.sourceIds = "id1" SET c.testprop=42 RETURN c.testprop</cypherquery>
+                <cypherquery>MATCH (c:CONCEPT) where c.sourceIds0 = "id1" SET c.testprop=42 RETURN c.testprop</cypherquery>
             </request>
         </operation>
     </operations>
