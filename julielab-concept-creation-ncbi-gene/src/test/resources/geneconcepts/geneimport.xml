@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="conceptdb-1.1.0.xsd"
-                 xsi:schemaLocation="conceptdb-1.1.0.xsd conceptdb-1.1.0.xsd
-                 http://www.julielab.de/conceptdb/concepts/ncbigene http://www.julielab.de/conceptdb/concepts/ncbigeneconceptcreator-1.0.0.xsd
-                 http://www.julielab.de/conceptdb/facets/default http://www.julielab.de/conceptdb/facets/defaultfacetcreator-1.0.0.xsd">
+<conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.julielab.de/conceptdb"
+                 xsi:schemaLocation="http://www.julielab.de/conceptdb http://www.julielab.de/conceptdb/concepts/conceptdb-1.2.0.xsd
+                 http://www.julielab.de/conceptdb/concepts/ncbigene http://www.julielab.de/conceptdb/concepts/ncbigeneconcepts-1.2.0.xsd
+                 http://www.julielab.de/conceptdb/facets/default http://www.julielab.de/conceptdb/facets/defaultfacet-1.1.0.xsd">
     <versioning>
         <version>1.0-test-gene-db</version>
     </versioning>
@@ -27,12 +27,12 @@
                     <name>de.julielab.concepts.db.creators.NCBIGeneConceptCreator</name>
                     <configuration>
                         <basepath>src/test/resources/geneconcepts/</basepath>
+                        <cache_dir>src/test/resources/cache</cache_dir>
                         <gene_info>genes/gene_info_test</gene_info>
                         <genedescriptions>genes/gene2summary_test</genedescriptions>
                         <organismlist>organisms/taxIdsForTests.lst</organismlist>
                         <organismnames>organisms/names_test.dmp</organismnames>
-                        <homologene>genes/homologene_test.data</homologene>
-                        <gene_group>genes/gene_group_test</gene_group>
+                        <gene_orthologs>genes/gene_group_test</gene_orthologs>
                     </configuration>
                 </creator>
             </concepts>

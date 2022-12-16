@@ -3,7 +3,7 @@
 <conceptdatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns="http://www.julielab.de/conceptdb"
                  xsi:schemaLocation="http://www.julielab.de/conceptdb  http://www.julielab.de/conceptdb/conceptdb-1.1.0.xsd
-                 http://www.julielab.de/conceptdb/concepts/ncbigene http://www.julielab.de/conceptdb/concepts/ncbigene-1.1.0.xsd">
+                 http://www.julielab.de/conceptdb/concepts/ncbigene http://www.julielab.de/conceptdb/concepts/ncbigene-1.2.0.xsd">
     <versioning>
         <version>1.0-test</version>
     </versioning>
@@ -38,7 +38,7 @@
                         <genedescriptions>genes/gene2summary_test</genedescriptions>
                         <organismlist>organisms/taxIdsForTests.lst</organismlist>
                         <organismnames>organisms/names_test.dmp</organismnames>
-                        <gene_group>genes/gene_group_test</gene_group>
+                        <gene_orthologs>genes/gene_group_test</gene_orthologs>
                     </configuration>
                 </creator>
             </concepts>
@@ -60,14 +60,14 @@
                     </parameter>
                 </parameters>
             </request>
+            <outputfile>
+                genes.idmap
+            </outputfile>
             <decoding>
                 <json2bytearray>true</json2bytearray>
                 <base64>false</base64>
                 <gzip>true</gzip>
             </decoding>
-            <outputfile>
-                genes.idmap
-            </outputfile>
         </export>
         <export>
             <request>
@@ -83,14 +83,14 @@
                     </parameter>
                 </parameters>
             </request>
+            <outputfile>
+                elements.2aggid
+            </outputfile>
             <decoding>
                 <json2bytearray>false</json2bytearray>
                 <base64>true</base64>
                 <gzip>true</gzip>
             </decoding>
-            <outputfile>
-                elements.2aggid
-            </outputfile>
         </export>
         <export>
             <request>
@@ -99,14 +99,14 @@
                     <httpmethod>GET</httpmethod>
                 </rest>
             </request>
+            <outputfile>
+                hypernyms.tid
+            </outputfile>
             <decoding>
                 <json2bytearray>true</json2bytearray>
                 <base64>false</base64>
                 <gzip>true</gzip>
             </decoding>
-            <outputfile>
-                hypernyms.tid
-            </outputfile>
         </export>
     </exports>
 </conceptdatabase>

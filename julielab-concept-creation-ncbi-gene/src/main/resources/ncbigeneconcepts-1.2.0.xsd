@@ -23,6 +23,13 @@
             </xs:documentation>
         </xs:annotation>
     </xs:element>
+    <xs:element name="cache_dir" type="xs:string">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Used to cache NCBI Gene import information useful for repeated imports while developing the database layout.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
     <xs:element name="gene_info" type="xs:string"/>
     <xs:annotation>
         <xs:documentation xml:lang="en">
@@ -56,14 +63,44 @@
             </xs:documentation>
         </xs:annotation>
     </xs:element>
-    <xs:element name="gene_group" type="xs:string">
+    <xs:element name="gene_orthologs" type="xs:string">
         <xs:annotation>
             <xs:documentation xml:lang="en">
-                The <em>gene_group</em> database mostly containing gene orthology information from the NCBI. It is used
+                The <em>gene_orthologs</em> database contains gene orthology information from the NCBI. It is used
                 to build orthology clusters. These clusters are
                 represented via nodes with the label <em>AGGREGATE_GENEGROUP</em> in the database. In the -- currently
                 not possible -- case that there are multiple clusters overlapping in their associated genes, a top homology cluster is
                 created in the form of an extra node with label <em>TOP_HOMOLOGY</em>.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="up_id_mapping" type="xs:string">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Path to the ID mapping as downloaded from UniProt. The required UniProt nodes will be created
+                as needed if they are not already in the database with the originalId property set to the UniProt
+                accession and the originalSource set to 'UniProtKB-AC'. There will be no names on the UniProt nodes,
+                however, only IDs.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="gene2go" type="xs:string">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                The <em>gene2go</em> file from NCBI gene. Used to connect GO terms to the genes they annotate.
+                The GO term nodes will be created - or merged with existing GO terms - using the originalId property
+                set to the GO term ID and the originalSource set to the value given with the 'go_db_original_source_name'
+                configuration parameter.
+            </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="go_db_original_source_name" type="xs:string">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+               If GO terms imported to the database by the gene2go file should be merged with the full GO term
+                information (names, synonyms, ...) imported by another concept creator (e.g. the JulielabBioPortalToolsConceptCreator),
+                set this to the value of the originalSource property used by the other concept creator. Then, JULIE Neo4j
+                Concept Manager plugin takes care of merging multiple imports into unique, property-merged nodes.
             </xs:documentation>
         </xs:annotation>
     </xs:element>
@@ -72,12 +109,16 @@
     <xs:element name="configuration">
         <xs:complexType>
             <xs:all>
-                <xs:element ref="basepath"/>
+                <xs:element ref="basepath" minOccurs="0"/>
+                <xs:element ref="cache_dir" minOccurs="0"/>
                 <xs:element ref="gene_info"/>
-                <xs:element ref="genedescriptions"/>
-                <xs:element ref="organismlist"/>
-                <xs:element ref="organismnames"/>
-                <xs:element ref="gene_group"/>
+                <xs:element ref="genedescriptions" minOccurs="0"/>
+                <xs:element ref="organismlist" minOccurs="0"/>
+                <xs:element ref="organismnames" minOccurs="0"/>
+                <xs:element ref="gene_orthologs" minOccurs="0"/>
+                <xs:element ref="up_id_mapping" minOccurs="0"/>
+                <xs:element ref="gene2go" minOccurs="0"/>
+                <xs:element ref="go_db_original_source_name" minOccurs="0"/>
             </xs:all>
         </xs:complexType>
     </xs:element>

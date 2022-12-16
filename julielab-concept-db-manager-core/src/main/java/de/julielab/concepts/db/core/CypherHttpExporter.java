@@ -8,6 +8,7 @@ import de.julielab.concepts.util.DataExportException;
 import de.julielab.concepts.util.IncompatibleActionHandlerConnectionException;
 import de.julielab.concepts.util.VersionRetrievalException;
 import de.julielab.java.utilities.ConfigurationUtilities;
+import de.julielab.java.utilities.StringIteratorInputStream;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.configuration2.tree.ImmutableNode;
@@ -15,12 +16,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.HttpMethod;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
+import java.util.stream.StreamSupport;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
 import static de.julielab.java.utilities.ConfigurationUtilities.slash;
@@ -71,18 +71,24 @@ public class CypherHttpExporter extends DataExporterImpl {
                 if (!response.getErrors().isEmpty())
                     throw new DataExportException(
                             "Error happened when trying perform operation: " + response.getErrors());
-                List<String> responseLines = new ArrayList<>();
-                Iterator<Result> resIt = response.getResults().iterator();
-                while (resIt.hasNext()) {
-                    Result result = resIt.next();
-                    for (Data data : result.getData()) {
-                        responseLines.add(data.getRow().stream().map(o -> o != null ? o.toString(): "null").collect(joining("\t")));
-                    }
-                }
+//                List<String> responseLines = new ArrayList<>();
+//
+//
+//                {
+//                    Iterator<Result> resIt = response.getResults().iterator();
+//                    while (resIt.hasNext()) {
+//                        Result result = resIt.next();
+//                        for (Data data : result.getData()) {
+//                            responseLines.add(data.getRow().stream().map(o -> o != null ? o.toString() : "null").collect(joining("\t")));
+//                        }
+//                    }
+//                }
+                final Iterator<String> concatenatedStringOutputIterator = StreamSupport.stream(response.getResults().spliterator(), false).map(Result::getData).flatMap(Collection::stream).map(data -> data.getRow().stream().map(o -> o != null ? o.toString() : "null").collect(joining("\t")) + System.getProperty("line.separator")).iterator();
+
                 log.info("Writing data to {}", filepath);
                 writeData(new File(filepath),
                         getResourceHeader(connectionConfiguration),
-                        new ByteArrayInputStream(responseLines.stream().collect(joining(System.getProperty("line.separator"))).getBytes(UTF_8)));
+                        new StringIteratorInputStream(concatenatedStringOutputIterator, UTF_8));
             } catch (ConceptDatabaseConnectionException | IOException | VersionRetrievalException e) {
                 throw new DataExportException(e);
             }

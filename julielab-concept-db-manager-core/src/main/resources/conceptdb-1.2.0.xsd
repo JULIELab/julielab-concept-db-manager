@@ -5,7 +5,7 @@
            xmlns="http://www.julielab.de/conceptdb"
            elementFormDefault="qualified">
 
-    <xs:include schemaLocation="exporter-1.1.0.xsd"/>
+    <xs:include schemaLocation="exporter-1.2.0.xsd"/>
     <xs:include schemaLocation="operation-1.1.0.xsd"/>
 
     <xs:annotation>

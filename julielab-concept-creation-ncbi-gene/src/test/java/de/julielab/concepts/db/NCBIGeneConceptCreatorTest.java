@@ -57,7 +57,7 @@ public class NCBIGeneConceptCreatorTest {
 
     @Test
     public void testCreateGeneConcepts() throws Exception {
-        Method method = NCBIGeneConceptCreator.class.getDeclaredMethod("createGeneTerm", String.class, Map.class);
+        Method method = NCBIGeneConceptCreator.class.getDeclaredMethod("createGeneConcept", String.class, Map.class);
         method.setAccessible(true);
         String geneRecord = "9606	3558	IL2	-	IL-2|TCGF|lymphokine	HGNC:6001|MIM:147680|HPRD:00979	4	4q26-q27	interleukin 2	protein-coding	IL2	interleukin 2	O	T cell growth factor|aldesleukin|interleukin-2|involved in regulation of T-cell clonal expansion	20140807";
         Map<String, String> gene2Summary = new HashMap<>();
