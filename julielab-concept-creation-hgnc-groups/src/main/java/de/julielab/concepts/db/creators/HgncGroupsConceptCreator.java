@@ -34,7 +34,7 @@ public class HgncGroupsConceptCreator implements ConceptCreator {
     public static final String FAMILYALIASFILE = "familyaliasfile";
     public static final String HIERARCHYFILE = "hierarchyfile";
     public static final String GENETOGROUPMAP = "genetogroupmap";
-    public static final String HGNC_SOURCE = "HGNC";
+    public static final String HGNC_SOURCE = "HGNCG";
     public static final String HGNC_GROUP_LABEL = "HGNC_GROUP";
     private final static Logger log = LoggerFactory.getLogger(HgncGroupsConceptCreator.class);
 
