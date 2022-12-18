@@ -15,7 +15,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.NoConnectionReuseStrategy;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
@@ -40,7 +42,9 @@ public class HttpConnectionService {
 
     public HttpConnectionService() {
         PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager();
-        client = HttpClients.custom().setConnectionManager(connManager).build();
+        // NoConnectionReuseStrategy as an attempt to solve the issue
+        // https://stackoverflow.com/questions/10558791/apache-httpclient-interim-error-nohttpresponseexception
+        client = HttpClientBuilder.create().setConnectionManager(connManager).setConnectionReuseStrategy(new NoConnectionReuseStrategy()).build();
     }
 
     public static HttpConnectionService getInstance() {
