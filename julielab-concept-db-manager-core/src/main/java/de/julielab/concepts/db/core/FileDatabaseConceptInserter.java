@@ -51,6 +51,9 @@ public class FileDatabaseConceptInserter implements ConceptInserter {
             throw new ConceptInsertionException(
                     "No access to a file-based graph database. The FileDatabaseConceptInserter has not been initialized properly. Call setConfiguration() and check its return value before calling this method.");
         log.info("Inserting concepts into embedded Neo4j database at {}.", connectionConfiguration.getString("uri"));
+
+        concepts.setImportOptions(setGlobalOptions(importConfiguration, concepts.getImportOptions()));
+
         ImportFacet facet = concepts.getFacet();
         if (facet == null)
             throw new ConceptInsertionException("The facet of the import concepts is null.");

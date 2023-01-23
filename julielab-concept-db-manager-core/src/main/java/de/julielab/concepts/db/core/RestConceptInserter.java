@@ -52,6 +52,8 @@ public class RestConceptInserter implements ConceptInserter {
         try {
             checkParameters(importConfig, slash(REST, REST_ENDPOINT));
 
+            concepts.setImportOptions(setGlobalOptions(importConfig, concepts.getImportOptions()));
+
             ObjectMapper jsonMapper = new ObjectMapper().registerModule(new Jdk8Module());
             jsonMapper.setSerializationInclusion(Include.NON_NULL);
             jsonMapper.setSerializationInclusion(Include.NON_EMPTY);

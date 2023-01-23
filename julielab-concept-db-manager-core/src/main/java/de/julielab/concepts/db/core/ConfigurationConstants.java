@@ -44,6 +44,9 @@ public class ConfigurationConstants {
     public static final String JAVA_TYPE = "javatype";
     public static final String ELEMENT_TYPE = "elementtype";
     public static final String TO_ESCAPED_JSON = "toescapedjson";
+    public static final String IMPORT_OPTIONS = "importoptions";
+    public static final String MERGE = "merge";
+    public static final String OVERRIDE_PREFERRED_NAME = "overridepreferredname";
 
     private ConfigurationConstants() {
     }
