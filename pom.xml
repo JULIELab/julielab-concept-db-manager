@@ -19,7 +19,7 @@
         <version>2.5.0</version>
     </parent>
     <artifactId>julielab-concept-db-manager</artifactId>
-    <version>1.3.1-SNAPSHOT</version>
+    <version>1.3.1</version>
     <name>JULIE Lab Concept Database Manager</name>
     <description>This project is a collection of tools with the goal to import ontological concepts into a graph
         database. The graph database then allows to traverse the imported data with a graph-specific query language. In
@@ -59,7 +59,7 @@
         </dependencies>
     </dependencyManagement>
     <properties>
-        <julielab-neo4j-plugins-version>3.2.1-SNAPSHOT</julielab-neo4j-plugins-version>
+        <julielab-neo4j-plugins-version>3.2.1</julielab-neo4j-plugins-version>
         <neo4j-version>4.4.2</neo4j-version>
     </properties>
 </project>

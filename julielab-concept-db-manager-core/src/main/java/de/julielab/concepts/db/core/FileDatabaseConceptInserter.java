@@ -24,6 +24,7 @@ import org.neo4j.logging.log4j.LogConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,6 +69,9 @@ public class FileDatabaseConceptInserter implements ConceptInserter {
             try {
                 log.debug("Inserting the concepts of facet {} (customId: {}) into the Neo4j database", facet.getName(),
                         facet.getCustomId());
+                // The JULIE Lab Neo4j plugins cannot handle parents in merging mode
+                if (concepts.getImportOptions().merge)
+                    concepts.setConcepts(concepts.getConcepts().map(c -> {c.parentCoordinates = Collections.emptyList(); return c;}));
                 Map<String, Object> response = new HashMap<>();
                 ConceptInsertion.insertConcepts(graphDb, ciLog, concepts, response);
                 log.debug("Successfully inserted the given concepts: {}", response);

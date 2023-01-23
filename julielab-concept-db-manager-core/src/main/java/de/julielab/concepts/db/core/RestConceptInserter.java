@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Collections;
 import java.util.stream.Stream;
 
 import static de.julielab.concepts.db.core.ConfigurationConstants.*;
@@ -83,6 +84,9 @@ public class RestConceptInserter implements ConceptInserter {
                     g.writeFieldName(NAME_CONCEPTS);
                     g.writeStartArray();
                     for (ImportConcept concept : (Iterable<ImportConcept>) importConcepts::iterator) {
+                        // The JULIE Lab Neo4j plugins cannot handle parents in merging mode
+                        if (concepts.getImportOptions().merge)
+                            concept.parentCoordinates = Collections.emptyList();
                         g.writeObject(concept);
                         progressBar.incrementDone(true);
                     }

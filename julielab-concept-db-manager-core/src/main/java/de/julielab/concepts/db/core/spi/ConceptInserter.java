@@ -31,8 +31,8 @@ public interface ConceptInserter extends DatabaseConnected {
 	 */
 	default ImportOptions setGlobalOptions(HierarchicalConfiguration<ImmutableNode> importConfiguration, @Nullable ImportOptions optionsFromConceptCreator) {
 		ImportOptions retOptions = optionsFromConceptCreator != null ? optionsFromConceptCreator : new ImportOptions();
-		final Boolean merge = importConfiguration.getBoolean(slash(IMPORT_OPTIONS, MERGE));
-		final Boolean overridePreferredName = importConfiguration.getBoolean(slash(IMPORT_OPTIONS, OVERRIDE_PREFERRED_NAME));
+		final Boolean merge = importConfiguration.getBoolean(slash(IMPORT_OPTIONS, MERGE), null);
+		final Boolean overridePreferredName = importConfiguration.getBoolean(slash(IMPORT_OPTIONS, OVERRIDE_PREFERRED_NAME), null);
 
 		if (merge != null)
 			retOptions.merge = merge;

@@ -26,6 +26,15 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="importoptions">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="merge" type="xs:boolean"/>
+                <xs:element name="overridepreferredname" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <xs:element name="parameter">
         <xs:annotation>
             <xs:documentation xml:lang="en">

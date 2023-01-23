@@ -25,7 +25,7 @@ public class ITTestsSetup {
     public static GenericContainer neo4j = new GenericContainer(
             new ImageFromDockerfile("cdbm-1.2.0-test", true)
                     .withFileFromClasspath("Dockerfile", "dockercontext/Dockerfile")
-                    .withFileFromClasspath("julielab-neo4j-plugins-concepts-3.1.0-assembly.jar", "dockercontext/julielab-neo4j-plugins-concepts-3.1.0-assembly.jar")
+                    .withFileFromClasspath("julielab-neo4j-plugins-concepts-3.2.1-assembly.jar", "dockercontext/julielab-neo4j-plugins-concepts-3.2.1-assembly.jar")
                     .withFileFromClasspath("neo4j.conf", "dockercontext/neo4j.conf"))
             .withExposedPorts(7474, 7687)
             .withEnv("NEO4J_AUTH", "none");
